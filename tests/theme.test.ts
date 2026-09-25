@@ -75,4 +75,8 @@ describe("monospace font", () => {
     expect(Object.keys(realTokens.css)).toContain('@import "tw-animate-css"')
     expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("tw-animate-css")
   })
+  it("ships the rest of shadcn init's base: class dark mode and token borders", () => {
+    expect(Object.keys(realTokens.css)).toContain("@custom-variant dark (&:is(.dark *))")
+    expect((realTokens.css["@layer base"] as Record<string, unknown>)["*"]).toEqual({ "@apply border-border outline-ring/50": {} })
+  })
 })
