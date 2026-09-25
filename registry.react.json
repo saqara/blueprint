@@ -604,6 +604,21 @@
       ]
     },
     {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Étapes numérotées, API identique au Stepper shadcn-vue (Saqara).",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
