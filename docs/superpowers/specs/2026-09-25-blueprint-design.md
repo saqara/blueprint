@@ -121,7 +121,7 @@ Les valeurs sombres sont des propositions. Elles sont validées par le test de c
 - Ombres reprises du DS v2 :
   - `--shadow-sm: 0 4px 4px rgba(0,0,0,.1)`
   - `--shadow-md: 0 10px 20px rgba(0,0,0,.04), 0 2px 6px rgba(0,0,0,.04), 0 0 1px rgba(0,0,0,.04)`
-  - `--shadow-lg: 0 10px 72px rgba(155,154,154,.3)`
+  - `--shadow-lg: 0 10px 72px var(--shadow)`, où `--shadow` dépend du mode : `rgba(155,154,154,.3)` en clair (valeur DS v2), `rgba(0,0,0,.6)` en sombre (une ombre grise faisait un halo clair sur fond sombre)
 
 ## 5. Composants
 
@@ -139,7 +139,7 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 
 - Stepper n'existe que dans shadcn-vue : il faut l'écrire côté React.
 - MultiSelect n'existe dans aucun des deux : il est écrit dans les deux frameworks à partir de Command et Popover.
-- Sonner s'appuie sur `sonner` en React et sur `vue-sonner` en Vue. La version React n'utilise pas `next-themes` : l'app passe `theme` au `Toaster`.
+- Sonner s'appuie sur `sonner` en React et sur `vue-sonner` en Vue. La version React n'utilise pas `next-themes` : l'app passe `theme` au `Toaster`. Les toasts typés (`success`, `info`, `warning`, `error`) sont teintés comme les Alert : fond à 10 % de la couleur, bordure à 50 %, texte normal, icône colorée ; la description utilise `muted-foreground`.
 
 **Hors V1 :** Chart (recharts d'un côté, unovis de l'autre, parité coûteuse) et DatePicker (pas de besoin dans pfou-hub).
 

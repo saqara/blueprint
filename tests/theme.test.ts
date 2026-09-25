@@ -12,6 +12,11 @@ const tokens: Tokens = {
 }
 
 describe("themeItem", () => {
+  it("never maps non-color vars (radius, shadow) to Tailwind colors", () => {
+    const item = themeItem({ ...tokens, light: { ...tokens.light, shadow: "rgba(0,0,0,.5)" } }) as any
+    expect(item.cssVars.theme["color-shadow"]).toBeUndefined()
+  })
+
   it("maps every color var to a Tailwind color, but not radius", () => {
     const item = themeItem(tokens) as any
     expect(item.name).toBe("saqara-theme")

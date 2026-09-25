@@ -35,6 +35,11 @@ describe("tokenErrors", () => {
     expect(errors.some((e) => e.includes("light.b"))).toBe(true)
   })
 
+  it("accepts a per-mode shadow color that is not hex", () => {
+    const light = { shadow: "rgba(155,154,154,.3)" }, dark = { shadow: "rgba(0,0,0,.6)" }
+    expect(tokenErrors({ ...base, light, dark })).toEqual([])
+  })
+
   it("rejects keys missing from one mode", () => {
     const errors = tokenErrors({ ...base, light: { a: "#FFFFFF", b: "#000000" }, dark: { a: "#FFFFFF" } })
     expect(errors).toContain("dark.b: missing (present in light)")

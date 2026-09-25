@@ -8,7 +8,8 @@ export type Tokens = {
 }
 
 const HEX = /^#[0-9A-Fa-f]{6}$/
-const NON_COLOR = new Set(["radius"])
+// Per-mode vars that are not #RRGGBB colors (no contrast check, no Tailwind color utility).
+export const NON_COLOR = new Set(["radius", "shadow"])
 
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => {

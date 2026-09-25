@@ -1,8 +1,8 @@
-import type { CssTree, Tokens } from "./contrast.ts"
+import { NON_COLOR, type CssTree, type Tokens } from "./contrast.ts"
 import type { Item } from "./manifest.ts"
 
 const colorMap = (t: Tokens) =>
-  Object.fromEntries(Object.keys(t.light).filter((k) => k !== "radius").map((k) => [`color-${k}`, `var(--${k})`]))
+  Object.fromEntries(Object.keys(t.light).filter((k) => !NON_COLOR.has(k)).map((k) => [`color-${k}`, `var(--${k})`]))
 
 export function themeItem(t: Tokens): Item {
   return {
