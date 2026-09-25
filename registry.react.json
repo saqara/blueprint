@@ -437,6 +437,25 @@
       "description": "Liste filtrable au clavier (recherche, palette de commandes)."
     },
     {
+      "name": "confirm-dialog",
+      "type": "registry:ui",
+      "title": "Confirm Dialog",
+      "description": "Remplace window.confirm : confirm() renvoie une promesse, dessinée avec alert-dialog (Saqara).",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/alert-dialog",
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/confirm-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",

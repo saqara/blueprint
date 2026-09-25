@@ -293,6 +293,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogMedia.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/vue/ui/alert-dialog/AlertDialogTitle.vue",
           "type": "registry:ui"
         },
@@ -646,6 +650,33 @@
         }
       ],
       "description": "Liste filtrable au clavier (recherche, palette de commandes)."
+    },
+    {
+      "name": "confirm-dialog",
+      "type": "registry:ui",
+      "title": "Confirm Dialog",
+      "description": "Remplace window.confirm : confirm() renvoie une promesse, dessinée avec alert-dialog (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/alert-dialog",
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/confirm-dialog/confirm.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirm-dialog/ConfirmDialog.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirm-dialog/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     },
     {
       "name": "data-table",
