@@ -86,7 +86,7 @@ On garde les **noms de variables shadcn**, pour que les composants officiels fon
 | `--secondary` / `--secondary-foreground` | `#F4F6F8` / `#283549` | `#363947` / `#F5F8FF` |
 | `--muted` / `--muted-foreground` | `#F3F3F4` / `#646671` | `#363947` / `#B0B3C3` |
 | `--accent` / `--accent-foreground` | `#FDECEB` / `#B32019` | `#363947` / `#F5F8FF` |
-| `--destructive` / `--destructive-foreground` | `#C2002C` / `#FFFFFF` | `#C2002C` / `#FFFFFF` |
+| `--destructive` / `--destructive-foreground` | `#C2002C` / `#FFFFFF` | `#FF5A6E` / `#161925` |
 | `--border` / `--input` | `#E8E8E9` / `#E8E8E9` | `#363947` / `#454751` |
 | `--ring` | `#F04632` | `#F04632` |
 
@@ -152,7 +152,7 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 À chaque PR :
 
 1. `check-parity` : mêmes noms d'items dans `registry.react.json` et `registry.vue.json`.
-2. Test de contraste (Vitest) sur `tokens/theme.json` : chaque paire `X` / `X-foreground` doit atteindre au moins 4,5:1, en clair comme en sombre. Les exceptions déclarées, aujourd'hui `primary` et `identity` (3,73:1), sont tolérées.
+2. Test de contraste (Vitest) sur `tokens/theme.json` : chaque paire `X` / `X-foreground`, ainsi que `muted-foreground` et `destructive` utilisés comme texte sur `background` et `card`, doit atteindre au moins 4,5:1, en clair comme en sombre. Les exceptions déclarées, aujourd'hui `primary` et `identity` (3,73:1), sont tolérées.
 3. `tsc --noEmit` (React) et `vue-tsc --noEmit` (Vue).
 4. `shadcn build` + `shadcn-vue build` + `vite build`. La vitrine importe tous les composants, donc son build sert de test d'intégration.
 

@@ -101,8 +101,8 @@
           "muted-foreground": "#B0B3C3",
           "accent": "#363947",
           "accent-foreground": "#F5F8FF",
-          "destructive": "#C2002C",
-          "destructive-foreground": "#FFFFFF",
+          "destructive": "#FF5A6E",
+          "destructive-foreground": "#161925",
           "border": "#363947",
           "input": "#454751",
           "ring": "#F04632",
@@ -147,6 +147,261 @@
         },
         {
           "path": "registry/vue/ui/button/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/checkbox/Checkbox.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/checkbox/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@saqara/label",
+        "@saqara/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/field/Field.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldError.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldLegend.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldSet.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/FieldTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/field/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "dependencies": [
+        "@vueuse/core"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/input/Input.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/label/Label.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/label/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/radio-group/RadioGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/radio-group/RadioGroupItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/radio-group/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/select/Select.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectItemText.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectScrollDownButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectScrollUpButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/SelectValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/select/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/separator/Separator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/separator/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/switch/Switch.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/switch/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "dependencies": [
+        "@vueuse/core"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/textarea/Textarea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/textarea/index.ts",
           "type": "registry:ui"
         }
       ]

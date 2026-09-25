@@ -38,8 +38,9 @@ export function tokenErrors(t: Tokens): string[] {
     const pairs = Object.keys(vars)
       .filter((k) => vars[`${k}-foreground`])
       .map((k) => [k, `${k}-foreground`])
+    // Tokens that components also use as plain text on page surfaces (hints, field errors).
     for (const bg of ["background", "card"]) {
-      if (vars[bg] && vars["muted-foreground"]) pairs.push([bg, "muted-foreground"])
+      for (const fg of ["muted-foreground", "destructive"]) if (vars[bg] && vars[fg]) pairs.push([bg, fg])
     }
     for (const [bg, fg] of pairs) {
       const ratio = contrastRatio(vars[bg], vars[fg])

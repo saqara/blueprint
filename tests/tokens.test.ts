@@ -40,6 +40,13 @@ describe("tokenErrors", () => {
     expect(errors).toContain("dark.b: missing (present in light)")
   })
 
+  it("checks destructive used as text (field errors) on background and card", () => {
+    const vars = { background: "#161925", card: "#1F2230", destructive: "#C2002C" }
+    const errors = tokenErrors({ ...base, light: vars, dark: vars })
+    expect(errors).toContain("light: destructive on background = 2.78:1 (< 4.5)")
+    expect(errors.some((e) => e.includes("destructive on card"))).toBe(true)
+  })
+
   it("checks muted-foreground on background", () => {
     const vars = { background: "#FFFFFF", "muted-foreground": "#EEEEEE" }
     expect(tokenErrors({ ...base, light: vars, dark: vars })[0]).toContain("muted-foreground on background")
