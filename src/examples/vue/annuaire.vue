@@ -148,7 +148,7 @@ function onSorting(next: SortingState) {
 
 <template>
   <AppShellSidebar class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" active-id="annuaire"
-    :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@exemple.fr' }" @sign-out="() => {}">
+    :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@saqara.com' }" @sign-out="() => {}">
     <div class="space-y-6">
       <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Entreprises" :value="COMPANIES.length" />

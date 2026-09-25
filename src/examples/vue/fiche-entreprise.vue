@@ -50,7 +50,7 @@ function addContact() {
 </script>
 
 <template>
-  <AppShellHeader class="min-h-full" :nav="nav" active-id="annuaire" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@exemple.fr' }" @sign-out="() => {}">
+  <AppShellHeader class="min-h-full" :nav="nav" active-id="annuaire" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@saqara.com' }" @sign-out="() => {}">
     <Toaster />
     <div class="mx-auto max-w-5xl space-y-6">
       <Breadcrumb>

@@ -16,7 +16,7 @@ const active = ref("annuaire")
 <template>
   <!-- [&_.h-svh]:h-full keeps the full-height sidebar inside the docs frame (which provides the transform) -->
   <div class="h-full overflow-hidden">
-    <AppShellSidebar class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" :active-id="active" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@exemple.fr' }"
+    <AppShellSidebar class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" :active-id="active" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@saqara.com' }"
       @navigate="(id) => (active = id)" @sign-out="() => {}">
       <p class="text-sm text-muted-foreground">Contenu de la page « {{ nav.find((n) => n.id === active)?.label }} ».</p>
     </AppShellSidebar>

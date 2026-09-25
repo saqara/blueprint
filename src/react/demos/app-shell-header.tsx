@@ -14,7 +14,7 @@ export default function AppShellHeaderDemo() {
   return (
     <div className="h-full overflow-auto">
       <AppShellHeader className="min-h-full" nav={nav} activeId={active} onNavigate={setActive}
-        user={{ name: "Alexandre Brochot", email: "alexandre.brochot@exemple.fr" }} onSignOut={() => {}}>
+        user={{ name: "Alexandre Brochot", email: "alexandre.brochot@saqara.com" }} onSignOut={() => {}}>
         <p className="text-sm text-muted-foreground">Contenu de la page « {nav.find((n) => n.id === active)?.label} ».</p>
       </AppShellHeader>
     </div>

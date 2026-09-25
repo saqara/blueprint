@@ -49,8 +49,11 @@ describe("demo and example content", () => {
   })
   it.each(Object.entries(sources))("%s uses obviously fictitious SIRENs and e-mail domains", (_, src) => {
     for (const siren of src.match(/\b\d{3} \d{3} \d{3}\b/g) ?? []) expect(siren).toMatch(/^9/)
-    // e-mail addresses only (a local part before "@", so Vue's @submit.prevent is not one)
-    for (const [, domain] of src.matchAll(/[\w.-]+@([a-z0-9-]+\.[a-z.]+)/g)) expect(domain).toBe("exemple.fr")
+    // e-mail addresses only (a local part before "@", so Vue's @submit.prevent is not one).
+    // Fictitious exemple.fr, plus the demo user whose real address is published with his agreement.
+    for (const [address, domain] of src.matchAll(/[\w.-]+@([a-z0-9-]+\.[a-z.]+)/g)) {
+      if (address !== "alexandre.brochot@saqara.com") expect(domain).toBe("exemple.fr")
+    }
   })
   it.each(Object.entries(sources).filter(([p]) => p.endsWith(".vue")))("%s mounts a Toaster when it raises toasts", (_, src) => {
     if (/\btoast\./.test(src)) expect(src).toContain("<Toaster")

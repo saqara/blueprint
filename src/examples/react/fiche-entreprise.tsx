@@ -48,7 +48,7 @@ export default function FicheEntrepriseExample() {
   }
 
   return (
-    <AppShellHeader className="min-h-full" nav={nav} activeId="annuaire" user={{ name: "Alexandre Brochot", email: "alexandre.brochot@exemple.fr" }} onSignOut={() => {}}>
+    <AppShellHeader className="min-h-full" nav={nav} activeId="annuaire" user={{ name: "Alexandre Brochot", email: "alexandre.brochot@saqara.com" }} onSignOut={() => {}}>
       <div className="mx-auto max-w-5xl space-y-6">
         <Breadcrumb>
           <BreadcrumbList>
