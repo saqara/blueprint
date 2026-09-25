@@ -12,6 +12,7 @@ const companies: Company[] = [
 ]
 // Columns live outside the component (or in useMemo): FlexRender mounts `cell` / `header` as components,
 // so a function rebuilt on every render remounts its cells (lost focus, tooltip state…).
+// Cells that read live state get it from `table.options.meta` (DataTable `meta` prop), not from a closure.
 const columns: ColumnDef<DataTableFeatures, Company, any>[] = [
   { accessorKey: "name", header: ({ column }) => <DataTableColumnHeader column={column} title="Raison sociale" /> },
   { accessorKey: "siren", header: "SIREN", enableSorting: false },

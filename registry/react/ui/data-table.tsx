@@ -45,6 +45,8 @@ type DataTableProps<TData extends RowData> = {
   getRowId?: (row: TData, index: number) => string
   sorting?: SortingState
   onSortingChange?: (sorting: SortingState) => void
+  /** Live state for cells (read via `table.options.meta`), so `columns` can stay stable. */
+  meta?: Record<string, unknown>
   loading?: boolean
   loadingRows?: number
   emptyMessage?: React.ReactNode
@@ -66,7 +68,7 @@ type DataTableProps<TData extends RowData> = {
 
 // Saqara: sorting is always controlled — the page sorts (server or client) and passes `sorting` back.
 function DataTable<TData extends RowData>({
-  columns, data, getRowId, sorting = [], onSortingChange, loading = false, loadingRows = 5,
+  columns, data, getRowId, meta, sorting = [], onSortingChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
   onRowClick, getRowProps, tableProps, scrollRef, scrollProps, className, children,
 }: DataTableProps<TData>) {
@@ -75,6 +77,7 @@ function DataTable<TData extends RowData>({
     data,
     columns,
     getRowId,
+    meta,
     manualSorting: true,
     state: { sorting },
     onSortingChange: (updater) => onSortingChange?.(resolveUpdater(updater, sorting)),
