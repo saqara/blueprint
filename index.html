@@ -1,12 +1,22 @@
 <!doctype html>
 <html lang="fr">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Saqara Blueprint</title><link rel="icon" href="/logo.svg" /><meta property="og:image" content="https://saqara.github.io/blueprint/banner.png" /></head>
-  <body style="font-family: system-ui; padding: 2rem">
-    <img src="/logo.svg" width="96" height="96" alt="" />
-    <h1>Saqara Blueprint</h1>
-    <ul>
-      <li><a href="./react.html">Composants React</a></li>
-      <li><a href="./vue.html">Composants Vue</a></li>
-    </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saqara Blueprint</title>
+    <link rel="icon" href="/logo.svg" />
+    <meta property="og:title" content="Saqara Blueprint" />
+    <meta property="og:description" content="Le design system des applications Saqara (React et Vue)." />
+    <meta property="og:image" content="https://saqara.github.io/blueprint/banner.png" />
+    <script>
+      try {
+        var c = localStorage.getItem("blueprint-theme")
+        if (c === "dark" || (c !== "light" && matchMedia("(prefers-color-scheme: dark)").matches)) document.documentElement.classList.add("dark")
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/site/main.tsx"></script>
   </body>
 </html>

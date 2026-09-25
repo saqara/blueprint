@@ -3,6 +3,7 @@
 @import "./theme.css";
 
 @source "../registry";
+@source "../site";
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
