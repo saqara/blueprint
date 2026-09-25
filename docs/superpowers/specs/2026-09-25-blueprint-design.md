@@ -112,7 +112,8 @@ Les valeurs sombres sont des propositions. Elles sont validées par le test de c
 
 - `--font-heading` : Poppins (400/500/600), pour les titres.
 - `--font-sans` : Lato (400/700), pour le texte et les tableaux.
-- Les polices sont chargées par les dépendances `@fontsource/poppins` et `@fontsource/lato` de l'item `saqara-theme`. Pas de lien Google Fonts.
+- `--font-mono` : JetBrains Mono (400/600), pour le code, les identifiants et les montants (ajout du 2026-09-25).
+- Les polices sont chargées par les dépendances `@fontsource/poppins`, `@fontsource/lato` et `@fontsource/jetbrains-mono` de l'item `saqara-theme`. Pas de lien Google Fonts.
 - On garde l'échelle de tailles Tailwind par défaut. L'échelle du DS v2 renommait `md` et `lg`, ce qui casserait les classes des composants shadcn.
 
 ### 4.3 Formes et ombres

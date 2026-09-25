@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `saqara-theme` : police monospace JetBrains Mono (`font-mono`), installée avec le thème.
 - 2026-09-25 — Site de documentation : pages par composant (aperçu, code, installation), bascule React / Vue, thème clair / sombre / auto, page tokens, page « Utiliser avec une IA » et `llms.txt`, 4 exemples (Annuaire, Fiche entreprise, Inscription, Connexion). Descriptions françaises publiées pour tous les composants.
 - 2026-09-25 — Lot 5 : `breadcrumb`, `collapsible`, `scroll-area`, `toggle`, `toggle-group`, `hover-card`.
 - 2026-09-25 — `app-shell-header` : couleurs de la sidebar, onglets sur une ligne, titre de page affiché seulement s'il est passé (`title`). `app-shell-sidebar` : compteurs en pastilles `identity`. `login` : logo et titre centrés.

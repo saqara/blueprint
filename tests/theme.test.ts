@@ -59,3 +59,13 @@ describe("keepDescription", () => {
     expect(keepDescription(undefined, { name: "x", type: "registry:ui" })).toEqual({ name: "x", type: "registry:ui" })
   })
 })
+
+import realTokens from "../tokens/theme.json"
+
+describe("monospace font", () => {
+  it("defines font-mono and ships its font files with the theme", () => {
+    expect(realTokens.theme["font-mono"]).toMatch(/^"JetBrains Mono", /)
+    expect(Object.keys(realTokens.css)).toContain('@import "@fontsource/jetbrains-mono/400.css"')
+    expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("@fontsource/jetbrains-mono")
+  })
+})

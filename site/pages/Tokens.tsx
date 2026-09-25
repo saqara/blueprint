@@ -52,6 +52,7 @@ export function Tokens() {
         <h2 className="text-xl font-semibold">Typographie</h2>
         <p className="font-heading text-2xl">Poppins — titres</p>
         <p>Lato — texte courant, tableaux et formulaires.</p>
+        <p className="font-mono">JetBrains Mono — code, identifiants (SIREN 900 000 001), montants.</p>
       </section>
     </article>
   )
