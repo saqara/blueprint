@@ -36,6 +36,13 @@ describe("npmDeps", () => {
   })
 })
 
+describe("npmDeps versions", () => {
+  it("keeps the upstream pinned spec instead of adding the bare import again", () => {
+    expect(npmDeps(["recharts@3.8.0", "cn"], ['import { Line } from "recharts"', 'import { X } from "@scope/pkg"'])).toEqual(["@scope/pkg", "cn", "recharts@3.8.0"])
+    expect(npmDeps(["@scope/pkg@^2"], ['import { X } from "@scope/pkg"'])).toEqual(["@scope/pkg@^2"])
+  })
+})
+
 describe("plan", () => {
   it("builds localized files and a manifest item", () => {
     const { files, item } = plan(upstream, "vue", () => false, false)

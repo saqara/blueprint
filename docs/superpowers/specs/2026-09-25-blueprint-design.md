@@ -160,6 +160,11 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 
 **Hors lot 3 :** upload intégré, création de valeurs (TagCombobox, MultiInput), tri/pagination/filtres intégrés à la DataTable.
 
+### 5.3 Lot 6 — `chart` et `tag-input` (validé le 2026-09-25)
+
+- **`chart`** : repris des registries officiels — React sur recharts (`ChartContainer`, `ChartTooltip`, `ChartLegend`), Vue sur unovis (conteneur, tooltip, légende de shadcn-vue). API propre à chaque librairie, rendu identique. Tokens `chart-1` à `chart-5` : identity, navy (éclairci en sombre), info, success, warning. Démo « Historique des notes ».
+- **`tag-input`** (Saqara, React + Vue) : remplace `MultiInput` et `TagCombobox` de pfou-hub. `value` + `onValueChange` (Vue `v-model`), `suggestions?`, `allowCreate` (défaut `true` ; `false` = catalogue fermé), `maxTags?`, `placeholder`, `disabled`. Entrée ou virgule pour ajouter, Retour arrière sur champ vide pour retirer le dernier, flèches dans les suggestions, bouton « Retirer … » par tag. Espaces normalisés, doublons ignorés (casse et accents), suggestions déjà choisies masquées. Logique pure testée à l'identique dans les deux frameworks.
+
 ### 5.2 Lot 4 — blocs (validé le 2026-09-25)
 
 Le lot 4 remplace la ligne « 4 — Blocs Saqara » du tableau ci-dessus : deux shells au lieu d'un, et un login à trois méthodes.

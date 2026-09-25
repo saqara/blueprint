@@ -9,6 +9,7 @@ const DESCRIPTIONS: Record<string, string> = {
   breadcrumb: "Fil d'Ariane indiquant la position dans l'app.",
   button: "Bouton d'action, en plusieurs variantes et tailles.",
   card: "Conteneur de contenu avec en-tête, corps et pied.",
+  chart: "Graphiques (courbes, barres, aires) aux couleurs du thème.",
   checkbox: "Case à cocher.",
   collapsible: "Zone dépliable simple.",
   command: "Liste filtrable au clavier (recherche, palette de commandes).",

@@ -31,7 +31,10 @@ export function npmDeps(upstream: string[] | undefined, contents: string[]): str
     .filter((s) => !s.startsWith("@/"))
     .map((s) => s.split("/").slice(0, s.startsWith("@") ? 2 : 1).join("/"))
     .filter((p) => !FRAMEWORKS.has(p))
-  return [...new Set([...(upstream ?? []), ...packages])].sort()
+  // "pkg@1.2.3" / "@scope/pkg@^2" from upstream win over the bare import of the same package.
+  const name = (spec: string) => spec.replace(/(?<=.)@[^@/]*$/, "")
+  const pinned = new Set((upstream ?? []).map(name))
+  return [...new Set([...(upstream ?? []), ...packages.filter((p) => !pinned.has(p))])].sort()
 }
 
 const title = (name: string) => name.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")

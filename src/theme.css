@@ -52,6 +52,11 @@
   --sidebar-accent-foreground: #1C1917;
   --sidebar-border: #E7E5E4;
   --sidebar-ring: #F04632;
+  --chart-1: #F04632;
+  --chart-2: #283549;
+  --chart-3: #0A5CD6;
+  --chart-4: #6EBD71;
+  --chart-5: #E59A06;
 }
 
 .dark {
@@ -94,6 +99,11 @@
   --sidebar-accent-foreground: #FAFAF9;
   --sidebar-border: #44403C;
   --sidebar-ring: #F04632;
+  --chart-1: #F04632;
+  --chart-2: #8FA3BF;
+  --chart-3: #4C8DF6;
+  --chart-4: #6EBD71;
+  --chart-5: #E59A06;
 }
 
 @theme inline {
@@ -134,6 +144,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --font-sans: Lato, ui-sans-serif, system-ui, sans-serif;
   --font-heading: Poppins, ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
