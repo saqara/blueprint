@@ -486,6 +486,31 @@
       ]
     },
     {
+      "name": "login",
+      "type": "registry:block",
+      "title": "Login",
+      "description": "Page de connexion : mot de passe, lien magique et SSO activables (Saqara).",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/alert",
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/input",
+        "@saqara/label",
+        "@saqara/saqara-logo",
+        "@saqara/separator",
+        "@saqara/spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/react/blocks/login.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "multi-select",
       "type": "registry:ui",
       "title": "Multi Select",

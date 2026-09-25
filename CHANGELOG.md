@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — Lot 4 : tokens sidebar, `avatar`, `saqara-logo`, `theme-toggle`, `user-menu`, blocs `app-shell-sidebar`, `app-shell-header`, `login`.
 - 2026-09-25 — `pagination` : libellés et textes d'accessibilité en français (Précédent, Suivant, Plus de pages).
 - 2026-09-25 — Lot 3 : `table`, `pagination`, `slider`, `sidebar`, `stepper`, et les composants Saqara `data-table` (tri contrôlé, TanStack Table v9), `multi-select`, `file-dropzone`, `stat-card`.
 - 2026-09-25 — `sonner` : toasts typés teintés aux couleurs Saqara (comme `alert`), description lisible en clair et en sombre. `saqara-theme` : ombre `shadow-lg` noire en mode sombre (plus de halo clair).

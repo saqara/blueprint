@@ -14,9 +14,9 @@ const active = ref("annuaire")
 </script>
 
 <template>
-  <!-- transform keeps the fixed sidebar inside the frame (showcase only) -->
+  <!-- transform + [&_.h-svh]:h-full keep the fixed, full-height sidebar inside the frame (showcase only) -->
   <div class="h-[600px] overflow-hidden rounded-lg border [transform:translateZ(0)]">
-    <AppShellSidebar class="h-full min-h-0" :nav="nav" :active-id="active" :user="{ name: 'Camille Martin', email: 'camille.martin@exemple.fr' }"
+    <AppShellSidebar class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" :active-id="active" :user="{ name: 'Camille Martin', email: 'camille.martin@exemple.fr' }"
       @navigate="(id) => (active = id)" @sign-out="() => {}">
       <p class="text-sm text-muted-foreground">Contenu de la page « {{ nav.find((n) => n.id === active)?.label }} ».</p>
     </AppShellSidebar>

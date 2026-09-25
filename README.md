@@ -33,6 +33,12 @@ Composants Saqara (lot 3) :
 - `stepper` : étapes numérotées à partir de 1 ; avec `linear` (défaut), on peut cliquer les étapes précédentes, l'étape en cours et la suivante (règle Reka, identique en React et en Vue).
 - `file-dropzone` : sélection et validation seulement, l'app gère l'envoi.
 
+Blocs (lot 4) — `npx shadcn add @saqara/app-shell-sidebar` (ou `app-shell-header`, `login`) :
+- Les shells ne dépendent d'aucun routeur : `nav` (`{ id, label, icon?, badge?, href? }`), `activeId`, `onNavigate` (Vue `@navigate`).
+- Thème : passer `theme` + `onThemeChange` (Vue `v-model:theme`) pour afficher la bascule ; l'app garde son stockage.
+- `login` est purement visuel : l'app fait l'authentification et pilote `status` (`idle`, `loading`, `sent`) et `error`.
+- En Vue, les callbacks facultatifs (`@sign-out`, `@sso`, `@forgot-password`…) n'affichent leur entrée que s'ils sont fournis.
+
 Le code est copié dans l'app : il lui appartient. Pour récupérer une mise à jour, relancer `add` avec `--overwrite` et relire le diff.
 
 ## Développer
