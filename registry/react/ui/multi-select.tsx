@@ -37,6 +37,10 @@ type MultiSelectProps = {
   countLabel?: (count: number) => string
   /** Adds a first entry that selects / clears everything; also the "count" summary when all are chosen. */
   selectAllLabel?: string
+  /** "select-all" (default) checks every option; "clear" means "no filter" and sends []. */
+  selectAllBehavior?: "select-all" | "clear"
+  /** Spoken after a checked option (cmdk's aria-selected marks the keyboard highlight, not the check). */
+  selectedLabel?: string
   /** Attributes for the trigger: data-testid, id, aria-label (required without a visible label)… */
   triggerProps?: React.ComponentProps<"button"> & Record<`data-${string}`, string | undefined>
   getOptionProps?: (option: MultiSelectOption) => Record<`data-${string}`, string | undefined>
@@ -47,14 +51,15 @@ type MultiSelectProps = {
 function MultiSelect({
   options, value, onValueChange, placeholder = "Sélectionner…", searchPlaceholder = "Rechercher…",
   emptyMessage = "Aucun résultat.", clearLabel = "Tout effacer", maxBadges = 3,
-  display = "badges", countLabel = (n) => `${n} sélectionné${n > 1 ? "s" : ""}`, selectAllLabel, triggerProps, getOptionProps,
+  display = "badges", countLabel = (n) => `${n} sélectionné${n > 1 ? "s" : ""}`, selectAllLabel, selectAllBehavior = "select-all", selectedLabel = "sélectionné", triggerProps, getOptionProps,
   disabled = false, className,
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
   const selected = options.filter((o) => value.includes(o.value))
   const { shown, hidden } = splitBadges(selected, maxBadges)
   const toggle = (v: string) => onValueChange(toggleValue(value, v))
-  const allSelected = options.length > 0 && selected.length === options.length
+  const reset = selectAllBehavior === "clear"
+  const allSelected = reset ? value.length === 0 : options.length > 0 && selected.length === options.length
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -62,7 +67,7 @@ function MultiSelect({
         <Button {...triggerProps} variant="outline" role="combobox" aria-expanded={open} disabled={disabled} data-slot="multi-select"
           className={cn("h-auto min-h-9 w-full justify-between py-1 font-normal", className)}>
           <span className="flex flex-wrap gap-1">
-            {selected.length === 0 && <span className="text-muted-foreground">{placeholder}</span>}
+            {selected.length === 0 && (reset && selectAllLabel ? <span>{selectAllLabel}</span> : <span className="text-muted-foreground">{placeholder}</span>)}
             {display === "count" && selected.length > 0 && <span>{summarize(selected.length, options.length, countLabel, selectAllLabel)}</span>}
             {display === "badges" && shown.map((o) => (
               <Badge key={o.value} variant="secondary">
@@ -82,15 +87,17 @@ function MultiSelect({
             <CommandEmpty>{emptyMessage}</CommandEmpty>
             <CommandGroup>
               {selectAllLabel && (
-                <CommandItem value="__all__" keywords={[selectAllLabel]} onSelect={() => onValueChange(allSelected ? [] : options.map((o) => o.value))}>
+                <CommandItem value="__all__" keywords={[selectAllLabel]} onSelect={() => onValueChange(reset || allSelected ? [] : options.map((o) => o.value))}>
                   <CheckIcon className={cn(allSelected ? "opacity-100" : "opacity-0")} />
                   {selectAllLabel}
+                  {allSelected && <span className="sr-only">{`, ${selectedLabel}`}</span>}
                 </CommandItem>
               )}
               {options.map((o) => (
                 <CommandItem key={o.value} {...getOptionProps?.(o)} value={o.value} keywords={[o.label]} onSelect={() => toggle(o.value)}>
                   <CheckIcon className={cn(value.includes(o.value) ? "opacity-100" : "opacity-0")} />
                   {o.label}
+                  {value.includes(o.value) && <span className="sr-only">{`, ${selectedLabel}`}</span>}
                 </CommandItem>
               ))}
             </CommandGroup>
