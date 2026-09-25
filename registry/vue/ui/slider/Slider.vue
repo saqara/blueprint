@@ -5,10 +5,14 @@ import { reactiveOmit } from "@vueuse/core"
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from "reka-ui"
 import { cn } from "@/lib/utils"
 
-const props = defineProps<SliderRootProps & { class?: HTMLAttributes["class"] }>()
+const props = defineProps<SliderRootProps & {
+  class?: HTMLAttributes["class"]
+  /** Accessible name of each thumb (reka falls back to English "Minimum" / "Maximum"). */
+  thumbLabels?: string[]
+}>()
 const emits = defineEmits<SliderRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class")
+const delegatedProps = reactiveOmit(props, "class", "thumbLabels")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -36,6 +40,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <SliderThumb
       v-for="(_, key) in modelValue"
       :key="key"
+      :aria-label="thumbLabels?.[key]"
       data-slot="slider-thumb"
       class="bg-white border-primary ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
     />

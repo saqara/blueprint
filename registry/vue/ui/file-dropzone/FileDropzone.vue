@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   label?: string
   removeLabel?: string
+  /** Attributes for the hidden file input: id, name, data-testid… */
+  inputProps?: Record<string, unknown>
   class?: HTMLAttributes["class"]
 }>(), {
   multiple: false,
@@ -60,11 +62,11 @@ function onDrop(event: DragEvent) {
       <UploadIcon class="size-5" />
       {{ label }}
     </button>
-    <input ref="input" type="file" hidden :accept="accept" :multiple="multiple" :disabled="disabled" @change="onChange">
+    <input v-bind="inputProps" ref="input" type="file" hidden :accept="accept" :multiple="multiple" :disabled="disabled" @change="onChange">
     <ul v-if="files.length" class="grid gap-1 text-sm">
       <li v-for="(file, i) in files" :key="`${file.name}-${i}`" class="flex items-center justify-between gap-2 rounded-md border px-3 py-1.5">
         <span class="truncate">{{ file.name }}</span>
-        <Button type="button" variant="ghost" size="icon" class="size-7" :aria-label="`${removeLabel} ${file.name}`" @click="files = files.filter((_, j) => j !== i)">
+        <Button type="button" variant="ghost" size="icon" class="size-7" :aria-label="`${removeLabel} ${file.name}`" :disabled="disabled" @click="files = files.filter((_, j) => j !== i)">
           <XIcon />
         </Button>
       </li>

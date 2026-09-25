@@ -528,7 +528,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Conteneur de contenu avec en-tête, corps et pied."
+      "description": "Conteneur de contenu avec en-tête, corps et pied.",
+      "dependencies": [
+        "reka-ui"
+      ]
     },
     {
       "name": "chart",
@@ -896,7 +899,8 @@
       "type": "registry:ui",
       "title": "Empty",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority",
+        "reka-ui"
       ],
       "files": [
         {

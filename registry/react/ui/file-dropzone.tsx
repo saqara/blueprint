@@ -45,13 +45,15 @@ type FileDropzoneProps = {
   disabled?: boolean
   label?: React.ReactNode
   removeLabel?: string
+  /** Attributes for the hidden file input: id, name, data-testid… */
+  inputProps?: React.ComponentProps<"input"> & Record<`data-${string}`, string | undefined>
   className?: string
 }
 
 // Saqara: selection + validation only; the app uploads and shows its own progress.
 function FileDropzone({
   files, onFilesChange, onReject, accept, maxSize, multiple = false, disabled = false,
-  label = "Glissez un fichier ici ou cliquez pour parcourir", removeLabel = "Retirer", className,
+  label = "Glissez un fichier ici ou cliquez pour parcourir", removeLabel = "Retirer", inputProps, className,
 }: FileDropzoneProps) {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = React.useState(false)
@@ -78,14 +80,14 @@ function FileDropzone({
         <UploadIcon className="size-5" />
         {label}
       </button>
-      <input ref={inputRef} type="file" hidden accept={accept} multiple={multiple} disabled={disabled}
+      <input {...inputProps} ref={inputRef} type="file" hidden accept={accept} multiple={multiple} disabled={disabled}
         onChange={(e) => { add(e.target.files); e.target.value = "" }} />
       {files.length > 0 && (
         <ul className="grid gap-1 text-sm">
           {files.map((file, i) => (
             <li key={`${file.name}-${i}`} className="flex items-center justify-between gap-2 rounded-md border px-3 py-1.5">
               <span className="truncate">{file.name}</span>
-              <Button type="button" variant="ghost" size="icon" className="size-7" aria-label={`${removeLabel} ${file.name}`}
+              <Button type="button" variant="ghost" size="icon" className="size-7" aria-label={`${removeLabel} ${file.name}`} disabled={disabled}
                 onClick={() => onFilesChange(files.filter((_, j) => j !== i))}>
                 <XIcon />
               </Button>

@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import { Slot } from "radix-ui"
 
 function Empty({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -57,9 +58,11 @@ function EmptyMedia({
   )
 }
 
-function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
+// Saqara: `asChild` sets the heading level (<EmptyTitle asChild><h2>…</h2></EmptyTitle>).
+function EmptyTitle({ className, asChild = false, ...props }: React.ComponentProps<"div"> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot.Root : "div"
   return (
-    <div
+    <Comp
       data-slot="empty-title"
       className={cn("text-lg font-medium tracking-tight", className)}
       {...props}
