@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `button` : prop `loading` (Saqara) — désactive le bouton, pose `aria-busy` et affiche le spinner devant le libellé, qui reste visible. `spinner` : libellé accessible en français (« Chargement »).
 - 2026-09-25 — `multi-select` : déclencheur à la hauteur des autres champs (36 px), avec ou sans badges.
 - 2026-09-25 — `tag-input` (Saqara) : saisie de plusieurs valeurs en étiquettes, libre ou guidée par un catalogue (remplace MultiInput / TagCombobox de pfou-hub).
 - 2026-09-25 — `chart` (React : recharts, Vue : unovis) et tokens `chart-1` à `chart-5` aux couleurs Saqara.

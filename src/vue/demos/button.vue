@@ -11,5 +11,6 @@ import { Button } from "@/registry/vue/ui/button"
     <Button variant="destructive">Supprimer</Button>
     <Button variant="link">Voir le détail</Button>
     <Button disabled>Désactivé</Button>
+    <Button loading>Enregistrement…</Button>
   </div>
 </template>

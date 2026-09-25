@@ -337,7 +337,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Bouton d'action, en plusieurs variantes et tailles."
+      "description": "Bouton d'action, en plusieurs variantes et tailles, avec état de chargement (Saqara).",
+      "registryDependencies": [
+        "@saqara/spinner"
+      ]
     },
     {
       "name": "card",
