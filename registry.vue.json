@@ -215,6 +215,7 @@
       "type": "registry:ui",
       "title": "Alert",
       "dependencies": [
+        "@lucide/vue",
         "class-variance-authority"
       ],
       "files": [
@@ -233,9 +234,20 @@
         {
           "path": "registry/vue/ui/alert/index.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert/AlertAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert/AlertClose.vue",
+          "type": "registry:ui"
         }
       ],
-      "description": "Message contextuel : information, succès, avertissement, erreur."
+      "description": "Message contextuel : information, succès, avertissement, erreur.",
+      "registryDependencies": [
+        "@saqara/button"
+      ]
     },
     {
       "name": "alert-dialog",
