@@ -53,8 +53,13 @@ function Login({
   const loading = status === "loading"
   const brand = logo ?? <SaqaraLogo className="text-foreground" />
 
-  // Countdown restarts whenever the sent screen shows; resend() restarts it too.
-  React.useEffect(() => { if (status === "sent") setWait(resendCooldown) }, [status, resendCooldown])
+  // Countdown restarts whenever the sent screen shows (state adjusted during render, not in an effect);
+  // resend() restarts it too.
+  const [shownStatus, setShownStatus] = React.useState(status)
+  if (status !== shownStatus) {
+    setShownStatus(status)
+    if (status === "sent") setWait(resendCooldown)
+  }
   React.useEffect(() => {
     if (status !== "sent") return
     const timer = setInterval(() => setWait((w) => Math.max(0, w - 1)), 1000)

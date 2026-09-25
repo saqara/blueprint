@@ -11,8 +11,9 @@
     "registry": "npm run sync && node scripts/llms.ts && shadcn build registry.react.json -o public/r/react && shadcn-vue build registry.vue.json -o public/r/vue",
     "dev": "npm run sync && vite",
     "build": "npm run registry && vite build",
-    "check": "node scripts/check-parity.ts && vitest run && tsc -p tsconfig.react.json && vue-tsc -p tsconfig.vue.json",
-    "smoke": "bash scripts/smoke.sh"
+    "check": "node scripts/check-parity.ts && npm run lint && vitest run && tsc -p tsconfig.react.json && vue-tsc -p tsconfig.vue.json",
+    "smoke": "bash scripts/smoke.sh",
+    "lint": "eslint registry/react"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
@@ -47,12 +48,15 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitejs/plugin-vue": "^6.0.9",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "happy-dom": "^20.14.5",
     "shadcn": "^4.21.0",
     "shadcn-vue": "^2.8.2",
     "shiki": "^4.4.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.1",
     "vite": "^8.3.1",
     "vitest": "^5.0.1",
     "vue-tsc": "^3.3.11"
