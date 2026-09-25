@@ -10,7 +10,7 @@ export function themeItem(t: Tokens): Item {
     type: "registry:theme",
     title: "Saqara theme",
     description: "Couleurs, polices et ombres Saqara (clair + sombre).",
-    dependencies: ["@fontsource/jetbrains-mono", "@fontsource/lato", "@fontsource/poppins"],
+    dependencies: ["@fontsource/jetbrains-mono", "@fontsource/lato", "@fontsource/poppins", "tw-animate-css"],
     cssVars: { theme: { ...colorMap(t), ...t.theme }, light: t.light, dark: t.dark },
     css: t.css,
     files: [],
