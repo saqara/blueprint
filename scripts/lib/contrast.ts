@@ -24,6 +24,14 @@ export function contrastRatio(a: string, b: string): number {
   return (hi + 0.05) / (lo + 0.05)
 }
 
+// What bg-X/10 renders: X at 10% alpha, composited over a surface in sRGB.
+function tint(color: string, surface: string, alpha = 0.1): string {
+  return "#" + [1, 3, 5].map((i) => {
+    const c = parseInt(color.slice(i, i + 2), 16), s = parseInt(surface.slice(i, i + 2), 16)
+    return Math.round(c * alpha + s * (1 - alpha)).toString(16).padStart(2, "0")
+  }).join("")
+}
+
 export function tokenErrors(t: Tokens): string[] {
   const errors: string[] = []
   const modes = { light: t.light, dark: t.dark }
@@ -47,6 +55,18 @@ export function tokenErrors(t: Tokens): string[] {
       const ratio = contrastRatio(vars[bg], vars[fg])
       if (ratio < 4.5 && !t.contrastExceptions.includes(bg)) {
         errors.push(`${mode}: ${fg} on ${bg} = ${ratio.toFixed(2)}:1 (< 4.5)`)
+      }
+    }
+    // X-text: the colour used as text, on page surfaces and on its own tint (tinted badges, statuses).
+    for (const fg of Object.keys(vars).filter((k) => k.endsWith("-text"))) {
+      const base = fg.slice(0, -"-text".length)
+      for (const surface of ["background", "card"].filter((k) => vars[k])) {
+        const checks: [string, string][] = [[surface, vars[surface]]]
+        if (vars[base]) checks.push([`${base}/10 over ${surface}`, tint(vars[base], vars[surface])])
+        for (const [label, bg] of checks) {
+          const ratio = contrastRatio(bg, vars[fg])
+          if (ratio < 4.5) errors.push(`${mode}: ${fg} on ${label} = ${ratio.toFixed(2)}:1 (< 4.5)`)
+        }
       }
     }
   }
