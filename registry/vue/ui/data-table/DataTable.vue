@@ -25,6 +25,8 @@ const props = withDefaults(defineProps<{
   getRowProps?: (row: TData) => Record<string, unknown>
   /** Attributes for the <table>: data-testid, aria-label… */
   tableProps?: Record<string, unknown>
+  /** Attributes, class and handlers for the scroll container (drag-to-scroll, scrollbar styling…). */
+  scrollProps?: Record<string, unknown>
   class?: HTMLAttributes["class"]
 }>(), {
   sorting: () => [],
@@ -73,7 +75,7 @@ function rowAttrs(row: TData) {
     data-slot="data-table"
     :class="cn('[--data-table-bg:var(--background)]', stickyHeader && '[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto', props.class)"
   >
-    <div ref="scrollContainer" data-slot="table-container" class="relative w-full overflow-x-auto">
+    <div ref="scrollContainer" v-bind="scrollProps" data-slot="table-container" class="relative w-full overflow-x-auto">
     <Table :container="false" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">

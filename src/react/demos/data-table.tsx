@@ -10,6 +10,8 @@ const companies: Company[] = [
   { siren: "900 000 002", name: "Élec Rhône", city: "Villeurbanne", score: 12 },
   { siren: "900 000 003", name: "Plomberie Dupuis", city: "Vienne", score: 18 },
 ]
+// Columns live outside the component (or in useMemo): FlexRender mounts `cell` / `header` as components,
+// so a function rebuilt on every render remounts its cells (lost focus, tooltip state…).
 const columns: ColumnDef<DataTableFeatures, Company, any>[] = [
   { accessorKey: "name", header: ({ column }) => <DataTableColumnHeader column={column} title="Raison sociale" /> },
   { accessorKey: "siren", header: "SIREN", enableSorting: false },
