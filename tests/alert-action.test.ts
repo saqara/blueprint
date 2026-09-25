@@ -25,3 +25,13 @@ describe("alert close", () => {
     expect(await render({ label: "Masquer" })).toContain('aria-label="Masquer"')
   })
 })
+
+describe("alert title", () => {
+  it.each([
+    ["react", async () => renderToString(e(R.Alert, null, e(R.AlertTitle, null, "Un titre d'alerte assez long pour tenir sur deux lignes")))],
+    ["vue", async () => renderVue(createSSRApp({ render: () => h(V.Alert, null, () => h(V.AlertTitle, null, () => "Un titre d'alerte assez long pour tenir sur deux lignes")) }))],
+  ])("%s wraps long titles instead of truncating them", async (_, render) => {
+    const title = (await render()).match(/data-slot="alert-title"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*data-slot="alert-title"/)!
+    expect(title[1] ?? title[2]).not.toContain("line-clamp")
+  })
+})

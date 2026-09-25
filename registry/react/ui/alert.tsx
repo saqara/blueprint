@@ -43,7 +43,8 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-title"
       className={cn(
-        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+        // Saqara: no line-clamp — long French titles wrap instead of being cut off (opt in with className="line-clamp-1").
+        "col-start-2 min-h-4 font-medium tracking-tight",
         className
       )}
       {...props}
