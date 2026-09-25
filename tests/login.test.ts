@@ -51,4 +51,34 @@ describe.each([
   it("centers the logo and title (CardHeader is a grid)", async () => {
     expect(await render({})).toMatch(/data-slot="card-header"[^>]*class="[^"]*justify-items-center|class="[^"]*justify-items-center[^"]*"[^>]*data-slot="card-header"/)
   })
+  it("titles the page with an h1, in both states", async () => {
+    expect(await render({})).toMatch(/<h1[^>]*>(<!--[^>]*-->)?Connexion/)
+    const sent = await render({ password: false, magicLink: true, status: "sent", sentTitle: "Lien envoyé" })
+    expect(sent).toMatch(/<h1[^>]*>(<!--[^>]*-->)?Lien envoyé/)
+  })
+  it("takes an email placeholder and a hint tied to the field", async () => {
+    const html = await render({ emailPlaceholder: "prenom.nom@exemple.fr", emailHint: "Votre adresse professionnelle." })
+    expect(html).toContain('placeholder="prenom.nom@exemple.fr"')
+    const hintId = html.match(/id="([^"]+)"[^>]*>(<!--[^>]*-->)?Votre adresse professionnelle\./)![1]
+    expect(html).toMatch(new RegExp(`type="email"[^>]*aria-describedby="${hintId}"|aria-describedby="${hintId}"[^>]*type="email"`))
+  })
+  it("spins only the button that is loading", async () => {
+    const sso = await render({ sso: { label: "SSO" }, status: "loading", loadingAction: "sso" })
+    expect(sso).toMatch(/<button[^>]*aria-busy="true"[^>]*>(?:(?!<\/button>)[\s\S])*SSO/)
+    expect(sso).not.toMatch(/aria-busy="true"[^>]*>(?:(?!<\/button>)[\s\S])*Se connecter/)
+    const form = await render({ sso: { label: "SSO" }, status: "loading" })
+    expect(form).toMatch(/aria-busy="true"[^>]*>(?:(?!<\/button>)[\s\S])*Se connecter/)
+  })
+  it("lets the error be dismissed when handled", async () => {
+    expect(await render({ error: "Erreur" })).not.toContain('aria-label="Fermer"')
+    expect(await render({ error: "Erreur", onErrorDismiss: () => {} })).toContain('aria-label="Fermer"')
+  })
+  it("shows the error, a resend countdown and a custom reset label once sent", async () => {
+    const html = await render({ password: false, magicLink: true, status: "sent", error: "Envoi impossible.", onResend: () => {}, onReset: () => {}, resetLabel: "Retour au formulaire" })
+    expect(html).toMatch(/role="alert"[\s\S]*Envoi impossible\./)
+    // The attribute, not the `disabled:` Tailwind variants in the class.
+    expect(html).toMatch(/<button[^>]*\sdisabled(=""|\s|>)[^>]*>?(?:(?!<\/button>)[\s\S])*Renvoyer le lien dans 60(<!--[^>]*-->)?\s*s/)
+    expect(html).toContain("Retour au formulaire")
+    expect(await render({ password: false, magicLink: true, status: "sent", onResend: () => {}, resendCooldown: 0 })).toMatch(/<button(?![^>]*\sdisabled(=""|\s|>))[^>]*>(<!--[^>]*-->)*\s*Renvoyer le lien\s*(<!--[^>]*-->)*<\/button>/)
+  })
 })
