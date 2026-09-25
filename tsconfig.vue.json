@@ -7,8 +7,21 @@
     "noEmit": true,
     "skipLibCheck": true,
     "jsx": "preserve",
-    "types": ["vite/client"],
-    "paths": { "@/*": ["./*"] }
+    "types": [
+      "vite/client"
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
   },
-  "include": ["registry/vue/**/*.ts", "registry/vue/**/*.vue", "src/vue/**/*.ts", "src/vue/**/*.vue", "lib"]
+  "include": [
+    "registry/vue/**/*.ts",
+    "registry/vue/**/*.vue",
+    "src/vue/**/*.ts",
+    "src/vue/**/*.vue",
+    "lib",
+    "src/examples/vue/**/*.vue"
+  ]
 }
