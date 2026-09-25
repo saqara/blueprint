@@ -40,6 +40,12 @@ describe("tokenErrors", () => {
     expect(tokenErrors({ ...base, light, dark })).toEqual([])
   })
 
+  it("defines the sidebar palette in both modes", () => {
+    const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
+    const keys = ["sidebar", "sidebar-foreground", "sidebar-primary", "sidebar-primary-foreground", "sidebar-accent", "sidebar-accent-foreground", "sidebar-border", "sidebar-ring"]
+    for (const mode of ["light", "dark"] as const) expect(keys.filter((k) => !(k in t[mode]))).toEqual([])
+  })
+
   it("rejects keys missing from one mode", () => {
     const errors = tokenErrors({ ...base, light: { a: "#FFFFFF", b: "#000000" }, dark: { a: "#FFFFFF" } })
     expect(errors).toContain("dark.b: missing (present in light)")

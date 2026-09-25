@@ -43,6 +43,14 @@
           "color-warning-foreground": "var(--warning-foreground)",
           "color-info": "var(--info)",
           "color-info-foreground": "var(--info-foreground)",
+          "color-sidebar": "var(--sidebar)",
+          "color-sidebar-foreground": "var(--sidebar-foreground)",
+          "color-sidebar-primary": "var(--sidebar-primary)",
+          "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+          "color-sidebar-accent": "var(--sidebar-accent)",
+          "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+          "color-sidebar-border": "var(--sidebar-border)",
+          "color-sidebar-ring": "var(--sidebar-ring)",
           "font-sans": "Lato, ui-sans-serif, system-ui, sans-serif",
           "font-heading": "Poppins, ui-sans-serif, system-ui, sans-serif",
           "radius-sm": "calc(var(--radius) - 4px)",
@@ -84,7 +92,15 @@
           "warning-foreground": "#0C0A09",
           "info": "#0A5CD6",
           "info-foreground": "#FFFFFF",
-          "shadow": "rgba(155,154,154,.3)"
+          "shadow": "rgba(155,154,154,.3)",
+          "sidebar": "#FAFAF9",
+          "sidebar-foreground": "#292524",
+          "sidebar-primary": "#F04632",
+          "sidebar-primary-foreground": "#FFFFFF",
+          "sidebar-accent": "#F5F5F4",
+          "sidebar-accent-foreground": "#1C1917",
+          "sidebar-border": "#E7E5E4",
+          "sidebar-ring": "#F04632"
         },
         "dark": {
           "radius": "0.375rem",
@@ -117,7 +133,15 @@
           "warning-foreground": "#0C0A09",
           "info": "#0A5CD6",
           "info-foreground": "#FFFFFF",
-          "shadow": "rgba(0,0,0,.6)"
+          "shadow": "rgba(0,0,0,.6)",
+          "sidebar": "#1C1917",
+          "sidebar-foreground": "#FAFAF9",
+          "sidebar-primary": "#F04632",
+          "sidebar-primary-foreground": "#FFFFFF",
+          "sidebar-accent": "#292524",
+          "sidebar-accent-foreground": "#FAFAF9",
+          "sidebar-border": "#292524",
+          "sidebar-ring": "#F04632"
         }
       },
       "css": {
@@ -242,6 +266,33 @@
         },
         {
           "path": "registry/vue/ui/alert-dialog/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/avatar/Avatar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/avatar/AvatarFallback.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/avatar/AvatarImage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/avatar/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -877,6 +928,22 @@
       ]
     },
     {
+      "name": "saqara-logo",
+      "type": "registry:ui",
+      "title": "Saqara Logo",
+      "description": "Symbole Saqara, clair et sombre, texte optionnel (Saqara).",
+      "files": [
+        {
+          "path": "registry/vue/ui/saqara-logo/SaqaraLogo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/saqara-logo/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
@@ -1384,6 +1451,28 @@
       ]
     },
     {
+      "name": "theme-toggle",
+      "type": "registry:ui",
+      "title": "Theme Toggle",
+      "description": "Bouton de bascule clair / sombre, piloté par l'app (Saqara).",
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/theme-toggle/ThemeToggle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/theme-toggle/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@lucide/vue"
+      ]
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
@@ -1412,6 +1501,33 @@
           "path": "registry/vue/ui/tooltip/index.ts",
           "type": "registry:ui"
         }
+      ]
+    },
+    {
+      "name": "user-menu",
+      "type": "registry:ui",
+      "title": "User Menu",
+      "description": "Menu utilisateur : avatar à initiales, nom, email, déconnexion (Saqara).",
+      "registryDependencies": [
+        "@saqara/avatar",
+        "@saqara/dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/user-menu/UserMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/user-menu/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/user-menu/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@lucide/vue"
       ]
     }
   ]
