@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
   <Card class="max-w-sm">
     <CardHeader>
       <CardTitle>Bâti Sud SAS</CardTitle>
-      <CardDescription>SIREN 552 100 554 — Lyon</CardDescription>
+      <CardDescription>SIREN 900 000 001 — Lyon</CardDescription>
     </CardHeader>
     <CardContent class="text-sm">Note qualité : 16/20</CardContent>
     <CardFooter><Button size="sm">Voir la fiche</Button></CardFooter>

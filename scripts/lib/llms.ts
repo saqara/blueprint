@@ -11,7 +11,8 @@ type Input = {
 // llms.txt (https://llmstxt.org): a Markdown index that coding assistants can read to use Blueprint correctly.
 export function llmsTxt({ react, categories, blocks, site }: Input): string {
   const describe = (name: string) => (react.items.find((i) => i.name === name)?.description as string | undefined) ?? ""
-  const line = (name: string, section: "composants" | "blocs") => `- [@saqara/${name}](${site}#/${section}/${name}): ${describe(name)}`
+  // Links point to the registry JSON (real source + dependencies); SPA doc URLs are useless to a fetcher.
+  const line = (name: string, _section: "composants" | "blocs") => `- [@saqara/${name}](${site}r/react/${name}.json): ${describe(name)}`
   const registries = (fw: "react" | "vue") => JSON.stringify({ registries: { "@saqara": `${site}r/${fw}/{name}.json` } }, null, 2)
 
   return [

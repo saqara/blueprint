@@ -25,8 +25,10 @@ export const EXAMPLES = [
   { slug: "connexion", title: "Connexion", description: "Page de connexion : mot de passe, lien magique, SSO." },
 ]
 
-// Written for Blueprint (no upstream shadcn page to link to).
-export const SAQARA_MADE = new Set(["data-table", "file-dropzone", "multi-select", "saqara-logo", "stat-card", "theme-toggle", "user-menu", ...BLOCKS])
+// Written for Blueprint (no upstream shadcn page to link to): descriptions end with "(Saqara)".
+export const SAQARA_MADE = new Set(
+  manifest.items.filter((i) => /\(Saqara\)\.?$/.test((i as { description?: string }).description ?? "")).map((i) => i.name),
+)
 
 export function itemInfo(name: string) {
   const item = manifest.items.find((i) => i.name === name)

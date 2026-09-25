@@ -8,7 +8,7 @@ export default function HoverCardDemo() {
       <HoverCardTrigger asChild><Button variant="link">Bâti Sud SAS</Button></HoverCardTrigger>
       <HoverCardContent className="space-y-1 text-sm">
         <p className="font-medium">Bâti Sud SAS</p>
-        <p className="text-muted-foreground">SIREN 552 100 554 — Lyon</p>
+        <p className="text-muted-foreground">SIREN 900 000 001 — Lyon</p>
         <Badge variant="success">Qualifié · 16/20</Badge>
       </HoverCardContent>
     </HoverCard>

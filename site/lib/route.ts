@@ -8,7 +8,11 @@ export function parseRoute(hash: string): Route {
   if (!path) return { section: "home" }
   const [section, slug, ...rest] = path.split("/")
   if (!SECTIONS.has(section as Section) || !slug || rest.length) return { section: "not-found" }
-  return { section: section as Section, slug: decodeURIComponent(slug) }
+  try {
+    return { section: section as Section, slug: decodeURIComponent(slug) }
+  } catch {
+    return { section: "not-found" }
+  }
 }
 
 export const toHash = (route: Route) => (route.section === "home" ? "#/" : `#/${route.section}/${route.slug}`)

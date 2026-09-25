@@ -19,7 +19,7 @@ describe("llms.txt", () => {
   it("lists every category item and block with its description and doc link", () => {
     for (const name of [...CATEGORIES.flatMap((c) => c.items), ...BLOCKS]) {
       const item = react.items.find((i) => i.name === name) as { description: string }
-      expect(txt).toContain(`- [@saqara/${name}](https://saqara.github.io/blueprint/#/${BLOCKS.includes(name) ? "blocs" : "composants"}/${name}): ${item.description}`)
+      expect(txt).toContain(`- [@saqara/${name}](https://saqara.github.io/blueprint/r/react/${name}.json): ${item.description}`)
     }
   })
   it("groups items under their category headings", () => {

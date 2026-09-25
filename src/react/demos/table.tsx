@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/react/ui/table"
 
 const rows = [
-  { siren: "552 100 554", name: "Bâti Sud SAS", city: "Lyon" },
-  { siren: "402 812 377", name: "Élec Rhône", city: "Villeurbanne" },
+  { siren: "900 000 001", name: "Bâti Sud SAS", city: "Lyon" },
+  { siren: "900 000 002", name: "Élec Rhône", city: "Villeurbanne" },
 ]
 
 export default function TableDemo() {

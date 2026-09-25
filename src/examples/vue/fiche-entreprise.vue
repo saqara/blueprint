@@ -18,7 +18,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/vue/ui/tabs"
 import { Toggle } from "@/registry/vue/ui/toggle"
 
-// Example: a supplier's detail page. Data is fictitious; the app mounts <Toaster /> once at its root (here, the example's own root).
+// Example: a supplier's detail page. Data is fictitious; the app mounts a Toaster once at its root (here, the example's own root).
 const nav: AppNavItem[] = [
   { id: "annuaire", label: "Mes entreprises", icon: Building2 },
   { id: "evaluations", label: "Évaluations", icon: ClipboardCheck, badge: 3 },
@@ -27,9 +27,9 @@ const nav: AppNavItem[] = [
 ]
 type Contact = { name: string; role: string; email: string }
 const contacts = ref<Contact[]>([
-  { name: "Julie Moreau", role: "Gérante", email: "j.moreau@batisud.fr" },
-  { name: "Karim Benali", role: "Conducteur de travaux", email: "k.benali@batisud.fr" },
-  { name: "Léa Fontaine", role: "Comptabilité", email: "l.fontaine@batisud.fr" },
+  { name: "Julie Moreau", role: "Gérante", email: "j.moreau@exemple.fr" },
+  { name: "Karim Benali", role: "Conducteur de travaux", email: "k.benali@exemple.fr" },
+  { name: "Léa Fontaine", role: "Comptabilité", email: "l.fontaine@exemple.fr" },
 ])
 const evaluations = [
   { date: "12/09/2026", chantier: "Résidence Les Tilleuls", note: 17, by: "Camille Martin" },
@@ -64,7 +64,7 @@ function addContact() {
       <header class="flex flex-wrap items-start justify-between gap-4">
         <div class="space-y-1">
           <h2 class="text-2xl font-semibold">Bâti Sud SAS</h2>
-          <p class="text-sm text-muted-foreground">SIREN 552 100 554 · Lyon (69) · Gros œuvre</p>
+          <p class="text-sm text-muted-foreground">SIREN 900 000 001 · Lyon (69) · Gros œuvre</p>
           <div class="flex gap-2 pt-1"><Badge variant="success">Qualifié</Badge><Badge variant="secondary">Note 16/20</Badge></div>
         </div>
         <div class="flex items-center gap-2">

@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
     <SheetContent>
       <SheetHeader>
         <SheetTitle>Bâti Sud SAS</SheetTitle>
-        <SheetDescription>SIREN 552 100 554 — Lyon</SheetDescription>
+        <SheetDescription>SIREN 900 000 001 — Lyon</SheetDescription>
       </SheetHeader>
     </SheetContent>
   </Sheet>

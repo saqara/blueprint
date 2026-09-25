@@ -4,9 +4,9 @@ export default function BreadcrumbDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem><BreadcrumbLink href="#breadcrumb">Mes entreprises</BreadcrumbLink></BreadcrumbItem>
+        <BreadcrumbItem><BreadcrumbLink href="#/composants/breadcrumb">Mes entreprises</BreadcrumbLink></BreadcrumbItem>
         <BreadcrumbSeparator />
-        <BreadcrumbItem><BreadcrumbLink href="#breadcrumb">Bâti Sud SAS</BreadcrumbLink></BreadcrumbItem>
+        <BreadcrumbItem><BreadcrumbLink href="#/composants/breadcrumb">Bâti Sud SAS</BreadcrumbLink></BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem><BreadcrumbPage>Contacts</BreadcrumbPage></BreadcrumbItem>
       </BreadcrumbList>

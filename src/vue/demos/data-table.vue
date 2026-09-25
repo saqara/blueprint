@@ -7,9 +7,9 @@ import { DataTable, DataTableColumnHeader, type DataTableFeatures } from "@/regi
 
 type Company = { siren: string; name: string; city: string; score: number }
 const companies: Company[] = [
-  { siren: "552 100 554", name: "Bâti Sud SAS", city: "Lyon", score: 16 },
-  { siren: "402 812 377", name: "Élec Rhône", city: "Villeurbanne", score: 12 },
-  { siren: "318 455 902", name: "Plomberie Dupuis", city: "Vienne", score: 18 },
+  { siren: "900 000 001", name: "Bâti Sud SAS", city: "Lyon", score: 16 },
+  { siren: "900 000 002", name: "Élec Rhône", city: "Villeurbanne", score: 12 },
+  { siren: "900 000 003", name: "Plomberie Dupuis", city: "Vienne", score: 18 },
 ]
 const columns: ColumnDef<DataTableFeatures, Company, any>[] = [
   { accessorKey: "name", header: ({ column }) => h(DataTableColumnHeader, { column, title: "Raison sociale" }) },

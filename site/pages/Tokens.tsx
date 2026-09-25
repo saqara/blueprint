@@ -1,8 +1,12 @@
+import type * as React from "react"
 import tokens from "../../tokens/theme.json"
 import { Badge } from "@/registry/react/ui/badge"
 import { contrastRatio } from "../../scripts/lib/contrast.ts"
 
 type Vars = Record<string, string>
+
+// Each palette redefines its own mode's variables, so « Clair » renders light even when the site is dark (and vice versa).
+export const cssVarsFor = (vars: Vars) => Object.fromEntries(Object.entries(vars).map(([k, v]) => [`--${k}`, v])) as React.CSSProperties
 const HEX = /^#[0-9A-Fa-f]{6}$/
 
 function Palette({ mode, vars }: { mode: "Clair" | "Sombre"; vars: Vars }) {
@@ -10,7 +14,7 @@ function Palette({ mode, vars }: { mode: "Clair" | "Sombre"; vars: Vars }) {
   return (
     <section className="space-y-3">
       <h2 className="text-xl font-semibold">{mode}</h2>
-      <div className={mode === "Sombre" ? "dark" : ""}>
+      <div style={cssVarsFor(vars)}>
         <div className="grid gap-2 rounded-lg border bg-background p-4 text-foreground sm:grid-cols-2 lg:grid-cols-3">
           {pairs.map((k) => {
             const ratio = contrastRatio(vars[k], vars[`${k}-foreground`])

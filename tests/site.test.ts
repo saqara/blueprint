@@ -74,3 +74,24 @@ describe("pageTitle", () => {
     [{ section: "not-found" }, "Introuvable"],
   ] as const)("%o → %s", (route, title) => expect(pageTitle(route)).toBe(title))
 })
+
+import { cssVarsFor } from "../site/pages/Tokens"
+
+describe("cssVarsFor", () => {
+  it("scopes a mode's tokens as CSS custom properties, whatever the page theme", () => {
+    expect(cssVarsFor({ background: "#FFFFFF", "muted-foreground": "#57534E" })).toEqual({ "--background": "#FFFFFF", "--muted-foreground": "#57534E" })
+  })
+})
+
+import { SAQARA_MADE } from "../site/catalog"
+
+describe("review fixes", () => {
+  it("treats a malformed escape as not-found instead of crashing", () => {
+    expect(parseRoute("#/composants/%E0")).toEqual({ section: "not-found" })
+  })
+  it("derives Saqara-made items from the manifest (including the React stepper)", () => {
+    const saqara = reactManifest.items.filter((i) => /\(Saqara\)\.?$/.test((i as { description?: string }).description ?? "")).map((i) => i.name)
+    expect([...SAQARA_MADE].sort()).toEqual(saqara.sort())
+    expect(SAQARA_MADE.has("stepper")).toBe(true)
+  })
+})

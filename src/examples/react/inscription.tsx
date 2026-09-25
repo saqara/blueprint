@@ -11,7 +11,7 @@ import { Label } from "@/registry/react/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/registry/react/ui/select"
 import { Stepper, StepperDescription, StepperIndicator, StepperItem, StepperSeparator, StepperTitle, StepperTrigger } from "@/registry/react/ui/stepper"
 
-// Example: supplier sign-up in three steps. The app mounts <Toaster /> once at its root.
+// Example: supplier sign-up in three steps. The app mounts a Toaster once at its root.
 type Values = { siren: string; name: string; category: string; logo: File[]; contactName: string; email: string; phone: string; accepted: boolean }
 type Errors = Partial<Record<keyof Values, string>>
 
