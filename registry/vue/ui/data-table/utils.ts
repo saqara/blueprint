@@ -13,7 +13,20 @@ export function ariaSort(sorted: false | "asc" | "desc"): "ascending" | "descend
   return sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined
 }
 
-// Header clicks cycle ascending → descending → no sort.
-export function nextSort(sorted: false | "asc" | "desc"): false | "asc" | "desc" {
-  return sorted === false ? "asc" : sorted === "asc" ? "desc" : false
+export type SortCycle = "asc-desc-none" | "asc-desc"
+
+// Header clicks cycle ascending → descending → no sort ("asc-desc": server sorts that never clear).
+export function nextSort(sorted: false | "asc" | "desc", cycle: SortCycle = "asc-desc-none"): false | "asc" | "desc" {
+  return sorted === false ? "asc" : sorted === "asc" ? "desc" : cycle === "asc-desc" ? "asc" : false
 }
+
+// A click on a control inside a clickable row belongs to that control, not to the row.
+export function fromControl(event: { target: EventTarget | null, currentTarget: EventTarget | null }): boolean {
+  const control = (event.target as Element | null)?.closest?.("a, button, input, select, textarea, label, [role=button], [role=checkbox], [role=menuitem], [contenteditable=true]")
+  return !!control && control !== event.currentTarget && (event.currentTarget as Element).contains(control)
+}
+
+// Sticky cells sit on the container background (set --data-table-bg, e.g. to var(--card)) and stay opaque on hover.
+export const stickyCell = "sticky left-0 z-[1] bg-(--data-table-bg) transition-colors [tr:hover>&]:bg-[color-mix(in_oklab,var(--muted)_50%,var(--data-table-bg))]"
+
+export const metaClass = (meta: unknown) => (meta as { className?: string } | undefined)?.className

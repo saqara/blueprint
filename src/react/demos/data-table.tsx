@@ -21,6 +21,7 @@ const columns: ColumnDef<DataTableFeatures, Company, any>[] = [
 export default function DataTableDemo() {
   const [sorting, setSorting] = useState<SortingState>([{ id: "name", desc: false }])
   const [loading, setLoading] = useState(false)
+  const [opened, setOpened] = useState<string>()
   // The demo sorts client-side; a real page would pass `sorting` to its API.
   const data = useMemo(() => {
     const [s] = sorting
@@ -32,7 +33,9 @@ export default function DataTableDemo() {
     <div className="space-y-2">
       <Button variant="outline" size="sm" onClick={() => setLoading((l) => !l)}>{loading ? "Afficher les données" : "Simuler le chargement"}</Button>
       <DataTable columns={columns} data={data} getRowId={(c) => c.siren} sorting={sorting} onSortingChange={setSorting}
-        loading={loading} stickyHeader stickyFirstColumn className="max-h-72 rounded-md border" />
+        loading={loading} stickyHeader stickyFirstColumn className="max-h-72 rounded-md border"
+        onRowClick={(c) => setOpened(c.name)} getRowProps={(c) => ({ "data-siren": c.siren })} />
+      <p className="text-sm text-muted-foreground">{opened ? `Fiche ouverte : ${opened}` : "Cliquez sur une ligne pour ouvrir la fiche."}</p>
     </div>
   )
 }
