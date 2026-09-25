@@ -1,2 +1,2 @@
 export { default as MultiSelect } from "./MultiSelect.vue"
-export { splitBadges, toggleValue, type MultiSelectOption } from "./utils"
+export { splitBadges, summarize, toggleValue, type MultiSelectOption } from "./utils"

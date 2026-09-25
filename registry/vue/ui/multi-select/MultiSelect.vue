@@ -8,7 +8,7 @@ import { Badge } from "@/registry/vue/ui/badge"
 import { Button } from "@/registry/vue/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/registry/vue/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/vue/ui/popover"
-import { splitBadges, toggleValue } from "./utils"
+import { splitBadges, summarize, toggleValue } from "./utils"
 
 const props = withDefaults(defineProps<{
   options: MultiSelectOption[]
@@ -17,9 +17,19 @@ const props = withDefaults(defineProps<{
   emptyMessage?: string
   clearLabel?: string
   maxBadges?: number
+  /** "badges" (default) or "count": a one-line summary ("3 agences"). */
+  display?: "badges" | "count"
+  countLabel?: (count: number) => string
+  /** Adds a first entry that selects / clears everything; also the "count" summary when all are chosen. */
+  selectAllLabel?: string
+  /** Attributes for the trigger: data-testid, id, aria-label (required without a visible label)… */
+  triggerProps?: Record<string, unknown>
+  getOptionProps?: (option: MultiSelectOption) => Record<string, unknown>
   disabled?: boolean
   class?: HTMLAttributes["class"]
 }>(), {
+  display: "badges",
+  countLabel: (n: number) => `${n} sélectionné${n > 1 ? "s" : ""}`,
   placeholder: "Sélectionner…",
   searchPlaceholder: "Rechercher…",
   emptyMessage: "Aucun résultat.",
@@ -32,20 +42,23 @@ const open = ref(false)
 const selected = computed(() => props.options.filter((o) => model.value.includes(o.value)))
 const badges = computed(() => splitBadges(selected.value, props.maxBadges))
 const toggle = (value: string) => { model.value = toggleValue(model.value, value) }
+const allSelected = computed(() => props.options.length > 0 && selected.value.length === props.options.length)
+const toggleAll = () => { model.value = allSelected.value ? [] : props.options.map((o) => o.value) }
 </script>
 
 <template>
   <Popover v-model:open="open">
     <PopoverTrigger as-child>
-      <Button variant="outline" role="combobox" :aria-expanded="open" :disabled="disabled" data-slot="multi-select"
+      <Button v-bind="triggerProps" variant="outline" role="combobox" :aria-expanded="open" :disabled="disabled" data-slot="multi-select"
         :class="cn('h-auto min-h-9 w-full justify-between py-1 font-normal', props.class)">
         <span class="flex flex-wrap gap-1">
           <span v-if="selected.length === 0" class="text-muted-foreground">{{ placeholder }}</span>
-          <Badge v-for="o in badges.shown" :key="o.value" variant="secondary">
+          <span v-if="display === 'count' && selected.length">{{ summarize(selected.length, options.length, countLabel, selectAllLabel) }}</span>
+          <Badge v-for="o in display === 'badges' ? badges.shown : []" :key="o.value" variant="secondary">
             {{ o.label }}
             <XIcon aria-hidden="true" class="size-3 cursor-pointer" @click.stop="toggle(o.value)" />
           </Badge>
-          <Badge v-if="badges.hidden > 0" variant="outline">+{{ badges.hidden }}</Badge>
+          <Badge v-if="display === 'badges' && badges.hidden > 0" variant="outline">+{{ badges.hidden }}</Badge>
         </span>
         <ChevronsUpDown class="opacity-50" />
       </Button>
@@ -56,7 +69,11 @@ const toggle = (value: string) => { model.value = toggleValue(model.value, value
         <CommandList>
           <CommandEmpty>{{ emptyMessage }}</CommandEmpty>
           <CommandGroup>
-            <CommandItem v-for="o in options" :key="o.value" :value="o.label" @select="toggle(o.value)">
+            <CommandItem v-if="selectAllLabel" :value="selectAllLabel" @select="toggleAll">
+              <CheckIcon :class="allSelected ? 'opacity-100' : 'opacity-0'" />
+              {{ selectAllLabel }}
+            </CommandItem>
+            <CommandItem v-for="o in options" :key="o.value" v-bind="getOptionProps?.(o)" :value="o.label" @select="toggle(o.value)">
               <CheckIcon :class="model.includes(o.value) ? 'opacity-100' : 'opacity-0'" />
               {{ o.label }}
             </CommandItem>
