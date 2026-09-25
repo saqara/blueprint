@@ -3,8 +3,8 @@ import { renderToString } from "react-dom/server"
 import { createSSRApp, h } from "vue"
 import { renderToString as renderVue } from "vue/server-renderer"
 import { describe, expect, it } from "vitest"
-import { AppShellSidebar as RSidebar } from "../registry/react/blocks/app-shell-sidebar"
-import VSidebar from "../registry/vue/blocks/AppShellSidebar.vue"
+import { AppShellSidebar as RSidebar, handleNavigate as rHandle } from "../registry/react/blocks/app-shell-sidebar"
+import VSidebar, { handleNavigate as vHandle } from "../registry/vue/blocks/AppShellSidebar.vue"
 import { AppShellHeader as RHeader } from "../registry/react/blocks/app-shell-header"
 import VHeader from "../registry/vue/blocks/AppShellHeader.vue"
 
@@ -46,5 +46,24 @@ describe.each([
     expect(current(html)).toBe(1)
     expect(html).toContain('href="#organisation"')
     expect(html).toContain('data-slot="theme-toggle"')
+  })
+})
+
+describe.each([["react", rHandle], ["vue", vHandle]] as const)("%s sidebar navigation", (_, handle) => {
+  const event = () => { const e = { prevented: false, preventDefault() { e.prevented = true } }; return e }
+  it("always closes the mobile sheet, and prevents the link only when the app navigates", () => {
+    const calls: string[] = []
+    const withApp = event()
+    handle(withApp, "rse", (id) => calls.push(`nav:${id}`), () => calls.push("close"))
+    const plainLink = event()
+    handle(plainLink, "rse", undefined, () => calls.push("close"))
+    expect(calls).toEqual(["close", "nav:rse", "close"])
+    expect([withApp.prevented, plainLink.prevented]).toEqual([true, false])
+  })
+  it("keeps an accessible name on the logo when collapsed (sr-only, not hidden)", async () => {
+    const { readFileSync } = await import("node:fs")
+    const src = readFileSync(_ === "react" ? "registry/react/blocks/app-shell-sidebar.tsx" : "registry/vue/blocks/AppShellSidebar.vue", "utf8")
+    expect(src).toContain("group-data-[collapsible=icon]:[&>span]:sr-only")
+    expect(src).not.toContain("group-data-[collapsible=icon]:[&>span]:hidden")
   })
 })

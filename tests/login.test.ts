@@ -42,4 +42,10 @@ describe.each([
     expect(html).toContain("Utiliser une autre adresse")
     expect(html).not.toContain('type="email"')
   })
+  it("locks inputs and the forgot-password link while loading", async () => {
+    const html = await render({ status: "loading", onForgotPassword: () => {} })
+    expect(html).toMatch(/<input[^>]*type="email"[^>]*disabled|<input[^>]*disabled[^>]*type="email"/)
+    expect(html).toMatch(/<input[^>]*type="password"[^>]*disabled|<input[^>]*disabled[^>]*type="password"/)
+    expect(html).toMatch(/<button[^>]*disabled[^>]*>\s*Mot de passe oublié/)
+  })
 })

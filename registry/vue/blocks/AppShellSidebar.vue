@@ -3,15 +3,23 @@ import type { Component } from "vue"
 
 export type AppNavItem = { id: string; label: string; icon?: Component; badge?: number; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
+
+// Closes the mobile sheet on every click; prevents the link only when the app navigates itself.
+export function handleNavigate(event: { preventDefault(): void }, id: string, onNavigate: ((id: string) => void) | undefined, close: () => void) {
+  close()
+  if (!onNavigate) return
+  event.preventDefault()
+  onNavigate(id)
+}
 </script>
 
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue"
-import { computed } from "vue"
+import { computed, defineComponent } from "vue"
 import { Separator } from "@/registry/vue/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarInset, SidebarMenu,
-  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger,
+  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, useSidebar,
 } from "@/registry/vue/ui/sidebar"
 import { SaqaraLogo } from "@/registry/vue/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/vue/ui/theme-toggle"
@@ -31,11 +39,11 @@ const props = withDefaults(defineProps<{
 const theme = defineModel<"light" | "dark">("theme")
 const active = computed(() => props.nav.find((item) => item.id === props.activeId))
 
-function go(event: Event, id: string) {
-  if (!props.onNavigate) return
-  event.preventDefault()
-  props.onNavigate(id)
-}
+// Renderless child of SidebarProvider: exposes the mobile-sheet closer to the nav slot.
+const SidebarCloser = defineComponent((_, { slots }) => {
+  const { setOpenMobile } = useSidebar()
+  return () => slots.default?.({ close: () => setOpenMobile(false) })
+})
 </script>
 
 <template>
@@ -43,12 +51,13 @@ function go(event: Event, id: string) {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <div class="flex h-8 items-center px-1 group-data-[collapsible=icon]:justify-center">
-          <slot name="logo"><SaqaraLogo with-text class="group-data-[collapsible=icon]:[&>span]:hidden" /></slot>
+          <slot name="logo"><SaqaraLogo with-text class="group-data-[collapsible=icon]:[&>span]:sr-only" /></slot>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
+            <SidebarCloser v-slot="{ close }">
             <SidebarMenu>
               <SidebarMenuItem v-for="item in nav" :key="item.id">
                 <SidebarMenuButton
@@ -57,7 +66,7 @@ function go(event: Event, id: string) {
                   :aria-current="item.id === activeId ? 'page' : undefined"
                   :as="item.href ? 'a' : 'button'"
                   :href="item.href"
-                  @click="go($event, item.id)"
+                  @click="handleNavigate($event, item.id, onNavigate, close)"
                 >
                   <component :is="item.icon" v-if="item.icon" />
                   <span>{{ item.label }}</span>
@@ -65,6 +74,7 @@ function go(event: Event, id: string) {
                 <SidebarMenuBadge v-if="item.badge">{{ item.badge }}</SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
+            </SidebarCloser>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

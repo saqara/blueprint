@@ -4,7 +4,7 @@ import * as React from "react"
 import { Separator } from "@/registry/react/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarInset, SidebarMenu,
-  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger,
+  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, useSidebar,
 } from "@/registry/react/ui/sidebar"
 import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/react/ui/theme-toggle"
@@ -12,6 +12,41 @@ import { UserMenu } from "@/registry/react/ui/user-menu"
 
 export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
+
+// Closes the mobile sheet on every click; prevents the link only when the app navigates itself.
+export function handleNavigate(event: { preventDefault(): void }, id: string, onNavigate: ((id: string) => void) | undefined, close: () => void) {
+  close()
+  if (!onNavigate) return
+  event.preventDefault()
+  onNavigate(id)
+}
+
+function NavMenu({ nav, activeId, onNavigate }: { nav: AppNavItem[]; activeId?: string; onNavigate?: (id: string) => void }) {
+  const { setOpenMobile } = useSidebar()
+  return (
+    <SidebarMenu>
+      {nav.map((item) => {
+        const isActive = item.id === activeId
+        const Icon = item.icon
+        const content = (<>{Icon && <Icon />}<span>{item.label}</span></>)
+        return (
+          <SidebarMenuItem key={item.id}>
+            <SidebarMenuButton
+              isActive={isActive}
+              tooltip={item.label}
+              aria-current={isActive ? "page" : undefined}
+              asChild={!!item.href}
+              onClick={(event) => handleNavigate(event, item.id, onNavigate, () => setOpenMobile(false))}
+            >
+              {item.href ? <a href={item.href}>{content}</a> : content}
+            </SidebarMenuButton>
+            {!!item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+          </SidebarMenuItem>
+        )
+      })}
+    </SidebarMenu>
+  )
+}
 
 type AppShellSidebarProps = {
   nav: AppNavItem[]
@@ -41,33 +76,13 @@ function AppShellSidebar({
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex h-8 items-center px-1 group-data-[collapsible=icon]:justify-center">
-            {logo ?? <SaqaraLogo withText className="group-data-[collapsible=icon]:[&>span]:hidden" />}
+            {logo ?? <SaqaraLogo withText className="group-data-[collapsible=icon]:[&>span]:sr-only" />}
           </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent>
-              <SidebarMenu>
-                {nav.map((item) => {
-                  const isActive = item.id === activeId
-                  const Icon = item.icon
-                  const content = (<>{Icon && <Icon />}<span>{item.label}</span></>)
-                  return (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton
-                        isActive={isActive}
-                        tooltip={item.label}
-                        aria-current={isActive ? "page" : undefined}
-                        asChild={!!item.href}
-                        onClick={(event) => { if (onNavigate) { event.preventDefault(); onNavigate(item.id) } }}
-                      >
-                        {item.href ? <a href={item.href}>{content}</a> : content}
-                      </SidebarMenuButton>
-                      {!!item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
-                    </SidebarMenuItem>
-                  )
-                })}
-              </SidebarMenu>
+              <NavMenu nav={nav} activeId={activeId} onNavigate={onNavigate} />
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

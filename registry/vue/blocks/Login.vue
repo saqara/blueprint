@@ -70,16 +70,16 @@ function sendLink(event: MouseEvent) {
       <form v-if="password || magicLink" class="grid gap-3" @submit.prevent="submit">
         <div class="grid gap-2">
           <Label :for="`${id}-email`">E-mail</Label>
-          <Input :id="`${id}-email`" v-model="email" name="email" type="email" autocomplete="email" required />
+          <Input :id="`${id}-email`" v-model="email" name="email" type="email" autocomplete="email" required :disabled="status === 'loading'" />
         </div>
         <div v-if="password" class="grid gap-2">
           <div class="flex items-center justify-between">
             <Label :for="`${id}-password`">Mot de passe</Label>
-            <button v-if="onForgotPassword" type="button" class="text-xs text-muted-foreground underline-offset-4 hover:underline" @click="onForgotPassword(email)">
+            <button v-if="onForgotPassword" type="button" :disabled="status === 'loading'" class="text-xs text-muted-foreground underline-offset-4 hover:underline disabled:opacity-50" @click="onForgotPassword(email)">
               Mot de passe oublié ?
             </button>
           </div>
-          <Input :id="`${id}-password`" v-model="secret" name="password" type="password" autocomplete="current-password" required />
+          <Input :id="`${id}-password`" v-model="secret" name="password" type="password" autocomplete="current-password" required :disabled="status === 'loading'" />
         </div>
         <Button v-if="password" type="submit" class="w-full" :disabled="status === 'loading'"><Spinner v-if="status === 'loading'" />Se connecter</Button>
         <template v-if="magicLink">

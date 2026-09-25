@@ -82,19 +82,19 @@ function Login({
           }}>
             <div className="grid gap-2">
               <Label htmlFor={`${id}-email`}>E-mail</Label>
-              <Input id={`${id}-email`} name="email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
+              <Input id={`${id}-email`} name="email" type="email" autoComplete="email" required disabled={loading} value={email} onChange={(event) => setEmail(event.target.value)} />
             </div>
             {password && (
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor={`${id}-password`}>Mot de passe</Label>
                   {onForgotPassword && (
-                    <button type="button" className="text-xs text-muted-foreground underline-offset-4 hover:underline" onClick={() => onForgotPassword(email)}>
+                    <button type="button" disabled={loading} className="text-xs text-muted-foreground underline-offset-4 hover:underline disabled:opacity-50" onClick={() => onForgotPassword(email)}>
                       Mot de passe oublié ?
                     </button>
                   )}
                 </div>
-                <Input id={`${id}-password`} name="password" type="password" autoComplete="current-password" required value={secret} onChange={(event) => setSecret(event.target.value)} />
+                <Input id={`${id}-password`} name="password" type="password" autoComplete="current-password" required disabled={loading} value={secret} onChange={(event) => setSecret(event.target.value)} />
               </div>
             )}
             {password && <Button type="submit" className="w-full" disabled={loading}>{loading && <Spinner />}Se connecter</Button>}
