@@ -19,6 +19,7 @@
 - Theme: localStorage `blueprint-theme` = `light | dark | auto`, default `auto`; applied before first paint by an inline script.
 - Every `localStorage` access is wrapped in try/catch (private windows).
 - `react.html` / `vue.html` keep working as redirects.
+- Brand: the Blueprint logo `public/logo.svg` (added by the user, commit 328e826) is the site mark — favicon on every page, sidebar header, home hero; `public/banner.png` is the `og:image`. Referenced as `/logo.svg` in HTML (Vite adds the base) and `${import.meta.env.BASE_URL}logo.svg` in code.
 - Example data is fictitious.
 - **Plan style note:** Tasks 1–5 carry full code. Example screens (Tasks 6–8) are specified by content, components and acceptance tests; their code is written during execution (4 screens × 2 frameworks) — the tests and the checklist are binding.
 
@@ -331,6 +332,10 @@ export function itemInfo(name: string) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Saqara Blueprint</title>
+    <link rel="icon" href="/logo.svg" />
+    <meta property="og:title" content="Saqara Blueprint" />
+    <meta property="og:description" content="Le design system des applications Saqara (React et Vue)." />
+    <meta property="og:image" content="https://saqara.github.io/blueprint/banner.png" />
     <script>
       try {
         var c = localStorage.getItem("blueprint-theme")
@@ -348,7 +353,7 @@ export function itemInfo(name: string) {
 `react.html` / `vue.html` (old links):
 ```html
 <!doctype html>
-<html lang="fr"><head><meta charset="UTF-8" /><meta http-equiv="refresh" content="0; url=./?fw=react#/" /><title>Saqara Blueprint</title></head>
+<html lang="fr"><head><meta charset="UTF-8" /><meta http-equiv="refresh" content="0; url=./?fw=react#/" /><title>Saqara Blueprint</title><link rel="icon" href="/logo.svg" /></head>
 <body><a href="./?fw=react#/">Saqara Blueprint</a></body></html>
 ```
 (`vue.html`: same with `fw=vue`.)
@@ -592,7 +597,6 @@ export function NotFound() {
 ```tsx
 import { ArrowRight } from "lucide-react"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/registry/react/ui/card"
-import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { BLOCKS, CATEGORIES, EXAMPLES } from "../catalog"
 
 export function Home() {
@@ -606,7 +610,7 @@ export function Home() {
   return (
     <div className="space-y-10">
       <section className="space-y-4 py-6">
-        <SaqaraLogo withText label="Blueprint" className="text-2xl [&_svg]:size-10" />
+        <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Saqara Blueprint" className="size-16 rounded-2xl" />
         <h1 className="max-w-2xl text-4xl font-semibold">Le design system des applications Saqara.</h1>
         <p className="max-w-2xl text-lg text-muted-foreground">
           Des composants shadcn/ui et shadcn-vue aux couleurs Saqara, installés dans votre app par la CLI : le code vous appartient.
@@ -639,7 +643,6 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
 } from "@/registry/react/ui/sidebar"
-import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { Toaster } from "@/registry/react/ui/sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
 import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, START_PAGES } from "./catalog"
@@ -669,7 +672,10 @@ export function App() {
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <a href="#/" className="flex h-10 items-center px-2"><SaqaraLogo withText label="Blueprint" /></a>
+          <a href="#/" className="flex h-10 items-center gap-2 px-2 font-heading font-semibold">
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="size-7 rounded-md" />
+            Blueprint
+          </a>
         </SidebarHeader>
         <SidebarContent>
           {NAV.map((group) => (
@@ -761,7 +767,7 @@ createRoot(document.getElementById("app")!).render(<StrictMode><App /></StrictMo
 - [ ] **Step 7: Delete the old showcase entries** — `src/react/main.tsx`, `src/vue/main.ts`, `src/vue/App.vue`. Keep `src/vue/shims.d.ts`; copy it to `site/shims.d.ts`.
 
 - [ ] **Step 8: Verify** — `npm run check && npm run build`; `npx vite preview` and in the browser check:
-  - `/blueprint/` shows Home; sidebar groups Démarrer / 6 categories / Blocs / Exemples.
+  - `/blueprint/` shows Home with the Blueprint logo; the favicon is the logo; sidebar header shows the logo + « Blueprint »; sidebar groups Démarrer / 6 categories / Blocs / Exemples.
   - `#/composants/button`: title, description, install command (copy works), Aperçu renders; switch to Vue → command becomes `shadcn-vue`, preview is the Vue demo, URL has `?fw=vue`; reload keeps Vue.
   - Theme menu: Clair / Sombre / Auto; reload on Sombre has no light flash; Auto follows the OS.
   - `#/composants/nope` → Introuvable. `/blueprint/vue.html` → redirects to the site in Vue.
