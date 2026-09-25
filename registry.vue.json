@@ -660,6 +660,32 @@
       ]
     },
     {
+      "name": "file-dropzone",
+      "type": "registry:ui",
+      "title": "File Dropzone",
+      "description": "Sélection de fichiers par clic ou glisser-déposer, avec validation type/taille (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/file-dropzone/FileDropzone.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-dropzone/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-dropzone/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
