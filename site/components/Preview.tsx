@@ -14,7 +14,12 @@ export function Preview({ kind, fw, name, framed = false }: { kind: "demos" | "e
       <TabsContent value="preview">
         {framed
           ? <div className="h-[720px] overflow-auto rounded-lg border [transform:translateZ(0)]">{body}</div>
-          : <div className="flex min-h-48 items-center justify-center rounded-lg border p-8">{body}</div>}
+          : (
+              // Full-width container: demos keep their own max-width and are centered (flex alone shrinks them to content).
+              <div className="flex min-h-48 items-center justify-center rounded-lg border p-8">
+                <div className="w-full max-w-3xl [&>*]:mx-auto [&>.contents>*]:mx-auto">{body}</div>
+              </div>
+            )}
       </TabsContent>
       <TabsContent value="code">
         <CodeBlock code={demo.source} lang={demo.fw === "react" ? "tsx" : "vue"} />

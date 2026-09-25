@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback } from "@/registry/vue/ui/avatar"
 
 <template>
   <div class="flex gap-2">
-    <Avatar><AvatarFallback>CM</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>AB</AvatarFallback></Avatar>
     <Avatar><AvatarFallback>BS</AvatarFallback></Avatar>
   </div>
 </template>

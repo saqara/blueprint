@@ -14,8 +14,8 @@ const active = ref("annuaire")
 </script>
 
 <template>
-  <div class="h-[600px] overflow-auto rounded-lg border [transform:translateZ(0)]">
-    <AppShellHeader class="min-h-full" :nav="nav" :active-id="active" :user="{ name: 'Camille Martin', email: 'camille.martin@exemple.fr' }"
+  <div class="h-full overflow-auto">
+    <AppShellHeader class="min-h-full" :nav="nav" :active-id="active" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@exemple.fr' }"
       @navigate="(id) => (active = id)" @sign-out="() => {}">
       <p class="text-sm text-muted-foreground">Contenu de la page « {{ nav.find((n) => n.id === active)?.label }} ».</p>
     </AppShellHeader>

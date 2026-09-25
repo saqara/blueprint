@@ -130,7 +130,7 @@ export default function AnnuaireExample() {
 
   return (
     <AppShellSidebar className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId="annuaire"
-      user={{ name: "Camille Martin", email: "camille.martin@exemple.fr" }} onSignOut={() => {}}>
+      user={{ name: "Alexandre Brochot", email: "alexandre.brochot@exemple.fr" }} onSignOut={() => {}}>
       <div className="space-y-6">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard label="Entreprises" value={COMPANIES.length} />

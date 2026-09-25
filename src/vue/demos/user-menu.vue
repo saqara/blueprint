@@ -5,7 +5,7 @@ import { UserMenu } from "@/registry/vue/ui/user-menu"
 </script>
 
 <template>
-  <UserMenu name="Camille Martin" email="camille.martin@exemple.fr" @sign-out="() => {}">
+  <UserMenu name="Alexandre Brochot" email="alexandre.brochot@exemple.fr" @sign-out="() => {}">
     <DropdownMenuItem><Settings />Mon profil</DropdownMenuItem>
   </UserMenu>
 </template>

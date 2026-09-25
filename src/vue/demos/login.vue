@@ -12,7 +12,7 @@ function wait(then: () => void) {
 </script>
 
 <template>
-  <div class="flex justify-center rounded-lg border bg-muted/40 p-8">
+  <div class="flex min-h-full items-center justify-center bg-muted/40 p-8">
     <Login title="Portail Fournisseur" description="Connectez-vous pour accéder à votre espace." magic-link :sso="{ label: 'Se connecter avec SSO' }"
       :status="status" :error="error"
       @password-submit="wait(() => { status = 'idle'; error = 'Identifiants incorrects.' })"

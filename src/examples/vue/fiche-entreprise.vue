@@ -32,9 +32,9 @@ const contacts = ref<Contact[]>([
   { name: "Léa Fontaine", role: "Comptabilité", email: "l.fontaine@exemple.fr" },
 ])
 const evaluations = [
-  { date: "12/09/2026", chantier: "Résidence Les Tilleuls", note: 17, by: "Camille Martin" },
+  { date: "12/09/2026", chantier: "Résidence Les Tilleuls", note: 17, by: "Alexandre Brochot" },
   { date: "03/06/2026", chantier: "Groupe scolaire Jean Macé", note: 15, by: "Hugo Leroy" },
-  { date: "18/02/2026", chantier: "Siège Rhône Habitat", note: 13, by: "Camille Martin" },
+  { date: "18/02/2026", chantier: "Siège Rhône Habitat", note: 13, by: "Alexandre Brochot" },
 ]
 const draft = reactive<Contact>({ name: "", role: "", email: "" })
 const open = ref(false)
@@ -50,7 +50,7 @@ function addContact() {
 </script>
 
 <template>
-  <AppShellHeader class="min-h-full" :nav="nav" active-id="annuaire" :user="{ name: 'Camille Martin', email: 'camille.martin@exemple.fr' }" @sign-out="() => {}">
+  <AppShellHeader class="min-h-full" :nav="nav" active-id="annuaire" :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@exemple.fr' }" @sign-out="() => {}">
     <Toaster />
     <div class="mx-auto max-w-5xl space-y-6">
       <Breadcrumb>

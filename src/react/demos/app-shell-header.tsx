@@ -12,9 +12,9 @@ const nav: AppNavItem[] = [
 export default function AppShellHeaderDemo() {
   const [active, setActive] = useState("annuaire")
   return (
-    <div className="h-[600px] overflow-auto rounded-lg border [transform:translateZ(0)]">
+    <div className="h-full overflow-auto">
       <AppShellHeader className="min-h-full" nav={nav} activeId={active} onNavigate={setActive}
-        user={{ name: "Camille Martin", email: "camille.martin@exemple.fr" }} onSignOut={() => {}}>
+        user={{ name: "Alexandre Brochot", email: "alexandre.brochot@exemple.fr" }} onSignOut={() => {}}>
         <p className="text-sm text-muted-foreground">Contenu de la page « {nav.find((n) => n.id === active)?.label} ».</p>
       </AppShellHeader>
     </div>
