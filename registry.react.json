@@ -133,6 +133,22 @@
       "files": []
     },
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -223,6 +239,25 @@
       "files": [
         {
           "path": "registry/react/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "dependencies": [
+        "cmdk",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/dialog"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/command.tsx",
           "type": "registry:ui"
         }
       ]
@@ -429,6 +464,22 @@
       "files": [
         {
           "path": "registry/react/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]
