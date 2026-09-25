@@ -94,3 +94,39 @@ describe.each([
     expect(change).toHaveBeenLastCalledWith(["lyon", "lille", "paris"])
   })
 })
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => {
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    await act(async () => root.render(e(RMulti as any, { options: agencies, triggerProps: { "data-testid": "agency-select" }, ...p })))
+    cleanups.push(() => act(async () => root.unmount()))
+    return (fn: () => void) => act(async () => fn())
+  }],
+  ["vue", async (p: Record<string, unknown>) => {
+    const app = createApp({ render: () => h(VMulti as any, { options: agencies, triggerProps: { "data-testid": "agency-select" }, ...p }) })
+    app.mount(document.body.appendChild(document.createElement("div")))
+    cleanups.push(() => app.unmount())
+    await nextTick()
+    return async (fn: () => void) => { fn(); await nextTick(); await new Promise((r) => setTimeout(r, 20)) }
+  }],
+])("%s multi-select checked state and reset entry", (fw, mount) => {
+  const value = (v: string[]) => (fw === "react" ? { value: v, onValueChange: () => {} } : { modelValue: v })
+  const item = (text: string) => [...document.querySelectorAll<HTMLElement>("[data-slot=command-item]")].find((i) => i.textContent?.includes(text))!
+  it("tells assistive tech which options are checked", async () => {
+    const run = await mount(value(["lyon"]))
+    await run(() => trigger().click())
+    expect(item("Lyon").querySelector(".sr-only")?.textContent).toBe(", sélectionné")
+    expect(item("Lille").querySelector(".sr-only")).toBeNull()
+  })
+  it("selectAllBehavior=clear: the entry means no filter and sends []", async () => {
+    const change = vi.fn()
+    const run = await mount({ ...value(["lyon"]), [fw === "react" ? "onValueChange" : "onUpdate:modelValue"]: change, selectAllLabel: "Toutes les agences", selectAllBehavior: "clear", display: "count" })
+    await run(() => trigger().click())
+    await run(() => item("Toutes les agences").click())
+    expect(change).toHaveBeenLastCalledWith([])
+  })
+  it("selectAllBehavior=clear: an empty selection reads as the reset label", async () => {
+    await mount({ ...value([]), selectAllLabel: "Toutes les agences", selectAllBehavior: "clear", display: "count" })
+    expect(trigger().textContent).toContain("Toutes les agences")
+  })
+})

@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `multi-select` : les options cochées sont annoncées aux lecteurs d'écran (« , sélectionné », `selectedLabel`) ; `selectAllBehavior="clear"` fait de l'entrée `selectAllLabel` un « sans filtre » qui envoie `[]` (cochée et affichée en résumé quand rien n'est choisi).
 - 2026-09-25 — `data-table` : prop `meta` (transmise à TanStack, lue dans les cellules via `table.options.meta`) pour l'état vivant des cellules sans recréer `columns` ; le focus et l'état des cellules interactives sont conservés.
 - 2026-09-25 — `data-table` : `scrollProps` (attributs, classe et gestionnaires du conteneur de défilement : drag-to-scroll, barre de défilement…). Documenté : définir `columns` hors du composant (React), `FlexRender` remontant les cellules d'une fonction recréée.
 - 2026-09-25 — `field` : `FieldLabel required` (astérisque décoratif ; `required` reste sur le contrôle). `textarea` : `rows` sert de hauteur minimale, `autoResize={false}` garde une hauteur fixe. `multi-select` : `display="count"` + `countLabel` (résumé « 3 agences »), `selectAllLabel` (entrée « Tous » en tête, et résumé quand tout est choisi), `triggerProps`, `getOptionProps`. Page « Utiliser avec une IA » : consignes `select` sans valeur vide, nom accessible des contrôles sans label, champs obligatoires.
