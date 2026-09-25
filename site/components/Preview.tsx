@@ -15,9 +15,10 @@ export function Preview({ kind, fw, name, framed = false }: { kind: "demos" | "e
         {framed
           ? <div className="h-[720px] overflow-auto rounded-lg border [transform:translateZ(0)]">{body}</div>
           : (
-              // Full-width container: demos keep their own max-width and are centered (flex alone shrinks them to content).
+              // Every demo is centered: demos with a max-w-* fill up to it, the others shrink to their content.
+              // (Vue islands are display:contents, so their root is a flex item here too.)
               <div className="flex min-h-48 items-center justify-center rounded-lg border p-8">
-                <div className="w-full max-w-3xl [&>*]:mx-auto [&>.contents>*]:mx-auto">{body}</div>
+                <div className="flex w-full max-w-3xl flex-col items-center [&>[class*=max-w-]]:w-full [&>.contents>[class*=max-w-]]:w-full">{body}</div>
               </div>
             )}
       </TabsContent>
