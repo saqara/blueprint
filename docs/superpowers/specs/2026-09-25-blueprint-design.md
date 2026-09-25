@@ -87,7 +87,7 @@ On garde les **noms de variables shadcn**, pour que les composants officiels fon
 | `--primary` / `--primary-foreground` | `#F04632` / `#FFFFFF` | `#F04632` / `#FFFFFF` |
 | `--secondary` / `--secondary-foreground` | `#F5F5F4` (stone-100) / `#1C1917` | `#292524` (stone-800) / `#FAFAF9` |
 | `--muted` / `--muted-foreground` | `#F5F5F4` / `#57534E` (stone-600) | `#292524` / `#A8A29E` (stone-400) |
-| `--accent` / `--accent-foreground` | `#FDECEB` / `#B32019` | `#292524` / `#FAFAF9` |
+| `--accent` / `--accent-foreground` | `#F5F5F4` / `#1C1917` (neutre : survols ; la teinte rouge est abandonnée, elle ressemblait à une sélection) | `#292524` / `#FAFAF9` |
 | `--destructive` / `--destructive-foreground` | `#C2002C` / `#FFFFFF` | `#FF5A6E` / `#0C0A09` |
 | `--border` / `--input` | `#E7E5E4` (stone-200) / `#E7E5E4` | `#292524` / `#44403C` (stone-700) |
 | `--ring` | `#F04632` | `#F04632` |
