@@ -133,12 +133,13 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 | **1 — Bases** | Button, Badge (+ `success`/`warning`/`info`/`identity`), Alert (+ mêmes variantes), Card, Input, Textarea, Label, Field, Checkbox, Switch, RadioGroup, Select, Tooltip, Skeleton, Spinner, Separator |
 | **2 — Overlays & navigation** | Dialog, AlertDialog, Sheet, DropdownMenu, Popover, Tabs, Accordion, Command, Sonner, Progress, Empty |
 | **3 — Composés Saqara** | DataTable (TanStack), MultiSelect / TagCombobox, FileDropzone, Slider, Pagination, Stepper, StatCard, Sidebar |
+| **4 — Blocs Saqara** (`registry:block`) | `app-shell` (sidebar repliable, header + logo, menu profil, bascule clair/sombre, menu mobile en Sheet — structure calquée sur le shell de pfou-hub, construit sur le bloc sidebar officiel) ; `login` (connexion + SSO). Aucun code repris de signature (`@saqara/layouts`, React 17 + Material UI) ni de pfou-hub. |
 
 **Points de vigilance**
 
 - Stepper n'existe que dans shadcn-vue : il faut l'écrire côté React.
 - MultiSelect n'existe dans aucun des deux : il est écrit dans les deux frameworks à partir de Command et Popover.
-- Sonner s'appuie sur `sonner` en React et sur `vue-sonner` en Vue.
+- Sonner s'appuie sur `sonner` en React et sur `vue-sonner` en Vue. La version React n'utilise pas `next-themes` : l'app passe `theme` au `Toaster`.
 
 **Hors V1 :** Chart (recharts d'un côté, unovis de l'autre, parité coûteuse) et DatePicker (pas de besoin dans pfou-hub).
 
