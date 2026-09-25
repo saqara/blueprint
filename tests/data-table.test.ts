@@ -91,3 +91,10 @@ describe.each([
     expect(await renderTable({ container: false })).not.toContain("table-container")
   })
 })
+
+describe.each(["react", "vue"] as const)("%s data-table scrollProps", (fw) => {
+  it("spreads scrollProps on the scroll container, merging its class", async () => {
+    const html = await render[fw]({ data, scrollProps: { [fw === "react" ? "className" : "class"]: "cursor-grab", "data-testid": "companies-scroll" } })
+    expect(html).toMatch(/<div(?=[^>]*data-slot="table-container")(?=[^>]*data-testid="companies-scroll")(?=[^>]*class="[^"]*\bcursor-grab\b)(?=[^>]*class="[^"]*\boverflow-x-auto\b)/)
+  })
+})

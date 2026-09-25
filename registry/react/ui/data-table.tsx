@@ -57,6 +57,8 @@ type DataTableProps<TData extends RowData> = {
   tableProps?: React.ComponentProps<"table"> & Record<`data-${string}`, string | undefined>
   /** The scroll container (drag-to-scroll, IntersectionObserver root…). */
   scrollRef?: React.Ref<HTMLDivElement>
+  /** Attributes, class and handlers for the scroll container (drag-to-scroll, scrollbar styling…). */
+  scrollProps?: React.ComponentProps<"div"> & Record<`data-${string}`, string | undefined>
   className?: string
   /** Rendered inside the scroll container, after the table (e.g. an infinite-scroll sentinel). */
   children?: React.ReactNode
@@ -66,7 +68,7 @@ type DataTableProps<TData extends RowData> = {
 function DataTable<TData extends RowData>({
   columns, data, getRowId, sorting = [], onSortingChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
-  onRowClick, getRowProps, tableProps, scrollRef, className, children,
+  onRowClick, getRowProps, tableProps, scrollRef, scrollProps, className, children,
 }: DataTableProps<TData>) {
   const table = useTable({
     features: dataTableFeatures,
@@ -86,7 +88,7 @@ function DataTable<TData extends RowData>({
       data-slot="data-table"
       className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
     >
-      <div ref={scrollRef} data-slot="table-container" className="relative w-full overflow-x-auto">
+      <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", scrollProps?.className)}>
       <Table container={false} {...tableProps} aria-busy={loading || undefined}>
         <TableHeader className={cn(stickyHeader && "sticky top-0 z-[2] bg-(--data-table-bg)")}>
           {table.getHeaderGroups().map((group) => (
