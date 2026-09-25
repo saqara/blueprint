@@ -652,8 +652,7 @@
         "@saqara/input",
         "@saqara/label",
         "@saqara/saqara-logo",
-        "@saqara/separator",
-        "@saqara/spinner"
+        "@saqara/separator"
       ],
       "files": [
         {
