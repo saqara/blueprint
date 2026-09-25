@@ -107,10 +107,13 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+// Saqara: `required` shows a decorative asterisk; the control itself carries `required`.
 function FieldLabel({
   className,
+  required = false,
+  children,
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: React.ComponentProps<typeof Label> & { required?: boolean }) {
   return (
     <Label
       data-slot="field-label"
@@ -121,7 +124,10 @@ function FieldLabel({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {required && <span aria-hidden="true" className="-ml-1.5 text-destructive">*</span>}
+    </Label>
   )
 }
 

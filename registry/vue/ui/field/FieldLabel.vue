@@ -3,8 +3,10 @@ import type { HTMLAttributes } from "vue"
 import { cn } from "@/lib/utils"
 import { Label } from "@/registry/vue/ui/label"
 
+// Saqara: `required` shows a decorative asterisk; the control itself carries `required`.
 const props = defineProps<{
   class?: HTMLAttributes["class"]
+  required?: boolean
 }>()
 </script>
 
@@ -19,5 +21,6 @@ const props = defineProps<{
     )"
   >
     <slot />
+    <span v-if="required" aria-hidden="true" class="-ml-1.5 text-destructive">*</span>
   </Label>
 </template>
