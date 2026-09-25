@@ -155,7 +155,7 @@ export default function AnnuaireExample() {
         </div>
 
         <DataTable columns={columns} data={view.rows} getRowId={(c) => c.siren} sorting={sorting} onSortingChange={(s) => { setSorting(s); setPage(1) }}
-          emptyMessage="Aucune entreprise ne correspond à ces filtres." className="rounded-md border" />
+          emptyMessage="Aucune entreprise ne correspond à ces filtres." className="rounded-md border bg-card [--data-table-bg:var(--card)]" />
 
         <div className="flex items-center justify-between gap-4 text-sm text-muted-foreground">
           <span>{list.length} entreprise{list.length > 1 ? "s" : ""}</span>

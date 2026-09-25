@@ -82,7 +82,7 @@ On garde les **noms de variables shadcn**, pour que les composants officiels fon
 
 | Variable | Clair | Sombre |
 |---|---|---|
-| `--background` / `--foreground` | `#FFFFFF` / `#292524` (stone-800) | `#0C0A09` (stone-950) / `#FAFAF9` (stone-50) |
+| `--background` / `--foreground` | `#FAFAF9` (stone-50 ; les cartes, popovers, dialogues et champs restent blancs) / `#292524` (stone-800) | `#0C0A09` (stone-950) / `#FAFAF9` (stone-50) |
 | `--card` / `--popover` | `#FFFFFF` (texte `#292524`) | `#1C1917` stone-900 (texte `#FAFAF9`) |
 | `--primary` / `--primary-foreground` | `#F04632` / `#FFFFFF` | `#F04632` / `#FFFFFF` |
 | `--secondary` / `--secondary-foreground` | `#F5F5F4` (stone-100) / `#1C1917` | `#292524` (stone-800) / `#FAFAF9` |

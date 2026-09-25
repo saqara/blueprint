@@ -100,3 +100,35 @@ describe("skeleton", () => {
     expect(src).not.toMatch(/bg-(accent|primary)/)
   })
 })
+
+describe("light surfaces", () => {
+  const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
+  it("detaches cards from the page, as in dark mode", () => {
+    expect(t.light.background).not.toBe(t.light.card)
+    expect(t.light.card).toBe(t.light.popover)
+  })
+  // Surfaces that must stay white on the light page: overlays, active tab, outline button.
+  it.each([
+    ["registry/react/ui/dialog.tsx", "bg-card dark:bg-background"],
+    ["registry/react/ui/sheet.tsx", "bg-card dark:bg-background"],
+    ["registry/react/ui/alert-dialog.tsx", "bg-card dark:bg-background"],
+    ["registry/react/ui/tabs.tsx", "data-[state=active]:bg-card"],
+    ["registry/react/ui/button.tsx", "border bg-card shadow-xs"],
+    ["registry/vue/ui/dialog/DialogContent.vue", "bg-card dark:bg-background"],
+    ["registry/vue/ui/dialog/DialogScrollContent.vue", "bg-card dark:bg-background"],
+    ["registry/vue/ui/sheet/SheetContent.vue", "bg-card dark:bg-background"],
+    ["registry/vue/ui/alert-dialog/AlertDialogContent.vue", "bg-card dark:bg-background"],
+    ["registry/vue/ui/tabs/TabsTrigger.vue", "data-[state=active]:bg-card"],
+    ["registry/vue/ui/button/index.ts", "border bg-card shadow-xs"],
+    ["registry/react/ui/input.tsx", "bg-card px-3"],
+    ["registry/react/ui/textarea.tsx", "bg-card px-3"],
+    ["registry/react/ui/select.tsx", "bg-card px-3"],
+    ["registry/react/ui/tag-input.tsx", "bg-card px-2"],
+    ["registry/vue/ui/input/Input.vue", "bg-card px-3"],
+    ["registry/vue/ui/textarea/Textarea.vue", "bg-card px-3"],
+    ["registry/vue/ui/select/SelectTrigger.vue", "bg-card px-3"],
+    ["registry/vue/ui/tag-input/TagInput.vue", "bg-card px-2"],
+  ])("%s stays white on the light page", (file, cls) => {
+    expect(readFileSync(file, "utf8")).toContain(cls)
+  })
+})

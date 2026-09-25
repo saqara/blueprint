@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `saqara-theme` : en clair, la page passe en `#FAFAF9` (stone-50) et les cartes / popovers restent blancs, comme la séparation du mode sombre. Restent blancs sur la page : `dialog`, `sheet`, `alert-dialog` (`bg-card`, sombre inchangé), l'onglet actif de `tabs`, le bouton `outline`, `input`, `textarea`, `select`, `tag-input`. Tokens de texte `success-text` / `warning-text` / `identity-text` clairs très légèrement assombris pour rester AA sur le nouveau fond. Exemple Annuaire : table sur fond carte.
 - 2026-09-25 — `multi-select` : en `selectAllBehavior="clear"`, une sélection complète faite à la main se résume par le compte (« 12 agences »), plus par `selectAllLabel`, réservé à « sans filtre » (`[]`).
 - 2026-09-25 — `multi-select` : les options cochées sont annoncées aux lecteurs d'écran (« , sélectionné », `selectedLabel`) ; `selectAllBehavior="clear"` fait de l'entrée `selectAllLabel` un « sans filtre » qui envoie `[]` (cochée et affichée en résumé quand rien n'est choisi).
 - 2026-09-25 — `data-table` : prop `meta` (transmise à TanStack, lue dans les cellules via `table.options.meta`) pour l'état vivant des cellules sans recréer `columns` ; le focus et l'état des cellules interactives sont conservés.

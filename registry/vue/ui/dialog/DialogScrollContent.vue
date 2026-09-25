@@ -58,7 +58,7 @@ function returnFocus(event: Event) {
       <DialogContent
         :class="
           cn(
-            'relative z-50 grid w-full max-w-[calc(100%-2rem)] my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',
+            'relative z-50 grid w-full max-w-[calc(100%-2rem)] my-8 gap-4 border border-border bg-card dark:bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',
             sizes[size],
             props.class,
           )
