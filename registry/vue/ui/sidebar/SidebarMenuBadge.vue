@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// Saqara: the badge is a sibling of the button, outside its accessible name: repeat the count as
+// sr-only text inside SidebarMenuButton and mark the badge aria-hidden (as AppShellSidebar does).
 import type { HTMLAttributes } from "vue"
 import { cn } from "@/lib/utils"
 

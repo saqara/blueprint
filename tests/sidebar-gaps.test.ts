@@ -91,3 +91,36 @@ describe.each([
     expect(document.querySelector("[data-slot=sidebar][data-variant]")).not.toBeNull()
   })
 })
+
+describe.each([
+  ["react", async (provider: Record<string, unknown>, sidebar: Record<string, unknown>) => {
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    await act(async () => root.render(e(RS.SidebarProvider, provider as any, e(RS.Sidebar, sidebar as any, "Nav"), e(RS.SidebarTrigger))))
+    cleanups.push(() => act(async () => root.unmount()))
+    return (fn: () => void) => act(async () => fn())
+  }],
+  ["vue", async (provider: Record<string, unknown>, sidebar: Record<string, unknown>) => {
+    const app = createApp({ render: () => h(VS.SidebarProvider, provider, () => [h(VS.Sidebar, sidebar, () => "Nav"), h(VS.SidebarTrigger)]) })
+    app.mount(document.body.appendChild(document.createElement("div")))
+    cleanups.push(() => app.unmount())
+    await nextTick()
+    return async (fn: () => void) => { fn(); await nextTick(); await new Promise((r) => setTimeout(r, 20)) }
+  }],
+])("%s Sidebar static and mobile sheet", (_, mount) => {
+  it("position=static keeps the sidebar in the page flow, icon collapse included", async () => {
+    await mount({ mobileBreakpoint: 100, defaultOpen: false }, { position: "static", collapsible: "icon" })
+    const container = document.querySelector<HTMLElement>("[data-slot=sidebar-container]")!
+    expect(container.className).not.toMatch(/\bfixed\b/)
+    expect(container.className).toMatch(/\brelative\b/)
+    expect(document.querySelector("[data-slot=sidebar-gap]")).toBeNull()
+    expect(document.querySelector("[data-slot=sidebar][data-variant]")?.getAttribute("data-collapsible")).toBe("icon")
+  })
+  it("titles the mobile sheet and shows a labelled close button with mobileCloseLabel", async () => {
+    const run = await mount({ mobileBreakpoint: 5000 }, { mobileTitle: "Administration", mobileCloseLabel: "Fermer la navigation" })
+    await run(() => document.querySelector<HTMLElement>("[data-sidebar=trigger]")!.click())
+    const sheet = document.querySelector<HTMLElement>("[data-mobile=true]")!
+    expect(sheet.textContent).toContain("Administration")
+    const close = [...sheet.querySelectorAll("button")].find((b) => b.textContent?.includes("Fermer la navigation"))
+    expect(close).toBeTruthy()
+  })
+})
