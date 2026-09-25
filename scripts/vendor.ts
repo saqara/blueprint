@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname } from "node:path"
-import { readManifest, upsertItem, writeManifest } from "./lib/manifest.ts"
+import { keepDescription, readManifest, upsertItem, writeManifest } from "./lib/manifest.ts"
 import { planAll, UPSTREAM, type Fw, type UpstreamItem } from "./lib/vendor.ts"
 
 const args = process.argv.slice(2)
@@ -30,7 +30,7 @@ for (const fw of ["react", "vue"] as Fw[]) {
       mkdirSync(dirname(f.path), { recursive: true })
       writeFileSync(f.path, f.content)
     }
-    manifest = upsertItem(manifest, item)
+    manifest = upsertItem(manifest, keepDescription(manifest.items.find((i) => i.name === item.name), item))
     for (const d of (item.dependencies as string[] | undefined) ?? []) if (!installed.has(d)) missing.add(d)
     console.log(`${fw}: ${item.name} (${files.length} files)`)
   }

@@ -12,3 +12,8 @@ export function upsertItem(m: Manifest, item: Item): Manifest {
   )
   return { ...m, items }
 }
+
+// Curated descriptions (site + consumers) survive a re-vendor that brings none.
+export function keepDescription(previous: Item | undefined, next: Item): Item {
+  return previous?.description && !next.description ? { ...next, description: previous.description } : next
+}

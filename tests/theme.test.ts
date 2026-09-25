@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { themeItem, toCss } from "../scripts/lib/theme.ts"
-import { upsertItem, type Manifest } from "../scripts/lib/manifest.ts"
+import { keepDescription, upsertItem, type Manifest } from "../scripts/lib/manifest.ts"
 import type { Tokens } from "../scripts/lib/contrast.ts"
 
 const tokens: Tokens = {
@@ -48,5 +48,14 @@ describe("upsertItem", () => {
     const replaced = upsertItem(next, { name: "button", type: "registry:ui", title: "B" })
     expect(replaced.items).toHaveLength(3)
     expect(replaced.items.find((i) => i.name === "button")!.title).toBe("B")
+  })
+})
+
+describe("keepDescription", () => {
+  it("keeps a curated description when re-vendoring an item that has none", () => {
+    const prev = { name: "button", type: "registry:ui", description: "Bouton." }
+    expect(keepDescription(prev, { name: "button", type: "registry:ui" }).description).toBe("Bouton.")
+    expect(keepDescription(prev, { name: "button", type: "registry:ui", description: "Nouveau." }).description).toBe("Nouveau.")
+    expect(keepDescription(undefined, { name: "x", type: "registry:ui" })).toEqual({ name: "x", type: "registry:ui" })
   })
 })

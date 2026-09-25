@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest"
 import { parseRoute, toHash } from "../site/lib/route"
 import { readThemeChoice, resolveTheme } from "../site/lib/theme"
 import { readFramework } from "../site/lib/framework"
+import reactManifest from "../registry.react.json"
+import vueManifest from "../registry.vue.json"
+import { BLOCKS, CATEGORIES, itemInfo } from "../site/catalog"
 
 describe("parseRoute", () => {
   it.each([
@@ -35,5 +38,26 @@ describe("framework", () => {
     expect(readFramework("?fw=vue", "react")).toBe("vue")
     expect(readFramework("?fw=angular", "vue")).toBe("vue")
     expect(readFramework("", null)).toBe("react")
+  })
+})
+
+describe("catalog", () => {
+  const ui = reactManifest.items.filter((i) => i.type === "registry:ui").map((i) => i.name)
+  const listed = CATEGORIES.flatMap((c) => c.items)
+  it("lists every UI item in exactly one category", () => {
+    expect([...listed].sort()).toEqual([...ui].sort())
+    expect(new Set(listed).size).toBe(listed.length)
+  })
+  it("lists every block", () => {
+    expect([...BLOCKS].sort()).toEqual(reactManifest.items.filter((i) => i.type === "registry:block").map((i) => i.name).sort())
+  })
+  it("gives every UI item and block a description in both manifests", () => {
+    for (const m of [reactManifest, vueManifest]) {
+      const missing = m.items.filter((i) => ["registry:ui", "registry:block"].includes(i.type) && !("description" in i && i.description)).map((i) => i.name)
+      expect(missing).toEqual([])
+    }
+  })
+  it("reads titles from the manifest", () => {
+    expect(itemInfo("data-table")?.title).toBe("Data Table")
   })
 })

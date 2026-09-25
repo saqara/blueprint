@@ -172,7 +172,8 @@
           "path": "registry/react/ui/accordion.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Sections repliables empilées, une ou plusieurs ouvertes."
     },
     {
       "name": "alert",
@@ -187,7 +188,8 @@
           "path": "registry/react/ui/alert.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Message contextuel : information, succès, avertissement, erreur."
     },
     {
       "name": "alert-dialog",
@@ -205,7 +207,8 @@
           "path": "registry/react/ui/alert-dialog.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fenêtre de confirmation pour les actions importantes ou irréversibles."
     },
     {
       "name": "app-shell-header",
@@ -263,7 +266,8 @@
           "path": "registry/react/ui/avatar.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Image ou initiales d'une personne."
     },
     {
       "name": "badge",
@@ -279,7 +283,8 @@
           "path": "registry/react/ui/badge.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Étiquette courte : statut, note, rôle."
     },
     {
       "name": "breadcrumb",
@@ -295,7 +300,8 @@
           "path": "registry/react/ui/breadcrumb.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fil d'Ariane indiquant la position dans l'app."
     },
     {
       "name": "button",
@@ -311,7 +317,8 @@
           "path": "registry/react/ui/button.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Bouton d'action, en plusieurs variantes et tailles."
     },
     {
       "name": "card",
@@ -325,7 +332,8 @@
           "path": "registry/react/ui/card.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Conteneur de contenu avec en-tête, corps et pied."
     },
     {
       "name": "checkbox",
@@ -341,7 +349,8 @@
           "path": "registry/react/ui/checkbox.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Case à cocher."
     },
     {
       "name": "collapsible",
@@ -355,7 +364,8 @@
           "path": "registry/react/ui/collapsible.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Zone dépliable simple."
     },
     {
       "name": "command",
@@ -374,7 +384,8 @@
           "path": "registry/react/ui/command.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Liste filtrable au clavier (recherche, palette de commandes)."
     },
     {
       "name": "data-table",
@@ -415,7 +426,8 @@
           "path": "registry/react/ui/dialog.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fenêtre modale pour un formulaire ou un contenu."
     },
     {
       "name": "dropdown-menu",
@@ -431,7 +443,8 @@
           "path": "registry/react/ui/dropdown-menu.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Menu d'actions déroulant."
     },
     {
       "name": "empty",
@@ -446,7 +459,8 @@
           "path": "registry/react/ui/empty.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "État vide avec icône, message et action."
     },
     {
       "name": "field",
@@ -465,7 +479,8 @@
           "path": "registry/react/ui/field.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de formulaire : libellé, aide et message d'erreur."
     },
     {
       "name": "file-dropzone",
@@ -499,7 +514,8 @@
           "path": "registry/react/ui/hover-card.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Aperçu d'un contenu au survol."
     },
     {
       "name": "input",
@@ -513,7 +529,8 @@
           "path": "registry/react/ui/input.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de saisie texte."
     },
     {
       "name": "label",
@@ -528,7 +545,8 @@
           "path": "registry/react/ui/label.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Libellé associé à un champ."
     },
     {
       "name": "login",
@@ -593,7 +611,8 @@
           "path": "registry/react/ui/pagination.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Navigation entre les pages d'une liste."
     },
     {
       "name": "popover",
@@ -608,7 +627,8 @@
           "path": "registry/react/ui/popover.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Contenu flottant ancré à un déclencheur."
     },
     {
       "name": "progress",
@@ -623,7 +643,8 @@
           "path": "registry/react/ui/progress.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Barre de progression."
     },
     {
       "name": "radio-group",
@@ -639,7 +660,8 @@
           "path": "registry/react/ui/radio-group.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Choix unique parmi plusieurs options."
     },
     {
       "name": "saqara-logo",
@@ -669,7 +691,8 @@
           "path": "registry/react/ui/scroll-area.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Zone de défilement aux barres stylées."
     },
     {
       "name": "select",
@@ -685,7 +708,8 @@
           "path": "registry/react/ui/select.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Liste déroulante à choix unique."
     },
     {
       "name": "separator",
@@ -700,7 +724,8 @@
           "path": "registry/react/ui/separator.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Séparateur horizontal ou vertical."
     },
     {
       "name": "sheet",
@@ -716,7 +741,8 @@
           "path": "registry/react/ui/sheet.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Panneau latéral glissant."
     },
     {
       "name": "sidebar",
@@ -742,7 +768,8 @@
           "path": "registry/react/ui/sidebar.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Barre latérale de navigation repliable."
     },
     {
       "name": "skeleton",
@@ -756,7 +783,8 @@
           "path": "registry/react/ui/skeleton.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Espace réservé pendant le chargement."
     },
     {
       "name": "slider",
@@ -771,7 +799,8 @@
           "path": "registry/react/ui/slider.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Curseur de valeur ou d'intervalle."
     },
     {
       "name": "sonner",
@@ -786,7 +815,8 @@
           "path": "registry/react/ui/sonner.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Notifications (toasts) aux couleurs Saqara."
     },
     {
       "name": "spinner",
@@ -802,7 +832,8 @@
           "path": "registry/react/ui/spinner.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Indicateur de chargement."
     },
     {
       "name": "stat-card",
@@ -850,7 +881,8 @@
           "path": "registry/react/ui/switch.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Interrupteur marche / arrêt."
     },
     {
       "name": "table",
@@ -864,7 +896,8 @@
           "path": "registry/react/ui/table.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Tableau de données simple."
     },
     {
       "name": "tabs",
@@ -880,7 +913,8 @@
           "path": "registry/react/ui/tabs.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Onglets pour basculer entre des vues."
     },
     {
       "name": "textarea",
@@ -894,7 +928,8 @@
           "path": "registry/react/ui/textarea.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de saisie multiligne."
     },
     {
       "name": "theme-toggle",
@@ -928,7 +963,8 @@
           "path": "registry/react/ui/toggle.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Bouton à deux états."
     },
     {
       "name": "toggle-group",
@@ -947,7 +983,8 @@
           "path": "registry/react/ui/toggle-group.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Groupe de boutons à bascule (choix unique ou multiple)."
     },
     {
       "name": "tooltip",
@@ -962,7 +999,8 @@
           "path": "registry/react/ui/tooltip.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Info-bulle au survol ou au focus."
     },
     {
       "name": "use-mobile",

@@ -188,7 +188,8 @@
           "path": "registry/vue/ui/accordion/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Sections repliables empilées, une ou plusieurs ouvertes."
     },
     {
       "name": "alert",
@@ -214,7 +215,8 @@
           "path": "registry/vue/ui/alert/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Message contextuel : information, succès, avertissement, erreur."
     },
     {
       "name": "alert-dialog",
@@ -268,7 +270,8 @@
           "path": "registry/vue/ui/alert-dialog/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fenêtre de confirmation pour les actions importantes ou irréversibles."
     },
     {
       "name": "app-shell-header",
@@ -337,7 +340,8 @@
           "path": "registry/vue/ui/avatar/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Image ou initiales d'une personne."
     },
     {
       "name": "badge",
@@ -357,7 +361,8 @@
           "path": "registry/vue/ui/badge/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Étiquette courte : statut, note, rôle."
     },
     {
       "name": "breadcrumb",
@@ -400,7 +405,8 @@
           "path": "registry/vue/ui/breadcrumb/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fil d'Ariane indiquant la position dans l'app."
     },
     {
       "name": "button",
@@ -419,7 +425,8 @@
           "path": "registry/vue/ui/button/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Bouton d'action, en plusieurs variantes et tailles."
     },
     {
       "name": "card",
@@ -458,7 +465,8 @@
           "path": "registry/vue/ui/card/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Conteneur de contenu avec en-tête, corps et pied."
     },
     {
       "name": "checkbox",
@@ -478,7 +486,8 @@
           "path": "registry/vue/ui/checkbox/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Case à cocher."
     },
     {
       "name": "collapsible",
@@ -504,7 +513,8 @@
           "path": "registry/vue/ui/collapsible/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Zone dépliable simple."
     },
     {
       "name": "command",
@@ -559,7 +569,8 @@
           "path": "registry/vue/ui/command/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Liste filtrable au clavier (recherche, palette de commandes)."
     },
     {
       "name": "data-table",
@@ -651,7 +662,8 @@
           "path": "registry/vue/ui/dialog/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Fenêtre modale pour un formulaire ou un contenu."
     },
     {
       "name": "dropdown-menu",
@@ -723,7 +735,8 @@
           "path": "registry/vue/ui/dropdown-menu/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Menu d'actions déroulant."
     },
     {
       "name": "empty",
@@ -761,7 +774,8 @@
           "path": "registry/vue/ui/empty/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "État vide avec icône, message et action."
     },
     {
       "name": "field",
@@ -819,7 +833,8 @@
           "path": "registry/vue/ui/field/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de formulaire : libellé, aide et message d'erreur."
     },
     {
       "name": "file-dropzone",
@@ -872,7 +887,8 @@
           "path": "registry/vue/ui/hover-card/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Aperçu d'un contenu au survol."
     },
     {
       "name": "input",
@@ -890,7 +906,8 @@
           "path": "registry/vue/ui/input/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de saisie texte."
     },
     {
       "name": "label",
@@ -909,7 +926,8 @@
           "path": "registry/vue/ui/label/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Libellé associé à un champ."
     },
     {
       "name": "login",
@@ -1011,7 +1029,8 @@
           "path": "registry/vue/ui/pagination/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Navigation entre les pages d'une liste."
     },
     {
       "name": "popover",
@@ -1042,7 +1061,8 @@
           "path": "registry/vue/ui/popover/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Contenu flottant ancré à un déclencheur."
     },
     {
       "name": "progress",
@@ -1061,7 +1081,8 @@
           "path": "registry/vue/ui/progress/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Barre de progression."
     },
     {
       "name": "radio-group",
@@ -1085,7 +1106,8 @@
           "path": "registry/vue/ui/radio-group/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Choix unique parmi plusieurs options."
     },
     {
       "name": "saqara-logo",
@@ -1124,7 +1146,8 @@
           "path": "registry/vue/ui/scroll-area/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Zone de défilement aux barres stylées."
     },
     {
       "name": "select",
@@ -1184,7 +1207,8 @@
           "path": "registry/vue/ui/select/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Liste déroulante à choix unique."
     },
     {
       "name": "separator",
@@ -1203,7 +1227,8 @@
           "path": "registry/vue/ui/separator/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Séparateur horizontal ou vertical."
     },
     {
       "name": "sheet",
@@ -1255,7 +1280,8 @@
           "path": "registry/vue/ui/sheet/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Panneau latéral glissant."
     },
     {
       "name": "sidebar",
@@ -1380,7 +1406,8 @@
           "path": "registry/vue/ui/sidebar/utils.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Barre latérale de navigation repliable."
     },
     {
       "name": "skeleton",
@@ -1395,7 +1422,8 @@
           "path": "registry/vue/ui/skeleton/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Espace réservé pendant le chargement."
     },
     {
       "name": "slider",
@@ -1414,7 +1442,8 @@
           "path": "registry/vue/ui/slider/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Curseur de valeur ou d'intervalle."
     },
     {
       "name": "sonner",
@@ -1433,7 +1462,8 @@
           "path": "registry/vue/ui/sonner/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Notifications (toasts) aux couleurs Saqara."
     },
     {
       "name": "spinner",
@@ -1451,7 +1481,8 @@
           "path": "registry/vue/ui/spinner/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Indicateur de chargement."
     },
     {
       "name": "stat-card",
@@ -1513,7 +1544,8 @@
           "path": "registry/vue/ui/stepper/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Étapes numérotées d'un parcours."
     },
     {
       "name": "switch",
@@ -1532,7 +1564,8 @@
           "path": "registry/vue/ui/switch/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Interrupteur marche / arrêt."
     },
     {
       "name": "table",
@@ -1582,7 +1615,8 @@
           "path": "registry/vue/ui/table/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Tableau de données simple."
     },
     {
       "name": "tabs",
@@ -1613,7 +1647,8 @@
           "path": "registry/vue/ui/tabs/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Onglets pour basculer entre des vues."
     },
     {
       "name": "textarea",
@@ -1631,7 +1666,8 @@
           "path": "registry/vue/ui/textarea/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Champ de saisie multiligne."
     },
     {
       "name": "theme-toggle",
@@ -1673,7 +1709,8 @@
           "path": "registry/vue/ui/toggle/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Bouton à deux états."
     },
     {
       "name": "toggle-group",
@@ -1700,7 +1737,8 @@
           "path": "registry/vue/ui/toggle-group/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Groupe de boutons à bascule (choix unique ou multiple)."
     },
     {
       "name": "tooltip",
@@ -1731,7 +1769,8 @@
           "path": "registry/vue/ui/tooltip/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "description": "Info-bulle au survol ou au focus."
     },
     {
       "name": "user-menu",
