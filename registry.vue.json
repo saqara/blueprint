@@ -271,6 +271,29 @@
       ]
     },
     {
+      "name": "app-shell-header",
+      "type": "registry:block",
+      "title": "App Shell (header)",
+      "description": "Shell d'application avec barre de navigation horizontale, compteurs, thème et menu utilisateur (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/button",
+        "@saqara/saqara-logo",
+        "@saqara/sheet",
+        "@saqara/theme-toggle",
+        "@saqara/user-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/AppShellHeader.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "app-shell-sidebar",
       "type": "registry:block",
       "title": "App Shell (sidebar)",

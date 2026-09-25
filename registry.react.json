@@ -208,6 +208,30 @@
       ]
     },
     {
+      "name": "app-shell-header",
+      "type": "registry:block",
+      "title": "App Shell (header)",
+      "description": "Shell d'application avec barre de navigation horizontale, compteurs, thème et menu utilisateur (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/button",
+        "@saqara/saqara-logo",
+        "@saqara/sheet",
+        "@saqara/theme-toggle",
+        "@saqara/user-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/react/blocks/app-shell-header.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "app-shell-sidebar",
       "type": "registry:block",
       "title": "App Shell (sidebar)",

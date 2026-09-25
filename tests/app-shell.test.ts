@@ -5,6 +5,8 @@ import { renderToString as renderVue } from "vue/server-renderer"
 import { describe, expect, it } from "vitest"
 import { AppShellSidebar as RSidebar } from "../registry/react/blocks/app-shell-sidebar"
 import VSidebar from "../registry/vue/blocks/AppShellSidebar.vue"
+import { AppShellHeader as RHeader } from "../registry/react/blocks/app-shell-header"
+import VHeader from "../registry/vue/blocks/AppShellHeader.vue"
 
 export const nav = [
   { id: "annuaire", label: "Mes entreprises" },
@@ -30,5 +32,19 @@ describe.each([
     const html = await render({ nav, activeId: "annuaire", title: "Tableau de bord" })
     expect(html).toMatch(/<h1[^>]*>Tableau de bord<\/h1>/)
     expect(html).not.toContain('data-slot="theme-toggle"')
+  })
+})
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, p, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, { default: () => "Contenu" }) }))],
+])("%s app-shell-header", (_, render) => {
+  it("renders brand, page title, tabs with badge, user menu and content", async () => {
+    const html = await render({ nav, activeId: "evaluations", user, theme: "light", onThemeChange: () => {} })
+    for (const text of ["Saqara", "Mes entreprises", "Organisation", "Contenu", 'aria-label="Navigation principale"', 'aria-label="Menu"']) expect(html).toContain(text)
+    expect(html).toMatch(/>3</)
+    expect(current(html)).toBe(1)
+    expect(html).toContain('href="#organisation"')
+    expect(html).toContain('data-slot="theme-toggle"')
   })
 })
