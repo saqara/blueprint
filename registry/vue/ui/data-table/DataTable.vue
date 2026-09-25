@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<{
   data: TData[]
   getRowId?: (row: TData, index: number) => string
   sorting?: SortingState
+  /** Live state for cells (read via `table.options.meta`), so `columns` can stay stable. */
+  meta?: Record<string, unknown>
   loading?: boolean
   loadingRows?: number
   emptyMessage?: string
@@ -43,6 +45,7 @@ const table = useTable({
   get data() { return props.data },
   get columns() { return props.columns },
   getRowId: props.getRowId,
+  get meta() { return props.meta },
   manualSorting: true,
   state: { get sorting() { return props.sorting } },
   onSortingChange: (updater) => emit("update:sorting", resolveUpdater(updater, props.sorting)),

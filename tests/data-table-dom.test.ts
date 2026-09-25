@@ -83,3 +83,30 @@ describe("column header", () => {
     expect(col.toggleSorting).toHaveBeenCalledWith(false)
   })
 })
+
+// Live state in cells: stable columns read it from table.options.meta, so cells re-render instead of remounting.
+describe("react live cell state through meta", () => {
+  const liveColumns = [{
+    id: "copy",
+    cell: ({ row, table }: any) => {
+      const { copied, onCopy } = table.options.meta
+      return e("button", { type: "button", onClick: () => onCopy(row.id) }, copied === row.id ? "Copié !" : "Copier")
+    },
+  }]
+  it("keeps the same button (and its focus) when the state changes", async () => {
+    const { useState } = await import("react")
+    function Page() {
+      const [copied, setCopied] = useState<string>()
+      return e(RDataTable as any, { columns: liveColumns, data, getRowId: (r: Row) => r.id, meta: { copied, onCopy: setCopied } })
+    }
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    await act(async () => root.render(e(Page)))
+    cleanups.push(() => act(async () => root.unmount()))
+    const button = document.querySelector<HTMLButtonElement>("tbody button")!
+    button.focus()
+    await act(async () => button.click())
+    expect(document.querySelector("tbody button")).toBe(button)
+    expect(button.textContent).toBe("Copié !")
+    expect(document.activeElement).toBe(button)
+  })
+})
