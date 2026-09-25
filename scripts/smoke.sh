@@ -67,6 +67,8 @@ for APP in "$R" "$V"; do
   grep -q "@fontsource/lato" "$APP/src/index.css" || { echo "FAIL: font imports missing in $APP/src/index.css"; exit 1; }
   grep -q "@apply font-heading" "$APP/src/index.css" || { echo "FAIL: heading font rule missing in $APP/src/index.css"; exit 1; }
   grep -q '@import "tw-animate-css"' "$APP/src/index.css" || { echo "FAIL: tw-animate-css missing in $APP/src/index.css"; exit 1; }
+  grep -q "@custom-variant dark" "$APP/src/index.css" || { echo "FAIL: dark variant missing in $APP/src/index.css"; exit 1; }
+  grep -q "@apply border-border outline-ring/50" "$APP/src/index.css" || { echo "FAIL: border rule missing in $APP/src/index.css"; exit 1; }
   grep -q "@apply bg-background text-foreground" "$APP/src/index.css" || { echo "FAIL: body colour rule missing in $APP/src/index.css"; exit 1; }
 done
 echo "smoke ok"
