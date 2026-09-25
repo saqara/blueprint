@@ -1,8 +1,8 @@
 import { useEffect, useState, useSyncExternalStore } from "react"
-import { FW_KEY, readFramework, type Fw } from "./lib/framework"
+import { FW_KEY, readFramework, withFramework, type Fw } from "./lib/framework"
 import { parseRoute } from "./lib/route"
 import { safeGet, safeSet } from "./lib/storage"
-import { readThemeChoice, resolveTheme, THEME_KEY, type ThemeChoice } from "./lib/theme"
+import { initialTheme, resolveTheme, THEME_KEY, type ThemeChoice } from "./lib/theme"
 
 const subscribeHash = (cb: () => void) => { addEventListener("hashchange", cb); return () => removeEventListener("hashchange", cb) }
 
@@ -15,16 +15,19 @@ export function useFramework(): [Fw, (fw: Fw) => void] {
   const setFw = (next: Fw) => {
     setState(next)
     safeSet(FW_KEY, next)
-    const url = new URL(location.href)
-    url.searchParams.set("fw", next)
-    history.replaceState(null, "", url)
+    history.replaceState(null, "", withFramework(location.href, next))
   }
+  // A framework restored from storage is written into the URL too.
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get("fw") !== fw) history.replaceState(null, "", withFramework(location.href, fw))
+  }, [fw])
   return [fw, setFw]
 }
 
 export function useTheme() {
-  const [choice, setChoice] = useState<ThemeChoice>(() => readThemeChoice(safeGet(THEME_KEY)))
-  const [resolved, setResolved] = useState<"light" | "dark">("light")
+  const [initial] = useState(() => initialTheme(safeGet(THEME_KEY), matchMedia("(prefers-color-scheme: dark)").matches))
+  const [choice, setChoice] = useState<ThemeChoice>(initial.choice)
+  const [resolved, setResolved] = useState<"light" | "dark">(initial.resolved)
   useEffect(() => {
     const media = matchMedia("(prefers-color-scheme: dark)")
     const apply = () => {

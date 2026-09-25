@@ -8,3 +8,9 @@ export function resolveTheme(choice: ThemeChoice, prefersDark: boolean): "light"
 export function readThemeChoice(stored: string | null): ThemeChoice {
   return stored === "light" || stored === "dark" ? stored : "auto"
 }
+
+// First render uses the real theme (the Toaster and islands get it right from the start).
+export function initialTheme(stored: string | null, prefersDark: boolean) {
+  const choice = readThemeChoice(stored)
+  return { choice, resolved: resolveTheme(choice, prefersDark) }
+}

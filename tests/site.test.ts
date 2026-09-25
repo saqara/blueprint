@@ -95,3 +95,30 @@ describe("review fixes", () => {
     expect(SAQARA_MADE.has("stepper")).toBe(true)
   })
 })
+
+import { initialTheme } from "../site/lib/theme"
+import { withFramework } from "../site/lib/framework"
+
+describe("site polish", () => {
+  it("resolves the first-render theme from the stored choice and the OS, not a fixed light", () => {
+    expect(initialTheme(null, true)).toEqual({ choice: "auto", resolved: "dark" })
+    expect(initialTheme("light", true)).toEqual({ choice: "light", resolved: "light" })
+  })
+  it("writes the framework into the query while keeping the hash", () => {
+    expect(withFramework("https://x.io/blueprint/#/composants/button", "vue")).toBe("https://x.io/blueprint/?fw=vue#/composants/button")
+    expect(withFramework("https://x.io/blueprint/?fw=react&a=1#/", "vue")).toBe("https://x.io/blueprint/?fw=vue&a=1#/")
+  })
+})
+
+import { readFileSync } from "node:fs"
+
+describe("anti-flash script", () => {
+  it("still checks the OS preference when localStorage throws", () => {
+    const html = readFileSync("index.html", "utf8")
+    const script = html.match(/<script>([\s\S]*?)<\/script>/)![1]
+    const classes = new Set<string>()
+    const run = new Function("localStorage", "matchMedia", "document", script)
+    run({ getItem: () => { throw new Error("blocked") } }, () => ({ matches: true }), { documentElement: { classList: { add: (c: string) => classes.add(c) } } })
+    expect(classes.has("dark")).toBe(true)
+  })
+})

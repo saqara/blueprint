@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react"
+import { Skeleton } from "@/registry/react/ui/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/react/ui/tabs"
-import { demoFor } from "../demos"
+import { loadDemo, type Demo } from "../demos"
 import type { Fw } from "../lib/framework"
 import { CodeBlock } from "./CodeBlock"
 import { VueIsland } from "./VueIsland"
 
 export function Preview({ kind, fw, name, framed = false }: { kind: "demos" | "examples"; fw: Fw; name: string; framed?: boolean }) {
-  const demo = demoFor(kind, fw, name)
-  if (!demo) return <p className="text-sm text-muted-foreground">Pas encore de démo pour ce framework.</p>
+  // undefined = loading, null = no demo for this framework
+  const [demo, setDemo] = useState<Demo | null>()
+  useEffect(() => {
+    let alive = true
+    setDemo(undefined)
+    loadDemo(kind, fw, name).then((d) => { if (alive) setDemo(d ?? null) })
+    return () => { alive = false }
+  }, [kind, fw, name])
+  if (demo === undefined) return <Skeleton className={framed ? "h-[720px] w-full" : "h-48 w-full"} />
+  if (demo === null) return <p className="text-sm text-muted-foreground">Pas encore de démo pour ce framework.</p>
   const body = demo.fw === "react" ? <demo.Component /> : <VueIsland component={demo.Component} />
   return (
     <Tabs defaultValue="preview">

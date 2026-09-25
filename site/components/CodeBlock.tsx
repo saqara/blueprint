@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 
-// Shiki is loaded on demand so the first paint stays light. Sources are our own files (trusted HTML).
+// Shiki (core + the 6 languages the docs use) is loaded on demand so the first paint stays light. Sources are our own files (trusted HTML).
 export function CodeBlock({ code, lang }: { code: string; lang: "tsx" | "vue" | "bash" | "json" | "css" | "markdown" }) {
   const [html, setHtml] = useState<string>()
   useEffect(() => {
     let alive = true
-    import("shiki")
-      .then(({ codeToHtml }) => codeToHtml(code.trimEnd(), { lang, themes: { light: "github-light", dark: "github-dark" } }))
+    import("../lib/highlighter")
+      .then(({ getHighlighter }) => getHighlighter())
+      .then((h) => h.codeToHtml(code.trimEnd(), { lang, themes: { light: "github-light", dark: "github-dark" } }))
       .then((out) => { if (alive) setHtml(out) })
     return () => { alive = false }
   }, [code, lang])

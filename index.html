@@ -9,10 +9,9 @@
     <meta property="og:description" content="Le design system des applications Saqara (React et Vue)." />
     <meta property="og:image" content="https://saqara.github.io/blueprint/banner.png" />
     <script>
-      try {
-        var c = localStorage.getItem("blueprint-theme")
-        if (c === "dark" || (c !== "light" && matchMedia("(prefers-color-scheme: dark)").matches)) document.documentElement.classList.add("dark")
-      } catch (e) {}
+      var c = null
+      try { c = localStorage.getItem("blueprint-theme") } catch (e) {}
+      if (c === "dark" || (c !== "light" && matchMedia("(prefers-color-scheme: dark)").matches)) document.documentElement.classList.add("dark")
     </script>
   </head>
   <body>
