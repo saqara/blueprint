@@ -66,6 +66,7 @@ for APP in "$R" "$V"; do
   grep -q -- "--primary: #F04632" "$APP/src/index.css" || { echo "FAIL: theme vars missing in $APP/src/index.css"; exit 1; }
   grep -q "@fontsource/lato" "$APP/src/index.css" || { echo "FAIL: font imports missing in $APP/src/index.css"; exit 1; }
   grep -q "@apply font-heading" "$APP/src/index.css" || { echo "FAIL: heading font rule missing in $APP/src/index.css"; exit 1; }
+  grep -q '@import "tw-animate-css"' "$APP/src/index.css" || { echo "FAIL: tw-animate-css missing in $APP/src/index.css"; exit 1; }
   grep -q "@apply bg-background text-foreground" "$APP/src/index.css" || { echo "FAIL: body colour rule missing in $APP/src/index.css"; exit 1; }
 done
 echo "smoke ok"

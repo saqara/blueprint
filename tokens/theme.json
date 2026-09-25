@@ -109,6 +109,7 @@
     "font-mono": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace"
   },
   "css": {
+    "@import \"tw-animate-css\"": {},
     "@import \"@fontsource/lato/400.css\"": {},
     "@import \"@fontsource/lato/700.css\"": {},
     "@import \"@fontsource/poppins/400.css\"": {},

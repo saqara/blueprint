@@ -71,4 +71,8 @@ describe("monospace font", () => {
   it("colours body so portalled content reads right without shadcn init", () => {
     expect((realTokens.css["@layer base"] as Record<string, unknown>).body).toEqual({ "@apply bg-background text-foreground": {} })
   })
+  it("ships tw-animate-css so overlays animate without shadcn init", () => {
+    expect(Object.keys(realTokens.css)).toContain('@import "tw-animate-css"')
+    expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("tw-animate-css")
+  })
 })

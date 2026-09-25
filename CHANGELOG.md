@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `saqara-theme` : installe et importe `tw-animate-css`, sans quoi `dialog`, `sheet`, `popover`… s'ouvrent sans animation dans une app installée sans `shadcn init`.
 - 2026-09-25 — `confirm-dialog` (Saqara) : `await confirm({ message })` remplace `window.confirm` (titre « Confirmation », boutons « Confirmer » / « Annuler », variantes `warning`, `destructive`, `info`, `onConfirm` asynchrone qui garde la fenêtre ouverte). `alert-dialog` (Vue) : `size` et `AlertDialogMedia`, comme en React.
 - 2026-09-25 — `saqara-theme` : `body` reçoit `bg-background text-foreground`, pour que les contenus portés dans `<body>` (dialog, sheet, popover…) soient lisibles en sombre dans une app installée sans `shadcn init`.
 - 2026-09-25 — `dialog` : prop `size` (`sm`, `md`, `lg`, `xl` ; défaut inchangé), hauteur limitée à l'écran et `DialogBody` qui défile entre l'en-tête et le pied, libellé « Fermer » par défaut (`closeLabel`). `dialog`, `sheet`, `alert-dialog` : un dialogue contrôlé sans déclencheur rend le focus à l'élément qui l'a ouvert. Textes d'accessibilité en français dans `sheet`, `sidebar`, `breadcrumb`, `command` et `stepper`, avec un test qui interdit les restes en anglais.
