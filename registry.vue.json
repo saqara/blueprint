@@ -697,6 +697,35 @@
       ]
     },
     {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "title": "Multi Select",
+      "description": "Sélection multiple dans une liste fermée, avec recherche et badges (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/button",
+        "@saqara/command",
+        "@saqara/popover"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/multi-select/MultiSelect.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/multi-select/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/multi-select/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",

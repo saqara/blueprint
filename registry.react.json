@@ -385,6 +385,28 @@
       ]
     },
     {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "title": "Multi Select",
+      "description": "Sélection multiple dans une liste fermée, avec recherche et badges (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/button",
+        "@saqara/command",
+        "@saqara/popover"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/multi-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
