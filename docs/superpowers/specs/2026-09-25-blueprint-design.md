@@ -74,20 +74,22 @@ Les noms d'items sont identiques dans les deux frameworks : `@saqara/button`, `@
 
 Source de vérité : les tokens de `@saqara/design-system` 2.x (consommés par signature), recalés sur le site vitrine saqara.com.
 
+Neutres : palette **stone** de Tailwind (gris chauds) dans les deux modes, décision du 2026-09-25 après revue du mode sombre.
+
 On garde les **noms de variables shadcn**, pour que les composants officiels fonctionnent sans retouche. Les couleurs sont en hex, comme la source ; Tailwind v4 les accepte, pas besoin de conversion OKLCH.
 
 ### 4.1 Couleurs
 
 | Variable | Clair | Sombre |
 |---|---|---|
-| `--background` / `--foreground` | `#FFFFFF` / `#2D2D2D` | `#161925` / `#F5F8FF` |
-| `--card` / `--popover` | `#FFFFFF` (texte `#2D2D2D`) | `#1F2230` (texte `#F5F8FF`) |
+| `--background` / `--foreground` | `#FFFFFF` / `#292524` (stone-800) | `#0C0A09` (stone-950) / `#FAFAF9` (stone-50) |
+| `--card` / `--popover` | `#FFFFFF` (texte `#292524`) | `#1C1917` stone-900 (texte `#FAFAF9`) |
 | `--primary` / `--primary-foreground` | `#F04632` / `#FFFFFF` | `#F04632` / `#FFFFFF` |
-| `--secondary` / `--secondary-foreground` | `#F4F6F8` / `#283549` | `#363947` / `#F5F8FF` |
-| `--muted` / `--muted-foreground` | `#F3F3F4` / `#646671` | `#363947` / `#B0B3C3` |
-| `--accent` / `--accent-foreground` | `#FDECEB` / `#B32019` | `#363947` / `#F5F8FF` |
-| `--destructive` / `--destructive-foreground` | `#C2002C` / `#FFFFFF` | `#FF5A6E` / `#161925` |
-| `--border` / `--input` | `#E8E8E9` / `#E8E8E9` | `#363947` / `#454751` |
+| `--secondary` / `--secondary-foreground` | `#F5F5F4` (stone-100) / `#1C1917` | `#292524` (stone-800) / `#FAFAF9` |
+| `--muted` / `--muted-foreground` | `#F5F5F4` / `#57534E` (stone-600) | `#292524` / `#A8A29E` (stone-400) |
+| `--accent` / `--accent-foreground` | `#FDECEB` / `#B32019` | `#292524` / `#FAFAF9` |
+| `--destructive` / `--destructive-foreground` | `#C2002C` / `#FFFFFF` | `#FF5A6E` / `#0C0A09` |
+| `--border` / `--input` | `#E7E5E4` (stone-200) / `#E7E5E4` | `#292524` / `#44403C` (stone-700) |
 | `--ring` | `#F04632` | `#F04632` |
 
 **Ajouts propres à Saqara**, exposés en utilitaires Tailwind (`bg-success`, `text-identity`…) via `@theme inline` :
@@ -96,8 +98,8 @@ On garde les **noms de variables shadcn**, pour que les composants officiels fon
 |---|---|---|
 | `--identity` (rouge de marque) | `#F04632` | `#FFFFFF` |
 | `--navy` | `#283549` | `#FFFFFF` |
-| `--success` | `#6EBD71` | `#161925` |
-| `--warning` | `#E59A06` | `#161925` |
+| `--success` | `#6EBD71` | `#0C0A09` |
+| `--warning` | `#E59A06` | `#0C0A09` |
 | `--info` | `#0A5CD6` | `#FFFFFF` |
 
 Trois valeurs ont été foncées pour atteindre AA (calcul du 2026-09-25) : `muted-foreground` `#73757C` → `#646671` (gray-700 du DS v2, 5,14:1), `destructive` `#F02548` → `#C2002C` (alert-900 du DS v2, 6,31:1), `info` `#0E6EFF` → `#0A5CD6` (valeur dérivée hors rampe, 5,97:1).
