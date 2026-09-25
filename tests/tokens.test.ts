@@ -79,8 +79,24 @@ describe("tokenErrors", () => {
     }
   })
 
+  it("keeps accent neutral: hovers must not look like a red selected state", () => {
+    const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
+    for (const mode of [t.light, t.dark]) {
+      expect(mode.accent).toBe(mode.muted)
+      expect(mode["accent-foreground"]).toBe(mode["secondary-foreground"])
+    }
+  })
+
   it("keeps sidebar borders distinct from the sidebar accent in dark mode", () => {
     const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
     expect(t.dark["sidebar-border"]).not.toBe(t.dark["sidebar-accent"])
+  })
+})
+
+describe("skeleton", () => {
+  it.each(["registry/react/ui/skeleton.tsx", "registry/vue/ui/skeleton/Skeleton.vue"])("%s pulses in neutral muted", (file) => {
+    const src = readFileSync(file, "utf8")
+    expect(src).toContain("bg-muted")
+    expect(src).not.toMatch(/bg-(accent|primary)/)
   })
 })
