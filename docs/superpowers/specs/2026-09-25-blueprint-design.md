@@ -34,7 +34,7 @@ Point commun aux trois : un paquet npm sur GitHub Packages, un outillage lourd o
 
 ## 3. Architecture
 
-Un seul projet, sans monorepo, avec pnpm.
+Un seul projet, sans monorepo, avec npm (pnpm/corepack absents du poste ; npm est aussi le gestionnaire de pfou-hub).
 
 ```
 blueprint/
@@ -68,7 +68,7 @@ blueprint/
 
 Les noms d'items sont identiques dans les deux frameworks : `@saqara/button`, `@saqara/dialog`, etc.
 
-**Choix par défaut :** icônes lucide (`lucide-react` / `lucide-vue-next`), primitives Radix (React) et Reka UI (Vue), Tailwind v4, mode sombre via la classe `.dark`.
+**Choix par défaut :** icônes lucide (`lucide-react` / `@lucide/vue`, ceux des registries officiels), primitives Radix (React) et Reka UI (Vue), Tailwind v4, mode sombre via la classe `.dark`.
 
 ## 4. Tokens
 
@@ -104,7 +104,7 @@ Trois valeurs ont été foncées pour atteindre AA (calcul du 2026-09-25) : `mut
 
 Les valeurs sombres sont des propositions. Elles sont validées par le test de contraste (§7), puis relues visuellement dans la vitrine.
 
-**Exception de contraste assumée :** un texte blanc sur `--primary` (`#F04632`) donne 3,73:1, sous le seuil WCAG AA de 4,5:1 pour du texte normal. C'est un choix de marque, pris en connaissance de cause. Cette paire est déclarée comme exception dans le test.
+**Exception de contraste assumée :** un texte blanc sur `--primary` (`#F04632`) donne 3,73:1, sous le seuil WCAG AA de 4,5:1 pour du texte normal. C'est un choix de marque, pris en connaissance de cause. Même chose pour `--identity` / `--identity-foreground`. Les deux paires sont déclarées comme exceptions dans le test.
 
 ### 4.2 Typographie
 
@@ -152,7 +152,7 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 À chaque PR :
 
 1. `check-parity` : mêmes noms d'items dans `registry.react.json` et `registry.vue.json`.
-2. Test de contraste (Vitest) sur `tokens/theme.json` : chaque paire `X` / `X-foreground` doit atteindre au moins 4,5:1, en clair comme en sombre. Les exceptions déclarées, aujourd'hui seulement `primary` (3,73:1), sont tolérées.
+2. Test de contraste (Vitest) sur `tokens/theme.json` : chaque paire `X` / `X-foreground` doit atteindre au moins 4,5:1, en clair comme en sombre. Les exceptions déclarées, aujourd'hui `primary` et `identity` (3,73:1), sont tolérées.
 3. `tsc --noEmit` (React) et `vue-tsc --noEmit` (Vue).
 4. `shadcn build` + `shadcn-vue build` + `vite build`. La vitrine importe tous les composants, donc son build sert de test d'intégration.
 
