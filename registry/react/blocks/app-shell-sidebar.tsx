@@ -10,7 +10,7 @@ import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/react/ui/theme-toggle"
 import { UserMenu } from "@/registry/react/ui/user-menu"
 
-export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; href?: string }
+export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; badgeLabel?: string; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 
 // Closes the mobile sheet on every click; prevents the link only when the app navigates itself.
@@ -28,7 +28,9 @@ function NavMenu({ nav, activeId, onNavigate }: { nav: AppNavItem[]; activeId?: 
       {nav.map((item) => {
         const isActive = item.id === activeId
         const Icon = item.icon
-        const content = (<>{Icon && <Icon />}<span>{item.label}</span></>)
+        // The count is shown by the badge (outside the button): its spoken context lives inside the label.
+        const badgeText = item.badge ? <span className="sr-only"> {item.badgeLabel ?? `${item.badge} en attente`}</span> : null
+        const content = (<>{Icon && <Icon />}<span>{item.label}{badgeText}</span></>)
         return (
           <SidebarMenuItem key={item.id}>
             <SidebarMenuButton
@@ -40,7 +42,7 @@ function NavMenu({ nav, activeId, onNavigate }: { nav: AppNavItem[]; activeId?: 
             >
               {item.href ? <a href={item.href}>{content}</a> : content}
             </SidebarMenuButton>
-            {!!item.badge && <SidebarMenuBadge className="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{item.badge}</SidebarMenuBadge>}
+            {!!item.badge && <SidebarMenuBadge aria-hidden="true" className="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{item.badge}</SidebarMenuBadge>}
           </SidebarMenuItem>
         )
       })}

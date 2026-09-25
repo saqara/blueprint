@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `app-shell-header` : emplacements `product` (à côté du logo) et `actions` (avant le thème et le menu utilisateur), `signOutLabel` transmis au menu utilisateur, le logo cliqué dans le panneau mobile le referme. `app-shell-header` et `app-shell-sidebar` : le compteur des onglets est lu avec son contexte (`badgeLabel`, « N en attente » par défaut) et le nombre seul est masqué aux lecteurs d'écran.
 - 2026-09-25 — `saqara-theme` : tokens de texte `success-text`, `warning-text`, `info-text`, `identity-text`, `destructive-text` (classes `text-success-text`…), AA (≥ 4,5:1) sur le fond, la carte et la teinte `bg-X/10`, en clair et en sombre. `text-success` / `text-warning` restent réservés aux fonds et aux icônes. Le test de contraste couvre ces paires.
 - 2026-09-25 — `saqara-theme` : embarque le reste de la base de `shadcn init` (`@custom-variant dark` sur la classe `.dark`, `* { @apply border-border outline-ring/50 }`) : `add @saqara/saqara-theme` suffit, plus besoin d'`init`. Les bordures sans couleur d'une app existante prennent la couleur `border`.
 - 2026-09-25 — `saqara-theme` : installe et importe `tw-animate-css`, sans quoi `dialog`, `sheet`, `popover`… s'ouvrent sans animation dans une app installée sans `shadcn init`.
