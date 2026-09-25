@@ -43,7 +43,7 @@ EOF
 V="$TMP/vue"; write_common "$V"
 cat > "$V/tsconfig.json" <<'EOF'
 { "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "jsx": "preserve",
-  "strict": true, "noEmit": true, "skipLibCheck": true, "paths": { "@/*": ["./src/*"] } },
+  "strict": true, "noEmit": true, "skipLibCheck": true, "types": ["vite/client"], "paths": { "@/*": ["./src/*"] } },
   "include": ["src/**/*.ts", "src/**/*.vue"] }
 EOF
 printf 'declare module "*.vue" { import type { DefineComponent } from "vue"; const c: DefineComponent<object, object, unknown>; export default c }\n' > "$V/src/shims.d.ts"

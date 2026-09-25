@@ -529,6 +529,44 @@
       ]
     },
     {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/empty/Empty.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/EmptyContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/EmptyDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/EmptyHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/EmptyMedia.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/EmptyTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/empty/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "field",
       "type": "registry:ui",
       "title": "Field",
@@ -650,6 +688,25 @@
         },
         {
           "path": "registry/vue/ui/popover/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/progress/Progress.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/progress/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -820,6 +877,25 @@
         },
         {
           "path": "registry/vue/ui/skeleton/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "dependencies": [
+        "@lucide/vue",
+        "vue-sonner"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/sonner/Sonner.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sonner/index.ts",
           "type": "registry:ui"
         }
       ]
