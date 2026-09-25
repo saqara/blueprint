@@ -695,6 +695,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/vue/ui/dialog/DialogBody.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/vue/ui/dialog/DialogClose.vue",
           "type": "registry:ui"
         },

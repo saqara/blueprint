@@ -16,12 +16,38 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps<DialogContentProps & { class?: HTMLAttributes["class"] }>()
+const sizes = {
+  default: "sm:max-w-lg",
+  sm: "sm:max-w-md",
+  md: "sm:max-w-2xl",
+  lg: "sm:max-w-4xl",
+  xl: "sm:max-w-6xl",
+}
+
+const props = withDefaults(defineProps<DialogContentProps & {
+  class?: HTMLAttributes["class"]
+  size?: keyof typeof sizes
+  closeLabel?: string
+}>(), {
+  size: "default",
+  closeLabel: "Fermer",
+})
 const emits = defineEmits<DialogContentEmits>()
 
-const delegatedProps = reactiveOmit(props, "class")
+const delegatedProps = reactiveOmit(props, "class", "size", "closeLabel")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+
+let opener: HTMLElement | null = null
+function rememberOpener() {
+  opener = document.activeElement as HTMLElement | null
+}
+// Saqara: reka only refocuses a DialogTrigger; controlled ones return focus to their opener.
+function returnFocus(event: Event) {
+  if (event.defaultPrevented || !opener?.isConnected) return
+  event.preventDefault()
+  opener.focus()
+}
 </script>
 
 <template>
@@ -32,11 +58,16 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <DialogContent
         :class="
           cn(
-            'relative z-50 grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',
+            'relative z-50 grid w-full max-w-[calc(100%-2rem)] my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',
+            sizes[size],
             props.class,
           )
         "
+        data-slot="dialog-content"
+        :data-size="size"
         v-bind="{ ...$attrs, ...forwarded }"
+        @open-auto-focus="rememberOpener"
+        @close-auto-focus="returnFocus"
         @pointer-down-outside="(event) => {
           const originalEvent = event.detail.originalEvent;
           const target = originalEvent.target as HTMLElement;
@@ -51,7 +82,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
           class="absolute top-4 right-4 p-0.5 transition-colors rounded-md hover:bg-secondary"
         >
           <X class="w-4 h-4" />
-          <span class="sr-only">Close</span>
+          <span class="sr-only">{{ closeLabel }}</span>
         </DialogClose>
       </DialogContent>
     </DialogOverlay>

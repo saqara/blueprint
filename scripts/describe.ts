@@ -13,7 +13,7 @@ const DESCRIPTIONS: Record<string, string> = {
   checkbox: "Case à cocher.",
   collapsible: "Zone dépliable simple.",
   command: "Liste filtrable au clavier (recherche, palette de commandes).",
-  dialog: "Fenêtre modale pour un formulaire ou un contenu.",
+  dialog: "Fenêtre modale pour un formulaire ou un contenu, en 4 tailles, avec un corps qui défile.",
   "dropdown-menu": "Menu d'actions déroulant.",
   empty: "État vide avec icône, message et action.",
   field: "Champ de formulaire : libellé, aide et message d'erreur.",
