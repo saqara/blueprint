@@ -82,3 +82,17 @@ describe.each(["react", "vue"] as const)("%s collapsible-section", (fw) => {
     expect($("[data-slot=collapsible-section] h2 button").getAttribute("aria-expanded")).toBe("false")
   })
 })
+
+describe.each(["react", "vue"] as const)("%s collapsible-section props", (fw) => {
+  it("passes attributes to the root and triggerProps to the toggle", async () => {
+    await section[fw]({ "data-testid": "company-contacts-section", id: "contacts", triggerProps: { "data-testid": "company-contacts-toggle" } })
+    expect($("[data-testid=company-contacts-section]").dataset.slot).toBe("collapsible-section")
+    expect($("#contacts")).not.toBeNull()
+    expect($("[data-testid=company-contacts-toggle]").tagName).toBe("BUTTON")
+  })
+  it("has a card variant and heading levels up to 6", async () => {
+    await section[fw]({ variant: "card", headingLevel: 5 })
+    expect($("[data-slot=collapsible-section]").className).toMatch(/rounded-lg border bg-card/)
+    expect($("[data-slot=collapsible-section] h5 button")).not.toBeNull()
+  })
+})
