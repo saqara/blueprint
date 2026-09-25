@@ -1708,6 +1708,32 @@
       "description": "Onglets pour basculer entre des vues."
     },
     {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "description": "Saisie de plusieurs valeurs en étiquettes, libre ou guidée par un catalogue (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/badge"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/tag-input/TagInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tag-input/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tag-input/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",

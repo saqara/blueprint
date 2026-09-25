@@ -8,7 +8,7 @@ export const START_PAGES = [
 ]
 
 export const CATEGORIES = [
-  { id: "formulaires", label: "Formulaires", items: ["button", "checkbox", "field", "file-dropzone", "input", "label", "multi-select", "radio-group", "select", "slider", "switch", "textarea", "toggle", "toggle-group"] },
+  { id: "formulaires", label: "Formulaires", items: ["button", "checkbox", "field", "file-dropzone", "input", "label", "multi-select", "radio-group", "select", "slider", "switch", "tag-input", "textarea", "toggle", "toggle-group"] },
   { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
   { id: "overlays", label: "Overlays", items: ["alert-dialog", "dialog", "dropdown-menu", "hover-card", "popover", "sheet", "sonner", "tooltip"] },
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "command", "pagination", "sidebar", "stepper", "tabs"] },

@@ -956,6 +956,25 @@
       "description": "Onglets pour basculer entre des vues."
     },
     {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "description": "Saisie de plusieurs valeurs en étiquettes, libre ou guidée par un catalogue (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/tag-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
