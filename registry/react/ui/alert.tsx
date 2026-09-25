@@ -1,9 +1,11 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { XIcon } from "lucide-react"
 import { cn } from "cn"
+import { Button } from "@/registry/react/ui/button"
 
 const alertVariants = cva(
-  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current has-data-[slot=alert-action]:grid-cols-[0_1fr_auto] has-[>svg]:has-data-[slot=alert-action]:grid-cols-[calc(var(--spacing)*4)_1fr_auto]",
   {
     variants: {
       variant: {
@@ -65,4 +67,19 @@ function AlertDescription({
   )
 }
 
-export { Alert, AlertTitle, AlertDescription, alertVariants }
+// Saqara: action slot (third column, top right) and its most common use, a close button.
+function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="alert-action" className={cn("col-start-3 row-start-1 -my-0.5 flex items-center gap-1 self-start justify-self-end", className)} {...props} />
+}
+
+function AlertClose({ label = "Fermer", className, ...props }: Omit<React.ComponentProps<typeof Button>, "children"> & { label?: string }) {
+  return (
+    <AlertAction>
+      <Button type="button" variant="ghost" size="icon-sm" aria-label={label} className={cn("-mr-2 size-6 text-current opacity-70 hover:opacity-100", className)} {...props}>
+        <XIcon />
+      </Button>
+    </AlertAction>
+  )
+}
+
+export { Alert, AlertAction, AlertClose, AlertTitle, AlertDescription, alertVariants }

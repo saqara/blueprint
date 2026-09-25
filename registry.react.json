@@ -200,7 +200,8 @@
       "title": "Alert",
       "dependencies": [
         "class-variance-authority",
-        "cn"
+        "cn",
+        "lucide-react"
       ],
       "files": [
         {
@@ -208,7 +209,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Message contextuel : information, succès, avertissement, erreur."
+      "description": "Message contextuel : information, succès, avertissement, erreur.",
+      "registryDependencies": [
+        "@saqara/button"
+      ]
     },
     {
       "name": "alert-dialog",
