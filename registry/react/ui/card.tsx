@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cn } from "cn"
+import { Slot } from "radix-ui"
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -27,9 +28,11 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+// Saqara: `asChild` sets the heading level (<CardTitle asChild><h2>…</h2></CardTitle>).
+function CardTitle({ className, asChild = false, ...props }: React.ComponentProps<"div"> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot.Root : "div"
   return (
-    <div
+    <Comp
       data-slot="card-title"
       className={cn("leading-none font-semibold", className)}
       {...props}

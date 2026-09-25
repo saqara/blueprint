@@ -17,10 +17,15 @@ function TooltipProvider({
   )
 }
 
+// Saqara: each tooltip brings its own provider, so it works outside a TooltipProvider (as upstream new-york-v4).
 function Tooltip({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+  return (
+    <TooltipProvider>
+      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+    </TooltipProvider>
+  )
 }
 
 function TooltipTrigger({

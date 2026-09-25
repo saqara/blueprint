@@ -375,7 +375,8 @@
       "type": "registry:ui",
       "title": "Card",
       "dependencies": [
-        "cn"
+        "cn",
+        "radix-ui"
       ],
       "files": [
         {
@@ -560,7 +561,8 @@
       "title": "Empty",
       "dependencies": [
         "class-variance-authority",
-        "cn"
+        "cn",
+        "radix-ui"
       ],
       "files": [
         {
