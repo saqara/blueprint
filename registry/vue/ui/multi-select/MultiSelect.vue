@@ -38,7 +38,7 @@ const toggle = (value: string) => { model.value = toggleValue(model.value, value
   <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button variant="outline" role="combobox" :aria-expanded="open" :disabled="disabled" data-slot="multi-select"
-        :class="cn('h-auto min-h-9 w-full justify-between font-normal', props.class)">
+        :class="cn('h-auto min-h-9 w-full justify-between py-1 font-normal', props.class)">
         <span class="flex flex-wrap gap-1">
           <span v-if="selected.length === 0" class="text-muted-foreground">{{ placeholder }}</span>
           <Badge v-for="o in badges.shown" :key="o.value" variant="secondary">

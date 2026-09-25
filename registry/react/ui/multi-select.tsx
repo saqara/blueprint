@@ -44,7 +44,7 @@ function MultiSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} disabled={disabled} data-slot="multi-select"
-          className={cn("h-auto min-h-9 w-full justify-between font-normal", className)}>
+          className={cn("h-auto min-h-9 w-full justify-between py-1 font-normal", className)}>
           <span className="flex flex-wrap gap-1">
             {selected.length === 0 && <span className="text-muted-foreground">{placeholder}</span>}
             {shown.map((o) => (

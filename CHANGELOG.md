@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `multi-select` : déclencheur à la hauteur des autres champs (36 px), avec ou sans badges.
 - 2026-09-25 — `tag-input` (Saqara) : saisie de plusieurs valeurs en étiquettes, libre ou guidée par un catalogue (remplace MultiInput / TagCombobox de pfou-hub).
 - 2026-09-25 — `chart` (React : recharts, Vue : unovis) et tokens `chart-1` à `chart-5` aux couleurs Saqara.
 - 2026-09-25 — `data-table` : un 3e clic sur un en-tête retire le tri ; `aria-busy` pendant le chargement. `file-dropzone` : `*/*` accepte tout ; en mode fichier unique, les fichiers en trop sont signalés (`reason: "count"`). Shells : le titre de page est toujours un `h1`, jamais vide. `saqara-theme` : `sidebar-border` sombre distinct (`#44403C`).
