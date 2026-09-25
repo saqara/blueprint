@@ -27,7 +27,7 @@ const DESCRIPTIONS: Record<string, string> = {
   "scroll-area": "Zone de défilement aux barres stylées.",
   select: "Liste déroulante à choix unique.",
   separator: "Séparateur horizontal ou vertical.",
-  sheet: "Panneau latéral glissant.",
+  sheet: "Panneau latéral glissant, en 4 largeurs, avec un corps qui défile.",
   sidebar: "Barre latérale de navigation repliable.",
   skeleton: "Espace réservé pendant le chargement.",
   slider: "Curseur de valeur ou d'intervalle.",

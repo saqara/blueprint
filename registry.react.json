@@ -438,6 +438,25 @@
       "description": "Zone dépliable simple."
     },
     {
+      "name": "collapsible-section",
+      "type": "registry:ui",
+      "title": "Collapsible Section",
+      "description": "Section titrée repliable : titre et chevron dans un bouton, actions à côté (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/collapsible-section.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
@@ -516,7 +535,7 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Fenêtre modale pour un formulaire ou un contenu."
+      "description": "Fenêtre modale pour un formulaire ou un contenu, en 4 tailles, avec un corps qui défile."
     },
     {
       "name": "dropdown-menu",
@@ -830,7 +849,7 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Panneau latéral glissant."
+      "description": "Panneau latéral glissant, en 4 largeurs, avec un corps qui défile."
     },
     {
       "name": "sidebar",
