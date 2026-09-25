@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Component } from "vue"
 
-export type AppNavItem = { id: string; label: string; icon?: Component; badge?: number; href?: string }
+export type AppNavItem = { id: string; label: string; icon?: Component; badge?: number; badgeLabel?: string; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 
 // Closes the mobile sheet on every click; prevents the link only when the app navigates itself.
@@ -69,9 +69,10 @@ const SidebarCloser = defineComponent((_, { slots }) => {
                   @click="handleNavigate($event, item.id, onNavigate, close)"
                 >
                   <component :is="item.icon" v-if="item.icon" />
-                  <span>{{ item.label }}</span>
+                  <!-- The count is shown by the badge (outside the button): its spoken context lives inside the label. -->
+                  <span>{{ item.label }}<span v-if="item.badge" class="sr-only"> {{ item.badgeLabel ?? `${item.badge} en attente` }}</span></span>
                 </SidebarMenuButton>
-                <SidebarMenuBadge v-if="item.badge" class="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{{ item.badge }}</SidebarMenuBadge>
+                <SidebarMenuBadge v-if="item.badge" aria-hidden="true" class="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{{ item.badge }}</SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
             </SidebarCloser>

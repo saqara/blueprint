@@ -107,3 +107,42 @@ describe.each([
     expect(await render({ nav })).not.toMatch(/<h1[^>]*>\s*(<!--[^>]*-->\s*)*<\/h1>/)
   })
 })
+
+const vueSlots = (p: Record<string, unknown>) => ({
+  default: () => "Contenu",
+  ...(p.actions ? { actions: () => h("a", { href: "https://aos.exemple.fr" }, "Aller vers AOS") } : {}),
+  ...(p.product ? { product: () => h("span", "Hub") } : {}),
+})
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, {
+    ...p,
+    actions: p.actions ? e("a", { href: "https://aos.exemple.fr" }, "Aller vers AOS") : undefined,
+    product: p.product ? e("span", null, "Hub") : undefined,
+  }, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, vueSlots(p)) }))],
+])("%s app-shell-header slots", (_, render) => {
+  it("renders header actions and a product next to the logo", async () => {
+    const html = await render({ nav, actions: true, product: true })
+    expect(html).toContain("Aller vers AOS")
+    expect(html).toMatch(/Saqara[\s\S]{0,400}Hub/)
+  })
+})
+
+describe.each([
+  ["react sidebar", async (p: Record<string, unknown>) => renderToString(e(RSidebar as any, p, "Contenu"))],
+  ["vue sidebar", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VSidebar as any, p, { default: () => "Contenu" }) }))],
+  ["react header", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, p, "Contenu"))],
+  ["vue header", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, { default: () => "Contenu" }) }))],
+])("%s nav badge", (_, render) => {
+  it("gives the count a screen-reader context, and hides the bare number", async () => {
+    const html = await render({ nav })
+    expect(html).toMatch(/<span class="sr-only">\s*(<!--[^>]*-->)?3 en attente(<!--[^>]*-->)?<\/span>/)
+    // Inside the same link / button as the label, so it is part of its accessible name.
+    expect(html).toMatch(/Évaluations(?:(?!<\/(?:a|button)>)[\s\S])*3 en attente/)
+    expect(html).toMatch(/aria-hidden="true"[^>]*>(<!--[^>]*-->)?3(<!--[^>]*-->)?</)
+  })
+  it("takes a badgeLabel", async () => {
+    const html = await render({ nav: [{ id: "notes", label: "Notes", badge: 2, badgeLabel: "2 notes à réaliser" }] })
+    expect(html).toContain("2 notes à réaliser")
+  })
+})
