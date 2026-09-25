@@ -21,12 +21,13 @@ const forwarded = useForwardProps(delegatedProps)
 
 <template>
   <PaginationNext
+    aria-label="Aller à la page suivante"
     data-slot="pagination-next"
     :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
     v-bind="forwarded"
   >
     <slot>
-      <span class="hidden sm:block">Next</span>
+      <span class="hidden sm:block">Suivant</span>
       <ChevronRightIcon />
     </slot>
   </PaginationNext>

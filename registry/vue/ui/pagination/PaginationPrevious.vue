@@ -21,13 +21,14 @@ const forwarded = useForwardProps(delegatedProps)
 
 <template>
   <PaginationPrev
+    aria-label="Aller à la page précédente"
     data-slot="pagination-previous"
     :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
     v-bind="forwarded"
   >
     <slot>
       <ChevronLeftIcon />
-      <span class="hidden sm:block">Previous</span>
+      <span class="hidden sm:block">Précédent</span>
     </slot>
   </PaginationPrev>
 </template>
