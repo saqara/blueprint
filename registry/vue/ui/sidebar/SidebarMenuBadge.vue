@@ -17,7 +17,8 @@ const props = defineProps<{
       'peer-data-[size=sm]/menu-button:top-1',
       'peer-data-[size=default]/menu-button:top-1.5',
       'peer-data-[size=lg]/menu-button:top-2.5',
-      'group-data-[collapsible=icon]:hidden',
+      // Saqara: a dot in the icon corner when collapsed (the count stays in the entry's accessible name).
+      'group-data-[collapsible=icon]:top-1 group-data-[collapsible=icon]:right-1 group-data-[collapsible=icon]:size-2 group-data-[collapsible=icon]:min-w-0 group-data-[collapsible=icon]:overflow-hidden group-data-[collapsible=icon]:rounded-full group-data-[collapsible=icon]:bg-sidebar-primary group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:text-[0px]',
       props.class,
     )"
   >

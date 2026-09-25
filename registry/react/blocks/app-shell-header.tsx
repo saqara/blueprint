@@ -13,7 +13,7 @@ import { UserMenu } from "@/registry/react/ui/user-menu"
 export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; badgeLabel?: string; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 
-// Nav entries share the sidebar palette (hover / active = sidebar-accent) and never wrap.
+// Nav entries: neutral sidebar-accent on hover, red tint when active (as the sidebar); they never wrap.
 const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0"
 
 type AppShellHeaderProps = {
@@ -56,7 +56,7 @@ function AppShellHeader({
     const Icon = item.icon
     const props = {
       "aria-current": isActive ? ("page" as const) : undefined,
-      className: cn(entryBase, isActive && "bg-sidebar-accent text-sidebar-accent-foreground", mobile && "w-full justify-start"),
+      className: cn(entryBase, isActive && "bg-primary/10 text-identity-text hover:bg-primary/10 hover:text-identity-text", mobile && "w-full justify-start"),
       onClick: (event: React.MouseEvent) => {
         setOpen(false)
         if (onNavigate) { event.preventDefault(); onNavigate(item.id) }

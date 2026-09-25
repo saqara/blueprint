@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes, Ref } from "vue"
 import { defaultDocument, useEventListener, useMediaQuery, useVModel } from "@vueuse/core"
-import { TooltipProvider } from "reka-ui"
 import { computed, ref } from "vue"
 import { cn } from "@/lib/utils"
 import { provideSidebarContext, SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from "./utils"
@@ -9,8 +8,14 @@ import { provideSidebarContext, SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SID
 const props = withDefaults(defineProps<{
   defaultOpen?: boolean
   open?: boolean
+  /** Saqara: toggle key with Cmd/Ctrl, or false to leave it to the page (e.g. bold in a rich-text editor). */
+  keyboardShortcut?: string | false
+  /** Saqara: width (px) under which the sidebar becomes a sheet. */
+  mobileBreakpoint?: number
   class?: HTMLAttributes["class"]
 }>(), {
+  keyboardShortcut: SIDEBAR_KEYBOARD_SHORTCUT,
+  mobileBreakpoint: 768,
   defaultOpen: !defaultDocument?.cookie.includes(`${SIDEBAR_COOKIE_NAME}=false`),
   open: undefined,
 })
@@ -19,7 +24,7 @@ const emits = defineEmits<{
   "update:open": [open: boolean]
 }>()
 
-const isMobile = useMediaQuery("(max-width: 768px)")
+const isMobile = useMediaQuery(() => `(max-width: ${props.mobileBreakpoint - 1}px)`)
 const openMobile = ref(false)
 
 const open = useVModel(props, "open", emits, {
@@ -44,7 +49,7 @@ function toggleSidebar() {
 }
 
 useEventListener("keydown", (event: KeyboardEvent) => {
-  if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
+  if (props.keyboardShortcut && event.key === props.keyboardShortcut && (event.metaKey || event.ctrlKey)) {
     event.preventDefault()
     toggleSidebar()
   }
@@ -65,8 +70,8 @@ provideSidebarContext({
 })
 </script>
 
+<!-- Saqara: no TooltipProvider here: each Tooltip brings its own (set a delay with Tooltip :delay-duration). -->
 <template>
-  <TooltipProvider :delay-duration="0">
     <div
       data-slot="sidebar-wrapper"
       :style="{
@@ -78,5 +83,4 @@ provideSidebarContext({
     >
       <slot />
     </div>
-  </TooltipProvider>
 </template>
