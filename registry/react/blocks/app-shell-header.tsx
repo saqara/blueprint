@@ -10,7 +10,7 @@ import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/react/ui/theme-toggle"
 import { UserMenu } from "@/registry/react/ui/user-menu"
 
-export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; href?: string }
+export type AppNavItem = { id: string; label: string; icon?: React.ComponentType<{ className?: string }>; badge?: number; badgeLabel?: string; href?: string }
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 
 // Nav entries share the sidebar palette (hover / active = sidebar-accent) and never wrap.
@@ -22,8 +22,13 @@ type AppShellHeaderProps = {
   onNavigate?: (id: string) => void
   title?: React.ReactNode
   logo?: React.ReactNode
+  /** Next to the logo: product name, role badge… */
+  product?: React.ReactNode
+  /** Before the theme toggle and user menu: external link, icon buttons… */
+  actions?: React.ReactNode
   user?: AppUser
   onSignOut?: () => void
+  signOutLabel?: string
   userMenuItems?: React.ReactNode
   theme?: "light" | "dark"
   onThemeChange?: (theme: "light" | "dark") => void
@@ -34,12 +39,17 @@ type AppShellHeaderProps = {
 
 // Saqara block: top-bar shell (pfou-hub structure). Routing-agnostic — `href` renders links, `onNavigate` handles clicks.
 function AppShellHeader({
-  nav, activeId, onNavigate, title, logo, user, onSignOut, userMenuItems, theme, onThemeChange, menuLabel = "Menu", className, children,
+  nav, activeId, onNavigate, title, logo, product, actions, user, onSignOut, signOutLabel, userMenuItems, theme, onThemeChange, menuLabel = "Menu", className, children,
 }: AppShellHeaderProps) {
   const [open, setOpen] = React.useState(false)
   const active = nav.find((item) => item.id === activeId)
   const PageIcon = active?.icon
-  const brand = logo ?? <SaqaraLogo withText />
+  const brand = (
+    <span className="flex items-center gap-2">
+      {logo ?? <SaqaraLogo withText />}
+      {product}
+    </span>
+  )
 
   const entry = (item: AppNavItem, mobile: boolean) => {
     const isActive = item.id === activeId
@@ -56,7 +66,12 @@ function AppShellHeader({
       <>
         {Icon && <Icon />}
         {item.label}
-        {!!item.badge && <Badge variant="identity" className="ml-1 h-5 min-w-5 px-1">{item.badge}</Badge>}
+        {!!item.badge && (
+          <>
+            <Badge variant="identity" aria-hidden="true" className="ml-1 h-5 min-w-5 px-1">{item.badge}</Badge>
+            <span className="sr-only">{item.badgeLabel ?? `${item.badge} en attente`}</span>
+          </>
+        )}
       </>
     )
     return item.href
@@ -81,14 +96,18 @@ function AppShellHeader({
             {nav.map((item) => entry(item, false))}
           </nav>
           <div className="ml-auto flex shrink-0 items-center gap-1 md:ml-0">
+            {actions}
             {theme && onThemeChange && <ThemeToggle theme={theme} onThemeChange={onThemeChange} />}
-            {user && <UserMenu {...user} onSignOut={onSignOut} compact>{userMenuItems}</UserMenu>}
+            {user && <UserMenu {...user} onSignOut={onSignOut} signOutLabel={signOutLabel} compact>{userMenuItems}</UserMenu>}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden" aria-label={menuLabel}><MenuIcon /></Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-72">
-                <SheetHeader><SheetTitle>{brand}</SheetTitle></SheetHeader>
+                {/* A logo link inside the sheet navigates too: close it like a nav entry. */}
+                <SheetHeader onClick={(event) => (event.target as HTMLElement).closest("a") && setOpen(false)}>
+                  <SheetTitle>{brand}</SheetTitle>
+                </SheetHeader>
                 <nav aria-label="Navigation principale" className="grid gap-1 px-4">
                   {nav.map((item) => entry(item, true))}
                 </nav>
