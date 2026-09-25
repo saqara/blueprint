@@ -68,7 +68,7 @@ function MultiSelect({
           className={cn("h-auto min-h-9 w-full justify-between py-1 font-normal", className)}>
           <span className="flex flex-wrap gap-1">
             {selected.length === 0 && (reset && selectAllLabel ? <span>{selectAllLabel}</span> : <span className="text-muted-foreground">{placeholder}</span>)}
-            {display === "count" && selected.length > 0 && <span>{summarize(selected.length, options.length, countLabel, selectAllLabel)}</span>}
+            {display === "count" && selected.length > 0 && <span>{summarize(selected.length, options.length, countLabel, reset ? undefined : selectAllLabel)}</span>}
             {display === "badges" && shown.map((o) => (
               <Badge key={o.value} variant="secondary">
                 {o.label}

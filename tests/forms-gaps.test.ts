@@ -125,6 +125,11 @@ describe.each([
     await run(() => item("Toutes les agences").click())
     expect(change).toHaveBeenLastCalledWith([])
   })
+  it("selectAllBehavior=clear: every option checked by hand reads as a count, not as no filter", async () => {
+    await mount({ ...value(["lyon", "lille", "paris"]), selectAllLabel: "Toutes les agences", selectAllBehavior: "clear", display: "count", countLabel: (n: number) => `${n} agences` })
+    expect(trigger().textContent).toContain("3 agences")
+    expect(trigger().textContent).not.toContain("Toutes les agences")
+  })
   it("selectAllBehavior=clear: an empty selection reads as the reset label", async () => {
     await mount({ ...value([]), selectAllLabel: "Toutes les agences", selectAllBehavior: "clear", display: "count" })
     expect(trigger().textContent).toContain("Toutes les agences")
