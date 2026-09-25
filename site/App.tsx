@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { Code2 } from "lucide-react"
 import { Button } from "@/registry/react/ui/button"
 import { Separator } from "@/registry/react/ui/separator"
@@ -30,11 +30,14 @@ export function App() {
   const [fw, setFw] = useFramework()
   const theme = useTheme()
   const current = toHash(route)
-  useEffect(() => { window.scrollTo(0, 0) }, [current])
+  // From md up the white panel is the scroll container (inset layout); below, the window scrolls.
+  const panel = useRef<HTMLElement>(null)
+  useEffect(() => { window.scrollTo(0, 0); panel.current?.scrollTo(0, 0) }, [current])
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      {/* Same layout as the app-shell-sidebar block with variant="inset" (shadcn dashboard). */}
+      <Sidebar variant="inset">
         <SidebarHeader>
           {/* Same header geometry as the app-shell-sidebar block. */}
           <a href="#/" className="flex h-8 items-center gap-2 px-1 font-heading font-semibold">
@@ -64,7 +67,7 @@ export function App() {
           ))}
         </SidebarContent>
       </Sidebar>
-      <SidebarInset>
+      <SidebarInset ref={panel} className="md:h-[calc(100svh-1rem)] md:overflow-y-auto">
         {/* Same top bar as the app-shell-sidebar block: trigger, separator, page title, then controls. */}
         <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger className="-ml-1" />

@@ -19,7 +19,7 @@ import { computed, defineComponent } from "vue"
 import { Separator } from "@/registry/vue/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarInset, SidebarMenu,
-  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, useSidebar,
+  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, useSidebar,
 } from "@/registry/vue/ui/sidebar"
 import { SaqaraLogo } from "@/registry/vue/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/vue/ui/theme-toggle"
@@ -34,8 +34,10 @@ const props = withDefaults(defineProps<{
   onNavigate?: (id: string) => void
   onSignOut?: () => void
   defaultOpen?: boolean
+  /** "inset" (shadcn dashboard layout): the content is a white panel framed by the sidebar colour. */
+  variant?: "sidebar" | "inset"
   class?: HTMLAttributes["class"]
-}>(), { defaultOpen: true })
+}>(), { defaultOpen: true, variant: "sidebar" })
 const theme = defineModel<"light" | "dark">("theme")
 const active = computed(() => props.nav.find((item) => item.id === props.activeId))
 
@@ -48,7 +50,7 @@ const SidebarCloser = defineComponent((_, { slots }) => {
 
 <template>
   <SidebarProvider :default-open="defaultOpen" :class="props.class">
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" :variant="variant">
       <SidebarHeader>
         <div class="flex h-8 items-center px-1 group-data-[collapsible=icon]:justify-center">
           <slot name="logo"><SaqaraLogo with-text class="group-data-[collapsible=icon]:[&>span]:sr-only" /></slot>
@@ -84,9 +86,9 @@ const SidebarCloser = defineComponent((_, { slots }) => {
           <template v-if="$slots['user-menu']" #default><slot name="user-menu" /></template>
         </UserMenu>
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
-    <SidebarInset>
+    <!-- min-h-0 + overflow: in a height-bounded shell the white panel scrolls inside its frame instead of spilling out. -->
+    <SidebarInset class="min-h-0 overflow-y-auto">
       <header class="flex h-14 shrink-0 items-center gap-2 border-b px-4">
         <SidebarTrigger class="-ml-1" />
         <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-4" />

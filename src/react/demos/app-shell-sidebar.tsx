@@ -14,7 +14,7 @@ export default function AppShellSidebarDemo() {
   return (
     // [&_.h-svh]:h-full keeps the full-height sidebar inside the docs frame (which provides the transform)
     <div className="h-full overflow-hidden">
-      <AppShellSidebar className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId={active} onNavigate={setActive}
+      <AppShellSidebar variant="inset" className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId={active} onNavigate={setActive}
         user={{ name: "Alexandre Brochot", email: "alexandre.brochot@saqara.com" }} onSignOut={() => {}}>
         <p className="text-sm text-muted-foreground">Contenu de la page « {nav.find((n) => n.id === active)?.label} ».</p>
       </AppShellSidebar>

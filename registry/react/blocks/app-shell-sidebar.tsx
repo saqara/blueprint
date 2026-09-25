@@ -4,7 +4,7 @@ import * as React from "react"
 import { Separator } from "@/registry/react/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarInset, SidebarMenu,
-  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger, useSidebar,
+  SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, useSidebar,
 } from "@/registry/react/ui/sidebar"
 import { SaqaraLogo } from "@/registry/react/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/react/ui/theme-toggle"
@@ -62,20 +62,22 @@ type AppShellSidebarProps = {
   theme?: "light" | "dark"
   onThemeChange?: (theme: "light" | "dark") => void
   defaultOpen?: boolean
+  /** "inset" (shadcn dashboard layout): the content is a white panel framed by the sidebar colour. */
+  variant?: "sidebar" | "inset"
   className?: string
   children?: React.ReactNode
 }
 
 // Saqara block: collapsible sidebar shell. Routing-agnostic — `href` renders links, `onNavigate` handles clicks.
 function AppShellSidebar({
-  nav, activeId, onNavigate, title, logo, user, onSignOut, userMenuItems, theme, onThemeChange, defaultOpen = true, className, children,
+  nav, activeId, onNavigate, title, logo, user, onSignOut, userMenuItems, theme, onThemeChange, defaultOpen = true, variant = "sidebar", className, children,
 }: AppShellSidebarProps) {
   const active = nav.find((item) => item.id === activeId)
   const PageIcon = active?.icon
 
   return (
     <SidebarProvider defaultOpen={defaultOpen} className={className}>
-      <Sidebar collapsible="icon">
+      <Sidebar collapsible="icon" variant={variant}>
         <SidebarHeader>
           <div className="flex h-8 items-center px-1 group-data-[collapsible=icon]:justify-center">
             {logo ?? <SaqaraLogo withText className="group-data-[collapsible=icon]:[&>span]:sr-only" />}
@@ -95,9 +97,9 @@ function AppShellSidebar({
             </UserMenu>
           </SidebarFooter>
         )}
-        <SidebarRail />
       </Sidebar>
-      <SidebarInset>
+      {/* min-h-0 + overflow: in a height-bounded shell the white panel scrolls inside its frame instead of spilling out. */}
+      <SidebarInset className="min-h-0 overflow-y-auto">
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />

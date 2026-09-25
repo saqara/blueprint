@@ -147,7 +147,7 @@ function onSorting(next: SortingState) {
 </script>
 
 <template>
-  <AppShellSidebar class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" active-id="annuaire"
+  <AppShellSidebar variant="inset" class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" active-id="annuaire"
     :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@saqara.com' }" @sign-out="() => {}">
     <div class="space-y-6">
       <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

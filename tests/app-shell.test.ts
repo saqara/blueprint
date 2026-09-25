@@ -146,3 +146,28 @@ describe.each([
     expect(html).toContain("2 notes à réaliser")
   })
 })
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RSidebar as any, p, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VSidebar as any, p, { default: () => "Contenu" }) }))],
+])("%s app-shell-sidebar inset", (_, render) => {
+  it("frames the content as a panel on the sidebar colour with variant=inset (shadcn dashboard layout)", async () => {
+    const html = await render({ nav, variant: "inset" })
+    expect(html).toContain('data-variant="inset"')
+    expect(html).toContain("has-data-[variant=inset]:bg-sidebar")
+  })
+  it("keeps the classic sidebar by default", async () => {
+    expect(await render({ nav })).toContain('data-variant="sidebar"')
+  })
+})
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RSidebar as any, p, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VSidebar as any, p, { default: () => "Contenu" }) }))],
+])("%s app-shell-sidebar rail", (_, render) => {
+  it("has no rail: its resize cursor suggested a resizable sidebar (the header trigger toggles it)", async () => {
+    const html = await render({ nav, variant: "inset" })
+    expect(html).not.toContain('data-sidebar="rail"')
+    expect(html).toContain('data-sidebar="trigger"')
+  })
+})
