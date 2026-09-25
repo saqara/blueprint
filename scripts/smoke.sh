@@ -8,7 +8,9 @@ TMP=$(mktemp -d)
 touch "$TMP/.npmrc"
 export NPM_CONFIG_USERCONFIG="$TMP/.npmrc"
 PORT=4873
-python3 -m http.server "$PORT" -d "$ROOT/public" >/dev/null 2>&1 &
+# Static server for public/ (python's http.server resets connections under the CLI's parallel fetches).
+node -e "require('http').createServer((q, s) => require('fs').readFile('$ROOT/public' + q.url.split('?')[0], (e, d) => {
+  s.writeHead(e ? 404 : 200, { 'content-type': 'application/json' }); s.end(d) })).listen($PORT, '127.0.0.1')" &
 SERVER=$!
 trap 'kill $SERVER; rm -rf "$TMP"' EXIT
 sleep 1
@@ -31,7 +33,7 @@ cat > "$R/components.json" <<EOF
 { "\$schema": "https://ui.shadcn.com/schema.json", "style": "new-york", "rsc": false, "tsx": true,
   "tailwind": { "config": "", "css": "src/index.css", "baseColor": "neutral", "cssVariables": true },
   "aliases": { "components": "@/components", "utils": "@/lib/utils", "ui": "@/components/ui", "lib": "@/lib", "hooks": "@/hooks" },
-  "iconLibrary": "lucide", "registries": { "@saqara": "http://localhost:$PORT/r/react/{name}.json" } }
+  "iconLibrary": "lucide", "registries": { "@saqara": "http://127.0.0.1:$PORT/r/react/{name}.json" } }
 EOF
 (cd "$R" && npm i -s react react-dom tailwindcss vite @vitejs/plugin-react typescript@^6 @types/react @types/react-dom \
   && npx -y shadcn@latest add $(items react) -y \
@@ -50,7 +52,7 @@ cat > "$V/components.json" <<EOF
 { "\$schema": "https://shadcn-vue.com/schema.json", "style": "new-york", "typescript": true,
   "tailwind": { "config": "", "css": "src/index.css", "baseColor": "neutral", "cssVariables": true },
   "aliases": { "components": "@/components", "utils": "@/lib/utils", "ui": "@/components/ui", "lib": "@/lib", "composables": "@/composables" },
-  "iconLibrary": "lucide", "registries": { "@saqara": "http://localhost:$PORT/r/vue/{name}.json" } }
+  "iconLibrary": "lucide", "registries": { "@saqara": "http://127.0.0.1:$PORT/r/vue/{name}.json" } }
 EOF
 (cd "$V" && npm i -s vue tailwindcss vite @vitejs/plugin-vue typescript@^6 vue-tsc clsx tailwind-merge \
   && npx -y shadcn-vue@latest add $(items vue) -y \

@@ -152,6 +152,45 @@
       ]
     },
     {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "files": [
+        {
+          "path": "registry/vue/ui/card/Card.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/CardTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
@@ -370,6 +409,39 @@
       ]
     },
     {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "files": [
+        {
+          "path": "registry/vue/ui/skeleton/Skeleton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/skeleton/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/spinner/Spinner.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/spinner/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
@@ -402,6 +474,37 @@
         },
         {
           "path": "registry/vue/ui/textarea/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/tooltip/Tooltip.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tooltip/TooltipContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tooltip/TooltipProvider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tooltip/TooltipTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tooltip/index.ts",
           "type": "registry:ui"
         }
       ]
