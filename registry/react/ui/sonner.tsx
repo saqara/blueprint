@@ -9,7 +9,8 @@ import {
 } from "lucide-react"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
-const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
+// Saqara: no theme library (see tests/sonner.test.ts). Apps pass `theme`; default matches vue-sonner.
+const Toaster = ({ theme = "light", ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme}

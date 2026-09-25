@@ -26,7 +26,7 @@ Prérequis : Tailwind v4 et `shadcn init` (React) ou `shadcn-vue init` (Vue) dé
 
 Composants qui demandent un élément racine :
 - `tooltip` (React) : placer un `<TooltipProvider>` à la racine de l'app.
-- `sonner` : monter `<Toaster />` une fois à la racine. En React, passer `theme="light" | "dark"` depuis le thème de l'app (défaut : `system`). En Vue, la feuille de style de `vue-sonner` est importée par le composant (l'app doit déclarer les types `vite/client`, présents par défaut dans un projet Vite).
+- `sonner` : monter `<Toaster />` une fois à la racine. En React, passer `theme="light" | "dark"` depuis le thème de l'app (défaut : `light`, comme en Vue). En Vue, la feuille de style de `vue-sonner` est importée par le composant (l'app doit déclarer les types `vite/client`, présents par défaut dans un projet Vite).
 
 Le code est copié dans l'app : il lui appartient. Pour récupérer une mise à jour, relancer `add` avec `--overwrite` et relire le diff.
 

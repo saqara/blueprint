@@ -10,6 +10,9 @@ describe("sonner (Saqara)", () => {
     expect(readFileSync("registry/react/ui/sonner.tsx", "utf8")).not.toContain("next-themes")
     expect(sonnerDeps("react")).not.toContain("next-themes")
   })
+  it("React Toaster defaults to light like vue-sonner (apps drive dark mode with a class, not the OS)", () => {
+    expect(readFileSync("registry/react/ui/sonner.tsx", "utf8")).toContain('theme = "light"')
+  })
   it("Vue Toaster ships the vue-sonner stylesheet", () => {
     expect(readFileSync("registry/vue/ui/sonner/Sonner.vue", "utf8")).toContain('import "vue-sonner/style.css"')
   })
