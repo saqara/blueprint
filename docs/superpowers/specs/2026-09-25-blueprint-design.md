@@ -185,6 +185,8 @@ Modèle de navigation commun aux shells : `AppNavItem = { id, label, icon?, badg
 
 **Hors lot 4 :** l'auth elle-même (Keycloak, envoi du lien), le routage, les sous-menus imbriqués.
 
+**Lot 5 (2026-09-25) :** `breadcrumb`, `collapsible`, `scroll-area`, `toggle`, `toggle-group`, `hover-card`, repris tels quels (React + Vue). Reportés à la demande : `chart`, `calendar` / `date-picker`, `tag-input`, champs téléphone / devise / pays.
+
 **Hors V1 :** Chart (recharts d'un côté, unovis de l'autre, parité coûteuse) et DatePicker (pas de besoin dans pfou-hub).
 
 ## 6. Conventions

@@ -360,6 +360,49 @@
       ]
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "dependencies": [
+        "@lucide/vue",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/breadcrumb/Breadcrumb.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbEllipsis.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbLink.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbPage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/BreadcrumbSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/breadcrumb/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -433,6 +476,32 @@
         },
         {
           "path": "registry/vue/ui/checkbox/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/collapsible/Collapsible.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/collapsible/CollapsibleContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/collapsible/CollapsibleTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/collapsible/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -779,6 +848,33 @@
       ]
     },
     {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/hover-card/HoverCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/hover-card/HoverCardContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/hover-card/HoverCardTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/hover-card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1003,6 +1099,29 @@
         },
         {
           "path": "registry/vue/ui/saqara-logo/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/scroll-area/ScrollArea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/scroll-area/ScrollBar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/scroll-area/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -1534,6 +1653,53 @@
       ],
       "dependencies": [
         "@lucide/vue"
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "dependencies": [
+        "@vueuse/core",
+        "class-variance-authority",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/toggle/Toggle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/toggle/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "dependencies": [
+        "@vueuse/core",
+        "class-variance-authority",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/toggle"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/toggle-group/ToggleGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/toggle-group/ToggleGroupItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/toggle-group/index.ts",
+          "type": "registry:ui"
+        }
       ]
     },
     {

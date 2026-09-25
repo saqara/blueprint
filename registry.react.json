@@ -282,6 +282,22 @@
       ]
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -323,6 +339,20 @@
       "files": [
         {
           "path": "registry/react/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/collapsible.tsx",
           "type": "registry:ui"
         }
       ]
@@ -452,6 +482,21 @@
       "files": [
         {
           "path": "registry/react/ui/file-dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/hover-card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -607,6 +652,21 @@
       "files": [
         {
           "path": "registry/react/ui/saqara-logo.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/scroll-area.tsx",
           "type": "registry:ui"
         }
       ]
@@ -850,6 +910,41 @@
       "files": [
         {
           "path": "registry/react/ui/theme-toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/toggle"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/toggle-group.tsx",
           "type": "registry:ui"
         }
       ]
