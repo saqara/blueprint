@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { localize, plan, saqaraDeps } from "../scripts/lib/vendor.ts"
+import { localize, npmDeps, plan, saqaraDeps } from "../scripts/lib/vendor.ts"
 
 const upstream = {
   name: "radio-group",
@@ -23,6 +23,16 @@ describe("saqaraDeps", () => {
   })
   it("handles missing upstream deps and self-imports", () => {
     expect(saqaraDeps(undefined, ['from "@/registry/new-york-v4/ui/radio-group"'], "radio-group")).toEqual([])
+  })
+})
+
+describe("npmDeps", () => {
+  it("adds bare imports upstream forgot to declare, skipping frameworks, aliases and relatives", () => {
+    const src = [
+      'import * as React from "react"\nimport { cva } from "class-variance-authority"\nimport { Slot } from "radix-ui"',
+      'import { X } from "@lucide/vue/icons"\nimport a from "./Dialog.vue"\nimport { cn } from "@/lib/utils"\nimport { ref } from "vue"',
+    ]
+    expect(npmDeps(["radix-ui"], src)).toEqual(["@lucide/vue", "class-variance-authority", "radix-ui"])
   })
 })
 

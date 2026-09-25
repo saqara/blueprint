@@ -137,6 +137,7 @@
       "type": "registry:ui",
       "title": "Button",
       "dependencies": [
+        "class-variance-authority",
         "reka-ui"
       ],
       "files": [

@@ -22,6 +22,18 @@ export function saqaraDeps(upstream: string[] | undefined, contents: string[], s
   return [...names].sort().map((n) => `@saqara/${n}`)
 }
 
+const FRAMEWORKS = new Set(["react", "react-dom", "vue"])
+
+// Upstream items sometimes import packages they don't declare (e.g. button → class-variance-authority).
+export function npmDeps(upstream: string[] | undefined, contents: string[]): string[] {
+  const specifiers = contents.flatMap((c) => [...c.matchAll(/from ["']([^"'.@][^"']*|@[^/"']+\/[^"']+)["']/g)].map((m) => m[1]))
+  const packages = specifiers
+    .filter((s) => !s.startsWith("@/"))
+    .map((s) => s.split("/").slice(0, s.startsWith("@") ? 2 : 1).join("/"))
+    .filter((p) => !FRAMEWORKS.has(p))
+  return [...new Set([...(upstream ?? []), ...packages])].sort()
+}
+
 const title = (name: string) => name.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
 
 export function plan(upstream: UpstreamItem, fw: Fw, exists: (path: string) => boolean, force: boolean) {
@@ -29,12 +41,13 @@ export function plan(upstream: UpstreamItem, fw: Fw, exists: (path: string) => b
   const clash = files.find((f) => exists(f.path))
   if (clash && !force) throw new Error(`${clash.path} already exists (customized?). Re-run with --force to overwrite.`)
 
+  const packages = npmDeps(upstream.dependencies, upstream.files.map((f) => f.content))
   const deps = saqaraDeps(upstream.registryDependencies, upstream.files.map((f) => f.content), upstream.name)
   const item: Item = {
     name: upstream.name,
     type: upstream.type,
     title: title(upstream.name),
-    ...(upstream.dependencies?.length ? { dependencies: upstream.dependencies } : {}),
+    ...(packages.length ? { dependencies: packages } : {}),
     ...(deps.length ? { registryDependencies: deps } : {}),
     files: files.map(({ path, type, target }) => (target ? { path, type, target } : { path, type })),
   }
