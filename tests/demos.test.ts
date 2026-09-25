@@ -19,3 +19,18 @@ describe("vue demos", () => {
     expect((await renderVue(createSSRApp(mod.default))).length).toBeGreaterThan(0)
   })
 })
+
+const reactExamples = import.meta.glob<{ default: ComponentType }>("../src/examples/react/*.tsx", { eager: true })
+const vueExamples = import.meta.glob<{ default: Component }>("../src/examples/vue/*.vue", { eager: true })
+
+describe("react examples", () => {
+  it.each(Object.entries(reactExamples))("%s renders", (_, mod) => {
+    expect(renderToString(createElement(mod.default)).length).toBeGreaterThan(0)
+  })
+})
+
+describe("vue examples", () => {
+  it.each(Object.entries(vueExamples))("%s renders", async (_, mod) => {
+    expect((await renderVue(createSSRApp(mod.default))).length).toBeGreaterThan(0)
+  })
+})

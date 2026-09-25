@@ -1,5 +1,6 @@
 import type { Fw } from "../lib/framework"
 import type { Route } from "../lib/route"
+import { ExamplePage } from "./ExamplePage"
 import { Home } from "./Home"
 import { Installation } from "./Installation"
 import { Introduction } from "./Introduction"
@@ -17,6 +18,7 @@ export function Page({ route, fw }: { route: Route; fw: Fw }) {
       return <NotFound />
     case "composants": return <ItemPage kind="composants" name={route.slug!} fw={fw} />
     case "blocs": return <ItemPage kind="blocs" name={route.slug!} fw={fw} />
+    case "exemples": return <ExamplePage slug={route.slug!} fw={fw} />
     default: return <NotFound />
   }
 }

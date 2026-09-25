@@ -24,3 +24,11 @@ export function parityErrors(react: Manifest, vue: Manifest, hasDemo: (fw: Fw, n
   }
   return errors
 }
+
+export function exampleErrors(react: string[], vue: string[]): string[] {
+  const errors: string[] = []
+  for (const [fw, names, other, otherNames] of [["react", react, "vue", vue], ["vue", vue, "react", react]] as const) {
+    for (const name of names) if (!otherNames.includes(name)) errors.push(`example "${name}" is in ${fw} but not in ${other}`)
+  }
+  return errors
+}

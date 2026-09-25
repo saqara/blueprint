@@ -9,5 +9,6 @@ export function VueIsland({ component }: { component: Component }) {
     app.mount(ref.current!)
     return () => app.unmount()
   }, [component])
-  return <div ref={ref} />
+  // display: contents — the island adds no box, so demos lay out exactly like their React twins.
+  return <div ref={ref} className="contents" />
 }

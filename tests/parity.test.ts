@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { parityErrors } from "../scripts/lib/parity.ts"
+import { exampleErrors, parityErrors } from "../scripts/lib/parity.ts"
 import type { Item, Manifest } from "../scripts/lib/manifest.ts"
 
 const m = (...items: Item[]): Manifest => ({ $schema: "", name: "saqara", homepage: "", items })
@@ -30,5 +30,12 @@ describe("parityErrors", () => {
   it("flags a missing demo, but never for the theme", () => {
     const hasDemo = (fw: string) => fw === "react"
     expect(parityErrors(m(theme, button), m(theme, button), hasDemo)).toEqual(['vue "button" has no demo in src/vue/demos/'])
+  })
+})
+
+describe("exampleErrors", () => {
+  it("requires every example in both frameworks", () => {
+    expect(exampleErrors(["annuaire", "connexion"], ["connexion"])).toEqual(['example "annuaire" is in react but not in vue'])
+    expect(exampleErrors(["connexion"], ["connexion"])).toEqual([])
   })
 })
