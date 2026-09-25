@@ -14,3 +14,35 @@ describe.each([["react", reactStepErrors], ["vue", vueStepErrors]] as const)("%s
     expect(stepErrors(2, { ...valid, contactName: "", email: "camille@" })).toEqual({ contactName: "Le nom du contact est obligatoire.", email: "L'e-mail n'est pas valide." })
   })
 })
+
+import * as RA from "../src/examples/react/annuaire"
+import * as VA from "../src/examples/vue/annuaire.vue"
+
+describe.each([["react", RA], ["vue", VA]] as const)("%s annuaire logic", (_, A) => {
+  const base = { search: "", depts: [] as string[], status: "all" as const, minScore: 0 }
+  it("ships ~24 fictitious companies", () => expect(A.COMPANIES.length).toBeGreaterThanOrEqual(24))
+  it("filters by name ignoring case and accents", () => {
+    const found = A.filterCompanies(A.COMPANIES, { ...base, search: "ELEC RHONE" })
+    expect(found.map((c) => c.name)).toEqual(["Élec Rhône"])
+  })
+  it("filters by departments, status and minimum score (all combined)", () => {
+    const found = A.filterCompanies(A.COMPANIES, { search: "", depts: ["69"], status: "qualified", minScore: 15 })
+    expect(found.length).toBeGreaterThan(0)
+    expect(found.every((c) => c.dept === "69" && c.status === "qualified" && c.score >= 15)).toBe(true)
+    expect(A.filterCompanies(A.COMPANIES, { ...base, minScore: 21 })).toEqual([])
+  })
+  it("sorts text in French order and scores numerically, both directions", () => {
+    const byName = A.sortCompanies(A.COMPANIES, [{ id: "name", desc: false }]).map((c) => c.name)
+    expect(byName).toEqual([...byName].sort((a, b) => a.localeCompare(b, "fr")))
+    const byScore = A.sortCompanies(A.COMPANIES, [{ id: "score", desc: true }]).map((c) => c.score)
+    expect(byScore).toEqual([...byScore].sort((a, b) => b - a))
+    expect(A.sortCompanies(A.COMPANIES, [])).toEqual(A.COMPANIES)
+  })
+  it("paginates with a clamped page", () => {
+    const list = A.COMPANIES.slice(0, 20)
+    expect(A.paginate(list, 1, 8)).toEqual({ rows: list.slice(0, 8), pageCount: 3, page: 1 })
+    expect(A.paginate(list, 3, 8).rows).toEqual(list.slice(16, 20))
+    expect(A.paginate(list, 9, 8).page).toBe(3)
+    expect(A.paginate([], 1, 8)).toEqual({ rows: [], pageCount: 1, page: 1 })
+  })
+})
