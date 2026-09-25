@@ -14,7 +14,7 @@ export default function ConnexionExample() {
   return (
     <div className="flex min-h-full flex-col items-center justify-center gap-6 bg-muted/40 p-6">
       <Login
-        title="Portail Fournisseur"
+        title="Saqara Hub"
         description="Connectez-vous pour accéder à votre espace."
         magicLink
         sso={{ label: "Se connecter avec SSO" }}

@@ -13,7 +13,7 @@ export default function SidebarDemo() {
       <Sidebar collapsible="none" className="h-64 rounded-md border">
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Portail fournisseur</SidebarGroupLabel>
+            <SidebarGroupLabel>Saqara Hub</SidebarGroupLabel>
             <SidebarMenu>
               {items.map((it) => (
                 <SidebarMenuItem key={it.label}>
