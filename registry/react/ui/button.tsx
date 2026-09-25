@@ -65,11 +65,10 @@ function Button({
       aria-busy={loading || undefined}
       {...props}
     >
-      {/* Saqara: decorative, the label beside it is what is read out. With
-          asChild the child renders alone, so the spinner is only drawn on a
-          real button. */}
-      {loading && !asChild ? <Spinner aria-hidden="true" role="presentation" /> : null}
-      {children}
+      {/* Saqara: with asChild the Slot needs a single element child (an array,
+          even [null, child], throws), so the spinner is only drawn on a real
+          button; it is decorative, the label beside it is what is read out. */}
+      {asChild ? children : <>{loading && <Spinner aria-hidden="true" role="presentation" />}{children}</>}
     </Comp>
   )
 }

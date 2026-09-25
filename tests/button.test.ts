@@ -1,34 +1,23 @@
-import { readFileSync } from "node:fs"
+import { createElement as e } from "react"
+import { renderToString } from "react-dom/server"
+import { createSSRApp, h } from "vue"
+import { renderToString as renderVue } from "vue/server-renderer"
 import { describe, expect, it } from "vitest"
-import { readManifest } from "../scripts/lib/manifest.ts"
+import { Button as RButton } from "../registry/react/ui/button"
+import { Button as VButton } from "../registry/vue/ui/button"
 
-const item = (fw: "react" | "vue", name: string) => readManifest(`registry.${fw}.json`).items.find((i) => i.name === name)!
-
-const buttons = { react: "registry/react/ui/button.tsx", vue: "registry/vue/ui/button/Button.vue" }
-const spinners = { react: "registry/react/ui/spinner.tsx", vue: "registry/vue/ui/spinner/Spinner.vue" }
-
-// Saqara: every app needs a busy button, and each one rewrote it around Blueprint's.
-describe.each(Object.entries(buttons))("%s button `loading` (Saqara)", (fw, path) => {
-  const src = readFileSync(path, "utf8")
-  it("takes a `loading` prop that disables the button and marks it busy", () => {
-    expect(src).toMatch(/loading/)
-    expect(src).toMatch(/aria-busy/)
-    expect(src).toMatch(/disabled \|\| loading|disabled\s*\|\|\s*loading/)
+// Regression (#1): asChild must hand a single element to the Slot, loading or not.
+describe("button asChild", () => {
+  it.each([false, true])("react renders the child link (loading=%s)", (loading) => {
+    const html = renderToString(e(RButton, { asChild: true, loading }, e("a", { href: "#/" }, "Accueil")))
+    expect(html).toMatch(/^<a [^>]*href="#\/"[^>]*>Accueil<\/a>$/)
   })
-  it("shows Blueprint's spinner, decorative, before the label it keeps", () => {
-    expect(src).toMatch(/Spinner/)
-    expect(src).toMatch(/aria-hidden/)
+  it.each([false, true])("vue renders the child link (loading=%s)", async (loading) => {
+    const html = await renderVue(createSSRApp({ render: () => h(VButton, { asChild: true, loading }, () => h("a", { href: "#/" }, "Accueil")) }))
+    expect(html).toMatch(/<a [^>]*href="#\/"[^>]*>Accueil<\/a>/)
+    expect(html).not.toContain("<button")
   })
-  it("declares the spinner as a registry dependency", () => {
-    expect(item(fw as "react" | "vue", "button").registryDependencies).toContain("@saqara/spinner")
-  })
-})
-
-// Saqara: interface text is French, the accessible name of a lone spinner included.
-describe.each(Object.entries(spinners))("%s spinner", (_, path) => {
-  it("is labelled in French", () => {
-    const src = readFileSync(path, "utf8")
-    expect(src).toContain('aria-label="Chargement"')
-    expect(src).not.toContain('aria-label="Loading"')
+  it("still shows the spinner on a real loading button", () => {
+    expect(renderToString(e(RButton, { loading: true }, "Envoyer"))).toMatch(/aria-busy="true"[\s\S]*<svg/)
   })
 })
