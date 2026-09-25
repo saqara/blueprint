@@ -31,3 +31,13 @@ export function itemInfo(name: string) {
   const item = manifest.items.find((i) => i.name === name)
   return item && { title: item.title as string, description: (item as { description?: string }).description ?? "", type: item.type }
 }
+
+export function pageTitle(route: { section: string; slug?: string }): string {
+  if (route.section === "home") return "Accueil"
+  const found =
+    route.section === "demarrer" ? START_PAGES.find((p) => p.slug === route.slug)?.title
+    : route.section === "exemples" ? EXAMPLES.find((e) => e.slug === route.slug)?.title
+    : route.section === "composants" || route.section === "blocs" ? itemInfo(route.slug ?? "")?.title
+    : undefined
+  return found ?? "Introuvable"
+}

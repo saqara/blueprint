@@ -4,7 +4,7 @@ import { readThemeChoice, resolveTheme } from "../site/lib/theme"
 import { readFramework } from "../site/lib/framework"
 import reactManifest from "../registry.react.json"
 import vueManifest from "../registry.vue.json"
-import { BLOCKS, CATEGORIES, itemInfo } from "../site/catalog"
+import { BLOCKS, CATEGORIES, itemInfo, pageTitle } from "../site/catalog"
 
 describe("parseRoute", () => {
   it.each([
@@ -60,4 +60,16 @@ describe("catalog", () => {
   it("reads titles from the manifest", () => {
     expect(itemInfo("data-table")?.title).toBe("Data Table")
   })
+})
+
+describe("pageTitle", () => {
+  it.each([
+    [{ section: "home" }, "Accueil"],
+    [{ section: "demarrer", slug: "tokens" }, "Thème et tokens"],
+    [{ section: "composants", slug: "data-table" }, "Data Table"],
+    [{ section: "blocs", slug: "login" }, "Login"],
+    [{ section: "exemples", slug: "annuaire" }, "Annuaire fournisseurs"],
+    [{ section: "composants", slug: "nope" }, "Introuvable"],
+    [{ section: "not-found" }, "Introuvable"],
+  ] as const)("%o → %s", (route, title) => expect(pageTitle(route)).toBe(title))
 })

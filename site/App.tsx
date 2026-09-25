@@ -1,13 +1,15 @@
 import { useEffect } from "react"
 import { Code2 } from "lucide-react"
 import { Button } from "@/registry/react/ui/button"
+import { Separator } from "@/registry/react/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
 } from "@/registry/react/ui/sidebar"
 import { Toaster } from "@/registry/react/ui/sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
-import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, START_PAGES } from "./catalog"
+import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES } from "./catalog"
+import { ReactIcon, VueIcon } from "./components/FrameworkIcon"
 import { ThemeMenu } from "./components/ThemeMenu"
 import { useFramework, useRoute, useTheme } from "./hooks"
 import type { Fw } from "./lib/framework"
@@ -34,8 +36,9 @@ export function App() {
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <a href="#/" className="flex h-10 items-center gap-2 px-2 font-heading font-semibold">
-            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="size-7 rounded-md" />
+          {/* Same header geometry as the app-shell-sidebar block. */}
+          <a href="#/" className="flex h-8 items-center gap-2 px-1 font-heading font-semibold">
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="size-6 rounded-md" />
             Blueprint
           </a>
         </SidebarHeader>
@@ -49,7 +52,7 @@ export function App() {
                     const href = toHash(item.route)
                     return (
                       <SidebarMenuItem key={href}>
-                        <SidebarMenuButton asChild isActive={href === current} size="sm">
+                        <SidebarMenuButton asChild isActive={href === current}>
                           <a href={href} aria-current={href === current ? "page" : undefined}>{item.label}</a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -62,12 +65,15 @@ export function App() {
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/95 px-4 backdrop-blur">
-          <SidebarTrigger />
+        {/* Same top bar as the app-shell-sidebar block: trigger, separator, page title, then controls. */}
+        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+          <h1 className="truncate text-sm font-medium">{pageTitle(route)}</h1>
           <div className="ml-auto flex items-center gap-2">
             <ToggleGroup type="single" variant="outline" size="sm" value={fw} onValueChange={(v) => v && setFw(v as Fw)} aria-label="Framework">
-              <ToggleGroupItem value="react">React</ToggleGroupItem>
-              <ToggleGroupItem value="vue">Vue</ToggleGroupItem>
+              <ToggleGroupItem value="react"><ReactIcon />React</ToggleGroupItem>
+              <ToggleGroupItem value="vue"><VueIcon />Vue</ToggleGroupItem>
             </ToggleGroup>
             <ThemeMenu value={theme.choice} onChange={theme.setChoice} />
             <Button variant="ghost" size="icon" asChild>
