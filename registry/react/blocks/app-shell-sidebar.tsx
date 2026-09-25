@@ -40,7 +40,7 @@ function NavMenu({ nav, activeId, onNavigate }: { nav: AppNavItem[]; activeId?: 
             >
               {item.href ? <a href={item.href}>{content}</a> : content}
             </SidebarMenuButton>
-            {!!item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+            {!!item.badge && <SidebarMenuBadge className="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{item.badge}</SidebarMenuBadge>}
           </SidebarMenuItem>
         )
       })}

@@ -71,7 +71,7 @@ const SidebarCloser = defineComponent((_, { slots }) => {
                   <component :is="item.icon" v-if="item.icon" />
                   <span>{{ item.label }}</span>
                 </SidebarMenuButton>
-                <SidebarMenuBadge v-if="item.badge">{{ item.badge }}</SidebarMenuBadge>
+                <SidebarMenuBadge v-if="item.badge" class="justify-center rounded-full bg-identity text-identity-foreground peer-hover/menu-button:text-identity-foreground peer-data-[active=true]/menu-button:text-identity-foreground">{{ item.badge }}</SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
             </SidebarCloser>

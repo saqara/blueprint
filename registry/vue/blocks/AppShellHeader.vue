@@ -11,7 +11,7 @@ import { MenuIcon } from "@lucide/vue"
 import { computed, ref } from "vue"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/registry/vue/ui/badge"
-import { Button, buttonVariants } from "@/registry/vue/ui/button"
+import { Button } from "@/registry/vue/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/vue/ui/sheet"
 import { SaqaraLogo } from "@/registry/vue/ui/saqara-logo"
 import { ThemeToggle } from "@/registry/vue/ui/theme-toggle"
@@ -31,8 +31,10 @@ const props = withDefaults(defineProps<{
 const theme = defineModel<"light" | "dark">("theme")
 const open = ref(false)
 const active = computed(() => props.nav.find((item) => item.id === props.activeId))
+// Nav entries share the sidebar palette (hover / active = sidebar-accent) and never wrap.
+const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0"
 const entryClass = (item: AppNavItem, mobile: boolean) =>
-  cn(buttonVariants({ variant: item.id === props.activeId ? "secondary" : "ghost", size: "sm" }), mobile && "w-full justify-start")
+  cn(entryBase, item.id === props.activeId && "bg-sidebar-accent text-sidebar-accent-foreground", mobile && "w-full justify-start")
 
 function go(event: Event, id: string) {
   open.value = false
@@ -44,14 +46,15 @@ function go(event: Event, id: string) {
 
 <template>
   <div data-slot="app-shell-header" :class="cn('flex min-h-svh flex-col bg-background', props.class)">
-    <header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+    <header class="sticky top-0 z-40 border-b border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div class="flex h-16 items-center gap-4 px-4 sm:px-6">
-        <slot name="logo"><SaqaraLogo with-text /></slot>
-        <div v-if="title ?? active" class="hidden items-center gap-2 border-l pl-4 text-sm font-medium md:flex">
+        <div class="shrink-0"><slot name="logo"><SaqaraLogo with-text /></slot></div>
+        <!-- The active tab already names the page: the title only shows when the app passes one. -->
+        <div v-if="title" class="hidden shrink-0 items-center gap-2 whitespace-nowrap border-l border-sidebar-border pl-4 text-sm font-medium lg:flex">
           <component :is="active.icon" v-if="active?.icon" class="size-4 text-primary" />
-          {{ title ?? active?.label }}
+          {{ title }}
         </div>
-        <nav aria-label="Navigation principale" class="ml-auto hidden items-center gap-1 md:flex">
+        <nav aria-label="Navigation principale" class="ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex">
           <component :is="item.href ? 'a' : 'button'" v-for="item in nav" :key="item.id" :href="item.href" :type="item.href ? undefined : 'button'"
             :aria-current="item.id === activeId ? 'page' : undefined" :class="entryClass(item, false)" @click="go($event, item.id)">
             <component :is="item.icon" v-if="item.icon" />
@@ -59,7 +62,7 @@ function go(event: Event, id: string) {
             <Badge v-if="item.badge" variant="identity" class="ml-1 h-5 min-w-5 px-1">{{ item.badge }}</Badge>
           </component>
         </nav>
-        <div class="ml-auto flex items-center gap-1 md:ml-0">
+        <div class="ml-auto flex shrink-0 items-center gap-1 md:ml-0">
           <ThemeToggle v-if="theme" v-model:theme="theme" />
           <UserMenu v-if="user" v-bind="user" :on-sign-out="onSignOut" compact>
             <template v-if="$slots['user-menu']" #default><slot name="user-menu" /></template>

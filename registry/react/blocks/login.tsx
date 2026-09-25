@@ -42,7 +42,7 @@ function Login({
   if (status === "sent") {
     return (
       <Card data-slot="login" className={cn("w-full max-w-sm", className)}>
-        <CardHeader className="items-center gap-3 text-center">
+        <CardHeader className="justify-items-center gap-3 text-center">
           {brand}
           <CardTitle className="font-heading text-xl">Vérifiez votre boîte mail</CardTitle>
           <CardDescription>Un lien de connexion a été envoyé à <strong>{email || "votre adresse"}</strong>.</CardDescription>
@@ -63,7 +63,7 @@ function Login({
 
   return (
     <Card data-slot="login" className={cn("w-full max-w-sm", className)}>
-      <CardHeader className="items-center gap-3 text-center">
+      <CardHeader className="justify-items-center gap-3 text-center">
         {brand}
         <CardTitle className="font-heading text-xl">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}

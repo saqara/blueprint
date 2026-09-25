@@ -28,6 +28,10 @@ describe.each([
     expect(current(html)).toBe(1)
     expect(html).toContain('href="#organisation"')
   })
+  it("renders badges as identity pills, like the header shell", async () => {
+    const html = await render({ nav, activeId: "annuaire" })
+    expect(html).toMatch(/data-sidebar="menu-badge"[^>]*class="[^"]*bg-identity|class="[^"]*bg-identity[^"]*"[^>]*data-sidebar="menu-badge"/)
+  })
   it("prefers an explicit title and hides the theme toggle without a theme", async () => {
     const html = await render({ nav, activeId: "annuaire", title: "Tableau de bord" })
     expect(html).toMatch(/<h1[^>]*>Tableau de bord<\/h1>/)
@@ -65,5 +69,27 @@ describe.each([["react", rHandle], ["vue", vHandle]] as const)("%s sidebar navig
     const src = readFileSync(_ === "react" ? "registry/react/blocks/app-shell-sidebar.tsx" : "registry/vue/blocks/AppShellSidebar.vue", "utf8")
     expect(src).toContain("group-data-[collapsible=icon]:[&>span]:sr-only")
     expect(src).not.toContain("group-data-[collapsible=icon]:[&>span]:hidden")
+  })
+})
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, p, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, { default: () => "Contenu" }) }))],
+])("%s app-shell-header layout", (_, render) => {
+  it("shows a page title only when the app passes one (the active tab names the page)", async () => {
+    expect(await render({ nav, activeId: "evaluations" })).not.toMatch(/border-l[^"]*">[\s\S]{0,200}Évaluations/)
+    expect(await render({ nav, activeId: "evaluations", title: "Campagne 2026" })).toContain("Campagne 2026")
+  })
+  it("uses the sidebar palette and keeps entries on one line", async () => {
+    const html = await render({ nav, activeId: "evaluations", user })
+    const header = html.match(/<header[^>]*class="([^"]*)"/)![1]
+    expect(header).toContain("bg-sidebar")
+    expect(header).toContain("border-sidebar-border")
+    const nav_ = html.match(/<nav aria-label="Navigation principale" class="([^"]*)"/)![1]
+    expect(nav_).toContain("min-w-0")
+    const active = html.match(/<(?:a|button)[^>]*aria-current="page"[^>]*class="([^"]*)"|<(?:a|button)[^>]*class="([^"]*)"[^>]*aria-current="page"/)!
+    const cls = active[1] ?? active[2]
+    expect(cls).toContain("whitespace-nowrap")
+    expect(cls).toContain("bg-sidebar-accent")
   })
 })

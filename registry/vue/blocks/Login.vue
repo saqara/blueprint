@@ -46,7 +46,7 @@ function sendLink(event: MouseEvent) {
 
 <template>
   <Card v-if="status === 'sent'" data-slot="login" :class="cn('w-full max-w-sm', props.class)">
-    <CardHeader class="items-center gap-3 text-center">
+    <CardHeader class="justify-items-center gap-3 text-center">
       <slot name="logo"><SaqaraLogo class="text-foreground" /></slot>
       <CardTitle class="font-heading text-xl">Vérifiez votre boîte mail</CardTitle>
       <CardDescription>Un lien de connexion a été envoyé à <strong>{{ email || "votre adresse" }}</strong>.</CardDescription>
@@ -56,7 +56,7 @@ function sendLink(event: MouseEvent) {
     </CardFooter>
   </Card>
   <Card v-else data-slot="login" :class="cn('w-full max-w-sm', props.class)">
-    <CardHeader class="items-center gap-3 text-center">
+    <CardHeader class="justify-items-center gap-3 text-center">
       <slot name="logo"><SaqaraLogo class="text-foreground" /></slot>
       <CardTitle class="font-heading text-xl">{{ title }}</CardTitle>
       <CardDescription v-if="description">{{ description }}</CardDescription>

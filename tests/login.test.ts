@@ -48,4 +48,7 @@ describe.each([
     expect(html).toMatch(/<input[^>]*type="password"[^>]*disabled|<input[^>]*disabled[^>]*type="password"/)
     expect(html).toMatch(/<button[^>]*disabled[^>]*>\s*Mot de passe oublié/)
   })
+  it("centers the logo and title (CardHeader is a grid)", async () => {
+    expect(await render({})).toMatch(/data-slot="card-header"[^>]*class="[^"]*justify-items-center|class="[^"]*justify-items-center[^"]*"[^>]*data-slot="card-header"/)
+  })
 })
