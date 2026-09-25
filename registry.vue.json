@@ -400,6 +400,39 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "Table TanStack à tri contrôlé, chargement et état vide (Saqara).",
+      "dependencies": [
+        "@tanstack/vue-table",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/skeleton",
+        "@saqara/table"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/data-table/DataTable.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/data-table/DataTableColumnHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/data-table/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/data-table/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",

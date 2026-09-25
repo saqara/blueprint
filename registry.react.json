@@ -265,6 +265,28 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "Table TanStack à tri contrôlé, chargement et état vide (Saqara).",
+      "dependencies": [
+        "@tanstack/react-table",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/skeleton",
+        "@saqara/table"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/data-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
