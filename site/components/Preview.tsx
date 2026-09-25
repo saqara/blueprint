@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/react/ui/tabs"
 import { demoFor } from "../demos"
 import type { Fw } from "../lib/framework"
+import { CodeBlock } from "./CodeBlock"
 import { VueIsland } from "./VueIsland"
 
 export function Preview({ kind, fw, name, framed = false }: { kind: "demos" | "examples"; fw: Fw; name: string; framed?: boolean }) {
@@ -16,7 +17,7 @@ export function Preview({ kind, fw, name, framed = false }: { kind: "demos" | "e
           : <div className="flex min-h-48 items-center justify-center rounded-lg border p-8">{body}</div>}
       </TabsContent>
       <TabsContent value="code">
-        <pre className="max-h-[600px] overflow-auto rounded-lg border p-4 text-sm"><code>{demo.source}</code></pre>
+        <CodeBlock code={demo.source} lang={demo.fw === "react" ? "tsx" : "vue"} />
       </TabsContent>
     </Tabs>
   )

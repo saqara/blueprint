@@ -2,3 +2,6 @@
 .dark .shiki,
 .dark .shiki span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; }
 .shiki { padding: 1rem; overflow: auto; }
+
+/* Inline code in docs prose: monospace (Lato would merge "--" into a dash). */
+main code { font-family: var(--font-mono); font-size: 0.9em; }
