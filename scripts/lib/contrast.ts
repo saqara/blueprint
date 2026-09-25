@@ -60,7 +60,7 @@ export function tokenErrors(t: Tokens): string[] {
     // X-text: the colour used as text, on page surfaces and on its own tint (tinted badges, statuses).
     for (const fg of Object.keys(vars).filter((k) => k.endsWith("-text"))) {
       const base = fg.slice(0, -"-text".length)
-      for (const surface of ["background", "card"].filter((k) => vars[k])) {
+      for (const surface of ["background", "card", "sidebar"].filter((k) => vars[k])) {
         const checks: [string, string][] = [[surface, vars[surface]]]
         if (vars[base]) checks.push([`${base}/10 over ${surface}`, tint(vars[base], vars[surface])])
         for (const [label, bg] of checks) {
