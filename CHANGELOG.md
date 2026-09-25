@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `select` (React) : dans un `<form>`, une valeur arrivée avant ses options n'est plus effacée (Radix renvoyait `onValueChange("")` depuis son `<select>` natif caché ; risque de perte de données à l'enregistrement). Le Vue (reka-ui) n'est pas concerné ; un test le garde.
 - 2026-09-25 — `login` : titre en `h1` (y compris l'écran « lien envoyé », titre modifiable via `sentTitle`), `emailPlaceholder` et `emailHint` (relié au champ), `loadingAction` pour faire tourner le seul bouton concerné (mot de passe, lien ou SSO), erreur refermable (`onErrorDismiss`), et sur l'écran « lien envoyé » : erreur affichée, `onResend` avec compte à rebours (`resendCooldown`, 60 s par défaut), `resetLabel`.
 - 2026-09-25 — `saqara-theme` : `accent` neutre en clair (`#F5F5F4` / `#1C1917`, comme en sombre) — les survols des boutons ghost / outline, menus et listes ne ressemblent plus à un état sélectionné rouge. `skeleton` : pulse en `bg-muted` (React et Vue ; le Vue était en `bg-primary/10`).
 - 2026-09-25 — `app-shell-header` : emplacements `product` (à côté du logo) et `actions` (avant le thème et le menu utilisateur), `signOutLabel` transmis au menu utilisateur, le logo cliqué dans le panneau mobile le referme. `app-shell-header` et `app-shell-sidebar` : le compteur des onglets est lu avec son contexte (`badgeLabel`, « N en attente » par défaut) et le nombre seul est masqué aux lecteurs d'écran.
