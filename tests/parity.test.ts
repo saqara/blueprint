@@ -21,6 +21,12 @@ describe("parityErrors", () => {
       'vue "dialog" depends on missing "@saqara/button"',
     ])
   })
+  it("accepts framework-only hooks, which need no twin and no demo", () => {
+    const hook = { name: "use-mobile", type: "registry:hook" }
+    const sidebar = { name: "sidebar", type: "registry:ui", registryDependencies: ["@saqara/use-mobile"] }
+    const vueSidebar = { name: "sidebar", type: "registry:ui" }
+    expect(parityErrors(m(sidebar, hook), m(vueSidebar), yes)).toEqual([])
+  })
   it("flags a missing demo, but never for the theme", () => {
     const hasDemo = (fw: string) => fw === "react"
     expect(parityErrors(m(theme, button), m(theme, button), hasDemo)).toEqual(['vue "button" has no demo in src/vue/demos/'])

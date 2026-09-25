@@ -363,6 +363,24 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -456,6 +474,32 @@
       ]
     },
     {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/input",
+        "@saqara/separator",
+        "@saqara/sheet",
+        "@saqara/skeleton",
+        "@saqara/tooltip",
+        "@saqara/use-mobile"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
@@ -465,6 +509,21 @@
       "files": [
         {
           "path": "registry/react/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -516,6 +575,20 @@
       ]
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -557,6 +630,17 @@
         {
           "path": "registry/react/ui/tooltip.tsx",
           "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "title": "Use Mobile",
+      "files": [
+        {
+          "path": "registry/react/hooks/use-mobile.ts",
+          "type": "registry:hook"
         }
       ]
     }

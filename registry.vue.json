@@ -664,6 +664,57 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/pagination/Pagination.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationEllipsis.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationFirst.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationLast.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationNext.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/PaginationPrevious.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/pagination/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -869,6 +920,131 @@
       ]
     },
     {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "class-variance-authority",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/input",
+        "@saqara/separator",
+        "@saqara/sheet",
+        "@saqara/skeleton",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/sidebar/Sidebar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarGroupAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarGroupContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarGroupLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarInset.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuBadge.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuButtonChild.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuSkeleton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuSub.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuSubButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarMenuSubItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarProvider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarRail.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/SidebarTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sidebar/utils.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
@@ -879,6 +1055,25 @@
         },
         {
           "path": "registry/vue/ui/skeleton/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/slider/Slider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/slider/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -935,6 +1130,56 @@
         },
         {
           "path": "registry/vue/ui/switch/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "dependencies": [
+        "@vueuse/core"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/table/Table.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableCaption.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableCell.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableEmpty.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableHead.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/TableRow.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/table/index.ts",
           "type": "registry:ui"
         }
       ]
