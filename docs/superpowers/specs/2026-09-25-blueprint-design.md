@@ -221,3 +221,43 @@ Pas de tests unitaires par composant : les composants viennent de shadcn, déjà
 | D6 | Parité complète React + Vue | thème seul pour Vue |
 | D7 | `--primary` = `#F04632` exact, exception AA assumée | `#CF342B` conforme AA |
 | D8 | Poppins pour les titres, Lato pour le texte | Poppins seule, Lato seule |
+
+## 9. Site de documentation (validé le 2026-09-25)
+
+Remplace la vitrine (`react.html`, `vue.html`) par un vrai site de doc, **construit avec Blueprint** (dogfooding), toujours publié sur `https://saqara.github.io/blueprint/`.
+
+### 9.1 Architecture
+
+- Un seul point d'entrée `index.html`. `react.html` et `vue.html` deviennent des redirections vers le site (anciens liens conservés).
+- Habillage écrit en React avec les composants Blueprint : `app-shell-sidebar` (navigation), `tabs` (Aperçu / Code), `toggle-group` (React | Vue), `dropdown-menu` (thème), `breadcrumb`, `scroll-area`.
+- En mode Vue, chaque démo Vue est montée dans un îlot (`createApp(...).mount()` dans un composant React), démontée au changement de page ou de framework.
+- **Framework** : bascule React | Vue dans le header, mémorisée (localStorage) et reflétée dans l'URL (`?fw=vue`) pour qu'un lien partagé ouvre le bon framework. Défaut : React.
+- **Thème** : menu Clair / Sombre / Auto, **Auto par défaut** (suit `prefers-color-scheme` et ses changements), mémorisé en localStorage, appliqué par la classe `.dark` sur `<html>` avant le premier rendu (pas de flash).
+- **Routage** par hash, sans librairie : `#/` (accueil), `#/demarrer/<page>`, `#/composants/<nom>`, `#/blocs/<nom>`, `#/exemples/<nom>`. Route inconnue → page « Introuvable » avec lien vers l'accueil.
+
+### 9.2 Navigation
+
+- **Démarrer** : Introduction, Installation (React, Vue), Thème et tokens.
+- **Composants**, par catégorie : Formulaires, Affichage, Overlays, Navigation, Données, Saqara. Chaque item du registry (hors thème, hooks et blocs) apparaît dans exactement une catégorie ; un test le vérifie.
+- **Blocs** : `app-shell-sidebar`, `app-shell-header`, `login`.
+- **Exemples** : Annuaire fournisseurs, Fiche entreprise, Inscription fournisseur, Connexion.
+
+### 9.3 Pages
+
+- **Composant / bloc** : titre et description (lus dans les manifestes du registry ; les composants repris de shadcn reçoivent une description française, publiée aussi pour les apps), commande d'installation du framework actif avec bouton Copier, onglets **Aperçu** (la démo existante) et **Code** (le source réel de la démo via `?raw`, coloré par Shiki, thèmes clair/sombre). Lien vers la doc officielle shadcn / shadcn-vue pour les composants repris.
+- **Thème et tokens** : générée depuis `tokens/theme.json` — nuancier clair et sombre, valeur hex, ratio de contraste de chaque paire (fonction `contrastRatio` existante), exceptions signalées.
+- **Exemples** : écrans complets, en React et en Vue, avec Aperçu (dans un cadre) et Code. Ils assemblent les composants comme une vraie app, avec des données fictives :
+  - *Annuaire fournisseurs* : `app-shell-sidebar`, StatCards, filtres (`multi-select`, `slider`, `toggle-group`), `data-table` triable avec badges de note, `pagination`, `hover-card` sur la raison sociale.
+  - *Fiche entreprise* : `breadcrumb`, en-tête avec badges, `tabs` (Informations, Contacts, Évaluations), `accordion`, `dialog` d'ajout de contact, `sonner` de confirmation.
+  - *Inscription fournisseur* : `stepper` en 3 étapes (Entreprise, Contacts, Validation), `field` / `input` / `select`, `file-dropzone` pour le logo, validation, récapitulatif.
+  - *Connexion* : bloc `login` plein écran (mot de passe, lien magique, SSO).
+
+### 9.4 Tests
+
+- La parité exige chaque exemple dans les deux frameworks (`src/examples/{react,vue}/`).
+- Rendu SSR de chaque démo et de chaque exemple.
+- Logique pure : lecture d'une route (`parseRoute`), résolution du thème (`resolveTheme("auto", prefersDark)`), couverture des catégories.
+
+### 9.5 Hors périmètre
+
+Recherche, tableau des props, version anglaise, versionnage de la doc.
