@@ -159,6 +159,32 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 
 **Hors lot 3 :** upload intégré, création de valeurs (TagCombobox, MultiInput), tri/pagination/filtres intégrés à la DataTable.
 
+### 5.2 Lot 4 — blocs (validé le 2026-09-25)
+
+Le lot 4 remplace la ligne « 4 — Blocs Saqara » du tableau ci-dessus : deux shells au lieu d'un, et un login à trois méthodes.
+
+**Briques partagées (`registry:ui`, React + Vue)**
+
+| Item | API |
+|---|---|
+| `saqara-logo` | Symbole « S » de Saqara (SVG de signature) : partie rouge en `--identity`, partie sombre en `currentColor` (lisible en sombre). `withText` ajoute « Saqara » en `font-heading`. |
+| `theme-toggle` | Bouton soleil/lune. `theme: "light" \| "dark"` + `onThemeChange` (Vue : `v-model:theme`). Purement visuel : l'app garde son gestionnaire de thème. |
+| `user-menu` | DropdownMenu : avatar à initiales (`avatar` officiel), nom, email, emplacement pour des entrées, « Se déconnecter » (`onSignOut`). |
+
+Modèle de navigation commun aux shells : `AppNavItem = { id, label, icon?, badge?, href? }`, avec `activeId` et `onNavigate(id)`. Sans routeur : `<a>` si `href`, sinon bouton. L'entrée active porte `aria-current="page"`.
+
+**Blocs (`registry:block`, React + Vue, un fichier chacun)**
+
+| Bloc | Contenu |
+|---|---|
+| `app-shell-sidebar` | Sidebar officielle repliable en icônes (logo en tête, `user-menu` en pied, badges sur les entrées) + header (`SidebarTrigger`, titre et icône de page, `theme-toggle`). Sheet automatique sur mobile. |
+| `app-shell-header` | Structure de pfou-hub : header collant (logo, séparateur, titre de page), onglets avec badges, `theme-toggle`, `user-menu` ; sur mobile, bouton menu qui ouvre la navigation dans un Sheet. |
+| `login` | Card centrée : logo, titre, description. Méthodes activables : `password` (email, mot de passe, « Mot de passe oublié »), `magicLink` (« Recevoir un lien de connexion »), `sso` (bouton en tête + séparateur « ou »). Callbacks `onPasswordSubmit`, `onMagicLinkSubmit`, `onSso`, `onForgotPassword`. État `status: "idle" \| "loading" \| "sent"` + `error` (`role="alert"`). Écran « Vérifiez votre boîte mail » avec l'adresse et « Utiliser une autre adresse ». |
+
+**Tests :** rendu SSR dans les deux frameworks (champs selon les méthodes, écran « envoyé », erreur, entrée active, badges) ; calcul des initiales en logique pure. **Vitrine :** chaque bloc dans un cadre fixe (600 px, `transform` pour contenir la sidebar `fixed`).
+
+**Hors lot 4 :** l'auth elle-même (Keycloak, envoi du lien), le routage, les sous-menus imbriqués.
+
 **Hors V1 :** Chart (recharts d'un côté, unovis de l'autre, parité coûteuse) et DatePicker (pas de besoin dans pfou-hub).
 
 ## 6. Conventions
