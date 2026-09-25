@@ -1,9 +1,10 @@
-import manifest from "../registry.react.json"
+import manifest from "../registry.react.json" with { type: "json" }
 
 export const START_PAGES = [
   { slug: "introduction", title: "Introduction" },
   { slug: "installation", title: "Installation" },
   { slug: "tokens", title: "Thème et tokens" },
+  { slug: "ia", title: "Utiliser avec une IA" },
 ]
 
 export const CATEGORIES = [

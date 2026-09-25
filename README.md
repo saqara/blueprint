@@ -4,7 +4,7 @@
 
 Design system Saqara : un registry [shadcn/ui](https://ui.shadcn.com) (React) et [shadcn-vue](https://www.shadcn-vue.com) (Vue), aux couleurs Saqara.
 
-Vitrine : https://saqara.github.io/blueprint/
+Documentation : https://saqara.github.io/blueprint/ (index pour les IA : https://saqara.github.io/blueprint/llms.txt)
 
 ## Utiliser Blueprint dans une app
 
@@ -49,7 +49,7 @@ Node ≥ 24 et npm.
 
 ```bash
 npm i
-npm run dev            # vitrine sur http://localhost:5173/blueprint/react.html
+npm run dev            # site de doc sur http://localhost:5173/blueprint/
 npm run vendor -- card # importe un composant officiel (React + Vue) dans registry/
 npm run check          # parité, tests, types
 npm run build          # registry JSON + vitrine dans dist/
@@ -57,6 +57,8 @@ npm run smoke          # installe tout dans des apps jetables (après build)
 ```
 
 - Les couleurs se changent dans `tokens/theme.json`, jamais dans `src/theme.css` (généré).
-- Chaque composant doit exister en React **et** en Vue, avec une démo dans `src/react/demos/` et `src/vue/demos/`.
+- Chaque composant doit exister en React **et** en Vue, avec une démo dans `src/react/demos/` et `src/vue/demos/`, et une catégorie dans `site/catalog.ts`.
+- Les exemples (écrans complets) vivent dans `src/examples/{react,vue}/`, dans les deux frameworks.
+- `public/llms.txt` est généré par `npm run registry` depuis les manifestes.
 - Un composant personnalisé ne se réimporte qu'avec `--force`, en connaissance de cause.
 - TypeScript reste en 6.x tant que `vue-tsc` ne supporte pas TypeScript 7.

@@ -2,3 +2,4 @@ node_modules/
 dist/
 public/r/
 .superpowers/
+public/llms.txt

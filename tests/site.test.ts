@@ -66,6 +66,7 @@ describe("pageTitle", () => {
   it.each([
     [{ section: "home" }, "Accueil"],
     [{ section: "demarrer", slug: "tokens" }, "Thème et tokens"],
+    [{ section: "demarrer", slug: "ia" }, "Utiliser avec une IA"],
     [{ section: "composants", slug: "data-table" }, "Data Table"],
     [{ section: "blocs", slug: "login" }, "Login"],
     [{ section: "exemples", slug: "annuaire" }, "Annuaire fournisseurs"],

@@ -8,7 +8,7 @@
   "scripts": {
     "sync": "node scripts/sync-theme.ts",
     "vendor": "node scripts/vendor.ts",
-    "registry": "npm run sync && shadcn build registry.react.json -o public/r/react && shadcn-vue build registry.vue.json -o public/r/vue",
+    "registry": "npm run sync && node scripts/llms.ts && shadcn build registry.react.json -o public/r/react && shadcn-vue build registry.vue.json -o public/r/vue",
     "dev": "npm run sync && vite",
     "build": "npm run registry && vite build",
     "check": "node scripts/check-parity.ts && vitest run && tsc -p tsconfig.react.json && vue-tsc -p tsconfig.vue.json",
