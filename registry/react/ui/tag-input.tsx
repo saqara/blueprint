@@ -31,8 +31,17 @@ export function filterSuggestions(suggestions: string[], query: string, values: 
 }
 
 type TagInputProps = TagOptions & {
-  value: string[]
-  onValueChange: (value: string[]) => void
+  value?: string[]
+  onValueChange?: (value: string[]) => void
+  /** "Pick only": a chosen value goes to onSelect and the field clears; no tag is added. */
+  onSelect?: (value: string) => void
+  /** Controlled query, e.g. for a server search. */
+  query?: string
+  onQueryChange?: (query: string) => void
+  maxSuggestions?: number
+  renderSuggestion?: (suggestion: string) => React.ReactNode
+  /** Shown when the typed text matches no suggestion. Default: "Aucun résultat." for a closed catalogue. */
+  emptyMessage?: React.ReactNode
   placeholder?: string
   removeLabel?: string
   disabled?: boolean
@@ -43,21 +52,30 @@ type TagInputProps = TagOptions & {
 
 // Saqara: free entry (e-mails, SIRET…) or a catalogue with suggestions (tags); replaces MultiInput / TagCombobox.
 function TagInput({
-  value, onValueChange, suggestions, allowCreate = true, maxTags, placeholder = "Ajouter…", removeLabel = "Retirer",
-  disabled = false, id, "aria-label": ariaLabel, className,
+  value = [], onValueChange, onSelect, query: controlledQuery, onQueryChange, suggestions, allowCreate = true, maxTags,
+  maxSuggestions = 8, renderSuggestion, emptyMessage = allowCreate ? undefined : "Aucun résultat.",
+  placeholder = "Ajouter…", removeLabel = "Retirer", disabled = false, id, "aria-label": ariaLabel, className,
 }: TagInputProps) {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const listId = React.useId()
-  const [query, setQuery] = React.useState("")
+  const [ownQuery, setOwnQuery] = React.useState("")
+  const query = controlledQuery ?? ownQuery
+  const setQuery = (next: string) => { setOwnQuery(next); onQueryChange?.(next) }
   const [open, setOpen] = React.useState(false)
   const [active, setActive] = React.useState(0)
-  const options = suggestions ? filterSuggestions(suggestions, query, value) : []
+  const options = suggestions ? filterSuggestions(suggestions, query, value, maxSuggestions) : []
   const full = maxTags !== undefined && value.length >= maxTags
   const showList = open && options.length > 0 && !full
+  const showEmpty = open && !!suggestions && !!emptyMessage && !!query.trim() && options.length === 0 && !full
 
   const commit = (raws: string[]) => {
-    const next = addTags(value, raws, { suggestions, allowCreate, maxTags })
-    if (next !== value) onValueChange(next)
+    if (onSelect) {
+      // Same normalisation and catalogue rules as tags, one value at a time.
+      for (const picked of addTags([], raws, { suggestions, allowCreate })) onSelect(picked)
+    } else {
+      const next = addTags(value, raws, { suggestions, allowCreate, maxTags })
+      if (next !== value) onValueChange?.(next)
+    }
     setQuery("")
     setActive(0)
   }
@@ -75,7 +93,7 @@ function TagInput({
       if (showList && (query.trim() || !allowCreate)) commit([options[active]])
       else if (query.trim()) commit([query])
     } else if (event.key === "Backspace" && !query && value.length) {
-      onValueChange(value.slice(0, -1))
+      onValueChange?.(value.slice(0, -1))
     } else if (event.key === "ArrowDown" && options.length) {
       event.preventDefault()
       setOpen(true)
@@ -99,7 +117,7 @@ function TagInput({
             {tag}
             <button type="button" aria-label={`${removeLabel} ${tag}`} disabled={disabled}
               className="rounded-sm opacity-70 outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring"
-              onClick={() => onValueChange(value.filter((t) => t !== tag))}>
+              onClick={() => onValueChange?.(value.filter((t) => t !== tag))}>
               <XIcon className="size-3" />
             </button>
           </Badge>
@@ -120,7 +138,7 @@ function TagInput({
           onChange={(event) => onChange(event.target.value)}
           onKeyDown={onKeyDown}
           onFocus={() => setOpen(true)}
-          onBlur={() => { setOpen(false); if (query.trim() && allowCreate) commit([query]) }}
+          onBlur={() => { setOpen(false); if (query.trim() && allowCreate && !onSelect) commit([query]) }}
         />
       </div>
       {showList && (
@@ -130,10 +148,15 @@ function TagInput({
               className={cn("cursor-pointer rounded-sm px-2 py-1.5 text-sm", i === active && "bg-accent text-accent-foreground")}
               onMouseDown={(event) => { event.preventDefault(); commit([option]) }}
               onMouseEnter={() => setActive(i)}>
-              {option}
+              {renderSuggestion ? renderSuggestion(option) : option}
             </li>
           ))}
         </ul>
+      )}
+      {showEmpty && (
+        <div role="status" className="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+          {emptyMessage}
+        </div>
       )}
     </div>
   )
