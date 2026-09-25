@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   side: "left",
   variant: "sidebar",
   collapsible: "offcanvas",
+  position: "fixed",
+  mobileTitle: "Navigation",
 })
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
@@ -36,13 +38,14 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
       data-slot="sidebar"
       data-mobile="true"
       :side="side"
-      class="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+:class="cn('bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0', !mobileCloseLabel && '[&>button]:hidden')"
+      :close-label="mobileCloseLabel"
       :style="{
         '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
       }"
     >
       <SheetHeader class="sr-only">
-        <SheetTitle>Navigation</SheetTitle>
+        <SheetTitle>{{ mobileTitle }}</SheetTitle>
         <SheetDescription>Menu de navigation principal.</SheetDescription>
       </SheetHeader>
       <div class="flex h-full w-full flex-col">
@@ -53,15 +56,17 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
   <div
     v-else
-    class="group peer text-sidebar-foreground hidden md:block"
+:class="cn('group peer text-sidebar-foreground hidden md:block', position === 'static' && 'h-full')"
     data-slot="sidebar"
     :data-state="state"
     :data-collapsible="state === 'collapsed' ? collapsible : ''"
     :data-variant="variant"
     :data-side="side"
   >
-    <!-- This is what handles the sidebar gap on desktop  -->
+    <!-- This is what handles the sidebar gap on desktop (a static sidebar takes its own room). -->
     <div
+      v-if="position !== 'static'"
+      data-slot="sidebar-gap"
       :class="cn(
         'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
         'group-data-[collapsible=offcanvas]:w-0',
@@ -72,11 +77,14 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
       )"
     />
     <div
+      data-slot="sidebar-container"
       :class="cn(
-        'fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
-        side === 'left'
-          ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
-          : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
+        'z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
+        position === 'static'
+          ? 'relative h-full overflow-hidden group-data-[collapsible=offcanvas]:w-0'
+          : cn('fixed inset-y-0 h-svh', side === 'left'
+            ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
+            : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]'),
         // Adjust the padding for floating and inset variants.
         variant === 'floating' || variant === 'inset'
           ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'

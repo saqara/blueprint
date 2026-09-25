@@ -6,6 +6,12 @@ export interface SidebarProps {
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
+  /** Saqara: "static" keeps the sidebar in the page flow (e.g. under an app header), collapse modes included. */
+  position?: "fixed" | "static"
+  /** Saqara: title of the mobile sheet (read by screen readers). */
+  mobileTitle?: string
+  /** Saqara: shows the mobile sheet's close button with this label. */
+  mobileCloseLabel?: string
   class?: HTMLAttributes["class"]
 }
 

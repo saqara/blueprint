@@ -157,6 +157,9 @@ function Sidebar({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
+  position = "fixed",
+  mobileTitle = "Navigation",
+  mobileCloseLabel,
   className,
   children,
   ...props
@@ -164,8 +167,15 @@ function Sidebar({
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
+  /** Saqara: "static" keeps the sidebar in the page flow (e.g. under an app header), collapse modes included. */
+  position?: "fixed" | "static"
+  /** Saqara: title of the mobile sheet (read by screen readers). */
+  mobileTitle?: string
+  /** Saqara: shows the mobile sheet's close button with this label. */
+  mobileCloseLabel?: string
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const isStatic = position === "static"
 
   if (collapsible === "none") {
     return (
@@ -189,7 +199,8 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className={cn("w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground", !mobileCloseLabel && "[&>button]:hidden")}
+          closeLabel={mobileCloseLabel}
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -198,7 +209,7 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Navigation</SheetTitle>
+            <SheetTitle>{mobileTitle}</SheetTitle>
             <SheetDescription>Menu de navigation principal.</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
@@ -209,15 +220,15 @@ function Sidebar({
 
   return (
     <div
-      className="group peer hidden text-sidebar-foreground md:block"
+      className={cn("group peer hidden text-sidebar-foreground md:block", isStatic && "h-full")}
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
     >
-      {/* This is what handles the sidebar gap on desktop */}
-      <div
+      {/* This is what handles the sidebar gap on desktop (a static sidebar takes its own room). */}
+      {!isStatic && <div
         data-slot="sidebar-gap"
         className={cn(
           "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
@@ -227,14 +238,16 @@ function Sidebar({
             ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
             : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
         )}
-      />
+      />}
       <div
         data-slot="sidebar-container"
         className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-          side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+          "z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+          isStatic
+            ? "relative h-full overflow-hidden group-data-[collapsible=offcanvas]:w-0"
+            : cn("fixed inset-y-0 h-svh", side === "left"
+              ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
+              : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]"),
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
@@ -580,6 +593,8 @@ function SidebarMenuAction({
   )
 }
 
+// Saqara: the badge is a sibling of the button, outside its accessible name: repeat the count as
+// sr-only text inside SidebarMenuButton and mark the badge aria-hidden (as app-shell-sidebar does).
 function SidebarMenuBadge({
   className,
   ...props
