@@ -56,64 +56,64 @@
         "light": {
           "radius": "0.375rem",
           "background": "#FFFFFF",
-          "foreground": "#2D2D2D",
+          "foreground": "#292524",
           "card": "#FFFFFF",
-          "card-foreground": "#2D2D2D",
+          "card-foreground": "#292524",
           "popover": "#FFFFFF",
-          "popover-foreground": "#2D2D2D",
+          "popover-foreground": "#292524",
           "primary": "#F04632",
           "primary-foreground": "#FFFFFF",
-          "secondary": "#F4F6F8",
-          "secondary-foreground": "#283549",
-          "muted": "#F3F3F4",
-          "muted-foreground": "#646671",
+          "secondary": "#F5F5F4",
+          "secondary-foreground": "#1C1917",
+          "muted": "#F5F5F4",
+          "muted-foreground": "#57534E",
           "accent": "#FDECEB",
           "accent-foreground": "#B32019",
           "destructive": "#C2002C",
           "destructive-foreground": "#FFFFFF",
-          "border": "#E8E8E9",
-          "input": "#E8E8E9",
+          "border": "#E7E5E4",
+          "input": "#E7E5E4",
           "ring": "#F04632",
           "identity": "#F04632",
           "identity-foreground": "#FFFFFF",
           "navy": "#283549",
           "navy-foreground": "#FFFFFF",
           "success": "#6EBD71",
-          "success-foreground": "#161925",
+          "success-foreground": "#0C0A09",
           "warning": "#E59A06",
-          "warning-foreground": "#161925",
+          "warning-foreground": "#0C0A09",
           "info": "#0A5CD6",
           "info-foreground": "#FFFFFF"
         },
         "dark": {
           "radius": "0.375rem",
-          "background": "#161925",
-          "foreground": "#F5F8FF",
-          "card": "#1F2230",
-          "card-foreground": "#F5F8FF",
-          "popover": "#1F2230",
-          "popover-foreground": "#F5F8FF",
+          "background": "#0C0A09",
+          "foreground": "#FAFAF9",
+          "card": "#1C1917",
+          "card-foreground": "#FAFAF9",
+          "popover": "#1C1917",
+          "popover-foreground": "#FAFAF9",
           "primary": "#F04632",
           "primary-foreground": "#FFFFFF",
-          "secondary": "#363947",
-          "secondary-foreground": "#F5F8FF",
-          "muted": "#363947",
-          "muted-foreground": "#B0B3C3",
-          "accent": "#363947",
-          "accent-foreground": "#F5F8FF",
+          "secondary": "#292524",
+          "secondary-foreground": "#FAFAF9",
+          "muted": "#292524",
+          "muted-foreground": "#A8A29E",
+          "accent": "#292524",
+          "accent-foreground": "#FAFAF9",
           "destructive": "#FF5A6E",
-          "destructive-foreground": "#161925",
-          "border": "#363947",
-          "input": "#454751",
+          "destructive-foreground": "#0C0A09",
+          "border": "#292524",
+          "input": "#44403C",
           "ring": "#F04632",
           "identity": "#F04632",
           "identity-foreground": "#FFFFFF",
           "navy": "#283549",
           "navy-foreground": "#FFFFFF",
           "success": "#6EBD71",
-          "success-foreground": "#161925",
+          "success-foreground": "#0C0A09",
           "warning": "#E59A06",
-          "warning-foreground": "#161925",
+          "warning-foreground": "#0C0A09",
           "info": "#0A5CD6",
           "info-foreground": "#FFFFFF"
         }
@@ -154,6 +154,60 @@
         },
         {
           "path": "registry/vue/ui/alert/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialog.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogCancel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/AlertDialogTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert-dialog/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -257,6 +311,137 @@
       ]
     },
     {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/dialog/Dialog.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogClose.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogOverlay.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogScrollContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/DialogTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dialog/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuCheckboxItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuRadioGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuRadioItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuShortcut.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuSub.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuSubContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuSubTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/DropdownMenuTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/dropdown-menu/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "field",
       "type": "registry:ui",
       "title": "Field",
@@ -347,6 +532,37 @@
         },
         {
           "path": "registry/vue/ui/label/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "dependencies": [
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/popover/Popover.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/popover/PopoverAnchor.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/popover/PopoverContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/popover/PopoverTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/popover/index.ts",
           "type": "registry:ui"
         }
       ]
@@ -450,6 +666,58 @@
         },
         {
           "path": "registry/vue/ui/separator/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/sheet/Sheet.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetClose.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetOverlay.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/SheetTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sheet/index.ts",
           "type": "registry:ui"
         }
       ]
