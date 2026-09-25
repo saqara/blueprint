@@ -17,22 +17,36 @@ const props = withDefaults(defineProps<{
   removeLabel?: string
   disabled?: boolean
   id?: string
+  maxSuggestions?: number
+  /** Shown when the typed text matches no suggestion. Default: "Aucun résultat." for a closed catalogue. */
+  emptyMessage?: string
+  /** "Pick only" (@select): a chosen value goes there and the field clears; no tag is added. */
+  onSelect?: (value: string) => void
   class?: HTMLAttributes["class"]
-}>(), { allowCreate: true, placeholder: "Ajouter…", removeLabel: "Retirer", disabled: false })
+}>(), { allowCreate: true, placeholder: "Ajouter…", removeLabel: "Retirer", disabled: false, maxSuggestions: 8 })
 const model = defineModel<string[]>({ default: () => [] })
+/** v-model:query, e.g. for a server search. */
+const query = defineModel<string>("query", { default: "" })
+defineSlots<{ suggestion?: (props: { suggestion: string }) => unknown }>()
 
 const input = ref<HTMLInputElement>()
 const listId = useId()
-const query = ref("")
 const open = ref(false)
 const active = ref(0)
-const options = computed(() => (props.suggestions ? filterSuggestions(props.suggestions, query.value, model.value) : []))
+const options = computed(() => (props.suggestions ? filterSuggestions(props.suggestions, query.value, model.value, props.maxSuggestions) : []))
 const full = computed(() => props.maxTags !== undefined && model.value.length >= props.maxTags)
 const showList = computed(() => open.value && options.value.length > 0 && !full.value)
+const empty = computed(() => props.emptyMessage ?? (props.allowCreate ? undefined : "Aucun résultat."))
+const showEmpty = computed(() => open.value && !!props.suggestions && !!empty.value && !!query.value.trim() && options.value.length === 0 && !full.value)
 
 function commit(raws: string[]) {
-  const next = addTags(model.value, raws, { suggestions: props.suggestions, allowCreate: props.allowCreate, maxTags: props.maxTags })
-  if (next !== model.value) model.value = next
+  if (props.onSelect) {
+    // Same normalisation and catalogue rules as tags, one value at a time.
+    for (const picked of addTags([], raws, { suggestions: props.suggestions, allowCreate: props.allowCreate })) props.onSelect(picked)
+  } else {
+    const next = addTags(model.value, raws, { suggestions: props.suggestions, allowCreate: props.allowCreate, maxTags: props.maxTags })
+    if (next !== model.value) model.value = next
+  }
   query.value = ""
   active.value = 0
 }
@@ -64,7 +78,7 @@ function onKeydown(event: KeyboardEvent) {
 }
 function onBlur() {
   open.value = false
-  if (query.value.trim() && props.allowCreate) commit([query.value])
+  if (query.value.trim() && props.allowCreate && !props.onSelect) commit([query.value])
 }
 const remove = (tag: string) => { model.value = model.value.filter((t) => t !== tag) }
 </script>
@@ -105,8 +119,11 @@ const remove = (tag: string) => { model.value = model.value.filter((t) => t !== 
       <li v-for="(option, i) in options" :id="`${listId}-${i}`" :key="option" role="option" :aria-selected="i === active"
         :class="cn('cursor-pointer rounded-sm px-2 py-1.5 text-sm', i === active && 'bg-accent text-accent-foreground')"
         @mousedown.prevent="commit([option])" @mouseenter="active = i">
-        {{ option }}
+        <slot name="suggestion" :suggestion="option">{{ option }}</slot>
       </li>
     </ul>
+    <div v-if="showEmpty" role="status" class="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+      {{ empty }}
+    </div>
   </div>
 </template>
