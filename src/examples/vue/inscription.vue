@@ -40,7 +40,7 @@ const STEPS = [
   { step: 2, title: "Contacts", description: "Interlocuteur principal" },
   { step: 3, title: "Validation", description: "Récapitulatif" },
 ]
-const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)" }
+const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)", count: "un seul fichier à la fois" }
 
 const step = ref(1)
 const values = reactive<Values>(empty())

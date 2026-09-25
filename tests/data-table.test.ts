@@ -3,8 +3,8 @@ import { renderToString } from "react-dom/server"
 import { createSSRApp, h } from "vue"
 import { renderToString as renderVue } from "vue/server-renderer"
 import { describe, expect, it } from "vitest"
-import { DataTable as ReactDataTable, ariaSort as reactAriaSort, resolveUpdater as reactResolve } from "../registry/react/ui/data-table"
-import { DataTable as VueDataTable, ariaSort as vueAriaSort, resolveUpdater as vueResolve } from "../registry/vue/ui/data-table"
+import { DataTable as ReactDataTable, ariaSort as reactAriaSort, nextSort as reactNextSort, resolveUpdater as reactResolve } from "../registry/react/ui/data-table"
+import { DataTable as VueDataTable, ariaSort as vueAriaSort, nextSort as vueNextSort, resolveUpdater as vueResolve } from "../registry/vue/ui/data-table"
 
 type Row = { id: string; name: string }
 const columns = [{ accessorKey: "name", header: "Raison sociale" }]
@@ -14,7 +14,7 @@ const render = {
   react: async (props: Record<string, unknown>) => renderToString(createElement(ReactDataTable as any, { columns, ...props })),
   vue: async (props: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VueDataTable as any, { columns, ...props }) })),
 }
-const helpers = { react: { ariaSort: reactAriaSort, resolveUpdater: reactResolve }, vue: { ariaSort: vueAriaSort, resolveUpdater: vueResolve } }
+const helpers = { react: { ariaSort: reactAriaSort, resolveUpdater: reactResolve, nextSort: reactNextSort }, vue: { ariaSort: vueAriaSort, resolveUpdater: vueResolve, nextSort: vueNextSort } }
 
 describe.each(["react", "vue"] as const)("%s data-table", (fw) => {
   it("resolves TanStack updaters (value or function)", () => {
@@ -28,6 +28,13 @@ describe.each(["react", "vue"] as const)("%s data-table", (fw) => {
     const html = await render[fw]({ data, loading: true, loadingRows: 4 })
     expect(html.match(/data-loading/g)).toHaveLength(4)
     expect(html).not.toContain("Bâti Sud")
+  })
+  it("cycles a header click through ascending, descending, then no sort", () => {
+    expect([helpers[fw].nextSort(false), helpers[fw].nextSort("asc"), helpers[fw].nextSort("desc")]).toEqual(["asc", "desc", false])
+  })
+  it("flags the table as busy while loading", async () => {
+    expect(await render[fw]({ data, loading: true })).toContain('aria-busy="true"')
+    expect(await render[fw]({ data })).not.toContain('aria-busy="true"')
   })
   it("renders the empty message without data", async () => {
     expect(await render[fw]({ data: [], emptyMessage: "Aucune entreprise." })).toContain("Aucune entreprise.")

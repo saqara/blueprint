@@ -93,3 +93,17 @@ describe.each([
     expect(cls).toContain("bg-sidebar-accent")
   })
 })
+
+describe.each([
+  ["react sidebar", async (p: Record<string, unknown>) => renderToString(e(RSidebar as any, p, "Contenu"))],
+  ["vue sidebar", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VSidebar as any, p, { default: () => "Contenu" }) }))],
+  ["react header", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, p, "Contenu"))],
+  ["vue header", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, { default: () => "Contenu" }) }))],
+])("%s page title", (_, render) => {
+  it("renders an explicit title as an h1", async () => {
+    expect(await render({ nav, activeId: "annuaire", title: "Campagne 2026" })).toMatch(/<h1[^>]*>(<!--[^>]*-->)?[\s\S]{0,120}Campagne 2026/)
+  })
+  it("never renders an empty h1", async () => {
+    expect(await render({ nav })).not.toMatch(/<h1[^>]*>\s*(<!--[^>]*-->\s*)*<\/h1>/)
+  })
+})

@@ -36,7 +36,7 @@ export function stepErrors(step: number, v: Values): Errors {
   return errors
 }
 
-const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)" }
+const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)", count: "un seul fichier à la fois" }
 
 export default function InscriptionExample() {
   const [step, setStep] = useState(1)

@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `data-table` : un 3e clic sur un en-tête retire le tri ; `aria-busy` pendant le chargement. `file-dropzone` : `*/*` accepte tout ; en mode fichier unique, les fichiers en trop sont signalés (`reason: "count"`). Shells : le titre de page est toujours un `h1`, jamais vide. `saqara-theme` : `sidebar-border` sombre distinct (`#44403C`).
 - 2026-09-25 — `saqara-theme` : police monospace JetBrains Mono (`font-mono`), installée avec le thème.
 - 2026-09-25 — Site de documentation : pages par composant (aperçu, code, installation), bascule React / Vue, thème clair / sombre / auto, page tokens, page « Utiliser avec une IA » et `llms.txt`, 4 exemples (Annuaire, Fiche entreprise, Inscription, Connexion). Descriptions françaises publiées pour tous les composants.
 - 2026-09-25 — Lot 5 : `breadcrumb`, `collapsible`, `scroll-area`, `toggle`, `toggle-group`, `hover-card`.

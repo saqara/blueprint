@@ -50,10 +50,11 @@ function go(event: Event, id: string) {
       <div class="flex h-16 items-center gap-4 px-4 sm:px-6">
         <div class="shrink-0"><slot name="logo"><SaqaraLogo with-text /></slot></div>
         <!-- The active tab already names the page: the title only shows when the app passes one. -->
-        <div v-if="title" class="hidden shrink-0 items-center gap-2 whitespace-nowrap border-l border-sidebar-border pl-4 text-sm font-medium lg:flex">
+        <!-- Same rule as the sidebar shell: the page title is an h1 (kept for screen readers on small screens). -->
+        <h1 v-if="title" class="flex shrink-0 items-center gap-2 whitespace-nowrap border-l border-sidebar-border pl-4 text-sm font-medium max-lg:sr-only">
           <component :is="active.icon" v-if="active?.icon" class="size-4 text-primary" />
           {{ title }}
-        </div>
+        </h1>
         <nav aria-label="Navigation principale" class="ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex">
           <component :is="item.href ? 'a' : 'button'" v-for="item in nav" :key="item.id" :href="item.href" :type="item.href ? undefined : 'button'"
             :aria-current="item.id === activeId ? 'page' : undefined" :class="entryClass(item, false)" @click="go($event, item.id)">

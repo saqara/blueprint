@@ -20,6 +20,11 @@ export function ariaSort(sorted: false | "asc" | "desc"): "ascending" | "descend
   return sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined
 }
 
+// Header clicks cycle ascending → descending → no sort.
+export function nextSort(sorted: false | "asc" | "desc"): false | "asc" | "desc" {
+  return sorted === false ? "asc" : sorted === "asc" ? "desc" : false
+}
+
 type DataTableProps<TData extends RowData> = {
   // Columns mix value types, hence `any` (same as the upstream shadcn data table).
   columns: ColumnDef<DataTableFeatures, TData, any>[]
@@ -58,7 +63,7 @@ function DataTable<TData extends RowData>({
       data-slot="data-table"
       className={cn(stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
     >
-      <Table>
+      <Table aria-busy={loading || undefined}>
         <TableHeader className={cn(stickyHeader && "sticky top-0 z-[2] bg-background")}>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
@@ -103,7 +108,7 @@ function DataTableColumnHeader<TData extends RowData, TValue extends CellData>({
   const sorted = column.getIsSorted()
   const Icon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ChevronsUpDown
   return (
-    <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => column.toggleSorting(sorted === "asc")}>
+    <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => { const next = nextSort(sorted); if (next) column.toggleSorting(next === "desc"); else column.clearSorting() }}>
       {title}
       <Icon />
     </Button>

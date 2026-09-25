@@ -90,7 +90,7 @@ const SidebarCloser = defineComponent((_, { slots }) => {
         <SidebarTrigger class="-ml-1" />
         <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-4" />
         <component :is="active.icon" v-if="active?.icon" class="size-4 text-primary" />
-        <h1 class="text-sm font-medium">{{ title ?? active?.label }}</h1>
+        <h1 v-if="title ?? active?.label" class="text-sm font-medium">{{ title ?? active?.label }}</h1>
         <ThemeToggle v-if="theme" v-model:theme="theme" class="ml-auto" />
       </header>
       <div class="flex-1 p-4"><slot /></div>

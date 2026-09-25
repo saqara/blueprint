@@ -4,7 +4,7 @@ import { toast } from "vue-sonner"
 import { FileDropzone, type FileRejection } from "@/registry/vue/ui/file-dropzone"
 import { Toaster } from "@/registry/vue/ui/sonner"
 
-const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)" }
+const reasons = { type: "format non accepté", size: "fichier trop lourd (2 Mo max.)", count: "un seul fichier à la fois" }
 const files = ref<File[]>([])
 const onReject = (rejections: FileRejection[]) =>
   rejections.forEach(({ file, reason }) => toast.error(`${file.name} : ${reasons[reason]}`))

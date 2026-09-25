@@ -62,4 +62,8 @@ describe("tokenErrors", () => {
     const vars = { background: "#FFFFFF", "muted-foreground": "#EEEEEE" }
     expect(tokenErrors({ ...base, light: vars, dark: vars })[0]).toContain("muted-foreground on background")
   })
+  it("keeps sidebar borders distinct from the sidebar accent in dark mode", () => {
+    const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
+    expect(t.dark["sidebar-border"]).not.toBe(t.dark["sidebar-accent"])
+  })
 })

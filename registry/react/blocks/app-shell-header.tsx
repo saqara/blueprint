@@ -71,10 +71,11 @@ function AppShellHeader({
           <div className="shrink-0">{brand}</div>
           {/* The active tab already names the page: the title only shows when the app passes one. */}
           {title && (
-            <div className="hidden shrink-0 items-center gap-2 whitespace-nowrap border-l border-sidebar-border pl-4 text-sm font-medium lg:flex">
+            // Same rule as the sidebar shell: the page title is an h1 (kept for screen readers on small screens).
+            <h1 className="flex shrink-0 items-center gap-2 whitespace-nowrap border-l border-sidebar-border pl-4 text-sm font-medium max-lg:sr-only">
               {PageIcon && <PageIcon className="size-4 text-primary" />}
               {title}
-            </div>
+            </h1>
           )}
           <nav aria-label="Navigation principale" className="ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex">
             {nav.map((item) => entry(item, false))}

@@ -12,3 +12,8 @@ export function resolveUpdater<T>(updater: Updater<T>, current: T): T {
 export function ariaSort(sorted: false | "asc" | "desc"): "ascending" | "descending" | undefined {
   return sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined
 }
+
+// Header clicks cycle ascending → descending → no sort.
+export function nextSort(sorted: false | "asc" | "desc"): false | "asc" | "desc" {
+  return sorted === false ? "asc" : sorted === "asc" ? "desc" : false
+}

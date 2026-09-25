@@ -5,7 +5,7 @@ import { UploadIcon, XIcon } from "@lucide/vue"
 import { ref } from "vue"
 import { cn } from "@/lib/utils"
 import { Button } from "@/registry/vue/ui/button"
-import { partitionFiles } from "./utils"
+import { limitFiles, partitionFiles } from "./utils"
 
 // Saqara: selection + validation only; the app uploads and shows its own progress.
 const props = withDefaults(defineProps<{
@@ -30,8 +30,9 @@ const dragging = ref(false)
 function add(list: FileList | null | undefined) {
   if (!list || props.disabled) return
   const { accepted, rejected } = partitionFiles([...list], { accept: props.accept, maxSize: props.maxSize })
-  if (rejected.length) emit("reject", rejected)
-  if (accepted.length) files.value = props.multiple ? [...files.value, ...accepted] : accepted.slice(0, 1)
+  const { kept, rejected: extra } = limitFiles(accepted, props.multiple)
+  if (rejected.length || extra.length) emit("reject", [...rejected, ...extra])
+  if (kept.length) files.value = props.multiple ? [...files.value, ...kept] : kept
 }
 function onChange(event: Event) {
   const target = event.target as HTMLInputElement

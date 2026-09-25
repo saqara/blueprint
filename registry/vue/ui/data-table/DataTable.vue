@@ -49,7 +49,7 @@ const sticky = (index: number) => (props.stickyFirstColumn && index === 0 ? "sti
     data-slot="data-table"
     :class="cn(stickyHeader && '[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto', props.class)"
   >
-    <Table>
+    <Table :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-background')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">
           <TableHead v-for="(header, i) in group.headers" :key="header.id" :aria-sort="ariaSort(header.column.getIsSorted())" :class="sticky(i)">

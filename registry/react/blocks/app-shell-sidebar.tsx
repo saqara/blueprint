@@ -100,7 +100,7 @@ function AppShellSidebar({
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
           {PageIcon && <PageIcon className="size-4 text-primary" />}
-          <h1 className="text-sm font-medium">{title ?? active?.label}</h1>
+          {(title ?? active?.label) && <h1 className="text-sm font-medium">{title ?? active?.label}</h1>}
           {theme && onThemeChange && <ThemeToggle theme={theme} onThemeChange={onThemeChange} className="ml-auto" />}
         </header>
         <div className="flex-1 p-4">{children}</div>

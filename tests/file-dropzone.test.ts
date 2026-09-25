@@ -17,6 +17,15 @@ describe.each([["react", R], ["vue", V]] as const)("%s file-dropzone", (fw, m) =
     expect(m.matchesAccept({ name: "notes.txt", type: "text/plain" }, ".xlsx,image/*")).toBe(false)
     expect(m.matchesAccept({ name: "anything.bin", type: "" }, undefined)).toBe(true)
   })
+  it("accepts everything with */* or *", () => {
+    expect(m.matchesAccept({ name: "a.bin", type: "application/octet-stream" }, "*/*")).toBe(true)
+    expect(m.matchesAccept({ name: "a.bin", type: "" }, "*")).toBe(true)
+  })
+  it("keeps one file in single mode and reports the others with reason count", () => {
+    const [a, b, c] = [file("a.png", "image/png"), file("b.png", "image/png"), file("c.png", "image/png")]
+    expect(m.limitFiles([a, b, c], false)).toEqual({ kept: [a], rejected: [{ file: b, reason: "count" }, { file: c, reason: "count" }] })
+    expect(m.limitFiles([a, b], true)).toEqual({ kept: [a, b], rejected: [] })
+  })
   it("partitions files by type first, then size", () => {
     const ok = file("logo.png", "image/png", 100)
     const big = file("photo.jpg", "image/jpeg", 3000)
