@@ -43,10 +43,19 @@ function SheetOverlay({
   )
 }
 
+// Width of left / right sheets from `sm` up (mobile stays at 3/4 of the screen).
+const sheetSizes = {
+  sm: "sm:max-w-sm",
+  md: "sm:max-w-xl",
+  lg: "sm:max-w-3xl",
+  xl: "sm:max-w-5xl",
+}
+
 function SheetContent({
   className,
   children,
   side = "right",
+  size = "sm",
   showCloseButton = true,
   closeLabel = "Fermer",
   onOpenAutoFocus,
@@ -54,6 +63,7 @@ function SheetContent({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
+  size?: keyof typeof sheetSizes
   showCloseButton?: boolean
   closeLabel?: string
 }) {
@@ -63,16 +73,18 @@ function SheetContent({
       <SheetOverlay />
       <SheetPrimitive.Content
         data-slot="sheet-content"
+        data-size={size}
         className={cn(
           "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500",
           side === "right" &&
-            "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+            "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
           side === "left" &&
-            "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+            "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
           side === "top" &&
             "inset-x-0 top-0 h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
           side === "bottom" &&
             "inset-x-0 bottom-0 h-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+          (side === "left" || side === "right") && sheetSizes[size],
           className
         )}
         onOpenAutoFocus={(event) => {
@@ -105,6 +117,16 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="sheet-header"
       className={cn("flex flex-col gap-1.5 p-4", className)}
+      {...props}
+    />
+  )
+}
+
+function SheetBody({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="sheet-body"
+      className={cn("min-h-0 flex-1 overflow-y-auto px-4", className)}
       {...props}
     />
   )
@@ -148,6 +170,7 @@ function SheetDescription({
 
 export {
   Sheet,
+  SheetBody,
   SheetTrigger,
   SheetClose,
   SheetContent,

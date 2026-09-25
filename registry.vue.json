@@ -617,6 +617,28 @@
       "description": "Zone dépliable simple."
     },
     {
+      "name": "collapsible-section",
+      "type": "registry:ui",
+      "title": "Collapsible Section",
+      "description": "Section titrée repliable : titre et chevron dans un bouton, actions à côté (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/collapsible-section/CollapsibleSection.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/collapsible-section/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
@@ -794,7 +816,7 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Fenêtre modale pour un formulaire ou un contenu."
+      "description": "Fenêtre modale pour un formulaire ou un contenu, en 4 tailles, avec un corps qui défile."
     },
     {
       "name": "dropdown-menu",
@@ -1375,6 +1397,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/vue/ui/sheet/SheetBody.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/vue/ui/sheet/SheetClose.vue",
           "type": "registry:ui"
         },
@@ -1411,7 +1437,7 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Panneau latéral glissant."
+      "description": "Panneau latéral glissant, en 4 largeurs, avec un corps qui défile."
     },
     {
       "name": "sidebar",
