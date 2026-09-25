@@ -61,7 +61,7 @@ const toggleAll = () => { model.value = reset.value || allSelected.value ? [] : 
         <span class="flex flex-wrap gap-1">
           <span v-if="selected.length === 0 && reset && selectAllLabel">{{ selectAllLabel }}</span>
           <span v-else-if="selected.length === 0" class="text-muted-foreground">{{ placeholder }}</span>
-          <span v-if="display === 'count' && selected.length">{{ summarize(selected.length, options.length, countLabel, selectAllLabel) }}</span>
+          <span v-if="display === 'count' && selected.length">{{ summarize(selected.length, options.length, countLabel, reset ? undefined : selectAllLabel) }}</span>
           <Badge v-for="o in display === 'badges' ? badges.shown : []" :key="o.value" variant="secondary">
             {{ o.label }}
             <XIcon aria-hidden="true" class="size-3 cursor-pointer" @click.stop="toggle(o.value)" />

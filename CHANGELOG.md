@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `multi-select` : en `selectAllBehavior="clear"`, une sélection complète faite à la main se résume par le compte (« 12 agences »), plus par `selectAllLabel`, réservé à « sans filtre » (`[]`).
 - 2026-09-25 — `multi-select` : les options cochées sont annoncées aux lecteurs d'écran (« , sélectionné », `selectedLabel`) ; `selectAllBehavior="clear"` fait de l'entrée `selectAllLabel` un « sans filtre » qui envoie `[]` (cochée et affichée en résumé quand rien n'est choisi).
 - 2026-09-25 — `data-table` : prop `meta` (transmise à TanStack, lue dans les cellules via `table.options.meta`) pour l'état vivant des cellules sans recréer `columns` ; le focus et l'état des cellules interactives sont conservés.
 - 2026-09-25 — `data-table` : `scrollProps` (attributs, classe et gestionnaires du conteneur de défilement : drag-to-scroll, barre de défilement…). Documenté : définir `columns` hors du composant (React), `FlexRender` remontant les cellules d'une fonction recréée.
