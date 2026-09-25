@@ -7,8 +7,10 @@ import { Button } from "@/registry/vue/ui/button"
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
   showCloseButton?: boolean
+  closeLabel?: string
 }>(), {
   showCloseButton: false,
+  closeLabel: "Fermer",
 })
 </script>
 
@@ -20,7 +22,7 @@ const props = withDefaults(defineProps<{
     <slot />
     <DialogClose v-if="showCloseButton" as-child>
       <Button variant="outline">
-        Close
+        {{ closeLabel }}
       </Button>
     </DialogClose>
   </div>

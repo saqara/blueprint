@@ -15,6 +15,7 @@ import SheetOverlay from "./SheetOverlay.vue"
 interface SheetContentProps extends DialogContentProps {
   class?: HTMLAttributes["class"]
   side?: "top" | "right" | "bottom" | "left"
+  closeLabel?: string
 }
 
 defineOptions({
@@ -23,12 +24,24 @@ defineOptions({
 
 const props = withDefaults(defineProps<SheetContentProps>(), {
   side: "right",
+  closeLabel: "Fermer",
 })
 const emits = defineEmits<DialogContentEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "side")
+const delegatedProps = reactiveOmit(props, "class", "side", "closeLabel")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+
+let opener: HTMLElement | null = null
+function rememberOpener() {
+  opener = document.activeElement as HTMLElement | null
+}
+// Saqara: reka only refocuses a SheetTrigger; controlled ones return focus to their opener.
+function returnFocus(event: Event) {
+  if (event.defaultPrevented || !opener?.isConnected) return
+  event.preventDefault()
+  opener.focus()
+}
 </script>
 
 <template>
@@ -48,6 +61,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
           && 'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t',
         props.class)"
       v-bind="{ ...$attrs, ...forwarded }"
+      @open-auto-focus="rememberOpener"
+      @close-auto-focus="returnFocus"
     >
       <slot />
 
@@ -55,7 +70,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         class="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
       >
         <X class="size-4" />
-        <span class="sr-only">Close</span>
+        <span class="sr-only">{{ closeLabel }}</span>
       </DialogClose>
     </DialogContent>
   </DialogPortal>

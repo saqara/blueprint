@@ -8,8 +8,8 @@ const props = withDefaults(defineProps<DialogRootProps & {
   title?: string
   description?: string
 }>(), {
-  title: "Command Palette",
-  description: "Search for a command to run...",
+  title: "Palette de commandes",
+  description: "Rechercher une commande…",
 })
 const emits = defineEmits<DialogRootEmits>()
 

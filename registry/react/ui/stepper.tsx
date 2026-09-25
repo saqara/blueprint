@@ -63,7 +63,7 @@ function Stepper({ value: valueProp, defaultValue = 1, onValueChange, orientatio
       <div
         data-slot="stepper"
         role="group"
-        aria-label="progress"
+        aria-label="Progression"
         data-orientation={orientation}
         className={cn("flex gap-2", orientation === "vertical" && "flex-col", className)}
         onKeyDown={(event) => {

@@ -6,6 +6,8 @@ ROOT=$(pwd)
 TMP=$(mktemp -d)
 # Isolated npm config: the developer's ~/.npmrc (private registries, allow-scripts) must not leak in.
 touch "$TMP/.npmrc"
+# `npm run smoke` also exports that config as npm_config_* (allow-scripts included): drop it.
+for v in $(compgen -e | grep '^npm_config_'); do unset "$v"; done
 export NPM_CONFIG_USERCONFIG="$TMP/.npmrc"
 PORT=4873
 # Static server for public/ (python's http.server resets connections under the CLI's parallel fetches).
