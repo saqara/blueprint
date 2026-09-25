@@ -65,7 +65,7 @@ function MultiSelect({
             <CommandEmpty>{emptyMessage}</CommandEmpty>
             <CommandGroup>
               {options.map((o) => (
-                <CommandItem key={o.value} value={o.label} onSelect={() => toggle(o.value)}>
+                <CommandItem key={o.value} value={o.value} keywords={[o.label]} onSelect={() => toggle(o.value)}>
                   <CheckIcon className={cn(value.includes(o.value) ? "opacity-100" : "opacity-0")} />
                   {o.label}
                 </CommandItem>

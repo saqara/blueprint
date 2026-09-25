@@ -11,12 +11,26 @@ export function stepState(step: number, value: number, completed?: boolean): Ste
   return step === value ? "active" : "inactive"
 }
 
+// Clamped, like Reka's roving focus (loop: false).
 export function moveIndex(current: number, delta: number, count: number): number {
-  return (current + delta + count) % count
+  return Math.min(count - 1, Math.max(0, current + delta))
+}
+
+// Reka's linear rule: any previous step, the current one, and the next one.
+export function isReachable(step: number, value: number, linear: boolean): boolean {
+  return !linear || step <= value + 1
+}
+
+export function composeHandlers<E extends { defaultPrevented: boolean }>(consumer: ((event: E) => void) | undefined, own: (event: E) => void) {
+  return (event: E) => {
+    consumer?.(event)
+    if (!event.defaultPrevented) own(event)
+  }
 }
 
 type StepperContextValue = { value: number; setValue: (value: number) => void; orientation: "horizontal" | "vertical"; linear: boolean }
 type StepperItemContextValue = { step: number; state: StepState; disabled: boolean }
+
 
 const StepperContext = React.createContext<StepperContextValue | null>(null)
 const StepperItemContext = React.createContext<StepperItemContextValue | null>(null)
@@ -48,6 +62,8 @@ function Stepper({ value: valueProp, defaultValue = 1, onValueChange, orientatio
     <StepperContext.Provider value={{ value, setValue, orientation, linear }}>
       <div
         data-slot="stepper"
+        role="group"
+        aria-label="progress"
         data-orientation={orientation}
         className={cn("flex gap-2", orientation === "vertical" && "flex-col", className)}
         onKeyDown={(event) => {
@@ -69,14 +85,15 @@ function Stepper({ value: valueProp, defaultValue = 1, onValueChange, orientatio
 type StepperItemProps = React.ComponentProps<"div"> & { step: number; completed?: boolean; disabled?: boolean }
 
 function StepperItem({ step, completed, disabled = false, className, ...props }: StepperItemProps) {
-  const { value } = useRequired(StepperContext, "StepperItem")
+  const { value, linear } = useRequired(StepperContext, "StepperItem")
   const state = stepState(step, value, completed)
+  const unreachable = disabled || !isReachable(step, value, linear)
   return (
-    <StepperItemContext.Provider value={{ step, state, disabled }}>
+    <StepperItemContext.Provider value={{ step, state, disabled: unreachable }}>
       <div
         data-slot="stepper-item"
         data-state={state}
-        data-disabled={disabled ? "" : undefined}
+        data-disabled={unreachable ? "" : undefined}
         className={cn("group flex items-center gap-2 data-[disabled]:pointer-events-none", className)}
         {...props}
       />
@@ -84,16 +101,16 @@ function StepperItem({ step, completed, disabled = false, className, ...props }:
   )
 }
 
-function StepperTrigger({ className, ...props }: React.ComponentProps<"button">) {
-  const { value, setValue, linear } = useRequired(StepperContext, "StepperTrigger")
+function StepperTrigger({ className, onClick, ...props }: React.ComponentProps<"button">) {
+  const { setValue } = useRequired(StepperContext, "StepperTrigger")
   const { step, state, disabled } = useRequired(StepperItemContext, "StepperTrigger")
   return (
     <button
       type="button"
       data-slot="stepper-trigger"
       aria-current={state === "active" ? "step" : undefined}
-      disabled={disabled || (linear && step > value)}
-      onClick={() => setValue(step)}
+      disabled={disabled}
+      onClick={composeHandlers(onClick, () => setValue(step))}
       className={cn("flex flex-col items-center gap-1 rounded-md p-1 text-center outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50", className)}
       {...props}
     />

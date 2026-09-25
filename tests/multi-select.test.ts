@@ -34,3 +34,12 @@ describe.each(["react", "vue"] as const)("%s multi-select", (fw) => {
     expect(html).not.toContain("Dép. 33")
   })
 })
+
+describe("react multi-select duplicate labels", () => {
+  it("keys cmdk items by value so two options with the same label stay distinct", async () => {
+    const { readFileSync } = await import("node:fs")
+    const src = readFileSync("registry/react/ui/multi-select.tsx", "utf8")
+    expect(src).toContain("value={o.value}")
+    expect(src).toContain("keywords={[o.label]}")
+  })
+})
