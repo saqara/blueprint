@@ -131,6 +131,21 @@
         }
       },
       "files": []
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "dependencies": [
+        "cn",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

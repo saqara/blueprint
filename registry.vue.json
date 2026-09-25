@@ -131,6 +131,24 @@
         }
       },
       "files": []
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/button/Button.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/button/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
