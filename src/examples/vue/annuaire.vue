@@ -175,7 +175,7 @@ function onSorting(next: SortingState) {
         <Button variant="ghost" @click="reset">Réinitialiser</Button>
       </div>
 
-      <DataTable :columns="columns" :data="view.rows" :get-row-id="(c) => c.siren" :sorting="sorting" class="rounded-md border"
+      <DataTable :columns="columns" :data="view.rows" :get-row-id="(c) => c.siren" :sorting="sorting"
         empty-message="Aucune entreprise ne correspond à ces filtres." @update:sorting="onSorting" />
 
       <div class="flex items-center justify-between gap-4 text-sm text-muted-foreground">

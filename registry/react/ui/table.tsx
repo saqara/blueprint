@@ -3,7 +3,8 @@
 import * as React from "react"
 import { cn } from "cn"
 
-// Saqara: `container={false}` drops the overflow wrapper, so sticky cells can stick to an outer scroller.
+// Saqara: framed like data-table (rounded border on the scroll container);
+// `container={false}` drops the wrapper (and its frame), so sticky cells can stick to an outer scroller.
 function Table({ className, container = true, ...props }: React.ComponentProps<"table"> & { container?: boolean }) {
   const table = (
     <table
@@ -16,7 +17,7 @@ function Table({ className, container = true, ...props }: React.ComponentProps<"
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className="relative w-full overflow-x-auto rounded-md border"
     >
       {table}
     </div>

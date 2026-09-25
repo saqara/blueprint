@@ -78,7 +78,7 @@ function rowAttrs(row: TData) {
     data-slot="data-table"
     :class="cn('[--data-table-bg:var(--background)]', stickyHeader && '[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto', props.class)"
   >
-    <div ref="scrollContainer" v-bind="scrollProps" data-slot="table-container" class="relative w-full overflow-x-auto">
+    <div ref="scrollContainer" v-bind="scrollProps" data-slot="table-container" class="relative w-full overflow-x-auto rounded-md border">
     <Table :container="false" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">

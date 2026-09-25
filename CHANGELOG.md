@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `table` et `data-table` : même apparence par défaut, un cadre (`rounded-md border`) sur le conteneur de défilement. `table container={false}` reste sans cadre. **À vérifier côté apps** : retirer un `rounded-md border` posé autour d'une table ou d'une `DataTable` (sinon double bordure).
 - 2026-09-25 — `app-shell-sidebar` : `variant="inset"` (mise en page du dashboard shadcn : le contenu est un panneau blanc arrondi, encadré par la couleur de la sidebar ; il défile dans son cadre quand la hauteur est bornée) ; la barre `SidebarRail` est retirée du bloc (son curseur de redimensionnement était trompeur ; le bouton de l'en-tête et ⌘/Ctrl+B restent). Site de doc et exemple Annuaire en `inset`.
 - 2026-09-25 — Correctif urgent : le registry React passe les règles React Compiler d'`eslint-plugin-react-hooks` v7 (la CI du Hub cassait). `sidebar` : `SidebarMenuSkeleton` à largeur fixe (plus de `Math.random` au rendu, React et Vue). `use-mobile` : `useSyncExternalStore` sur `matchMedia`. `login` : compte à rebours relancé sans `setState` dans un effet. `npm run check` lance désormais ce lint sur `registry/react`.
 - 2026-09-25 — `multi-select` : en `selectAllBehavior="clear"`, une sélection complète faite à la main se résume par le compte (« 12 agences »), plus par `selectAllLabel`, réservé à « sans filtre » (`[]`).
