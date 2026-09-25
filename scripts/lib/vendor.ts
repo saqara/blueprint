@@ -53,3 +53,17 @@ export function plan(upstream: UpstreamItem, fw: Fw, exists: (path: string) => b
   }
   return { files: files.map(({ path, content }) => ({ path, content })), item }
 }
+
+// Fetch and plan every (framework, name) pair first: a missing item aborts before any file is written.
+export async function planAll(
+  names: string[],
+  fetchItem: (fw: Fw, name: string) => Promise<UpstreamItem>,
+  exists: (path: string) => boolean,
+  force: boolean,
+): Promise<Record<Fw, ReturnType<typeof plan>[]>> {
+  const planned: Record<Fw, ReturnType<typeof plan>[]> = { react: [], vue: [] }
+  for (const fw of ["react", "vue"] as Fw[]) {
+    for (const name of names) planned[fw].push(plan(await fetchItem(fw, name), fw, exists, force))
+  }
+  return planned
+}

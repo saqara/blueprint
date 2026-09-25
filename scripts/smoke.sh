@@ -63,5 +63,6 @@ for APP in "$R" "$V"; do
   if grep -rq "@/registry/" "$APP/src"; then echo "FAIL: unrewritten @/registry/ import in $APP"; exit 1; fi
   grep -q -- "--primary: #F04632" "$APP/src/index.css" || { echo "FAIL: theme vars missing in $APP/src/index.css"; exit 1; }
   grep -q "@fontsource/lato" "$APP/src/index.css" || { echo "FAIL: font imports missing in $APP/src/index.css"; exit 1; }
+  grep -q "@apply font-heading" "$APP/src/index.css" || { echo "FAIL: heading font rule missing in $APP/src/index.css"; exit 1; }
 done
 echo "smoke ok"

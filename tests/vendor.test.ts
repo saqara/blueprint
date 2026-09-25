@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { localize, npmDeps, plan, saqaraDeps } from "../scripts/lib/vendor.ts"
+import { localize, npmDeps, plan, planAll, saqaraDeps } from "../scripts/lib/vendor.ts"
 
 const upstream = {
   name: "radio-group",
@@ -55,5 +55,23 @@ describe("plan", () => {
   })
   it("overwrites with force", () => {
     expect(plan(upstream, "vue", () => true, true).files).toHaveLength(1)
+  })
+})
+
+describe("planAll", () => {
+  const item = (name: string) => ({ name, type: "registry:ui", files: [{ path: `registry/new-york-v4/ui/${name}.tsx`, type: "registry:ui", content: "" }] })
+  const fetchItem = async (fw: string, name: string) => {
+    if (fw === "vue" && name === "missing") throw new Error(`upstream vue has no "missing"`)
+    return item(name)
+  }
+
+  it("plans every framework before anything can be written", async () => {
+    const planned = await planAll(["a", "b"], fetchItem, () => false, false)
+    expect(planned.react.map((p) => p.item.name)).toEqual(["a", "b"])
+    expect(planned.vue.map((p) => p.item.name)).toEqual(["a", "b"])
+  })
+
+  it("rejects as a whole when one framework lacks an item, so no files are written", async () => {
+    await expect(planAll(["a", "missing"], fetchItem, () => false, false)).rejects.toThrow('upstream vue has no "missing"')
   })
 })
