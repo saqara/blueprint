@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `collapsible-section` : attributs passés à la racine (`data-testid`, `id`…), `triggerProps` pour le bouton, `variant="card"` (bordure, fond carte, marge interne), `headingLevel` de 2 à 6.
 - 2026-09-25 — `tag-input` : `maxSuggestions` (8 par défaut), `emptyMessage` (« Aucun résultat. » par défaut en catalogue fermé), rendu personnalisé des suggestions (`renderSuggestion`, Vue : slot `#suggestion`), requête contrôlée (`query` + `onQueryChange`, Vue : `v-model:query`) et mode « choix unique » `onSelect` (la valeur part dans le callback, le champ se vide, aucun tag ajouté). `value` / `onValueChange` deviennent optionnels (React).
 - 2026-09-25 — `card` / `empty` : niveau de titre réglable (`CardTitle` / `EmptyTitle` en `asChild` côté React, `as` côté Vue). `tooltip` : chaque tooltip apporte son provider, il fonctionne hors `TooltipProvider`. `slider` : `thumbLabels` nomme chaque curseur (au lieu de « Minimum » / « Maximum » en anglais). `file-dropzone` : `disabled` verrouille aussi « Retirer », `inputProps` transmis à l'input caché (`id`, `name`, `data-testid`).
 - 2026-09-25 — `sheet` : prop `size` (`sm` par défaut, `md`, `lg`, `xl` pour les panneaux gauche / droite) et `SheetBody` qui défile entre l'en-tête et le pied (le bouton de fermeture reste visible). `collapsible-section` (Saqara) : section repliable avec titre et chevron dans un bouton de titre, emplacement `actions` à côté, ouverture contrôlée ou non.
