@@ -62,6 +62,23 @@ describe("tokenErrors", () => {
     const vars = { background: "#FFFFFF", "muted-foreground": "#EEEEEE" }
     expect(tokenErrors({ ...base, light: vars, dark: vars })[0]).toContain("muted-foreground on background")
   })
+  it("checks X-text on background, card and the bg-X/10 tint", () => {
+    const vars = { background: "#FFFFFF", card: "#FFFFFF", success: "#6EBD71", "success-text": "#6EBD71" }
+    const errors = tokenErrors({ ...base, light: vars, dark: vars })
+    expect(errors).toContain("light: success-text on background = 2.29:1 (< 4.5)")
+    expect(errors.some((e) => e.includes("success-text on success/10 over background"))).toBe(true)
+    const fixed = { ...vars, "success-text": "#2F7F36" }
+    expect(tokenErrors({ ...base, light: fixed, dark: fixed })).toEqual([])
+  })
+
+  it("gives every semantic colour a legible text token", () => {
+    const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
+    for (const k of ["success", "warning", "info", "identity", "destructive"]) {
+      expect(t.light[`${k}-text`]).toBeDefined()
+      expect(t.dark[`${k}-text`]).toBeDefined()
+    }
+  })
+
   it("keeps sidebar borders distinct from the sidebar accent in dark mode", () => {
     const t: Tokens = JSON.parse(readFileSync("tokens/theme.json", "utf8"))
     expect(t.dark["sidebar-border"]).not.toBe(t.dark["sidebar-accent"])

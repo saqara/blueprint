@@ -6,6 +6,7 @@ const RULES = `## Design system : Saqara Blueprint
 - Les composants d'interface viennent du registry \`@saqara\` (doc : https://saqara.github.io/blueprint/, index pour IA : https://saqara.github.io/blueprint/llms.txt).
 - Avant d'écrire un composant, vérifier qu'il n'existe pas déjà dans Blueprint ; l'installer avec la CLI plutôt que le recopier.
 - Couleurs : uniquement les tokens du thème (\`bg-primary\`, \`text-muted-foreground\`, \`bg-success\`…), jamais de hex.
+- Texte coloré (statuts, scores) : \`text-success-text\`, \`text-warning-text\`, \`text-info-text\`, \`text-identity-text\`, \`text-destructive-text\` — lisibles sur le fond, la carte et la teinte \`bg-X/10\`. Jamais \`text-success\` ou \`text-warning\` pour du texte : ces tokens servent aux fonds et aux icônes.
 - Textes d'interface en français.
 - Ne pas modifier les composants de \`components/ui\` pour un besoin local : composer autour.`
 
