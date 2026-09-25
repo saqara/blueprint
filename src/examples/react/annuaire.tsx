@@ -129,7 +129,7 @@ export default function AnnuaireExample() {
   const average = (COMPANIES.reduce((n, c) => n + c.score, 0) / COMPANIES.length).toFixed(1).replace(".", ",")
 
   return (
-    <AppShellSidebar className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId="annuaire"
+    <AppShellSidebar variant="inset" className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId="annuaire"
       user={{ name: "Alexandre Brochot", email: "alexandre.brochot@saqara.com" }} onSignOut={() => {}}>
       <div className="space-y-6">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
