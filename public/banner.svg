@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-label="Saqara Blueprint">
+  <defs>
+    <linearGradient id="bannerBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4AA6F8"/>
+      <stop offset="1" stop-color="#2C62DC"/>
+    </linearGradient>
+    <pattern id="minor" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+    <pattern id="major" width="160" height="160" patternUnits="userSpaceOnUse">
+      <path d="M160 0H0V160" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="1.5"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bannerBg)"/>
+  <rect width="1280" height="640" fill="url(#minor)"/>
+  <rect width="1280" height="640" fill="url(#major)"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".15" stroke-width="2">
+    <circle cx="280" cy="320" r="260"/>
+    <circle cx="1120" cy="80" r="220"/>
+    <circle cx="1120" cy="80" r="120"/>
+  </g>
+  <rect x="24" y="24" width="1232" height="592" rx="16" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+  <svg x="120" y="160" width="320" height="320" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4AA6F8"/>
+      <stop offset="1" stop-color="#2C62DC"/>
+    </linearGradient>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".82"/>
+    </linearGradient>
+    <clipPath id="tile"><rect width="1024" height="1024" rx="228"/></clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#bg)"/>
+  <!-- construction guides, derived from the logo's own geometry -->
+  <g clip-path="url(#tile)" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3">
+    <path d="M0 216H1024M0 343H1024M0 402H1024M0 611H1024M0 681H1024M0 808H1024M283 0V1024M436 0V1024M498 0V1024M534 0V1024M580 0V1024M661 0V1024M740 0V1024"/>
+    <circle cx="512" cy="512" r="420"/>
+    <circle cx="512" cy="512" r="320"/>
+    <circle cx="739" cy="402" r="205"/>
+    <circle cx="739" cy="402" r="78"/>
+    <circle cx="498" cy="392" r="185"/>
+    <circle cx="498" cy="392" r="58"/>
+    <circle cx="500" cy="638" r="208"/>
+    <circle cx="500" cy="638" r="82"/>
+  </g>
+  <rect x="283" y="216" width="457.5" height="592.5" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/>
+  <rect x="48" y="48" width="928" height="928" rx="184" fill="none" stroke="#fff" stroke-width="8"/>
+  <g transform="translate(283 216)" fill="url(#fg)">
+    <path d="M251.1 186.1H378.9C388.8 153.1 404.6 126.8 456.5 126.8V.3C363.3.3 271.3 50.9 251.1 186.1Z"/>
+    <path d="M252.4 242.4C165.3 211.7 152.3 193.2 153.5 167.3 154.5 144.8 175.5 125.5 215.5 127.1V.6C117.5-3.8 28.7 55.3 23.7 164.7 18.8 273.2 99.6 317.5 182.8 344.8 266.7 372.1 298.6 387.4 297 422.2 296 444 279.5 467.7 217.9 464.9 174.7 462.9 144 437.2 141.3 395.1H.5C20 526.4 102.6 586.3 208.2 591.1 331.3 596.6 421.7 535.8 426.7 426.4 432.1 306.6 337.1 272.2 252.4 242.4Z"/>
+  </g>
+</svg>
+  <g fill="#fff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="500" y="306" font-size="84" font-weight="700" letter-spacing="-2">Saqara Blueprint</text>
+    <text x="504" y="370" font-size="32" fill-opacity=".85">Design system · shadcn/ui pour React &amp; Vue</text>
+  </g>
+</svg>

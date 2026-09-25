@@ -1,3 +1,5 @@
+<p align="center"><img src="public/banner.svg" alt="Saqara Blueprint"></p>
+
 # Saqara Blueprint
 
 Design system Saqara : un registry [shadcn/ui](https://ui.shadcn.com) (React) et [shadcn-vue](https://www.shadcn-vue.com) (Vue), aux couleurs Saqara.
