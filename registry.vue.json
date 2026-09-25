@@ -1204,6 +1204,25 @@
       ]
     },
     {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "Carte d'indicateur : libellé, valeur, précision, icône (Saqara).",
+      "registryDependencies": [
+        "@saqara/card"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/stat-card/StatCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stat-card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "stepper",
       "type": "registry:ui",
       "title": "Stepper",

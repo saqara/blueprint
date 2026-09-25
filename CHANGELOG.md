@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — Lot 3 : `table`, `pagination`, `slider`, `sidebar`, `stepper`, et les composants Saqara `data-table` (tri contrôlé, TanStack Table v9), `multi-select`, `file-dropzone`, `stat-card`.
 - 2026-09-25 — `sonner` : toasts typés teintés aux couleurs Saqara (comme `alert`), description lisible en clair et en sombre. `saqara-theme` : ombre `shadow-lg` noire en mode sombre (plus de halo clair).
 - 2026-09-25 — Lot 2 : `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tabs`, `accordion`, `command`, `progress`, `empty`, `sonner` (React sans next-themes, Vue avec la feuille de style vue-sonner).
 - 2026-09-25 — `saqara-theme` : neutres en palette stone (gris chauds) en clair et en sombre.

@@ -28,6 +28,11 @@ Composants qui demandent un élément racine :
 - `tooltip` (React) : placer un `<TooltipProvider>` à la racine de l'app.
 - `sonner` : monter `<Toaster />` une fois à la racine. En React, passer `theme="light" | "dark"` depuis le thème de l'app (défaut : `light`, comme en Vue). En Vue, la feuille de style de `vue-sonner` est importée par le composant (l'app doit déclarer les types `vite/client`, présents par défaut dans un projet Vite).
 
+Composants Saqara (lot 3) :
+- `data-table` : le tri est toujours contrôlé par la page (`sorting` + `onSortingChange`, Vue `v-model:sorting`) ; colonnes typées `ColumnDef<DataTableFeatures, Row, any>[]` (TanStack Table v9) ; pour l'en-tête collant, donner une hauteur max (`className="max-h-96"`).
+- `stepper` : étapes numérotées à partir de 1 ; avec `linear` (défaut), on ne peut revenir qu'aux étapes précédentes.
+- `file-dropzone` : sélection et validation seulement, l'app gère l'envoi.
+
 Le code est copié dans l'app : il lui appartient. Pour récupérer une mise à jour, relancer `add` avec `--overwrite` et relire le diff.
 
 ## Développer
