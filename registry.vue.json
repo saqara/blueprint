@@ -133,6 +133,52 @@
       "files": []
     },
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/alert/Alert.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert/AlertDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert/AlertTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/alert/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "dependencies": [
+        "@vueuse/core",
+        "class-variance-authority",
+        "reka-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/badge/Badge.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/badge/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
