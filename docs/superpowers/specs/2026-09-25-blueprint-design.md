@@ -141,6 +141,24 @@ Chaque composant est livré en React **et** en Vue, avec une démo dans chaque v
 - MultiSelect n'existe dans aucun des deux : il est écrit dans les deux frameworks à partir de Command et Popover.
 - Sonner s'appuie sur `sonner` en React et sur `vue-sonner` en Vue. La version React n'utilise pas `next-themes` : l'app passe `theme` au `Toaster`. Les toasts typés (`success`, `info`, `warning`, `error`) sont teintés comme les Alert : fond à 10 % de la couleur, bordure à 50 %, texte normal, icône colorée ; la description utilise `muted-foreground`.
 
+### 5.1 Lot 3 — détail (validé le 2026-09-25)
+
+**Repris tels quels des registries officiels :** `table`, `pagination`, `slider`, `sidebar` (React + Vue) et `stepper` côté Vue.
+
+**Composants Saqara (React + Vue).** Textes par défaut en français, tous surchargeables par props.
+
+| Item | API | Construit sur |
+|---|---|---|
+| `data-table` | `columns` (TanStack `ColumnDef`), `data`, `getRowId`, `sorting` + `onSortingChange` (toujours contrôlé : la page trie, serveur ou client), `loading` (lignes squelette, 5 par défaut), `emptyMessage`, `stickyHeader`, `stickyFirstColumn`. En-tête triable (`DataTableColumnHeader`) avec flèches et `aria-sort`. | `table`, `button`, `skeleton`, `@tanstack/react-table` / `@tanstack/vue-table` |
+| `multi-select` | `options: { value, label }[]`, `value` + `onValueChange` (Vue : `v-model`), `placeholder`, `searchPlaceholder`, `emptyMessage`, `maxBadges` (3 par défaut, puis « +N »), `disabled`. Recherche clavier, badges retirables, « Tout effacer ». Liste fermée : pas de création de valeur. | `popover`, `command`, `badge` |
+| `stepper` (React) | Même API que le Stepper shadcn-vue : `Stepper`, `StepperItem`, `StepperTrigger`, `StepperIndicator`, `StepperTitle`, `StepperDescription`, `StepperSeparator` ; `value` contrôlé + `onValueChange`, `orientation`, flèches clavier entre étapes. | React + `cn` |
+| `file-dropzone` | `accept` (MIME, `type/*`, extensions), `maxSize` (octets), `multiple`, `files` + `onFilesChange`, `onReject({ file, reason: "type" \| "size" }[])`, `disabled`. Liste des fichiers avec retrait. Pas d'upload : l'app envoie et affiche sa `progress`. | `<input type="file">` natif, `button` |
+| `stat-card` | `label`, `value`, `description?`, emplacement icône. | `card` |
+
+**Tests :** la logique pure (acceptation/refus de fichiers, bascule d'une valeur, calcul « +N », état d'une étape) est testée avec les mêmes cas en React et en Vue. Chaque démo passe par le rendu SSR, la parité et le smoke. Interactions (clic, clavier) vérifiées à l'écran : pas de jsdom ni de Testing Library.
+
+**Hors lot 3 :** upload intégré, création de valeurs (TagCombobox, MultiInput), tri/pagination/filtres intégrés à la DataTable.
+
 **Hors V1 :** Chart (recharts d'un côté, unovis de l'autre, parité coûteuse) et DatePicker (pas de besoin dans pfou-hub).
 
 ## 6. Conventions
