@@ -8,7 +8,7 @@ export default function LoginDemo() {
   const wait = (which: typeof action, then: () => void) => { setAction(which); setStatus("loading"); setError(undefined); setTimeout(then, 800) }
   return (
     <div className="flex min-h-full items-center justify-center bg-muted/40 p-8">
-      <Login title="Portail Fournisseur" description="Connectez-vous pour accéder à votre espace." magicLink sso={{ label: "Se connecter avec SSO" }}
+      <Login title="Saqara Hub" description="Connectez-vous pour accéder à votre espace." magicLink sso={{ label: "Se connecter avec SSO" }}
         status={status} loadingAction={action} error={error} onErrorDismiss={() => setError(undefined)}
         emailPlaceholder="prenom.nom@exemple.fr" resendCooldown={30}
         onPasswordSubmit={() => wait("password", () => { setStatus("idle"); setError("Identifiants incorrects.") })}

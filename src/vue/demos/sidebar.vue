@@ -14,7 +14,7 @@ const items = [
     <Sidebar collapsible="none" class="h-64 rounded-md border">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Portail fournisseur</SidebarGroupLabel>
+          <SidebarGroupLabel>Saqara Hub</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem v-for="it in items" :key="it.label">
               <SidebarMenuButton :is-active="it.active"><component :is="it.icon" />{{ it.label }}</SidebarMenuButton>

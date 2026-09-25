@@ -16,7 +16,7 @@ function wait(which: Action, then: () => void) {
 
 <template>
   <div class="flex min-h-full items-center justify-center bg-muted/40 p-8">
-    <Login title="Portail Fournisseur" description="Connectez-vous pour accéder à votre espace." magic-link :sso="{ label: 'Se connecter avec SSO' }"
+    <Login title="Saqara Hub" description="Connectez-vous pour accéder à votre espace." magic-link :sso="{ label: 'Se connecter avec SSO' }"
       :status="status" :loading-action="action" :error="error" email-placeholder="prenom.nom@exemple.fr" :resend-cooldown="30"
       @error-dismiss="error = undefined"
       @password-submit="wait('password', () => { status = 'idle'; error = 'Identifiants incorrects.' })"

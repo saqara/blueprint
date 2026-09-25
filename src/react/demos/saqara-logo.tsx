@@ -5,7 +5,7 @@ export default function SaqaraLogoDemo() {
     <div className="flex items-center gap-6">
       <SaqaraLogo />
       <SaqaraLogo withText />
-      <SaqaraLogo withText label="Portail Fournisseur" className="text-lg" />
+      <SaqaraLogo withText label="Saqara Hub" className="text-lg" />
     </div>
   )
 }

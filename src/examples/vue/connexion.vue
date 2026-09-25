@@ -15,7 +15,7 @@ function simulate(then: () => void) {
 <template>
   <div class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted/40 p-6">
     <Login
-      title="Portail Fournisseur"
+      title="Saqara Hub"
       description="Connectez-vous pour accéder à votre espace."
       magic-link
       :sso="{ label: 'Se connecter avec SSO' }"
