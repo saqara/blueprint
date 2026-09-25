@@ -36,7 +36,7 @@ export default function DataTableDemo() {
     <div className="space-y-2">
       <Button variant="outline" size="sm" onClick={() => setLoading((l) => !l)}>{loading ? "Afficher les données" : "Simuler le chargement"}</Button>
       <DataTable columns={columns} data={data} getRowId={(c) => c.siren} sorting={sorting} onSortingChange={setSorting}
-        loading={loading} stickyHeader stickyFirstColumn className="max-h-72 rounded-md border"
+        loading={loading} stickyHeader stickyFirstColumn className="max-h-72"
         onRowClick={(c) => setOpened(c.name)} getRowProps={(c) => ({ "data-siren": c.siren })} />
       <p className="text-sm text-muted-foreground">{opened ? `Fiche ouverte : ${opened}` : "Cliquez sur une ligne pour ouvrir la fiche."}</p>
     </div>

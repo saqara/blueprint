@@ -98,3 +98,14 @@ describe.each(["react", "vue"] as const)("%s data-table scrollProps", (fw) => {
     expect(html).toMatch(/<div(?=[^>]*data-slot="table-container")(?=[^>]*data-testid="companies-scroll")(?=[^>]*class="[^"]*\bcursor-grab\b)(?=[^>]*class="[^"]*\boverflow-x-auto\b)/)
   })
 })
+
+describe.each(["react", "vue"] as const)("%s table frame", (fw) => {
+  const frame = /data-slot="table-container"[^>]*class="[^"]*rounded-md border|class="[^"]*rounded-md border[^"]*"[^>]*data-slot="table-container"/
+  it("frames Table and DataTable the same way (rounded border on the scroll container)", async () => {
+    const table = fw === "react"
+      ? renderToString(createElement(RTable as any, null, createElement("tbody")))
+      : await renderVue(createSSRApp({ render: () => h(VTable as any, null, { default: () => h("tbody") }) }))
+    expect(table).toMatch(frame)
+    expect(await render[fw]({ data })).toMatch(frame)
+  })
+})

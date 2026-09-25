@@ -91,7 +91,7 @@ function DataTable<TData extends RowData>({
       data-slot="data-table"
       className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
     >
-      <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", scrollProps?.className)}>
+      <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto rounded-md border", scrollProps?.className)}>
       <Table container={false} {...tableProps} aria-busy={loading || undefined}>
         <TableHeader className={cn(stickyHeader && "sticky top-0 z-[2] bg-(--data-table-bg)")}>
           {table.getHeaderGroups().map((group) => (

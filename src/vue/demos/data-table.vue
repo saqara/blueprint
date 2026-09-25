@@ -34,7 +34,7 @@ const data = computed(() => {
   <div class="space-y-2">
     <Button variant="outline" size="sm" @click="loading = !loading">{{ loading ? "Afficher les données" : "Simuler le chargement" }}</Button>
     <DataTable v-model:sorting="sorting" :columns="columns" :data="data" :get-row-id="(c) => c.siren" :loading="loading"
-      sticky-header sticky-first-column class="max-h-72 rounded-md border"
+      sticky-header sticky-first-column class="max-h-72"
       :on-row-click="(c: Company) => (opened = c.name)" :get-row-props="(c: Company) => ({ 'data-siren': c.siren })" />
     <p class="text-sm text-muted-foreground">{{ opened ? `Fiche ouverte : ${opened}` : "Cliquez sur une ligne pour ouvrir la fiche." }}</p>
   </div>
