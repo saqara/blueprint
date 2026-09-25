@@ -68,4 +68,7 @@ describe("monospace font", () => {
     expect(Object.keys(realTokens.css)).toContain('@import "@fontsource/jetbrains-mono/400.css"')
     expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("@fontsource/jetbrains-mono")
   })
+  it("colours body so portalled content reads right without shadcn init", () => {
+    expect((realTokens.css["@layer base"] as Record<string, unknown>).body).toEqual({ "@apply bg-background text-foreground": {} })
+  })
 })

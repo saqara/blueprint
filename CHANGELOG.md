@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-25 — `saqara-theme` : `body` reçoit `bg-background text-foreground`, pour que les contenus portés dans `<body>` (dialog, sheet, popover…) soient lisibles en sombre dans une app installée sans `shadcn init`.
 - 2026-09-25 — `dialog` : prop `size` (`sm`, `md`, `lg`, `xl` ; défaut inchangé), hauteur limitée à l'écran et `DialogBody` qui défile entre l'en-tête et le pied, libellé « Fermer » par défaut (`closeLabel`). `dialog`, `sheet`, `alert-dialog` : un dialogue contrôlé sans déclencheur rend le focus à l'élément qui l'a ouvert. Textes d'accessibilité en français dans `sheet`, `sidebar`, `breadcrumb`, `command` et `stepper`, avec un test qui interdit les restes en anglais.
 - 2026-09-25 — `alert` : emplacement `AlertAction` (3e colonne, en haut à droite) et `AlertClose` (bouton X, « Fermer » par défaut) pour les alertes refermables, en React et en Vue ; `AlertTitle` n'est plus tronqué à une ligne (les titres longs passent à la ligne).
 - 2026-09-25 — `button` (React) : `asChild` rendait un tableau au `Slot` depuis l'ajout de `loading` (erreur « Slot failed to slot onto its children ») ; corrigé et couvert par un test.
