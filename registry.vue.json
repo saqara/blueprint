@@ -271,6 +271,25 @@
       ]
     },
     {
+      "name": "app-shell-sidebar",
+      "type": "registry:block",
+      "title": "App Shell (sidebar)",
+      "description": "Shell d'application avec sidebar repliable, titre de page, thème et menu utilisateur (Saqara).",
+      "registryDependencies": [
+        "@saqara/saqara-logo",
+        "@saqara/separator",
+        "@saqara/sidebar",
+        "@saqara/theme-toggle",
+        "@saqara/user-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/AppShellSidebar.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
