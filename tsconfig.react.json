@@ -8,8 +8,22 @@
     "noEmit": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "vite/client"],
-    "paths": { "@/*": ["./*"] }
+    "types": [
+      "node",
+      "vite/client"
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "resolveJsonModule": true
   },
-  "include": ["registry/react", "src/react", "scripts", "lib"]
+  "include": [
+    "registry/react",
+    "src/react",
+    "scripts",
+    "lib",
+    "site"
+  ]
 }
