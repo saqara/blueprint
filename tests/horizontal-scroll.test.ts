@@ -1,0 +1,71 @@
+// @vitest-environment happy-dom
+import { act, createElement as e } from "react"
+import { createRoot } from "react-dom/client"
+import { createApp, h, nextTick } from "vue"
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest"
+import { HorizontalScroll as RScroll } from "../registry/react/ui/horizontal-scroll"
+import { HorizontalScroll as VScroll } from "../registry/vue/ui/horizontal-scroll"
+
+;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
+// happy-dom has no layout: the viewport pretends to hold 2000px of content in 800px.
+const proto = HTMLElement.prototype
+const saved = { sw: Object.getOwnPropertyDescriptor(proto, "scrollWidth"), cw: Object.getOwnPropertyDescriptor(proto, "clientWidth") }
+beforeAll(() => {
+  Object.defineProperty(proto, "scrollWidth", { configurable: true, get() { return this.dataset?.slot === "horizontal-scroll-viewport" ? 2000 : 0 } })
+  Object.defineProperty(proto, "clientWidth", { configurable: true, get() { return ["horizontal-scroll-viewport", "horizontal-scroll-bar"].includes(this.dataset?.slot) ? 800 : 0 } })
+})
+afterAll(() => {
+  if (saved.sw) Object.defineProperty(proto, "scrollWidth", saved.sw)
+  if (saved.cw) Object.defineProperty(proto, "clientWidth", saved.cw)
+})
+const cleanups: (() => unknown)[] = []
+afterEach(async () => {
+  for (const c of cleanups.splice(0)) await c()
+  document.body.innerHTML = ""
+})
+const viewport = () => document.querySelector<HTMLElement>("[data-slot=horizontal-scroll-viewport]")!
+const bar = () => document.querySelector<HTMLElement>("[data-slot=horizontal-scroll-bar]")
+
+describe.each([
+  ["react", async () => {
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    await act(async () => root.render(e(RScroll, null, e("table", null, e("tbody", null, e("tr", null, e("td", null, "Très large")))))))
+    cleanups.push(() => act(async () => root.unmount()))
+    return (fn: () => void) => act(async () => fn())
+  }],
+  ["vue", async () => {
+    const app = createApp({ render: () => h(VScroll, null, () => h("table", h("tbody", h("tr", h("td", "Très large"))))) })
+    app.mount(document.body.appendChild(document.createElement("div")))
+    cleanups.push(() => app.unmount())
+    await nextTick(); await nextTick()
+    return async (fn: () => void) => { fn(); await nextTick() }
+  }],
+])("%s horizontal-scroll", (_, mount) => {
+  it("shows a sticky bar whose thumb follows the content, and drags it", async () => {
+    const run = await mount()
+    expect(bar()).not.toBeNull()
+    expect(bar()!.className).toMatch(/sticky/)
+    const thumb = () => bar()!.querySelector<HTMLElement>("[data-slot=horizontal-scroll-thumb]")!
+    // 800 of 2000px visible: the thumb is 40% of the 800px track.
+    expect(thumb().style.width).toBe("320px")
+    await run(() => { viewport().scrollLeft = 300; viewport().dispatchEvent(new Event("scroll")) })
+    // 300 of 1200px scrollable -> 25% of the 480px free track.
+    expect(thumb().style.left).toBe("120px")
+    const pointer = (el: HTMLElement, type: string, x: number) => el.dispatchEvent(new PointerEvent(type, { clientX: x, button: 0, pointerType: "mouse", bubbles: true }))
+    await run(() => pointer(thumb(), "pointerdown", 0))
+    await run(() => pointer(thumb(), "pointermove", 48))
+    // 48px of thumb = 48 * 1200 / 480 = 120px of content.
+    expect(viewport().scrollLeft).toBe(420)
+    await run(() => pointer(thumb(), "pointerup", 48))
+  })
+  it("drags the content with the mouse", async () => {
+    const run = await mount()
+    const pointer = (type: string, x: number) => viewport().dispatchEvent(new PointerEvent(type, { clientX: x, button: 0, pointerType: "mouse", bubbles: true }))
+    await run(() => { viewport().scrollLeft = 200; pointer("pointerdown", 500) })
+    await run(() => pointer("pointermove", 400))
+    expect(viewport().scrollLeft).toBe(300)
+    await run(() => pointer("pointerup", 400))
+    await run(() => pointer("pointermove", 300))
+    expect(viewport().scrollLeft).toBe(300)
+  })
+})
