@@ -61,6 +61,12 @@ type DataTableProps<TData extends RowData> = {
   scrollRef?: React.Ref<HTMLDivElement>
   /** Attributes, class and handlers for the scroll container (drag-to-scroll, scrollbar styling…). */
   scrollProps?: React.ComponentProps<"div"> & Record<`data-${string}`, string | undefined>
+  /** false: no scroll container of its own (an outer scroller takes over; scrollRef / scrollProps are ignored). */
+  container?: boolean
+  /** false: no frame (a card frames the table). */
+  bordered?: boolean
+  /** Cells wrap (long messages) instead of staying on one line. */
+  wrap?: boolean
   className?: string
   /** Rendered inside the scroll container, after the table (e.g. an infinite-scroll sentinel). */
   children?: React.ReactNode
@@ -70,7 +76,7 @@ type DataTableProps<TData extends RowData> = {
 function DataTable<TData extends RowData>({
   columns, data, getRowId, meta, sorting = [], onSortingChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
-  onRowClick, getRowProps, tableProps, scrollRef, scrollProps, className, children,
+  onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, className, children,
 }: DataTableProps<TData>) {
   const table = useTable({
     features: dataTableFeatures,
@@ -85,14 +91,8 @@ function DataTable<TData extends RowData>({
   const colCount = table.getAllLeafColumns().length
   const sticky = (index: number) => stickyFirstColumn && index === 0 && stickyCell
   const rows = table.getRowModel().rows
-
-  return (
-    <div
-      data-slot="data-table"
-      className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
-    >
-      <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto rounded-md border", scrollProps?.className)}>
-      <Table container={false} {...tableProps} aria-busy={loading || undefined}>
+  const tableElement = (
+      <Table container={false} wrap={wrap} {...tableProps} aria-busy={loading || undefined}>
         <TableHeader className={cn(stickyHeader && "sticky top-0 z-[2] bg-(--data-table-bg)")}>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
@@ -142,11 +142,23 @@ function DataTable<TData extends RowData>({
           )}
         </TableBody>
       </Table>
-      {children}
-      </div>
+  )
+
+  return (
+    <div
+      data-slot="data-table"
+      className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
+    >
+      {container ? (
+        <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border", scrollProps?.className)}>
+          {tableElement}
+          {children}
+        </div>
+      ) : <>{tableElement}{children}</>}
     </div>
   )
 }
+
 
 function DataTableColumnHeader<TData extends RowData, TValue extends CellData>({ column, title, sortCycle = "asc-desc-none", className, ...props }: {
   column: Column<DataTableFeatures, TData, TValue>

@@ -40,28 +40,41 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
+// Saqara: without `href` (pagination held in state) this is a <button>, natively disableable;
+// with `href` it stays a link and `disabled` sets aria-disabled.
 function PaginationLink({
   className,
   isActive,
   size = "icon",
+  disabled = false,
   ...props
 }: PaginationLinkProps) {
+  const shared = {
+    "aria-current": isActive ? ("page" as const) : undefined,
+    "data-slot": "pagination-link",
+    "data-active": isActive,
+    className: cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    ),
+  }
+  if (props.href === undefined) {
+    return <button type="button" disabled={disabled} {...shared} {...(props as React.ComponentProps<"button">)} />
+  }
   return (
     <a
-      aria-current={isActive ? "page" : undefined}
-      data-slot="pagination-link"
-      data-active={isActive}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? "outline" : "ghost",
-          size,
-        }),
-        className
-      )}
+      {...shared}
+      aria-disabled={disabled || undefined}
+      tabIndex={disabled ? -1 : props.tabIndex}
       {...props}
+      className={cn(shared.className, disabled && "pointer-events-none opacity-50")}
     />
   )
 }
