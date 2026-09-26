@@ -66,14 +66,16 @@ export function paginate<T>(list: T[], page: number, perPage: number) {
 import type { ColumnDef, SortingState } from "@tanstack/vue-table"
 import type { AppNavItem } from "@/registry/vue/blocks/AppShellSidebar.vue"
 import type { DataTableFeatures } from "@/registry/vue/ui/data-table"
-import { Building2, ClipboardCheck, Leaf, Users } from "@lucide/vue"
+import { Building2, ClipboardCheck, DownloadIcon, Leaf, SearchIcon, Users } from "@lucide/vue"
 import { computed, h, reactive, ref } from "vue"
 import AppShellSidebar from "@/registry/vue/blocks/AppShellSidebar.vue"
 import { Badge } from "@/registry/vue/ui/badge"
 import { Button } from "@/registry/vue/ui/button"
 import { DataTable, DataTableColumnHeader } from "@/registry/vue/ui/data-table"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/registry/vue/ui/hover-card"
-import { Input } from "@/registry/vue/ui/input"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/registry/vue/ui/input-group"
+import { ListToolbar } from "@/registry/vue/ui/list-toolbar"
+import { SectionHeader } from "@/registry/vue/ui/page-header"
 import { MultiSelect } from "@/registry/vue/ui/multi-select"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationNext, PaginationPrevious } from "@/registry/vue/ui/pagination"
 import { Slider } from "@/registry/vue/ui/slider"
@@ -150,6 +152,9 @@ function onSorting(next: SortingState) {
   <AppShellSidebar variant="inset" class="h-full min-h-0 [&_.h-svh]:h-full" :nav="nav" active-id="annuaire"
     :user="{ name: 'Alexandre Brochot', email: 'alexandre.brochot@saqara.com' }" @sign-out="() => {}">
     <div class="space-y-6">
+      <SectionHeader title="Entreprises suivies" description="Fournisseurs et sous-traitants de votre organisation.">
+        <template #actions><Button variant="outline"><DownloadIcon />Exporter</Button></template>
+      </SectionHeader>
       <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Entreprises" :value="COMPANIES.length" />
         <StatCard label="Qualifiées" :value="qualified" />
@@ -157,9 +162,15 @@ function onSorting(next: SortingState) {
         <StatCard label="Note moyenne" :value="`${average}/20`" />
       </div>
 
-      <div class="flex flex-wrap items-end gap-3">
-        <Input class="w-56" placeholder="Rechercher une entreprise…" aria-label="Rechercher une entreprise" :model-value="filters.search"
-          @update:model-value="(v) => update('search', String(v))" />
+      <ListToolbar>
+        <template #search>
+          <InputGroup>
+            <InputGroupInput placeholder="Rechercher une entreprise…" aria-label="Rechercher une entreprise" :model-value="filters.search"
+              @update:model-value="(v: string | number) => update('search', String(v))" />
+            <InputGroupAddon><SearchIcon /></InputGroupAddon>
+          </InputGroup>
+        </template>
+        <template #filters>
         <MultiSelect class="w-64" :options="DEPARTMENTS" :model-value="filters.depts" placeholder="Départements"
           @update:model-value="(v) => update('depts', v)" />
         <ToggleGroup type="single" variant="outline" :model-value="filters.status" aria-label="Statut"
@@ -172,8 +183,9 @@ function onSorting(next: SortingState) {
           <span class="text-muted-foreground">Note minimale : {{ filters.minScore }}/20</span>
           <Slider v-model="minScore" :min="0" :max="20" :step="1" aria-label="Note minimale" />
         </div>
-        <Button variant="ghost" @click="reset">Réinitialiser</Button>
-      </div>
+        </template>
+        <template #actions><Button variant="ghost" @click="reset">Réinitialiser</Button></template>
+      </ListToolbar>
 
       <DataTable :columns="columns" :data="view.rows" :get-row-id="(c) => c.siren" :sorting="sorting"
         empty-message="Aucune entreprise ne correspond à ces filtres." @update:sorting="onSorting" />

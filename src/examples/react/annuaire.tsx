@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react"
 import type { ColumnDef, SortingState } from "@tanstack/react-table"
-import { Building2, ClipboardCheck, Leaf, Users } from "lucide-react"
+import { Building2, ClipboardCheck, DownloadIcon, Leaf, SearchIcon, Users } from "lucide-react"
 import { AppShellSidebar, type AppNavItem } from "@/registry/react/blocks/app-shell-sidebar"
 import { Badge } from "@/registry/react/ui/badge"
 import { Button } from "@/registry/react/ui/button"
 import { DataTable, DataTableColumnHeader, type DataTableFeatures } from "@/registry/react/ui/data-table"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/registry/react/ui/hover-card"
-import { Input } from "@/registry/react/ui/input"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/registry/react/ui/input-group"
+import { ListToolbar } from "@/registry/react/ui/list-toolbar"
 import { MultiSelect } from "@/registry/react/ui/multi-select"
+import { SectionHeader } from "@/registry/react/ui/page-header"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/registry/react/ui/pagination"
 import { Slider } from "@/registry/react/ui/slider"
 import { StatCard } from "@/registry/react/ui/stat-card"
@@ -132,6 +134,8 @@ export default function AnnuaireExample() {
     <AppShellSidebar variant="inset" className="h-full min-h-0 [&_.h-svh]:h-full" nav={nav} activeId="annuaire"
       user={{ name: "Alexandre Brochot", email: "alexandre.brochot@saqara.com" }} onSignOut={() => {}}>
       <div className="space-y-6">
+        <SectionHeader title="Entreprises suivies" description="Fournisseurs et sous-traitants de votre organisation."
+          actions={<Button variant="outline"><DownloadIcon />Exporter</Button>} />
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard label="Entreprises" value={COMPANIES.length} />
           <StatCard label="Qualifiées" value={qualified} />
@@ -139,8 +143,14 @@ export default function AnnuaireExample() {
           <StatCard label="Note moyenne" value={`${average}/20`} />
         </div>
 
-        <div className="flex flex-wrap items-end gap-3">
-          <Input className="w-56" placeholder="Rechercher une entreprise…" aria-label="Rechercher une entreprise" value={filters.search} onChange={(e) => set("search", e.target.value)} />
+        <ListToolbar
+          search={
+            <InputGroup>
+              <InputGroupInput placeholder="Rechercher une entreprise…" aria-label="Rechercher une entreprise" value={filters.search} onChange={(e) => set("search", e.target.value)} />
+              <InputGroupAddon><SearchIcon /></InputGroupAddon>
+            </InputGroup>
+          }
+          filters={<>
           <MultiSelect className="w-64" options={DEPARTMENTS} value={filters.depts} onValueChange={(v) => set("depts", v)} placeholder="Départements" />
           <ToggleGroup type="single" variant="outline" value={filters.status} onValueChange={(v) => v && set("status", v as Filters["status"])} aria-label="Statut">
             <ToggleGroupItem value="all">Toutes</ToggleGroupItem>
@@ -151,8 +161,9 @@ export default function AnnuaireExample() {
             <span className="text-muted-foreground">Note minimale : {filters.minScore}/20</span>
             <Slider min={0} max={20} step={1} value={[filters.minScore]} onValueChange={([v]) => set("minScore", v)} aria-label="Note minimale" />
           </div>
-          <Button variant="ghost" onClick={() => { setFilters(EMPTY); setPage(1) }}>Réinitialiser</Button>
-        </div>
+          </>}
+          actions={<Button variant="ghost" onClick={() => { setFilters(EMPTY); setPage(1) }}>Réinitialiser</Button>}
+        />
 
         <DataTable columns={columns} data={view.rows} getRowId={(c) => c.siren} sorting={sorting} onSortingChange={(s) => { setSorting(s); setPage(1) }}
           emptyMessage="Aucune entreprise ne correspond à ces filtres." />
@@ -161,13 +172,13 @@ export default function AnnuaireExample() {
           <span>{list.length} entreprise{list.length > 1 ? "s" : ""}</span>
           <Pagination className="mx-0 w-auto">
             <PaginationContent>
-              <PaginationItem><PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); setPage(view.page - 1) }} /></PaginationItem>
+              <PaginationItem><PaginationPrevious disabled={view.page <= 1} onClick={() => setPage(view.page - 1)} /></PaginationItem>
               {Array.from({ length: view.pageCount }, (_, i) => i + 1).map((p) => (
                 <PaginationItem key={p}>
-                  <PaginationLink href="#" isActive={p === view.page} onClick={(e) => { e.preventDefault(); setPage(p) }}>{p}</PaginationLink>
+                  <PaginationLink isActive={p === view.page} onClick={() => setPage(p)}>{p}</PaginationLink>
                 </PaginationItem>
               ))}
-              <PaginationItem><PaginationNext href="#" onClick={(e) => { e.preventDefault(); setPage(view.page + 1) }} /></PaginationItem>
+              <PaginationItem><PaginationNext disabled={view.page >= view.pageCount} onClick={() => setPage(view.page + 1)} /></PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>

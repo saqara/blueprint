@@ -715,6 +715,21 @@
       "description": "Libellé associé à un champ."
     },
     {
+      "name": "list-toolbar",
+      "type": "registry:ui",
+      "title": "List Toolbar",
+      "description": "Barre d'outils de liste : recherche extensible, filtres à largeur fixe, actions à droite (Saqara).",
+      "files": [
+        {
+          "path": "registry/react/ui/list-toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "cn"
+      ]
+    },
+    {
       "name": "login",
       "type": "registry:block",
       "title": "Login",
@@ -758,6 +773,21 @@
           "path": "registry/react/ui/multi-select.tsx",
           "type": "registry:ui"
         }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "En-tête de page (h1) ou de section (h2) : titre, description, actions à droite (Saqara).",
+      "files": [
+        {
+          "path": "registry/react/ui/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "cn"
       ]
     },
     {

@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-26 — `page-header` (Saqara) : `PageHeader` (h1) et `SectionHeader` (h2), titre + description + actions à droite, retour à la ligne sur mobile. `list-toolbar` (Saqara) : recherche extensible (16 rem min.), filtres à largeur fixe, actions à droite, retour à la ligne. Exemple Annuaire : en-tête de section, barre d'outils (recherche avec icône) et pagination en boutons.
 - 2026-09-26 — `sheet` : `SheetBody scrollProgress` affiche une fine barre de progression de lecture en haut du corps (décorative).
 - 2026-09-26 — `horizontal-scroll` (Saqara) : pour les tables larges (`Table` / `DataTable` en `container={false}`), barre de défilement horizontale collée en bas de l'écran (synchronisée, affichée seulement si le contenu déborde) et glisser à la souris pour défiler (hors boutons, liens et champs ; le tactile garde son défilement natif).
 - 2026-09-26 — `autocomplete` (Saqara) : `Input` avec suggestions asynchrones fournies par l'app (adresse…), focus gardé dans le champ, clavier ↑ ↓ Entrée Échap, messages « Recherche… » / « Aucun résultat. ». `rating-grid` (Saqara) : grille de notation (Likert, 0 à 5 par défaut), un groupe de radios natifs par critère dans une vraie table, chaque radio nommé « critère : niveau ».
