@@ -122,13 +122,29 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function SheetBody({ className, ...props }: React.ComponentProps<"div">) {
+// Saqara: `scrollProgress` shows a thin decorative bar at the top of the body, following the scroll.
+function SheetBody({ className, scrollProgress = false, onScroll, children, ...props }: React.ComponentProps<"div"> & { scrollProgress?: boolean }) {
+  const [progress, setProgress] = React.useState(0)
   return (
     <div
       data-slot="sheet-body"
       className={cn("min-h-0 flex-1 overflow-y-auto px-4", className)}
+      onScroll={(event) => {
+        onScroll?.(event)
+        if (!scrollProgress) return
+        const el = event.currentTarget
+        const max = el.scrollHeight - el.clientHeight
+        setProgress(max > 0 ? Math.round((el.scrollTop / max) * 100) : 0)
+      }}
       {...props}
-    />
+    >
+      {scrollProgress && (
+        <div aria-hidden="true" className="sticky top-0 z-10 -mx-4 h-0.5">
+          <div data-slot="sheet-scroll-progress" aria-hidden="true" className="h-full bg-primary transition-[width] duration-100" style={{ width: `${progress}%` }} />
+        </div>
+      )}
+      {children}
+    </div>
   )
 }
 

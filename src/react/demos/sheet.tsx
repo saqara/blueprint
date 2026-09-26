@@ -13,7 +13,7 @@ export default function SheetDemo() {
           <SheetTitle>Bâti Sud SAS</SheetTitle>
           <SheetDescription>SIREN 900 000 001 — Lyon</SheetDescription>
         </SheetHeader>
-        <SheetBody className="grid content-start gap-4">
+        <SheetBody scrollProgress className="grid content-start gap-4">
           <CollapsibleSection title="Contacts" actions={<Button variant="ghost" size="sm">Ajouter</Button>}>
             <ul className="grid gap-2 text-sm">{contacts.map((c) => <li key={c}>{c}</li>)}</ul>
           </CollapsibleSection>
