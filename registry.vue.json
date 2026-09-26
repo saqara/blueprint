@@ -375,6 +375,30 @@
       ]
     },
     {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "Autocomplete",
+      "description": "Champ de saisie avec suggestions asynchrones (adresse…), le focus reste dans le champ (Saqara).",
+      "registryDependencies": [
+        "@saqara/input",
+        "@saqara/spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/autocomplete/Autocomplete.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/autocomplete/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/autocomplete/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
@@ -1331,6 +1355,29 @@
         }
       ],
       "description": "Choix unique parmi plusieurs options."
+    },
+    {
+      "name": "rating-grid",
+      "type": "registry:ui",
+      "title": "Rating Grid",
+      "description": "Grille de notation (Likert) : un groupe de boutons radio par critère, dans une vraie table (Saqara).",
+      "registryDependencies": [
+        "@saqara/table"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/rating-grid/RatingGrid.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/rating-grid/utils.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/rating-grid/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     },
     {
       "name": "saqara-logo",
