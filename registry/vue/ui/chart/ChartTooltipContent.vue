@@ -11,7 +11,8 @@ const props = withDefaults(defineProps<{
   nameKey?: string
   labelKey?: string
   labelFormatter?: (d: number | Date) => string
-  /** Saqara: formats the value only (decimals, units, "—"…); French number format by default. */
+  /** Saqara: formats the value only (decimals, units…), also called for a missing value (to show "—");
+   * French number format by default. */
   valueFormatter?: (value: any, key: string) => string
   payload?: Record<string, any>
   config?: ChartConfig
@@ -96,7 +97,7 @@ const tooltipLabel = computed(() => {
                 {{ itemConfig?.label || value }}
               </span>
             </div>
-            <span v-if="value != null" class="text-foreground font-mono font-medium tabular-nums">
+            <span v-if="value != null || valueFormatter" class="text-foreground font-mono font-medium tabular-nums">
               {{ valueFormatter ? valueFormatter(value, key) : typeof value === "number" ? value.toLocaleString("fr-FR") : value }}
             </span>
           </div>

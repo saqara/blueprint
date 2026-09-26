@@ -5,14 +5,36 @@ import { cn } from "cn"
 import { CircleIcon } from "lucide-react"
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui"
 
+// Saqara: `allowDeselect` — clicking the checked item again clears the selection (value "").
 function RadioGroup({
   className,
+  allowDeselect = false,
+  value: valueProp,
+  defaultValue,
+  onValueChange,
+  onClickCapture,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root> & { allowDeselect?: boolean }) {
+  const [inner, setInner] = React.useState(defaultValue ?? "")
+  const value = valueProp ?? inner
+  const change = (next: string) => {
+    setInner(next)
+    onValueChange?.(next)
+  }
   return (
     <RadioGroupPrimitive.Root
       data-slot="radio-group"
       className={cn("grid gap-3", className)}
+      value={value}
+      onValueChange={change}
+      onClickCapture={(event) => {
+        onClickCapture?.(event)
+        const item = (event.target as Element).closest("[role=radio]")
+        if (!allowDeselect || item?.getAttribute("aria-checked") !== "true") return
+        event.preventDefault()
+        event.stopPropagation()
+        change("")
+      }}
       {...props}
     />
   )

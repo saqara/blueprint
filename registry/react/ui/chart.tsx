@@ -132,8 +132,9 @@ function ChartTooltipContent({
   labelKey,
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
   React.ComponentProps<"div"> & {
-    /** Saqara: formats the value only (decimals, units, "—"…); French number format by default. */
-    valueFormatter?: (value: number | string, name: string) => React.ReactNode
+    /** Saqara: formats the value only (decimals, units…), also called for a missing value (to show "—");
+     * French number format by default. Per-bar colours (Recharts <Cell>) don't reach the tooltip: put `fill` in the data row. */
+    valueFormatter?: (value: number | string | null | undefined, name: string) => React.ReactNode
     hideLabel?: boolean
     hideIndicator?: boolean
     indicator?: "line" | "dot" | "dashed"
@@ -254,10 +255,10 @@ function ChartTooltipContent({
                           {itemConfig?.label ?? item.name}
                         </span>
                       </div>
-                      {item.value != null && (
+                      {(item.value != null || valueFormatter) && (
                         <span className="font-mono font-medium text-foreground tabular-nums">
                           {valueFormatter
-                            ? valueFormatter(item.value as number | string, String(item.name ?? key))
+                            ? valueFormatter(item.value as number | string | null | undefined, String(item.name ?? key))
                             : typeof item.value === "number"
                               ? item.value.toLocaleString("fr-FR")
                               : String(item.value)}
