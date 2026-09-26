@@ -1172,6 +1172,22 @@
       "description": "Libellé associé à un champ."
     },
     {
+      "name": "list-toolbar",
+      "type": "registry:ui",
+      "title": "List Toolbar",
+      "description": "Barre d'outils de liste : recherche extensible, filtres à largeur fixe, actions à droite (Saqara).",
+      "files": [
+        {
+          "path": "registry/vue/ui/list-toolbar/ListToolbar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/list-toolbar/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "login",
       "type": "registry:block",
       "title": "Login",
@@ -1217,6 +1233,30 @@
         },
         {
           "path": "registry/vue/ui/multi-select/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "En-tête de page (h1) ou de section (h2) : titre, description, actions à droite (Saqara).",
+      "files": [
+        {
+          "path": "registry/vue/ui/page-header/Header.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/page-header/PageHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/page-header/SectionHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/page-header/index.ts",
           "type": "registry:ui"
         }
       ]

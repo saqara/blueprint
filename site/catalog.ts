@@ -9,6 +9,7 @@ export const START_PAGES = [
 
 export const CATEGORIES = [
   { id: "formulaires", label: "Formulaires", items: ["autocomplete", "button", "checkbox", "field", "file-dropzone", "input", "input-group", "label", "multi-select", "password-input", "radio-group", "rating-grid", "select", "slider", "switch", "tag-input", "textarea", "toggle", "toggle-group"] },
+  { id: "mise-en-page", label: "Mise en page", items: ["list-toolbar", "page-header"] },
   { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
   { id: "overlays", label: "Overlays", items: ["alert-dialog", "confirm-dialog", "dialog", "dropdown-menu", "hover-card", "popover", "sheet", "sonner", "tooltip"] },
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "collapsible-section", "command", "pagination", "sidebar", "stepper", "tabs"] },
