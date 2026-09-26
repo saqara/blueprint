@@ -301,6 +301,25 @@
       ]
     },
     {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "Autocomplete",
+      "description": "Champ de saisie avec suggestions asynchrones (adresse…), le focus reste dans le champ (Saqara).",
+      "registryDependencies": [
+        "@saqara/input",
+        "@saqara/spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/autocomplete.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "cn"
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
@@ -811,6 +830,24 @@
         }
       ],
       "description": "Choix unique parmi plusieurs options."
+    },
+    {
+      "name": "rating-grid",
+      "type": "registry:ui",
+      "title": "Rating Grid",
+      "description": "Grille de notation (Likert) : un groupe de boutons radio par critère, dans une vraie table (Saqara).",
+      "registryDependencies": [
+        "@saqara/table"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/rating-grid.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "cn"
+      ]
     },
     {
       "name": "saqara-logo",
