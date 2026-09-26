@@ -1067,6 +1067,50 @@
       "description": "Champ de saisie texte."
     },
     {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/input",
+        "@saqara/textarea"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/input-group/InputGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/InputGroupAddon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/InputGroupButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/InputGroupInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/InputGroupText.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/InputGroupTextarea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/input-group/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Champ avec éléments accolés : icône, texte, bouton (effacer, copier…)."
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
@@ -1187,6 +1231,28 @@
         }
       ],
       "description": "Navigation entre les pages d'une liste."
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "Mot de passe ou secret avec bouton afficher / masquer (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/input-group"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/password-input/PasswordInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/password-input/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     },
     {
       "name": "popover",

@@ -10,6 +10,7 @@ const RULES = `## Design system : Saqara Blueprint
 - Textes d'interface en français.
 - \`select\` : aucun item à valeur vide (Radix l'interdit). Pour « Tous », une valeur sentinelle (\`"all"\`) que l'app traduit ; pour revenir au placeholder, \`value=""\`.
 - Tout contrôle sans \`<Label>\` visible (\`SelectTrigger\`, \`Switch\`, \`Checkbox\`, \`multi-select\` via \`triggerProps\`) reçoit un \`aria-label\`.
+- Formulaire verrouillé (« Modifier » pour éditer) : \`readOnly\` sur \`input\` / \`textarea\` / \`SelectTrigger\`, pas \`disabled\` (\`disabled\` = indisponible, valeur atténuée).
 - Champ obligatoire : \`<FieldLabel required>\` pour l'astérisque, et \`required\` sur le contrôle lui-même.
 - \`data-table\` (React) : définir \`columns\` hors du composant ou avec \`useMemo\` : une fonction \`cell\` recréée à chaque rendu remonte la cellule (focus et état perdus). L'état vivant lu par une cellule (« Copié ! »…) passe par la prop \`meta\` de \`DataTable\` et se lit dans \`table.options.meta\`.
 - Ne pas modifier les composants de \`components/ui\` pour un besoin local : composer autour.`
