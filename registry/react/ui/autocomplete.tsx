@@ -17,7 +17,11 @@ type AutocompleteProps = Omit<React.ComponentProps<"input">, "value" | "onChange
   onSelect?: (option: AutocompleteOption) => void
   loading?: boolean
   loadingMessage?: string
+  /** Shown when a search returns nothing. None by default. */
   emptyMessage?: string
+  /** Leading icon inside the field (search, map pin…). */
+  icon?: React.ReactNode
+  inputClassName?: string
   /** Minimum length before the list (or its messages) shows. */
   minChars?: number
   renderSuggestion?: (option: AutocompleteOption) => React.ReactNode
@@ -26,15 +30,16 @@ type AutocompleteProps = Omit<React.ComponentProps<"input">, "value" | "onChange
 // Saqara: a normal Input with a suggestion list (address search…). Focus never leaves the field;
 // the app owns fetching, debouncing and what a selection does.
 function Autocomplete({
-  value, onValueChange, suggestions, onSelect, loading = false, loadingMessage = "Recherche…", emptyMessage = "Aucun résultat.",
-  minChars = 1, renderSuggestion, className, onKeyDown, onFocus, onBlur, ...props
+  value, onValueChange, suggestions, onSelect, loading = false, loadingMessage = "Recherche…", emptyMessage,
+  minChars = 1, renderSuggestion, icon, inputClassName, className, onKeyDown, onFocus, onBlur, ...props
 }: AutocompleteProps) {
   const listId = React.useId()
   const [open, setOpen] = React.useState(false)
   const [active, setActive] = React.useState(0)
   const enough = value.trim().length >= minChars
-  const showList = open && enough && suggestions.length > 0 && !loading
-  const status = open && enough && (loading ? loadingMessage : suggestions.length === 0 ? emptyMessage : "")
+  // The previous suggestions stay visible while the next search runs (spinner in the field).
+  const showList = open && enough && suggestions.length > 0
+  const status = open && enough && suggestions.length === 0 && (loading ? loadingMessage : emptyMessage)
 
   const pick = (option: AutocompleteOption) => {
     onSelect?.(option)
@@ -52,7 +57,7 @@ function Autocomplete({
         aria-activedescendant={showList ? `${listId}-${active}` : undefined}
         autoComplete="off"
         value={value}
-        className={cn(loading && "pr-8")}
+        className={cn(icon && "pl-9", loading && "pr-8", inputClassName)}
         onChange={(event) => { onValueChange?.(event.target.value); setOpen(true); setActive(0) }}
         onFocus={(event) => { setOpen(true); onFocus?.(event) }}
         onBlur={(event) => { setOpen(false); onBlur?.(event) }}
@@ -74,6 +79,7 @@ function Autocomplete({
         }}
         {...props}
       />
+      {icon && <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">{icon}</span>}
       {loading && <Spinner aria-hidden="true" role="presentation" className="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground" />}
       {showList && (
         <ul id={listId} role="listbox" className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md">

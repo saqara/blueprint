@@ -20,6 +20,14 @@ type RatingGridProps = {
   /** Prefix of the native radio names (one group per criterion). */
   name?: string
   disabled?: boolean
+  /** Locked but legible (disabled = unavailable, faded). */
+  readOnly?: boolean
+  /** Attributes for each row: data-testid… */
+  getRowProps?: (criterion: RatingCriterion) => React.ComponentProps<"tr"> & Record<`data-${string}`, string | undefined>
+  /** Custom criterion cell (e.g. the description in a tooltip instead of under the label). */
+  renderCriterion?: (criterion: RatingCriterion) => React.ReactNode
+  /** Custom column header (e.g. a coloured digit above the label). */
+  renderLevel?: (level: RatingLevel) => React.ReactNode
   className?: string
 }
 
@@ -29,7 +37,7 @@ const radio =
 
 // Saqara: Likert / rating grid — one row per criterion, one native radio group per row (arrows move
 // within a row, Tab moves between rows), inside a real table (no role overrides).
-function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, caption, name, disabled = false, className }: RatingGridProps) {
+function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, caption, name, disabled = false, readOnly = false, getRowProps, renderCriterion, renderLevel, className }: RatingGridProps) {
   const id = React.useId()
   const prefix = name ?? `rating-${id}`
   return (
@@ -38,15 +46,19 @@ function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, capt
       <TableHeader>
         <TableRow>
           <TableHead>Critère</TableHead>
-          {scale.map((level) => <TableHead key={level.value} className="text-center">{level.label}</TableHead>)}
+          {scale.map((level) => <TableHead key={level.value} className="text-center">{renderLevel ? renderLevel(level) : level.label}</TableHead>)}
         </TableRow>
       </TableHeader>
       <TableBody>
         {criteria.map((criterion) => (
-          <TableRow key={criterion.id}>
+          <TableRow key={criterion.id} {...getRowProps?.(criterion)}>
             <TableCell className="whitespace-normal">
-              <span className="block">{criterion.label}</span>
-              {criterion.description && <span className="block text-xs text-muted-foreground">{criterion.description}</span>}
+              {renderCriterion ? renderCriterion(criterion) : (
+                <>
+                  <span className="block">{criterion.label}</span>
+                  {criterion.description && <span className="block text-xs text-muted-foreground">{criterion.description}</span>}
+                </>
+              )}
             </TableCell>
             {scale.map((level) => (
               <TableCell key={level.value} className="text-center">
@@ -55,9 +67,9 @@ function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, capt
                   name={`${prefix}-${criterion.id}`}
                   value={level.value}
                   checked={value[criterion.id] === level.value}
-                  disabled={disabled}
+                  disabled={disabled || readOnly}
                   aria-label={`${criterion.label} : ${level.label}`}
-                  className={cn(radio, "align-middle")}
+                  className={cn(radio, "align-middle", readOnly && "disabled:cursor-default disabled:opacity-100")}
                   onChange={() => onValueChange?.({ ...value, [criterion.id]: level.value })}
                 />
               </TableCell>

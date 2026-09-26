@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { MapPinIcon } from "lucide-react"
 import { Autocomplete, type AutocompleteOption } from "@/registry/react/ui/autocomplete"
 import { Label } from "@/registry/react/ui/label"
 
@@ -32,7 +33,8 @@ export default function AutocompleteDemo() {
     <div className="grid w-full max-w-sm gap-2">
       <Label htmlFor="adresse">Adresse du siège</Label>
       <Autocomplete id="adresse" placeholder="12 rue de la…" minChars={3} value={query} onValueChange={setQuery}
-        suggestions={suggestions} loading={loading} onSelect={(o) => { setChosen(o); setQuery(o.label) }} />
+        suggestions={suggestions} loading={loading} icon={<MapPinIcon />} emptyMessage="Aucune adresse trouvée."
+        onSelect={(o) => { setChosen(o); setQuery(o.label) }} />
       <p className="text-sm text-muted-foreground">{chosen ? `${chosen.label}, ${chosen.description}` : "Saisissez au moins 3 caractères."}</p>
     </div>
   )

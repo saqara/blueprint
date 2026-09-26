@@ -14,22 +14,26 @@ const props = withDefaults(defineProps<{
   suggestions: AutocompleteOption[]
   loading?: boolean
   loadingMessage?: string
+  /** Shown when a search returns nothing. None by default. */
   emptyMessage?: string
+  inputClass?: HTMLAttributes["class"]
   /** Minimum length before the list (or its messages) shows. */
   minChars?: number
   onSelect?: (option: AutocompleteOption) => void
   class?: HTMLAttributes["class"]
-}>(), { loading: false, loadingMessage: "Recherche…", emptyMessage: "Aucun résultat.", minChars: 1 })
+}>(), { loading: false, loadingMessage: "Recherche…", minChars: 1 })
 /** v-model:value — the typed text. */
 const value = defineModel<string>("value", { default: "" })
-defineSlots<{ suggestion?: (props: { option: AutocompleteOption }) => unknown }>()
+/** #icon: leading icon inside the field (search, map pin…). */
+const slots = defineSlots<{ suggestion?: (props: { option: AutocompleteOption }) => unknown, icon?: () => unknown }>()
 
 const listId = useId()
 const open = ref(false)
 const active = ref(0)
 const enough = computed(() => value.value.trim().length >= props.minChars)
-const showList = computed(() => open.value && enough.value && props.suggestions.length > 0 && !props.loading)
-const status = computed(() => open.value && enough.value ? (props.loading ? props.loadingMessage : props.suggestions.length === 0 ? props.emptyMessage : "") : "")
+// The previous suggestions stay visible while the next search runs (spinner in the field).
+const showList = computed(() => open.value && enough.value && props.suggestions.length > 0)
+const status = computed(() => open.value && enough.value && props.suggestions.length === 0 ? (props.loading ? props.loadingMessage : props.emptyMessage) ?? "" : "")
 
 function pick(option: AutocompleteOption) {
   props.onSelect?.(option)
@@ -69,12 +73,13 @@ function onKeydown(event: KeyboardEvent) {
       :aria-activedescendant="showList ? `${listId}-${active}` : undefined"
       autocomplete="off"
       :model-value="value"
-      :class="cn(loading && 'pr-8')"
+      :class="cn(slots.icon && 'pl-9', loading && 'pr-8', inputClass)"
       @input="onInput"
       @keydown="onKeydown"
       @focus="open = true"
       @blur="open = false"
     />
+    <span v-if="$slots.icon" aria-hidden="true" class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground [&>svg]:size-4"><slot name="icon" /></span>
     <Spinner v-if="loading" aria-hidden="true" role="presentation" class="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground" />
     <ul v-if="showList" :id="listId" role="listbox" class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
       <li v-for="(option, i) in suggestions" :id="`${listId}-${i}`" :key="option.value" role="option" :aria-selected="i === active"
