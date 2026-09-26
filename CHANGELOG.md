@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-26 — `horizontal-scroll` : un simple clic atteint de nouveau les lignes (le pointeur n'est capturé qu'après 5 px de glissement, et le clic qui termine un vrai glissement est ignoré) ; `viewportRef` et `viewportProps` pour l'élément qui défile. `data-table` : `stickyScrollbar` et `dragToScroll` directement sur la table (son conteneur devient celui de `horizontal-scroll`, en-tête collant et `scrollRef` conservés).
 - 2026-09-26 — `page-header` (Saqara) : `PageHeader` (h1) et `SectionHeader` (h2), titre + description + actions à droite, retour à la ligne sur mobile. `list-toolbar` (Saqara) : recherche extensible (16 rem min.), filtres à largeur fixe, actions à droite, retour à la ligne. Exemple Annuaire : en-tête de section, barre d'outils (recherche avec icône) et pagination en boutons.
 - 2026-09-26 — `sheet` : `SheetBody scrollProgress` affiche une fine barre de progression de lecture en haut du corps (décorative).
 - 2026-09-26 — `horizontal-scroll` (Saqara) : pour les tables larges (`Table` / `DataTable` en `container={false}`), barre de défilement horizontale collée en bas de l'écran (synchronisée, affichée seulement si le contenu déborde) et glisser à la souris pour défiler (hors boutons, liens et champs ; le tactile garde son défilement natif).

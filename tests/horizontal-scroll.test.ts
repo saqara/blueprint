@@ -2,7 +2,7 @@
 import { act, createElement as e } from "react"
 import { createRoot } from "react-dom/client"
 import { createApp, h, nextTick } from "vue"
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest"
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest"
 import { HorizontalScroll as RScroll } from "../registry/react/ui/horizontal-scroll"
 import { HorizontalScroll as VScroll } from "../registry/vue/ui/horizontal-scroll"
 
@@ -67,5 +67,46 @@ describe.each([
     await run(() => pointer("pointerup", 400))
     await run(() => pointer("pointermove", 300))
     expect(viewport().scrollLeft).toBe(300)
+  })
+})
+
+describe.each([
+  ["react", async (props: Record<string, unknown>, onRow: () => void) => {
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    await act(async () => root.render(e(RScroll, props as any, e("table", null, e("tbody", null, e("tr", { onClick: onRow }, e("td", null, "Bâti Sud")))))))
+    cleanups.push(() => act(async () => root.unmount()))
+    return (fn: () => void) => act(async () => fn())
+  }],
+  ["vue", async (props: Record<string, unknown>, onRow: () => void) => {
+    const app = createApp({ render: () => h(VScroll, props, () => h("table", h("tbody", h("tr", { onClick: onRow }, h("td", "Bâti Sud"))))) })
+    app.mount(document.body.appendChild(document.createElement("div")))
+    cleanups.push(() => app.unmount())
+    await nextTick(); await nextTick()
+    return async (fn: () => void) => { fn(); await nextTick() }
+  }],
+])("%s horizontal-scroll clicks", (_, mount) => {
+  const pointer = (type: string, x: number) => viewport().dispatchEvent(new PointerEvent(type, { clientX: x, button: 0, pointerType: "mouse", bubbles: true }))
+  const td = () => document.querySelector<HTMLElement>("td")!
+  it("lets a plain click reach the row (no pointer capture before a real drag)", async () => {
+    const capture = vi.spyOn(HTMLElement.prototype, "setPointerCapture").mockImplementation(() => {})
+    let rows = 0
+    const run = await mount({}, () => rows++)
+    await run(() => { pointer("pointerdown", 500); pointer("pointerup", 501); td().click() })
+    expect(capture).not.toHaveBeenCalled()
+    expect(rows).toBe(1)
+    // A real drag (> 5px) captures the pointer and swallows the click that follows.
+    await run(() => { pointer("pointerdown", 500); pointer("pointermove", 450); pointer("pointerup", 450); td().click() })
+    expect(capture).toHaveBeenCalled()
+    expect(rows).toBe(1)
+    await run(() => td().click())
+    expect(rows).toBe(2)
+    capture.mockRestore()
+  })
+  it("exposes the viewport (viewportRef / viewportProps)", async () => {
+    const box: { current: HTMLElement | null } = { current: null }
+    await mount({ viewportRef: (el: HTMLElement | null) => { box.current = el }, viewportProps: { className: "max-h-full", class: "max-h-full", "data-testid": "annuaire-scroll" } }, () => {})
+    expect(viewport().className).toContain("max-h-full")
+    expect(viewport().dataset.testid).toBe("annuaire-scroll")
+    expect(box.current).toBe(viewport())
   })
 })

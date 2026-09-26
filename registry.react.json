@@ -528,6 +528,7 @@
       ],
       "registryDependencies": [
         "@saqara/button",
+        "@saqara/horizontal-scroll",
         "@saqara/skeleton",
         "@saqara/table"
       ],
