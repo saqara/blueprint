@@ -23,6 +23,7 @@ export const EXAMPLES = [
   { slug: "fiche-entreprise", title: "Fiche entreprise", description: "Informations, contacts et évaluations d'une entreprise." },
   { slug: "inscription", title: "Inscription fournisseur", description: "Parcours en trois étapes avec validation." },
   { slug: "connexion", title: "Connexion", description: "Page de connexion : mot de passe, lien magique, SSO." },
+  { slug: "journal", title: "Journal d'activité", description: "Défilement infini (sentinelle) et imports en cours dans la pile de notifications." },
 ]
 
 // Written for Blueprint (no upstream shadcn page to link to): descriptions end with "(Saqara)".

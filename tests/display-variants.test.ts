@@ -103,6 +103,14 @@ describe("chart tooltip values", () => {
     expect(render({})).toContain("12,345")
     expect(render({ valueFormatter: (v: number) => `${v.toFixed(1)}/20` })).toContain("12.3/20")
   })
+  it("react: valueFormatter also formats a missing value (—)", () => {
+    const html = renderToString(e(ChartContainer, { config: { note: { label: "Note" } } }, e(RTooltip as any, { active: true, payload: [{ name: "note", dataKey: "note", value: null, color: "red", payload: {} }], valueFormatter: (v: unknown) => (v == null ? "—" : String(v)) })))
+    expect(html).toContain("—")
+  })
+  it("vue: valueFormatter also formats a missing value (—)", async () => {
+    const html = await vue(() => h(VTooltip, { payload: { note: null }, config: { note: { label: "Note" } }, valueFormatter: (v: unknown) => (v == null ? "—" : String(v)) }))
+    expect(html).toContain("—")
+  })
   it("vue: French by default, shows 0, valueFormatter overrides", async () => {
     const render = (p: object) => vue(() => h(VTooltip, { payload: { note: 0 }, config: { note: { label: "Note" } }, ...p }))
     expect(await render({})).toMatch(/>\s*0\s*</)
