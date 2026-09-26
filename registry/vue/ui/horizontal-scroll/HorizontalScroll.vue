@@ -90,8 +90,11 @@ function onPointerMove(event: PointerEvent) {
   }
   el.scrollLeft = drag.left + drag.ratio * dx
 }
-function stop() {
+// Release explicitly: a capture left behind would keep retargeting clicks to the viewport.
+function stop(event: PointerEvent) {
   if (drag?.started) swallowClick = true
+  const el = event.currentTarget as HTMLElement
+  if (el.hasPointerCapture?.(event.pointerId)) el.releasePointerCapture(event.pointerId)
   drag = null
   dragging.value = false
 }

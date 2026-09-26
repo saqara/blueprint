@@ -28,6 +28,12 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
   const drag = React.useRef<{ x: number; left: number; ratio: number; started?: boolean } | null>(null)
   const swallowClick = React.useRef(false)
   React.useImperativeHandle(viewportRef, () => viewport.current as HTMLDivElement, [])
+  // Release explicitly: a capture left behind would keep retargeting clicks to the viewport.
+  const release = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+    drag.current = null
+    setDragging(false)
+  }
   const [size, setSize] = React.useState({ content: 0, visible: 0, track: 0 })
   const [left, setLeft] = React.useState(0)
   const [dragging, setDragging] = React.useState(false)
@@ -80,8 +86,11 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
           }
           event.currentTarget.scrollLeft = drag.current.left + drag.current.ratio * dx
         }}
-        onPointerUp={() => { if (drag.current?.started) swallowClick.current = true; drag.current = null; setDragging(false) }}
-        onPointerCancel={() => { drag.current = null; setDragging(false) }}
+        onPointerUp={(event) => {
+          if (drag.current?.started) swallowClick.current = true
+          release(event)
+        }}
+        onPointerCancel={release}
         onClickCapture={(event) => {
           // The click that ends a real drag is not a click on what lies under the pointer.
           if (!swallowClick.current) return

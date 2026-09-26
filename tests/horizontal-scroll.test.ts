@@ -90,7 +90,9 @@ describe.each([
   it("lets a plain click reach the row (no pointer capture before a real drag)", async () => {
     const capture = vi.spyOn(HTMLElement.prototype, "setPointerCapture").mockImplementation(() => {})
     let rows = 0
-    const run = await mount({}, () => rows++)
+    const run = await mount({}, () => {})
+    // A native listener: the test is about where the click lands, not about the framework's own handler timing.
+    td().closest("tr")!.addEventListener("click", () => rows++)
     await run(() => { pointer("pointerdown", 500); pointer("pointerup", 501); td().click() })
     expect(capture).not.toHaveBeenCalled()
     expect(rows).toBe(1)
