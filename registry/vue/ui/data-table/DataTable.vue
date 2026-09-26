@@ -29,6 +29,12 @@ const props = withDefaults(defineProps<{
   tableProps?: Record<string, unknown>
   /** Attributes, class and handlers for the scroll container (drag-to-scroll, scrollbar styling…). */
   scrollProps?: Record<string, unknown>
+  /** false: no scroll container of its own (an outer scroller takes over; scrollProps is ignored). */
+  container?: boolean
+  /** false: no frame (a card frames the table). */
+  bordered?: boolean
+  /** Cells wrap (long messages) instead of staying on one line. */
+  wrap?: boolean
   class?: HTMLAttributes["class"]
 }>(), {
   sorting: () => [],
@@ -37,6 +43,9 @@ const props = withDefaults(defineProps<{
   emptyMessage: "Aucun résultat.",
   stickyHeader: false,
   stickyFirstColumn: false,
+  container: true,
+  bordered: true,
+  wrap: false,
 })
 const emit = defineEmits<{ "update:sorting": [sorting: SortingState] }>()
 
@@ -78,8 +87,10 @@ function rowAttrs(row: TData) {
     data-slot="data-table"
     :class="cn('[--data-table-bg:var(--background)]', stickyHeader && '[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto', props.class)"
   >
-    <div ref="scrollContainer" v-bind="scrollProps" data-slot="table-container" class="relative w-full overflow-x-auto rounded-md border">
-    <Table :container="false" v-bind="tableProps" :aria-busy="loading || undefined">
+    <!-- container=false: display:contents, no box and no scroll of its own (an outer scroller takes over). -->
+    <div ref="scrollContainer" v-bind="container ? scrollProps : {}" :data-slot="container ? 'table-container' : undefined"
+      :class="container ? cn('relative w-full overflow-x-auto', bordered && 'rounded-md border') : 'contents'">
+    <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">
           <TableHead v-for="(header, i) in group.headers" :key="header.id" :aria-sort="ariaSort(header.column.getIsSorted())" :class="cn(sticky(i), metaClass(header.column.columnDef.meta))">

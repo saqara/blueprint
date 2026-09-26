@@ -5,11 +5,16 @@ import { cn } from "cn"
 
 // Saqara: framed like data-table (rounded border on the scroll container);
 // `container={false}` drops the wrapper (and its frame), so sticky cells can stick to an outer scroller.
-function Table({ className, container = true, ...props }: React.ComponentProps<"table"> & { container?: boolean }) {
+// `bordered={false}` drops the frame (a card frames it); `wrap` lets cells wrap (long messages).
+function Table({ className, container = true, bordered = true, wrap = false, ...props }: React.ComponentProps<"table"> & {
+  container?: boolean
+  bordered?: boolean
+  wrap?: boolean
+}) {
   const table = (
     <table
       data-slot="table"
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn("w-full caption-bottom text-sm", wrap && "[&_td]:whitespace-normal", className)}
       {...props}
     />
   )
@@ -17,7 +22,7 @@ function Table({ className, container = true, ...props }: React.ComponentProps<"
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto rounded-md border"
+      className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border")}
     >
       {table}
     </div>

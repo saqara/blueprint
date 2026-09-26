@@ -109,3 +109,23 @@ describe.each(["react", "vue"] as const)("%s table frame", (fw) => {
     expect(await render[fw]({ data })).toMatch(frame)
   })
 })
+
+describe.each(["react", "vue"] as const)("%s table variants", (fw) => {
+  const renderTable = (p: Record<string, unknown>) => fw === "react"
+    ? Promise.resolve(renderToString(createElement(RTable as any, p, createElement("tbody"))))
+    : renderVue(createSSRApp({ render: () => h(VTable as any, p, { default: () => h("tbody") }) }))
+  const container = (html: string) => html.match(/data-slot="table-container"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*data-slot="table-container"/)!.slice(1).find(Boolean)!
+  it("bordered=false drops the frame (the card frames it)", async () => {
+    expect(container(await renderTable({ bordered: false }))).not.toMatch(/\bborder\b/)
+    expect(container(await render[fw]({ data, bordered: false }))).not.toMatch(/\bborder\b/)
+  })
+  it("wrap lets cells wrap (long messages)", async () => {
+    expect(decodeURIComponent(await renderTable({ wrap: true })).replace(/&amp;/g, "&")).toContain("[&_td]:whitespace-normal")
+    expect((await render[fw]({ data, wrap: true })).replace(/&amp;/g, "&")).toContain("[&_td]:whitespace-normal")
+  })
+  it("DataTable container=false hands scrolling to an outer scroller", async () => {
+    const html = await render[fw]({ data, container: false })
+    expect(html).not.toContain('data-slot="table-container"')
+    expect(html).toContain("<table")
+  })
+})
