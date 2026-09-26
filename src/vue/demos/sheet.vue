@@ -14,7 +14,7 @@ const contacts = ["Camille Martin — Directrice", "Julien Petit — Conducteur 
         <SheetTitle>Bâti Sud SAS</SheetTitle>
         <SheetDescription>SIREN 900 000 001 — Lyon</SheetDescription>
       </SheetHeader>
-      <SheetBody class="grid content-start gap-4">
+      <SheetBody scroll-progress class="grid content-start gap-4">
         <CollapsibleSection title="Contacts">
           <template #actions><Button variant="ghost" size="sm">Ajouter</Button></template>
           <ul class="grid gap-2 text-sm"><li v-for="c in contacts" :key="c">{{ c }}</li></ul>

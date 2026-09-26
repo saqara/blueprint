@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-26 — `sheet` : `SheetBody scrollProgress` affiche une fine barre de progression de lecture en haut du corps (décorative).
 - 2026-09-26 — `horizontal-scroll` (Saqara) : pour les tables larges (`Table` / `DataTable` en `container={false}`), barre de défilement horizontale collée en bas de l'écran (synchronisée, affichée seulement si le contenu déborde) et glisser à la souris pour défiler (hors boutons, liens et champs ; le tactile garde son défilement natif).
 - 2026-09-26 — `autocomplete` (Saqara) : `Input` avec suggestions asynchrones fournies par l'app (adresse…), focus gardé dans le champ, clavier ↑ ↓ Entrée Échap, messages « Recherche… » / « Aucun résultat. ». `rating-grid` (Saqara) : grille de notation (Likert, 0 à 5 par défaut), un groupe de radios natifs par critère dans une vraie table, chaque radio nommé « critère : niveau ».
 - 2026-09-26 — `radio-group` : `allowDeselect` (recliquer l'option choisie efface la sélection, valeur `""`) ; démo de cartes sélectionnables (`FieldLabel` autour d'un `Field`). Nouvel exemple « Journal d'activité » : défilement infini par sentinelle dans le conteneur de `data-table`, et imports en cours dans la pile de notifications (`toast.custom` mis à jour par `id`). `chart` : `valueFormatter` appelé aussi pour une valeur absente (« — ») ; couleur par barre : mettre `fill` dans la ligne de données.
