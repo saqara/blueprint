@@ -68,7 +68,12 @@ function Button({
       {/* Saqara: with asChild the Slot needs a single element child (an array,
           even [null, child], throws), so the spinner is only drawn on a real
           button; it is decorative, the label beside it is what is read out. */}
-      {asChild ? children : <>{loading && <Spinner aria-hidden="true" role="presentation" />}{children}</>}
+      {asChild
+        ? children
+        // Saqara: an icon-only button swaps its icon for the spinner (the aria-label still names it).
+        : loading && size?.startsWith("icon")
+          ? <Spinner aria-hidden="true" role="presentation" />
+          : <>{loading && <Spinner aria-hidden="true" role="presentation" />}{children}</>}
     </Comp>
   )
 }

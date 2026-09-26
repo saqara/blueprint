@@ -407,6 +407,7 @@
       "type": "registry:ui",
       "title": "Badge",
       "dependencies": [
+        "@lucide/vue",
         "@vueuse/core",
         "class-variance-authority",
         "reka-ui"

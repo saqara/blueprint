@@ -323,6 +323,7 @@
       "dependencies": [
         "class-variance-authority",
         "cn",
+        "lucide-react",
         "radix-ui"
       ],
       "files": [

@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { Badge } from "@/registry/vue/ui/badge"
+
+const cities = ref(["Lyon", "Lille", "Paris"])
 </script>
 
 <template>
@@ -12,5 +15,6 @@ import { Badge } from "@/registry/vue/ui/badge"
     <Badge variant="info">En cours</Badge>
     <Badge variant="identity">Saqara</Badge>
     <Badge variant="destructive">Refusé</Badge>
+    <Badge v-for="c in cities" :key="c" variant="secondary" :remove-label="`Retirer ${c}`" :on-remove="() => (cities = cities.filter((x) => x !== c))">{{ c }}</Badge>
   </div>
 </template>
