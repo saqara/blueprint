@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   >
     <!-- Saqara: decorative, the label beside it is what is read out. -->
     <Spinner v-if="loading && !asChild" aria-hidden="true" role="presentation" />
-    <slot />
+    <!-- Saqara: an icon-only button swaps its icon for the spinner (the aria-label still names it). -->
+    <slot v-if="!(loading && !asChild && size?.startsWith('icon'))" />
   </Primitive>
 </template>

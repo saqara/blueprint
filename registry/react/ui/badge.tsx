@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import { XIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 
 const badgeVariants = cva(
@@ -29,13 +30,17 @@ const badgeVariants = cva(
   }
 )
 
+// Saqara: `onRemove` adds a close button (removable chip) without making the badge taller.
 function Badge({
   className,
   variant = "default",
   asChild = false,
+  onRemove,
+  removeLabel = "Retirer",
+  children,
   ...props
 }: React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+  VariantProps<typeof badgeVariants> & { asChild?: boolean; onRemove?: () => void; removeLabel?: string }) {
   const Comp = asChild ? Slot.Root : "span"
 
   return (
@@ -44,7 +49,15 @@ function Badge({
       data-variant={variant}
       className={cn(badgeVariants({ variant }), className)}
       {...props}
-    />
+    >
+      {children}
+      {onRemove && !asChild && (
+        <button type="button" aria-label={removeLabel} onClick={onRemove}
+          className="-mr-0.5 inline-grid size-3.5 place-items-center rounded-full opacity-70 outline-none hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset">
+          <XIcon aria-hidden="true" className="size-3" />
+        </button>
+      )}
+    </Comp>
   )
 }
 
