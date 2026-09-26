@@ -129,3 +129,12 @@ describe.each(["react", "vue"] as const)("%s table variants", (fw) => {
     expect(html).toContain("<table")
   })
 })
+
+describe.each(["react", "vue"] as const)("%s data-table wide-table options", (fw) => {
+  it("uses HorizontalScroll for its own container with stickyScrollbar / dragToScroll", async () => {
+    const html = await render[fw]({ data, dragToScroll: true, stickyScrollbar: true, stickyHeader: true })
+    expect(html).toContain('data-slot="horizontal-scroll"')
+    expect(html).toMatch(/data-slot="table-container"/)
+    expect(await render[fw]({ data })).not.toContain('data-slot="horizontal-scroll"')
+  })
+})

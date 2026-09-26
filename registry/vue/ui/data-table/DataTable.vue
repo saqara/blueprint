@@ -4,6 +4,7 @@ import type { HTMLAttributes } from "vue"
 import { FlexRender, useTable } from "@tanstack/vue-table"
 import { computed, ref } from "vue"
 import { cn } from "@/lib/utils"
+import { HorizontalScroll } from "@/registry/vue/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/vue/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/vue/ui/table"
 import { ariaSort, dataTableFeatures, fromControl, metaClass, resolveUpdater, stickyCell, type DataTableFeatures } from "./utils"
@@ -35,6 +36,10 @@ const props = withDefaults(defineProps<{
   bordered?: boolean
   /** Cells wrap (long messages) instead of staying on one line. */
   wrap?: boolean
+  /** Wide tables: a horizontal scrollbar stuck to the bottom of the screen (see horizontal-scroll). */
+  stickyScrollbar?: boolean
+  /** Wide tables: drag with the mouse to scroll sideways (see horizontal-scroll). */
+  dragToScroll?: boolean
   class?: HTMLAttributes["class"]
 }>(), {
   sorting: () => [],
@@ -46,6 +51,8 @@ const props = withDefaults(defineProps<{
   container: true,
   bordered: true,
   wrap: false,
+  stickyScrollbar: false,
+  dragToScroll: false,
 })
 const emit = defineEmits<{ "update:sorting": [sorting: SortingState] }>()
 
@@ -87,8 +94,40 @@ function rowAttrs(row: TData) {
     data-slot="data-table"
     :class="cn('[--data-table-bg:var(--background)]', stickyHeader && '[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto', props.class)"
   >
+    <!-- Wide tables: the scroll container becomes HorizontalScroll's viewport (sticky header and scrollContainer kept). -->
+    <HorizontalScroll v-if="container && (stickyScrollbar || dragToScroll)" :sticky-scrollbar="stickyScrollbar" :drag-to-scroll="dragToScroll"
+      :viewport-ref="(el: HTMLElement | null) => (scrollContainer = el)" :class="cn(stickyHeader && 'max-h-[inherit]')"
+      :viewport-props="{ ...scrollProps, 'data-slot': 'table-container', class: cn('relative w-full', stickyHeader && 'max-h-[inherit] overflow-auto', bordered && 'rounded-md border') }">
+    <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
+      <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
+        <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">
+          <TableHead v-for="(header, i) in group.headers" :key="header.id" :aria-sort="ariaSort(header.column.getIsSorted())" :class="cn(sticky(i), metaClass(header.column.columnDef.meta))">
+            <FlexRender v-if="!header.isPlaceholder" :header="header" />
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <template v-if="loading">
+          <TableRow v-for="r in loadingRows" :key="`loading-${r}`" data-loading>
+            <TableCell v-for="c in colCount" :key="c" :class="sticky(c - 1)"><Skeleton class="h-4 w-full" /></TableCell>
+          </TableRow>
+        </template>
+        <template v-else-if="table.getRowModel().rows.length">
+          <TableRow v-for="row in table.getRowModel().rows" :key="row.id" v-bind="rowAttrs(row.original)">
+            <TableCell v-for="(cell, i) in row.getAllCells()" :key="cell.id" :class="cn(sticky(i), metaClass(cell.column.columnDef.meta))">
+              <FlexRender :cell="cell" />
+            </TableCell>
+          </TableRow>
+        </template>
+        <TableRow v-else>
+          <TableCell :colspan="colCount" class="h-24 text-center text-muted-foreground">{{ emptyMessage }}</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    <slot />
+    </HorizontalScroll>
     <!-- container=false: display:contents, no box and no scroll of its own (an outer scroller takes over). -->
-    <div ref="scrollContainer" v-bind="container ? scrollProps : {}" :data-slot="container ? 'table-container' : undefined"
+    <div v-else ref="scrollContainer" v-bind="container ? scrollProps : {}" :data-slot="container ? 'table-container' : undefined"
       :class="container ? cn('relative w-full overflow-x-auto', bordered && 'rounded-md border') : 'contents'">
     <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">

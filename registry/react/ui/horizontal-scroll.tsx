@@ -11,14 +11,23 @@ type HorizontalScrollProps = React.ComponentProps<"div"> & {
   stickyScrollbar?: boolean
   /** Drag with the mouse to scroll (touch keeps its native scroll). */
   dragToScroll?: boolean
+  /** The scrolling element (e.g. the IntersectionObserver root, or to make it the vertical scroller too). */
+  viewportRef?: React.Ref<HTMLDivElement>
+  /** Attributes, class and handlers for the scrolling element. */
+  viewportProps?: React.ComponentProps<"div"> & Record<`data-${string}`, string | undefined>
 }
+
+// Past this many pixels a press becomes a drag (below it, the click goes through to rows, links…).
+const DRAG_THRESHOLD = 5
 
 // Saqara: wide tables (Table / DataTable with container={false}) — the scrollbar stays reachable at the
 // bottom of the screen, and the content can be dragged sideways.
-function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, className, children, ...props }: HorizontalScrollProps) {
+function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewportRef, viewportProps, className, children, ...props }: HorizontalScrollProps) {
   const viewport = React.useRef<HTMLDivElement>(null)
   const bar = React.useRef<HTMLDivElement>(null)
-  const drag = React.useRef<{ x: number; left: number; ratio: number } | null>(null)
+  const drag = React.useRef<{ x: number; left: number; ratio: number; started?: boolean } | null>(null)
+  const swallowClick = React.useRef(false)
+  React.useImperativeHandle(viewportRef, () => viewport.current as HTMLDivElement, [])
   const [size, setSize] = React.useState({ content: 0, visible: 0, track: 0 })
   const [left, setLeft] = React.useState(0)
   const [dragging, setDragging] = React.useState(false)
@@ -44,27 +53,42 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, classNa
   return (
     <div data-slot="horizontal-scroll" className={cn("relative", className)} {...props}>
       <div
-        ref={viewport}
         data-slot="horizontal-scroll-viewport"
+        {...viewportProps}
+        ref={viewport}
         className={cn(
           "overflow-x-auto",
           stickyScrollbar && "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-          dragToScroll && overflow && (dragging ? "cursor-grabbing select-none" : "cursor-grab")
+          dragToScroll && overflow && (dragging ? "cursor-grabbing select-none" : "cursor-grab"),
+          viewportProps?.className
         )}
-        onScroll={(event) => setLeft(event.currentTarget.scrollLeft)}
+        onScroll={(event) => { setLeft(event.currentTarget.scrollLeft); viewportProps?.onScroll?.(event) }}
         onPointerDown={(event) => {
           if (!dragToScroll || event.pointerType !== "mouse" || event.button !== 0) return
           if ((event.target as Element).closest(CONTROLS)) return
+          // No capture yet: capturing now would retarget the click to the viewport (rows would never get it).
           drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft, ratio: -1 }
-          event.currentTarget.setPointerCapture?.(event.pointerId)
-          setDragging(true)
         }}
         onPointerMove={(event) => {
           if (!drag.current) return
-          event.currentTarget.scrollLeft = drag.current.left + drag.current.ratio * (event.clientX - drag.current.x)
+          const dx = event.clientX - drag.current.x
+          if (!drag.current.started) {
+            if (Math.abs(dx) <= DRAG_THRESHOLD) return
+            drag.current.started = true
+            event.currentTarget.setPointerCapture?.(event.pointerId)
+            setDragging(true)
+          }
+          event.currentTarget.scrollLeft = drag.current.left + drag.current.ratio * dx
         }}
-        onPointerUp={() => { drag.current = null; setDragging(false) }}
+        onPointerUp={() => { if (drag.current?.started) swallowClick.current = true; drag.current = null; setDragging(false) }}
         onPointerCancel={() => { drag.current = null; setDragging(false) }}
+        onClickCapture={(event) => {
+          // The click that ends a real drag is not a click on what lies under the pointer.
+          if (!swallowClick.current) return
+          swallowClick.current = false
+          event.preventDefault()
+          event.stopPropagation()
+        }}
       >
         {children}
       </div>

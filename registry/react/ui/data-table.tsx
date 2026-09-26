@@ -5,6 +5,7 @@ import { type CellData, type Column, type ColumnDef, type RowData, type SortingS
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react"
 import { cn } from "cn"
 import { Button } from "@/registry/react/ui/button"
+import { HorizontalScroll } from "@/registry/react/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/react/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/react/ui/table"
 
@@ -67,6 +68,10 @@ type DataTableProps<TData extends RowData> = {
   bordered?: boolean
   /** Cells wrap (long messages) instead of staying on one line. */
   wrap?: boolean
+  /** Wide tables: a horizontal scrollbar stuck to the bottom of the screen (see horizontal-scroll). */
+  stickyScrollbar?: boolean
+  /** Wide tables: drag with the mouse to scroll sideways (see horizontal-scroll). */
+  dragToScroll?: boolean
   className?: string
   /** Rendered inside the scroll container, after the table (e.g. an infinite-scroll sentinel). */
   children?: React.ReactNode
@@ -76,7 +81,7 @@ type DataTableProps<TData extends RowData> = {
 function DataTable<TData extends RowData>({
   columns, data, getRowId, meta, sorting = [], onSortingChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
-  onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, className, children,
+  onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, stickyScrollbar = false, dragToScroll = false, className, children,
 }: DataTableProps<TData>) {
   const table = useTable({
     features: dataTableFeatures,
@@ -149,12 +154,21 @@ function DataTable<TData extends RowData>({
       data-slot="data-table"
       className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
     >
-      {container ? (
-        <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border", scrollProps?.className)}>
-          {tableElement}
-          {children}
-        </div>
-      ) : <>{tableElement}{children}</>}
+      {!container ? <>{tableElement}{children}</>
+        : stickyScrollbar || dragToScroll ? (
+          // The scroll container becomes HorizontalScroll's viewport (sticky header and scrollRef kept).
+          <HorizontalScroll stickyScrollbar={stickyScrollbar} dragToScroll={dragToScroll} viewportRef={scrollRef}
+            className={cn(stickyHeader && "max-h-[inherit]")}
+            viewportProps={{ ...scrollProps, "data-slot": "table-container", className: cn("relative w-full", stickyHeader && "max-h-[inherit] overflow-auto", bordered && "rounded-md border", scrollProps?.className) }}>
+            {tableElement}
+            {children}
+          </HorizontalScroll>
+        ) : (
+          <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border", scrollProps?.className)}>
+            {tableElement}
+            {children}
+          </div>
+        )}
     </div>
   )
 }

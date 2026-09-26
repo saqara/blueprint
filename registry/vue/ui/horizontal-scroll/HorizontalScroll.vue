@@ -10,8 +10,15 @@ const props = withDefaults(defineProps<{
   stickyScrollbar?: boolean
   /** Drag with the mouse to scroll (touch keeps its native scroll). */
   dragToScroll?: boolean
+  /** Called with the scrolling element (e.g. the IntersectionObserver root); also exposed as `viewport`. */
+  viewportRef?: (el: HTMLElement | null) => void
+  /** Attributes and class for the scrolling element. */
+  viewportProps?: Record<string, unknown>
   class?: HTMLAttributes["class"]
 }>(), { stickyScrollbar: true, dragToScroll: true })
+
+// Past this many pixels a press becomes a drag (below it, the click goes through to rows, links…).
+const DRAG_THRESHOLD = 5
 
 // A drag that starts on a control belongs to the control.
 const CONTROLS = "a, button, input, select, textarea, label, [role=button], [role=checkbox], [contenteditable=true]"
@@ -22,7 +29,9 @@ const size = ref({ content: 0, visible: 0, track: 0 })
 const left = ref(0)
 const dragging = ref(false)
 const overflow = computed(() => size.value.content > size.value.visible + 1)
-let drag: { x: number, left: number, ratio: number } | null = null
+let drag: { x: number, left: number, ratio: number, started?: boolean } | null = null
+let swallowClick = false
+defineExpose({ viewport })
 let observer: ResizeObserver | undefined
 
 // Custom thumb: native overlay scrollbars (macOS) hide themselves, a sticky bar must stay visible.
@@ -33,6 +42,7 @@ const thumbLeft = computed(() => (left.value / scrollable.value) * free.value)
 
 onMounted(() => {
   const el = viewport.value!
+  props.viewportRef?.(el)
   const measure = () => {
     size.value = { content: el.scrollWidth, visible: el.clientWidth, track: bar.value?.clientWidth ?? el.clientWidth }
   }
@@ -41,7 +51,7 @@ onMounted(() => {
   observer.observe(el)
   if (el.firstElementChild) observer.observe(el.firstElementChild)
 })
-onBeforeUnmount(() => observer?.disconnect())
+onBeforeUnmount(() => { observer?.disconnect(); props.viewportRef?.(null) })
 
 function onViewportScroll(event: Event) {
   left.value = (event.currentTarget as HTMLElement).scrollLeft
@@ -65,18 +75,32 @@ function onThumbMove(event: PointerEvent) {
 function onPointerDown(event: PointerEvent) {
   if (!props.dragToScroll || event.pointerType !== "mouse" || event.button !== 0) return
   if ((event.target as Element).closest(CONTROLS)) return
-  const el = event.currentTarget as HTMLElement
-  drag = { x: event.clientX, left: el.scrollLeft, ratio: -1 }
-  el.setPointerCapture?.(event.pointerId)
-  dragging.value = true
+  // No capture yet: capturing now would retarget the click to the viewport (rows would never get it).
+  drag = { x: event.clientX, left: (event.currentTarget as HTMLElement).scrollLeft, ratio: -1 }
 }
 function onPointerMove(event: PointerEvent) {
   if (!drag) return
-  (event.currentTarget as HTMLElement).scrollLeft = drag.left + drag.ratio * (event.clientX - drag.x)
+  const el = event.currentTarget as HTMLElement
+  const dx = event.clientX - drag.x
+  if (!drag.started) {
+    if (Math.abs(dx) <= DRAG_THRESHOLD) return
+    drag.started = true
+    el.setPointerCapture?.(event.pointerId)
+    dragging.value = true
+  }
+  el.scrollLeft = drag.left + drag.ratio * dx
 }
 function stop() {
+  if (drag?.started) swallowClick = true
   drag = null
   dragging.value = false
+}
+// The click that ends a real drag is not a click on what lies under the pointer.
+function onClickCapture(event: MouseEvent) {
+  if (!swallowClick) return
+  swallowClick = false
+  event.preventDefault()
+  event.stopPropagation()
 }
 </script>
 
@@ -85,6 +109,7 @@ function stop() {
     <div
       ref="viewport"
       data-slot="horizontal-scroll-viewport"
+      v-bind="viewportProps"
       :class="cn(
         'overflow-x-auto',
         stickyScrollbar && '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
@@ -95,6 +120,7 @@ function stop() {
       @pointermove="onPointerMove"
       @pointerup="stop"
       @pointercancel="stop"
+      @click.capture="onClickCapture"
     >
       <slot />
     </div>
