@@ -12,7 +12,7 @@ export const CATEGORIES = [
   { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
   { id: "overlays", label: "Overlays", items: ["alert-dialog", "confirm-dialog", "dialog", "dropdown-menu", "hover-card", "popover", "sheet", "sonner", "tooltip"] },
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "collapsible-section", "command", "pagination", "sidebar", "stepper", "tabs"] },
-  { id: "donnees", label: "Données", items: ["chart", "data-table"] },
+  { id: "donnees", label: "Données", items: ["chart", "data-table", "horizontal-scroll"] },
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
 ]
 

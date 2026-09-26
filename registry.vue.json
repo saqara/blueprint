@@ -1045,6 +1045,22 @@
       ]
     },
     {
+      "name": "horizontal-scroll",
+      "type": "registry:ui",
+      "title": "Horizontal Scroll",
+      "description": "Défilement horizontal des tables larges : barre collée en bas de l'écran et glisser pour défiler (Saqara).",
+      "files": [
+        {
+          "path": "registry/vue/ui/horizontal-scroll/HorizontalScroll.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/horizontal-scroll/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",

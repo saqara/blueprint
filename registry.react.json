@@ -632,6 +632,21 @@
       ]
     },
     {
+      "name": "horizontal-scroll",
+      "type": "registry:ui",
+      "title": "Horizontal Scroll",
+      "description": "Défilement horizontal des tables larges : barre collée en bas de l'écran et glisser pour défiler (Saqara).",
+      "files": [
+        {
+          "path": "registry/react/ui/horizontal-scroll.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "cn"
+      ]
+    },
+    {
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",
