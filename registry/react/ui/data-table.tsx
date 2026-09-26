@@ -158,8 +158,10 @@ function DataTable<TData extends RowData>({
         : stickyScrollbar || dragToScroll ? (
           // The scroll container becomes HorizontalScroll's viewport (sticky header and scrollRef kept).
           <HorizontalScroll stickyScrollbar={stickyScrollbar} dragToScroll={dragToScroll} viewportRef={scrollRef}
-            className={cn(stickyHeader && "max-h-[inherit]")}
-            viewportProps={{ ...scrollProps, "data-slot": "table-container", className: cn("relative w-full", stickyHeader && "max-h-[inherit] overflow-auto", bordered && "rounded-md border", scrollProps?.className) }}>
+            // Sticky header: a flex column bounded by the table's max height; the viewport shrinks and scrolls
+            // (an inherited percentage would resolve against a wrapper with no height).
+            className={cn(stickyHeader && "flex max-h-[inherit] flex-col")}
+            viewportProps={{ ...scrollProps, "data-slot": "table-container", className: cn("relative w-full", stickyHeader && "min-h-0 overflow-auto", bordered && "rounded-md border", scrollProps?.className) }}>
             {tableElement}
             {children}
           </HorizontalScroll>
