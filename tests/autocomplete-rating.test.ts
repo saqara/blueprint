@@ -59,7 +59,7 @@ describe.each(["react", "vue"] as const)("%s autocomplete", (fw) => {
     expect(document.querySelector("[role=status]")?.textContent).toContain("Recherche…")
     for (const c of cleanups.splice(0)) await c()
     document.body.innerHTML = ""
-    const run2 = await mounts[fw]("auto", { value: "zzz", suggestions: [], "aria-label": "Adresse" })
+    const run2 = await mounts[fw]("auto", { value: "zzz", suggestions: [], emptyMessage: "Aucun résultat.", "aria-label": "Adresse" })
     await run2(() => input().focus())
     expect(document.querySelector("[role=status]")?.textContent).toContain("Aucun résultat")
   })
@@ -81,3 +81,38 @@ describe.each(["react", "vue"] as const)("%s rating-grid", (fw) => {
     expect(document.querySelector("caption")?.textContent).toBe("Évaluation qualité")
   })
 })
+
+describe.each(["react", "vue"] as const)("%s autocomplete follow-ups", (fw) => {
+  const input = () => document.querySelector<HTMLInputElement>("[role=combobox]")!
+  it("keeps the previous suggestions visible while loading", async () => {
+    const run = await mounts[fw]("auto", { value: "12 rue", suggestions: addresses, loading: true, "aria-label": "Adresse" })
+    await run(() => input().focus())
+    expect(document.querySelectorAll("[role=option]")).toHaveLength(2)
+    expect(document.querySelector("[role=status]")).toBeNull()
+  })
+  it("shows no empty message unless one is given", async () => {
+    const run = await mounts[fw]("auto", { value: "zzz", suggestions: [], "aria-label": "Adresse" })
+    await run(() => input().focus())
+    expect(document.querySelector("[role=status]")).toBeNull()
+  })
+  it("takes a leading icon and a class for the input", async () => {
+    await mounts[fw]("auto", { value: "", suggestions: [], "aria-label": "Adresse", inputClassName: "h-10", inputClass: "h-10", ...(fw === "react" ? { icon: e("svg", { "data-icon": "" }) } : {}) })
+    expect(input().className).toContain("h-10")
+    if (fw === "react") {
+      expect(document.querySelector("[data-slot=autocomplete] svg[data-icon]")).not.toBeNull()
+      expect(input().className).toContain("pl-9")
+    }
+  })
+})
+
+describe.each(["react", "vue"] as const)("%s rating-grid follow-ups", (fw) => {
+  const criteria = [{ id: "delais", label: "Respect des délais", description: "Planning tenu" }]
+  it("spreads getRowProps, and readOnly locks radios legibly", async () => {
+    await mounts[fw]("grid", { criteria, value: { delais: "3" }, readOnly: true, getRowProps: (c: { id: string }) => ({ "data-testid": `evaluation-form-question-${c.id}` }) })
+    expect(document.querySelector("tr[data-testid=evaluation-form-question-delais]")).not.toBeNull()
+    const radio = document.querySelector<HTMLInputElement>("input[type=radio]")!
+    expect(radio.disabled).toBe(true)
+    expect(radio.className).toContain("disabled:opacity-100")
+  })
+})
+

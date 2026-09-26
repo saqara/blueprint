@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AutocompleteOption } from "@/registry/vue/ui/autocomplete"
+import { MapPinIcon } from "@lucide/vue"
 import { ref, watch } from "vue"
 import { Autocomplete } from "@/registry/vue/ui/autocomplete"
 import { Label } from "@/registry/vue/ui/label"
@@ -38,7 +39,9 @@ function select(o: AutocompleteOption) {
   <div class="grid w-full max-w-sm gap-2">
     <Label for="adresse">Adresse du siège</Label>
     <Autocomplete id="adresse" v-model:value="query" placeholder="12 rue de la…" :min-chars="3"
-      :suggestions="suggestions" :loading="loading" :on-select="select" />
+      :suggestions="suggestions" :loading="loading" empty-message="Aucune adresse trouvée." :on-select="select">
+      <template #icon><MapPinIcon /></template>
+    </Autocomplete>
     <p class="text-sm text-muted-foreground">{{ chosen ? `${chosen.label}, ${chosen.description}` : "Saisissez au moins 3 caractères." }}</p>
   </div>
 </template>

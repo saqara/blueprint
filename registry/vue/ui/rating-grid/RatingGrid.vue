@@ -16,8 +16,14 @@ const props = withDefaults(defineProps<{
   /** Prefix of the native radio names (one group per criterion). */
   name?: string
   disabled?: boolean
+  /** Locked but legible (disabled = unavailable, faded). */
+  readOnly?: boolean
+  /** Attributes for each row: data-testid… */
+  getRowProps?: (criterion: RatingCriterion) => Record<string, unknown>
   class?: HTMLAttributes["class"]
-}>(), { scale: () => defaultScale, disabled: false })
+}>(), { scale: () => defaultScale, disabled: false, readOnly: false })
+/** #criterion="{ criterion }" and #level="{ level }": custom cells (description in a tooltip, coloured digit…). */
+defineSlots<{ criterion?: (props: { criterion: RatingCriterion }) => unknown, level?: (props: { level: RatingLevel }) => unknown }>()
 const value = defineModel<Record<string, string>>("value", { default: () => ({}) })
 const prefix = props.name ?? `rating-${useId()}`
 </script>
@@ -28,14 +34,16 @@ const prefix = props.name ?? `rating-${useId()}`
     <TableHeader>
       <TableRow>
         <TableHead>Critère</TableHead>
-        <TableHead v-for="level in scale" :key="level.value" class="text-center">{{ level.label }}</TableHead>
+        <TableHead v-for="level in scale" :key="level.value" class="text-center"><slot name="level" :level="level">{{ level.label }}</slot></TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="criterion in criteria" :key="criterion.id">
+      <TableRow v-for="criterion in criteria" :key="criterion.id" v-bind="getRowProps?.(criterion)">
         <TableCell class="whitespace-normal">
-          <span class="block">{{ criterion.label }}</span>
-          <span v-if="criterion.description" class="block text-xs text-muted-foreground">{{ criterion.description }}</span>
+          <slot name="criterion" :criterion="criterion">
+            <span class="block">{{ criterion.label }}</span>
+            <span v-if="criterion.description" class="block text-xs text-muted-foreground">{{ criterion.description }}</span>
+          </slot>
         </TableCell>
         <TableCell v-for="level in scale" :key="level.value" class="text-center">
           <input
@@ -43,9 +51,9 @@ const prefix = props.name ?? `rating-${useId()}`
             :name="`${prefix}-${criterion.id}`"
             :value="level.value"
             :checked="value[criterion.id] === level.value"
-            :disabled="disabled"
+            :disabled="disabled || readOnly"
             :aria-label="`${criterion.label} : ${level.label}`"
-            :class="cn(radioClass, 'align-middle')"
+            :class="cn(radioClass, 'align-middle', readOnly && 'disabled:cursor-default disabled:opacity-100')"
             @change="value = { ...value, [criterion.id]: level.value }"
           >
         </TableCell>
