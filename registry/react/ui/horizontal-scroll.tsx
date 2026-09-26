@@ -34,7 +34,7 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
     drag.current = null
     setDragging(false)
   }
-  const [size, setSize] = React.useState({ content: 0, visible: 0, track: 0 })
+  const [size, setSize] = React.useState({ content: 0, visible: 0, track: 0, vertical: false })
   const [left, setLeft] = React.useState(0)
   const [dragging, setDragging] = React.useState(false)
   const overflow = size.content > size.visible + 1
@@ -42,7 +42,10 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
   React.useEffect(() => {
     const el = viewport.current
     if (!el) return
-    const measure = () => setSize({ content: el.scrollWidth, visible: el.clientWidth, track: bar.current?.clientWidth ?? el.clientWidth })
+    const measure = () => setSize({
+      content: el.scrollWidth, visible: el.clientWidth, track: bar.current?.clientWidth ?? el.clientWidth,
+      vertical: el.scrollHeight > el.clientHeight + 1,
+    })
     measure()
     const observer = new ResizeObserver(measure)
     observer.observe(el)
@@ -64,7 +67,10 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
         ref={viewport}
         className={cn(
           "overflow-x-auto",
-          stickyScrollbar && "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          // Only the horizontal native bar goes (the sticky bar replaces it); Firefox can't target one axis,
+          // so there it is hidden only when the content doesn't also scroll vertically.
+          stickyScrollbar && "[&::-webkit-scrollbar:horizontal]:h-0",
+          stickyScrollbar && !size.vertical && "[scrollbar-width:none]",
           dragToScroll && overflow && (dragging ? "cursor-grabbing select-none" : "cursor-grab"),
           viewportProps?.className
         )}
@@ -106,7 +112,7 @@ function HorizontalScroll({ stickyScrollbar = true, dragToScroll = true, viewpor
           ref={bar}
           data-slot="horizontal-scroll-bar"
           aria-hidden="true"
-          className="sticky bottom-0 z-10 h-3 bg-background/80 backdrop-blur-sm"
+          className="sticky bottom-0 z-10 h-3 shrink-0 bg-background/80 backdrop-blur-sm"
           onPointerDown={(event) => {
             // A click on the track centres the thumb there.
             if (!viewport.current || event.target !== event.currentTarget) return

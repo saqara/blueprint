@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-26 — `data-table` `stickyHeader` + `stickyScrollbar` / `dragToScroll` : la hauteur est de nouveau bornée (colonne flex, le conteneur rétrécit et défile verticalement ; l'en-tête collant et la sentinelle fonctionnent). `horizontal-scroll` : seule la barre native horizontale est masquée ; la barre verticale reste visible quand le contenu défile aussi verticalement.
 - 2026-09-26 — `horizontal-scroll` : la capture du pointeur est relâchée explicitement à la fin d'un glissement (une capture restée active renverrait les clics suivants vers le conteneur).
 - 2026-09-26 — `autocomplete` : icône en tête (`icon`, Vue : `#icon`), `inputClassName` (Vue : `inputClass`), les suggestions précédentes restent visibles pendant `loading`, plus de message vide par défaut (`emptyMessage` à fournir). `rating-grid` : `getRowProps`, rendu personnalisé des critères et des niveaux (`renderCriterion` / `renderLevel`, Vue : `#criterion` / `#level`), `readOnly` lisible.
 - 2026-09-26 — `horizontal-scroll` : un simple clic atteint de nouveau les lignes (le pointeur n'est capturé qu'après 5 px de glissement, et le clic qui termine un vrai glissement est ignoré) ; `viewportRef` et `viewportProps` pour l'élément qui défile. `data-table` : `stickyScrollbar` et `dragToScroll` directement sur la table (son conteneur devient celui de `horizontal-scroll`, en-tête collant et `scrollRef` conservés).

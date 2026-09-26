@@ -138,3 +138,15 @@ describe.each(["react", "vue"] as const)("%s data-table wide-table options", (fw
     expect(await render[fw]({ data })).not.toContain('data-slot="horizontal-scroll"')
   })
 })
+
+describe.each(["react", "vue"] as const)("%s data-table sticky header in a wide table", (fw) => {
+  it("bounds the viewport through a flex column (no inherited percentage)", async () => {
+    const html = (await render[fw]({ data, stickyHeader: true, stickyScrollbar: true })).replace(/&amp;/g, "&")
+    const cls = (slot: string) => html.match(new RegExp(`data-slot="${slot}"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*data-slot="${slot}"`))!.slice(1).find(Boolean)!
+    expect(cls("horizontal-scroll")).toMatch(/\bflex\b/)
+    expect(cls("horizontal-scroll")).toContain("flex-col")
+    expect(cls("table-container")).toContain("min-h-0")
+    expect(cls("table-container")).not.toContain("max-h-[inherit]")
+  })
+})
+

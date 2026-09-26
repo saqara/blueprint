@@ -112,3 +112,31 @@ describe.each([
     expect(box.current).toBe(viewport())
   })
 })
+
+describe("horizontal-scroll vertical scrolling", () => {
+  it.each(["react", "vue"] as const)("%s: hides only the horizontal native bar when the content also scrolls vertically", async (fw) => {
+    const sh = Object.getOwnPropertyDescriptor(proto, "scrollHeight")
+    const ch = Object.getOwnPropertyDescriptor(proto, "clientHeight")
+    Object.defineProperty(proto, "scrollHeight", { configurable: true, get() { return this.dataset?.slot === "horizontal-scroll-viewport" ? 1500 : 0 } })
+    Object.defineProperty(proto, "clientHeight", { configurable: true, get() { return this.dataset?.slot === "horizontal-scroll-viewport" ? 400 : 0 } })
+    try {
+      if (fw === "react") {
+        const root = createRoot(document.body.appendChild(document.createElement("div")))
+        await act(async () => root.render(e(RScroll, null, e("div", null, "x"))))
+        cleanups.push(() => act(async () => root.unmount()))
+      } else {
+        const app = createApp({ render: () => h(VScroll, null, () => h("div", "x")) })
+        app.mount(document.body.appendChild(document.createElement("div")))
+        cleanups.push(() => app.unmount())
+        await nextTick(); await nextTick()
+      }
+      expect(viewport().className).toContain("[&::-webkit-scrollbar:horizontal]:h-0")
+      expect(viewport().className).not.toContain("[scrollbar-width:none]")
+      expect(bar()!.className).toContain("shrink-0")
+    } finally {
+      if (sh) Object.defineProperty(proto, "scrollHeight", sh); else delete (proto as any).scrollHeight
+      if (ch) Object.defineProperty(proto, "clientHeight", ch); else delete (proto as any).clientHeight
+    }
+  })
+})
+

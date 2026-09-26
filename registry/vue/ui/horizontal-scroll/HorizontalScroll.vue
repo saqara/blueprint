@@ -25,7 +25,7 @@ const CONTROLS = "a, button, input, select, textarea, label, [role=button], [rol
 
 const viewport = ref<HTMLElement>()
 const bar = ref<HTMLElement>()
-const size = ref({ content: 0, visible: 0, track: 0 })
+const size = ref({ content: 0, visible: 0, track: 0, vertical: false })
 const left = ref(0)
 const dragging = ref(false)
 const overflow = computed(() => size.value.content > size.value.visible + 1)
@@ -44,7 +44,10 @@ onMounted(() => {
   const el = viewport.value!
   props.viewportRef?.(el)
   const measure = () => {
-    size.value = { content: el.scrollWidth, visible: el.clientWidth, track: bar.value?.clientWidth ?? el.clientWidth }
+    size.value = {
+      content: el.scrollWidth, visible: el.clientWidth, track: bar.value?.clientWidth ?? el.clientWidth,
+      vertical: el.scrollHeight > el.clientHeight + 1,
+    }
   }
   measure()
   observer = new ResizeObserver(measure)
@@ -115,7 +118,10 @@ function onClickCapture(event: MouseEvent) {
       v-bind="viewportProps"
       :class="cn(
         'overflow-x-auto',
-        stickyScrollbar && '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        // Only the horizontal native bar goes (the sticky bar replaces it); Firefox can't target one axis,
+        // so there it is hidden only when the content doesn't also scroll vertically.
+        stickyScrollbar && '[&::-webkit-scrollbar:horizontal]:h-0',
+        stickyScrollbar && !size.vertical && '[scrollbar-width:none]',
         dragToScroll && overflow && (dragging ? 'cursor-grabbing select-none' : 'cursor-grab'),
       )"
       @scroll="onViewportScroll"
@@ -132,7 +138,7 @@ function onClickCapture(event: MouseEvent) {
       ref="bar"
       data-slot="horizontal-scroll-bar"
       aria-hidden="true"
-      class="sticky bottom-0 z-10 h-3 bg-background/80 backdrop-blur-sm"
+      class="sticky bottom-0 z-10 h-3 shrink-0 bg-background/80 backdrop-blur-sm"
       @pointerdown="onTrackDown"
     >
       <div

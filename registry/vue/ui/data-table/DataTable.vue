@@ -96,8 +96,8 @@ function rowAttrs(row: TData) {
   >
     <!-- Wide tables: the scroll container becomes HorizontalScroll's viewport (sticky header and scrollContainer kept). -->
     <HorizontalScroll v-if="container && (stickyScrollbar || dragToScroll)" :sticky-scrollbar="stickyScrollbar" :drag-to-scroll="dragToScroll"
-      :viewport-ref="(el: HTMLElement | null) => (scrollContainer = el)" :class="cn(stickyHeader && 'max-h-[inherit]')"
-      :viewport-props="{ ...scrollProps, 'data-slot': 'table-container', class: cn('relative w-full', stickyHeader && 'max-h-[inherit] overflow-auto', bordered && 'rounded-md border') }">
+      :viewport-ref="(el: HTMLElement | null) => (scrollContainer = el)" :class="cn(stickyHeader && 'flex max-h-[inherit] flex-col')"
+      :viewport-props="{ ...scrollProps, 'data-slot': 'table-container', class: cn('relative w-full', stickyHeader && 'min-h-0 overflow-auto', bordered && 'rounded-md border') }">
     <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">
