@@ -81,4 +81,26 @@ describe.each([
     expect(html).toContain("Retour au formulaire")
     expect(await render({ password: false, magicLink: true, status: "sent", onResend: () => {}, resendCooldown: 0 })).toMatch(/<button(?![^>]*\sdisabled(=""|\s|>))[^>]*>(<!--[^>]*-->)*\s*Renvoyer le lien\s*(<!--[^>]*-->)*<\/button>/)
   })
+  it("keeps the form as the primary method by default", async () => {
+    const html = await render({ password: false, magicLink: true, sso: { label: "Se connecter avec AOS" } })
+    expect(html).toMatch(/data-variant="outline"(?:(?!<\/button>)[\s\S])*Se connecter avec AOS/)
+    expect(html).toMatch(/data-variant="default"(?:(?!<\/button>)[\s\S])*Recevoir un lien de connexion/)
+  })
+  it("makes SSO the filled button with primaryMethod=sso", async () => {
+    const html = await render({ password: false, magicLink: true, sso: { label: "Se connecter avec AOS" }, primaryMethod: "sso" })
+    expect(html).toMatch(/data-variant="default"(?:(?!<\/button>)[\s\S])*Se connecter avec AOS/)
+    expect(html).toMatch(/data-variant="outline"(?:(?!<\/button>)[\s\S])*Recevoir un lien de connexion/)
+  })
+})
+
+
+describe("login SSO icon", () => {
+  it("react: renders sso.icon before the label", () => {
+    const html = renderToString(e(RLogin as any, { sso: { label: "Se connecter avec AOS", icon: e("img", { src: "/aos.png", alt: "" }) } }))
+    expect(html).toMatch(/<img[^>]*src="\/aos.png"[\s\S]*Se connecter avec AOS/)
+  })
+  it("vue: renders the #sso-icon slot before the label", async () => {
+    const html = await renderVue(createSSRApp({ render: () => h(VLogin as any, { sso: { label: "Se connecter avec AOS" } }, { "sso-icon": () => h("img", { src: "/aos.png", alt: "" }) }) }))
+    expect(html).toMatch(/<img[^>]*src="\/aos.png"[\s\S]*Se connecter avec AOS/)
+  })
 })
