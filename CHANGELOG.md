@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-28 — `autocomplete` : dans un `dialog`, Échap ferme d'abord la liste ; seule une deuxième pression ferme la modale. `switch` : piste non cochée en `muted-foreground/70` (≥ 3:1 sur le fond et les cartes, clair et sombre, WCAG 1.4.11 ; elle était à 1,26:1 en clair).
 - 2026-09-26 — `data-table` `stickyHeader` + `stickyScrollbar` / `dragToScroll` : la hauteur est de nouveau bornée (colonne flex, le conteneur rétrécit et défile verticalement ; l'en-tête collant et la sentinelle fonctionnent). `horizontal-scroll` : seule la barre native horizontale est masquée ; la barre verticale reste visible quand le contenu défile aussi verticalement.
 - 2026-09-26 — `horizontal-scroll` : la capture du pointeur est relâchée explicitement à la fin d'un glissement (une capture restée active renverrait les clics suivants vers le conteneur).
 - 2026-09-26 — `autocomplete` : icône en tête (`icon`, Vue : `#icon`), `inputClassName` (Vue : `inputClass`), les suggestions précédentes restent visibles pendant `loading`, plus de message vide par défaut (`emptyMessage` à fournir). `rating-grid` : `getRowProps`, rendu personnalisé des critères et des niveaux (`renderCriterion` / `renderLevel`, Vue : `#criterion` / `#level`), `readOnly` lisible.
