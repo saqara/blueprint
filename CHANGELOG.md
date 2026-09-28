@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-28 — CI : seul le build du HEAD de `main` publie le registry ; un run plus ancien qui finit en dernier ne peut plus écraser une version plus récente (c'est arrivé à `login` après #41 / #42).
 - 2026-09-28 — `login` : `primaryMethod` (`"form"` par défaut, `"sso"` fait du bouton SSO le bouton plein et passe le formulaire en `outline`) ; icône du bouton SSO (`sso.icon`, Vue : slot `#sso-icon`), 16 px avant le libellé.
 - 2026-09-28 — `autocomplete` : dans un `dialog`, Échap ferme d'abord la liste ; seule une deuxième pression ferme la modale. `switch` : piste non cochée en `muted-foreground/70` (≥ 3:1 sur le fond et les cartes, clair et sombre, WCAG 1.4.11 ; elle était à 1,26:1 en clair).
 - 2026-09-26 — `data-table` `stickyHeader` + `stickyScrollbar` / `dragToScroll` : la hauteur est de nouveau bornée (colonne flex, le conteneur rétrécit et défile verticalement ; l'en-tête collant et la sentinelle fonctionnent). `horizontal-scroll` : seule la barre native horizontale est masquée ; la barre verticale reste visible quand le contenu défile aussi verticalement.
