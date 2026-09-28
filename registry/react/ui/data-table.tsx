@@ -176,16 +176,25 @@ function DataTable<TData extends RowData>({
 }
 
 
-function DataTableColumnHeader<TData extends RowData, TValue extends CellData>({ column, title, sortCycle = "asc-desc-none", className, ...props }: {
+function DataTableColumnHeader<TData extends RowData, TValue extends CellData>({ column, title, sortCycle = "asc-desc-none", thenBy, className, ...props }: {
   column: Column<DataTableFeatures, TData, TValue>
   title: string
   sortCycle?: SortCycle
+  /** Tie-break keys: a click sorts by this column, then by these, in the same direction. */
+  thenBy?: string[]
 } & Omit<React.ComponentProps<typeof Button>, "onClick" | "children">) {
   if (!column.getCanSort()) return <>{title}</>
   const sorted = column.getIsSorted()
   const Icon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ChevronsUpDown
   return (
-    <Button variant="ghost" size="sm" className={cn("-ml-3 h-8", className)} {...props} onClick={() => { const next = nextSort(sorted, sortCycle); if (next) column.toggleSorting(next === "desc"); else column.clearSorting() }}>
+    <Button variant="ghost" size="sm" className={cn("-ml-3 h-8", className)} {...props} onClick={() => {
+      const next = nextSort(sorted, sortCycle)
+      if (thenBy?.length) {
+        const desc = next === "desc"
+        column.table.setSorting(next ? [{ id: column.id, desc }, ...thenBy.map((id) => ({ id, desc }))] : [])
+      } else if (next) column.toggleSorting(next === "desc")
+      else column.clearSorting()
+    }}>
       {title}
       <Icon />
     </Button>

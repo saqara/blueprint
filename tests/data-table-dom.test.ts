@@ -110,3 +110,36 @@ describe("react live cell state through meta", () => {
     expect(document.activeElement).toBe(button)
   })
 })
+
+describe.each(["react", "vue"] as const)("%s column header thenBy", (fw) => {
+  it("sorts by the column, then by the listed keys, in the same direction", async () => {
+    const onSortingChange = vi.fn()
+    const rows = [{ id: "a", name: "Bâti Sud", city: "Lyon" }]
+    const columns = fw === "react"
+      ? [{ accessorKey: "name", header: ({ column }: any) => e(RHeader as any, { column, title: "Raison sociale", thenBy: ["city"] }) }, { accessorKey: "city", header: "Ville" }]
+      : [{ accessorKey: "name", header: ({ column }: any) => h(VHeader as any, { column, title: "Raison sociale", thenBy: ["city"] }) }, { accessorKey: "city", header: "Ville" }]
+    let sorting: unknown[] = []
+    const record = (s: unknown[]) => { sorting = s; onSortingChange(s) }
+    if (fw === "react") {
+      const root = createRoot(document.body.appendChild(document.createElement("div")))
+      const draw = () => act(async () => root.render(e(RDataTable as any, { columns, data: rows, sorting, onSortingChange: (s: unknown[]) => { record(s); draw() } })))
+      await draw()
+      cleanups.push(() => act(async () => root.unmount()))
+    } else {
+      const { ref } = await import("vue")
+      const s = ref<unknown[]>([])
+      const app = createApp({ render: () => h(VDataTable as any, { columns, data: rows, sorting: s.value, "onUpdate:sorting": (v: unknown[]) => { record(v); s.value = v } }) })
+      app.mount(document.body.appendChild(document.createElement("div")))
+      cleanups.push(() => app.unmount())
+      await nextTick()
+    }
+    const button = () => [...document.querySelectorAll<HTMLButtonElement>("th button")].find((b) => b.textContent?.includes("Raison sociale"))!
+    const click = async () => { if (fw === "react") await act(async () => button().click()); else { button().click(); await nextTick() } }
+    await click()
+    expect(onSortingChange).toHaveBeenLastCalledWith([{ id: "name", desc: false }, { id: "city", desc: false }])
+    await click()
+    expect(onSortingChange).toHaveBeenLastCalledWith([{ id: "name", desc: true }, { id: "city", desc: true }])
+    await click()
+    expect(onSortingChange).toHaveBeenLastCalledWith([])
+  })
+})
