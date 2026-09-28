@@ -104,3 +104,18 @@ describe("login SSO icon", () => {
     expect(html).toMatch(/<img[^>]*src="\/aos.png"[\s\S]*Se connecter avec AOS/)
   })
 })
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RLogin as any, p))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VLogin as any, p) }))],
+])("%s login hints", (_, render) => {
+  const described = (html: string, label: string, hint: string) => {
+    const id = html.match(new RegExp(`id="([^"]+)"[^>]*>(<!--[^>]*-->)*${hint}`))![1]
+    expect(html).toMatch(new RegExp(`aria-describedby="${id}"(?:(?!</button>)[\\s\\S])*${label}`))
+  }
+  it("ties a hint to the SSO button and to the form's submit", async () => {
+    const html = await render({ password: false, magicLink: true, sso: { label: "Se connecter avec AOS", hint: "Pour les donneurs d’ordres." }, formHint: "Pour les fournisseurs." })
+    described(html, "Se connecter avec AOS", "Pour les donneurs d’ordres\\.")
+    described(html, "Recevoir un lien de connexion", "Pour les fournisseurs\\.")
+  })
+})

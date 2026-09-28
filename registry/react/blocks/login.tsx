@@ -17,7 +17,9 @@ type LoginProps = {
   password?: boolean
   magicLink?: boolean
   /** SSO button; `icon` renders before the label at 16px (a provider logo…). */
-  sso?: { label: string; icon?: React.ReactNode }
+  sso?: { label: string; icon?: React.ReactNode; hint?: React.ReactNode }
+  /** Help under the form's submit, tied to it (aria-describedby). */
+  formHint?: React.ReactNode
   /** Which method is the filled button: the form (default) or SSO. */
   primaryMethod?: "form" | "sso"
   status?: "idle" | "loading" | "sent"
@@ -45,7 +47,7 @@ const titleClass = "font-heading text-xl leading-none font-semibold"
 
 // Saqara block: presentational login. The app runs the auth and drives `status` / `error`.
 function Login({
-  title = "Connexion", description, logo, password = true, magicLink = false, sso, primaryMethod = "form", status = "idle", loadingAction, error,
+  title = "Connexion", description, logo, password = true, magicLink = false, sso, primaryMethod = "form", formHint, status = "idle", loadingAction, error,
   emailPlaceholder, emailHint, sentTitle = "Vérifiez votre boîte mail", resetLabel = "Utiliser une autre adresse", resendCooldown = 60,
   onPasswordSubmit, onMagicLinkSubmit, onSso, onForgotPassword, onReset, onResend, onErrorDismiss, className,
 }: LoginProps) {
@@ -55,6 +57,10 @@ function Login({
   const [wait, setWait] = React.useState(resendCooldown)
   const loading = status === "loading"
   const brand = logo ?? <SaqaraLogo className="text-foreground" />
+  const sentTitleRef = React.useRef<HTMLHeadingElement>(null)
+  // The sent screen replaces the form: move focus to its title so the change is announced.
+  React.useEffect(() => { if (status === "sent") sentTitleRef.current?.focus() }, [status])
+  const formHintId = formHint ? `${id}-form-hint` : undefined
 
   // Countdown restarts whenever the sent screen shows (state adjusted during render, not in an effect);
   // resend() restarts it too.
@@ -81,7 +87,7 @@ function Login({
       <Card data-slot="login" className={cn("w-full max-w-sm", className)}>
         <CardHeader className="justify-items-center gap-3 text-center">
           {brand}
-          <h1 data-slot="card-title" className={titleClass}>{sentTitle}</h1>
+          <h1 ref={sentTitleRef} tabIndex={-1} data-slot="card-title" className={cn(titleClass, "outline-none")}>{sentTitle}</h1>
           <CardDescription>Un lien de connexion a été envoyé à <strong>{email || "votre adresse"}</strong>.</CardDescription>
         </CardHeader>
         {errorAlert && <CardContent>{errorAlert}</CardContent>}
@@ -119,11 +125,13 @@ function Login({
       <CardContent className="grid gap-4">
         {errorAlert}
         {sso && (
-          <Button variant={primaryMethod === "sso" ? "default" : "outline"} className="w-full" disabled={loading} loading={spinning === "sso"} onClick={onSso}>
+          <Button variant={primaryMethod === "sso" ? "default" : "outline"} className="w-full" disabled={loading} loading={spinning === "sso"} onClick={onSso}
+            aria-describedby={sso.hint ? `${id}-sso-hint` : undefined}>
             {sso.icon && spinning !== "sso" && <span aria-hidden="true" className="inline-flex size-4 shrink-0 items-center justify-center [&>*]:size-4">{sso.icon}</span>}
             {sso.label}
           </Button>
         )}
+        {sso?.hint && <p id={`${id}-sso-hint`} className="-mt-2 text-center text-xs text-muted-foreground">{sso.hint}</p>}
         {sso && hasForm && (
           <div className="flex items-center gap-2 text-xs text-muted-foreground"><Separator className="flex-1" /><span>ou</span><Separator className="flex-1" /></div>
         )}
@@ -153,10 +161,11 @@ function Login({
                 <Input id={`${id}-password`} name="password" type="password" autoComplete="current-password" required disabled={loading} value={secret} onChange={(event) => setSecret(event.target.value)} />
               </div>
             )}
-            {password && <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "password"}>Se connecter</Button>}
+            {password && <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "password"} aria-describedby={formHintId}>Se connecter</Button>}
             {magicLink && (password
               ? <Button type="button" variant="ghost" className="w-full" disabled={loading} loading={spinning === "magicLink"} onClick={sendLink}>Recevoir un lien de connexion</Button>
-              : <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "magicLink"}>Recevoir un lien de connexion</Button>)}
+              : <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "magicLink"} aria-describedby={formHintId}>Recevoir un lien de connexion</Button>)}
+            {formHint && <p id={formHintId} className="text-center text-xs text-muted-foreground">{formHint}</p>}
           </form>
         )}
       </CardContent>

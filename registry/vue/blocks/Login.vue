@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue"
-import { computed, onBeforeUnmount, onMounted, ref, useId, watch } from "vue"
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from "vue"
 import { cn } from "@/lib/utils"
 import { Alert, AlertClose, AlertDescription } from "@/registry/vue/ui/alert"
 import { Button } from "@/registry/vue/ui/button"
@@ -18,7 +18,9 @@ const props = withDefaults(defineProps<{
   password?: boolean
   magicLink?: boolean
   /** SSO button; the #sso-icon slot renders before the label at 16px (a provider logo…). */
-  sso?: { label: string }
+  sso?: { label: string, hint?: string }
+  /** Help under the form's submit, tied to it (aria-describedby). */
+  formHint?: string
   /** Which method is the filled button: the form (default) or SSO. */
   primaryMethod?: "form" | "sso"
   status?: "idle" | "loading" | "sent"
@@ -48,6 +50,14 @@ const id = useId()
 const email = ref("")
 const secret = ref("")
 const loading = computed(() => props.status === "loading")
+// The sent screen replaces the form: move focus to its title so the change is announced.
+const sentTitleRef = ref<HTMLElement>()
+watch(() => props.status, async (status) => {
+  if (status !== "sent") return
+  await nextTick()
+  sentTitleRef.value?.focus()
+})
+
 // With SSO as the primary method, the form's submit steps down to outline.
 const formVariant = computed(() => props.primaryMethod === "sso" && props.sso ? "outline" : "default")
 const spinning = computed(() => loading.value ? (props.loadingAction ?? (props.password ? "password" : "magicLink")) : undefined)
@@ -87,7 +97,7 @@ function sendLink(event: MouseEvent) {
   <Card v-if="status === 'sent'" data-slot="login" :class="cn('w-full max-w-sm', props.class)">
     <CardHeader class="justify-items-center gap-3 text-center">
       <slot name="logo"><SaqaraLogo class="text-foreground" /></slot>
-      <h1 data-slot="card-title" :class="titleClass">{{ sentTitle }}</h1>
+      <h1 ref="sentTitleRef" tabindex="-1" data-slot="card-title" :class="cn(titleClass, 'outline-none')">{{ sentTitle }}</h1>
       <CardDescription>Un lien de connexion a été envoyé à <strong>{{ email || "votre adresse" }}</strong>.</CardDescription>
     </CardHeader>
     <CardContent v-if="error">
@@ -114,10 +124,12 @@ function sendLink(event: MouseEvent) {
         <AlertDescription>{{ error }}</AlertDescription>
         <AlertClose v-if="onErrorDismiss" @click="onErrorDismiss()" />
       </Alert>
-      <Button v-if="sso" :variant="primaryMethod === 'sso' ? 'default' : 'outline'" class="w-full" :disabled="loading" :loading="spinning === 'sso'" @click="onSso?.()">
+      <Button v-if="sso" :variant="primaryMethod === 'sso' ? 'default' : 'outline'" class="w-full" :disabled="loading" :loading="spinning === 'sso'"
+        :aria-describedby="sso.hint ? `${id}-sso-hint` : undefined" @click="onSso?.()">
         <span v-if="$slots['sso-icon'] && spinning !== 'sso'" aria-hidden="true" class="inline-flex size-4 shrink-0 items-center justify-center [&>*]:size-4"><slot name="sso-icon" /></span>
         {{ sso.label }}
       </Button>
+      <p v-if="sso?.hint" :id="`${id}-sso-hint`" class="-mt-2 text-center text-xs text-muted-foreground">{{ sso.hint }}</p>
       <div v-if="sso && (password || magicLink)" class="flex items-center gap-2 text-xs text-muted-foreground">
         <Separator class="flex-1" /><span>ou</span><Separator class="flex-1" />
       </div>
@@ -137,11 +149,12 @@ function sendLink(event: MouseEvent) {
           </div>
           <Input :id="`${id}-password`" v-model="secret" name="password" type="password" autocomplete="current-password" required :disabled="loading" />
         </div>
-        <Button v-if="password" type="submit" :variant="formVariant" class="w-full" :disabled="loading" :loading="spinning === 'password'">Se connecter</Button>
+        <Button v-if="password" type="submit" :variant="formVariant" :aria-describedby="formHint ? `${id}-form-hint` : undefined" class="w-full" :disabled="loading" :loading="spinning === 'password'">Se connecter</Button>
         <template v-if="magicLink">
           <Button v-if="password" type="button" variant="ghost" class="w-full" :disabled="loading" :loading="spinning === 'magicLink'" @click="sendLink">Recevoir un lien de connexion</Button>
-          <Button v-else type="submit" :variant="formVariant" class="w-full" :disabled="loading" :loading="spinning === 'magicLink'">Recevoir un lien de connexion</Button>
+          <Button v-else type="submit" :variant="formVariant" :aria-describedby="formHint ? `${id}-form-hint` : undefined" class="w-full" :disabled="loading" :loading="spinning === 'magicLink'">Recevoir un lien de connexion</Button>
         </template>
+        <p v-if="formHint" :id="`${id}-form-hint`" class="text-center text-xs text-muted-foreground">{{ formHint }}</p>
       </form>
     </CardContent>
   </Card>
