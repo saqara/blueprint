@@ -16,7 +16,10 @@ type LoginProps = {
   logo?: React.ReactNode
   password?: boolean
   magicLink?: boolean
-  sso?: { label: string }
+  /** SSO button; `icon` renders before the label at 16px (a provider logo…). */
+  sso?: { label: string; icon?: React.ReactNode }
+  /** Which method is the filled button: the form (default) or SSO. */
+  primaryMethod?: "form" | "sso"
   status?: "idle" | "loading" | "sent"
   /** Which button spins while `status` is "loading" (all controls stay locked). Default: the form's main method. */
   loadingAction?: "password" | "magicLink" | "sso"
@@ -42,7 +45,7 @@ const titleClass = "font-heading text-xl leading-none font-semibold"
 
 // Saqara block: presentational login. The app runs the auth and drives `status` / `error`.
 function Login({
-  title = "Connexion", description, logo, password = true, magicLink = false, sso, status = "idle", loadingAction, error,
+  title = "Connexion", description, logo, password = true, magicLink = false, sso, primaryMethod = "form", status = "idle", loadingAction, error,
   emailPlaceholder, emailHint, sentTitle = "Vérifiez votre boîte mail", resetLabel = "Utiliser une autre adresse", resendCooldown = 60,
   onPasswordSubmit, onMagicLinkSubmit, onSso, onForgotPassword, onReset, onResend, onErrorDismiss, className,
 }: LoginProps) {
@@ -97,6 +100,8 @@ function Login({
   }
 
   const hasForm = password || magicLink
+  // With SSO as the primary method, the form's submit steps down to outline.
+  const formVariant = primaryMethod === "sso" && sso ? "outline" : "default"
   const spinning = loading ? (loadingAction ?? (password ? "password" : "magicLink")) : undefined
   const sendLink = (event: React.MouseEvent<HTMLButtonElement>) => {
     const input = event.currentTarget.form?.elements.namedItem("email") as HTMLInputElement | null
@@ -113,7 +118,12 @@ function Login({
       </CardHeader>
       <CardContent className="grid gap-4">
         {errorAlert}
-        {sso && <Button variant="outline" className="w-full" disabled={loading} loading={spinning === "sso"} onClick={onSso}>{sso.label}</Button>}
+        {sso && (
+          <Button variant={primaryMethod === "sso" ? "default" : "outline"} className="w-full" disabled={loading} loading={spinning === "sso"} onClick={onSso}>
+            {sso.icon && spinning !== "sso" && <span aria-hidden="true" className="inline-flex size-4 shrink-0 items-center justify-center [&>*]:size-4">{sso.icon}</span>}
+            {sso.label}
+          </Button>
+        )}
         {sso && hasForm && (
           <div className="flex items-center gap-2 text-xs text-muted-foreground"><Separator className="flex-1" /><span>ou</span><Separator className="flex-1" /></div>
         )}
@@ -143,10 +153,10 @@ function Login({
                 <Input id={`${id}-password`} name="password" type="password" autoComplete="current-password" required disabled={loading} value={secret} onChange={(event) => setSecret(event.target.value)} />
               </div>
             )}
-            {password && <Button type="submit" className="w-full" disabled={loading} loading={spinning === "password"}>Se connecter</Button>}
+            {password && <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "password"}>Se connecter</Button>}
             {magicLink && (password
               ? <Button type="button" variant="ghost" className="w-full" disabled={loading} loading={spinning === "magicLink"} onClick={sendLink}>Recevoir un lien de connexion</Button>
-              : <Button type="submit" className="w-full" disabled={loading} loading={spinning === "magicLink"}>Recevoir un lien de connexion</Button>)}
+              : <Button type="submit" variant={formVariant} className="w-full" disabled={loading} loading={spinning === "magicLink"}>Recevoir un lien de connexion</Button>)}
           </form>
         )}
       </CardContent>
