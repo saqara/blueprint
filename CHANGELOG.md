@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-28 — `chart` : documenté (page « Utiliser avec une IA » et composant) — surcharge de la couleur des libellés d'axe par une classe sur `ChartContainer`, et ce que fait le clavier (flèches en React / Recharts, rien en Vue / unovis ; les actions par barre doivent exister hors du graphique). Un test garantit que la surcharge documentée fonctionne.
 - 2026-09-28 — `rating-grid` : sous `sm`, la table s'empile (une carte par critère, radios en liste verticale avec leur libellé, même DOM) ; `outOfScale` ajoute un choix hors échelle (« Non applicable ») après un séparateur.
 - 2026-09-28 — `data-table` : `DataTableColumnHeader thenBy` (clés de départage : un clic trie par la colonne puis par ces clés, dans le même sens ; le cycle `sortCycle` s'applique).
 - 2026-09-28 — `login` : texte d'aide par méthode relié par `aria-describedby` (`sso.hint`, `formHint`) ; à l'écran « lien envoyé », le focus va sur le titre de la carte (annoncé par les lecteurs d'écran).

@@ -38,6 +38,9 @@ function useChart() {
   return context
 }
 
+// Saqara: axis labels are muted by default; pass [&_.recharts-cartesian-axis-tick_text]:fill-foreground in
+// className to override. Keyboard: Recharts 3 makes the chart focusable and arrows move the active bar and
+// its tooltip, but a bar can't be activated from the keyboard — offer any per-bar action outside the chart too.
 function ChartContainer({
   id,
   className,

@@ -9,6 +9,8 @@ import ChartStyle from "./ChartStyle.vue"
 </script>
 
 <script setup lang="ts">
+// Saqara: axis labels are muted by default; pass [&_.tick_text]:!fill-foreground in class to override.
+// unovis has no keyboard navigation: offer any per-bar action outside the chart too (table, list, link).
 const props = defineProps<{
   id?: HTMLAttributes["id"]
   class?: HTMLAttributes["class"]
