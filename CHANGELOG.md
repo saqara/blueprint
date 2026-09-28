@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-28 — `tooltip` : un déclencheur désactivé (`asChild` sur un contrôle `disabled`) est enveloppé dans un `span` focalisable, le tooltip s'ouvre donc au survol et au focus. `slider` : `marks` (repères le long de la piste, avec libellé facultatif).
 - 2026-09-28 — CI : seul le build du HEAD de `main` publie le registry ; un run plus ancien qui finit en dernier ne peut plus écraser une version plus récente (c'est arrivé à `login` après #41 / #42).
 - 2026-09-28 — `login` : `primaryMethod` (`"form"` par défaut, `"sso"` fait du bouton SSO le bouton plein et passe le formulaire en `outline`) ; icône du bouton SSO (`sso.icon`, Vue : slot `#sso-icon`), 16 px avant le libellé.
 - 2026-09-28 — `autocomplete` : dans un `dialog`, Échap ferme d'abord la liste ; seule une deuxième pression ferme la modale. `switch` : piste non cochée en `muted-foreground/70` (≥ 3:1 sur le fond et les cartes, clair et sombre, WCAG 1.4.11 ; elle était à 1,26:1 en clair).

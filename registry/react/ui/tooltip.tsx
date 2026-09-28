@@ -28,10 +28,22 @@ function Tooltip({
   )
 }
 
+// Saqara: a disabled control gets no pointer events, so its tooltip would never open (e.g. "why is this
+// disabled?"). A disabled asChild child is wrapped in a focusable span that carries the trigger.
 function TooltipTrigger({
+  asChild,
+  children,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
+  const disabled = asChild && React.isValidElement<{ disabled?: boolean }>(children) && !!children.props.disabled
+  if (disabled) {
+    return (
+      <TooltipPrimitive.Trigger data-slot="tooltip-trigger" asChild {...props}>
+        <span tabIndex={0} className="inline-flex w-fit rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">{children}</span>
+      </TooltipPrimitive.Trigger>
+    )
+  }
+  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" asChild={asChild} {...props}>{children}</TooltipPrimitive.Trigger>
 }
 
 function TooltipContent({
