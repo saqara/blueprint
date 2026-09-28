@@ -41,6 +41,19 @@ function Autocomplete({
   const showList = open && enough && suggestions.length > 0
   const status = open && enough && suggestions.length === 0 && (loading ? loadingMessage : emptyMessage)
 
+  // Escape closes the list first. A dialog (Radix DismissableLayer) listens on the document in the
+  // capture phase, so the list listens one step earlier, on the window, while it is open.
+  React.useEffect(() => {
+    if (!showList) return
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return
+      event.stopPropagation()
+      setOpen(false)
+    }
+    window.addEventListener("keydown", onEscape, true)
+    return () => window.removeEventListener("keydown", onEscape, true)
+  }, [showList])
+
   const pick = (option: AutocompleteOption) => {
     onSelect?.(option)
     setOpen(false)

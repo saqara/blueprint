@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue"
 import type { AutocompleteOption } from "./utils"
-import { computed, ref, useId } from "vue"
+import { computed, onBeforeUnmount, ref, useId, watch } from "vue"
 import { cn } from "@/lib/utils"
 import { Input } from "@/registry/vue/ui/input"
 import { Spinner } from "@/registry/vue/ui/spinner"
@@ -34,6 +34,19 @@ const enough = computed(() => value.value.trim().length >= props.minChars)
 // The previous suggestions stay visible while the next search runs (spinner in the field).
 const showList = computed(() => open.value && enough.value && props.suggestions.length > 0)
 const status = computed(() => open.value && enough.value && props.suggestions.length === 0 ? (props.loading ? props.loadingMessage : props.emptyMessage) ?? "" : "")
+
+// Escape closes the list first. A dialog (reka DismissableLayer) listens on the document, so the list
+// listens one step earlier, on the window in the capture phase, while it is open.
+function onEscape(event: KeyboardEvent) {
+  if (event.key !== "Escape") return
+  event.stopPropagation()
+  open.value = false
+}
+watch(showList, (shown) => {
+  if (shown) window.addEventListener("keydown", onEscape, true)
+  else window.removeEventListener("keydown", onEscape, true)
+})
+onBeforeUnmount(() => window.removeEventListener("keydown", onEscape, true))
 
 function pick(option: AutocompleteOption) {
   props.onSelect?.(option)
