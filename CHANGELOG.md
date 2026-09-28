@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-28 — `rating-grid` : sous `sm`, la table s'empile (une carte par critère, radios en liste verticale avec leur libellé, même DOM) ; `outOfScale` ajoute un choix hors échelle (« Non applicable ») après un séparateur.
 - 2026-09-28 — `data-table` : `DataTableColumnHeader thenBy` (clés de départage : un clic trie par la colonne puis par ces clés, dans le même sens ; le cycle `sortCycle` s'applique).
 - 2026-09-28 — `login` : texte d'aide par méthode relié par `aria-describedby` (`sso.hint`, `formHint`) ; à l'écran « lien envoyé », le focus va sur le titre de la carte (annoncé par les lecteurs d'écran).
 - 2026-09-28 — `tooltip` : un déclencheur désactivé (`asChild` sur un contrôle `disabled`) est enveloppé dans un `span` focalisable, le tooltip s'ouvre donc au survol et au focus. `slider` : `marks` (repères le long de la piste, avec libellé facultatif).

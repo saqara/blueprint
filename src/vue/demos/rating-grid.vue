@@ -12,6 +12,7 @@ const value = ref<Record<string, string>>({ delais: "4" })
 
 <template>
   <div class="w-full max-w-2xl">
-    <RatingGrid v-model:value="value" caption="Évaluation qualité — Bâti Sud SAS" :criteria="criteria" />
+    <RatingGrid v-model:value="value" caption="Évaluation qualité — Bâti Sud SAS" :criteria="criteria"
+      :out-of-scale="{ value: 'na', label: 'Non applicable' }" />
   </div>
 </template>

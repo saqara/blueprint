@@ -28,6 +28,8 @@ type RatingGridProps = {
   renderCriterion?: (criterion: RatingCriterion) => React.ReactNode
   /** Custom column header (e.g. a coloured digit above the label). */
   renderLevel?: (level: RatingLevel) => React.ReactNode
+  /** An extra choice outside the scale ("Non applicable"), after a separator. */
+  outOfScale?: RatingLevel
   className?: string
 }
 
@@ -37,16 +39,22 @@ const radio =
 
 // Saqara: Likert / rating grid — one row per criterion, one native radio group per row (arrows move
 // within a row, Tab moves between rows), inside a real table (no role overrides).
-function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, caption, name, disabled = false, readOnly = false, getRowProps, renderCriterion, renderLevel, className }: RatingGridProps) {
+function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, caption, name, disabled = false, readOnly = false, getRowProps, renderCriterion, renderLevel, outOfScale, className }: RatingGridProps) {
   const id = React.useId()
   const prefix = name ?? `rating-${id}`
+  const levels = outOfScale ? [...scale, outOfScale] : scale
+  // Below sm the same table restacks (one card per criterion, radios listed vertically with a visible
+  // label): one DOM, so the native radio groups never get duplicated.
   return (
-    <Table data-slot="rating-grid" className={className}>
+    <div data-slot="rating-grid" className={cn("sm:overflow-x-auto sm:rounded-md sm:border max-sm:[&_thead]:hidden max-sm:[&_table]:block max-sm:[&_tbody]:grid max-sm:[&_tbody]:gap-3 max-sm:[&_tr]:grid max-sm:[&_tr]:gap-1 max-sm:[&_tr]:rounded-md max-sm:[&_tr]:border! max-sm:[&_tr]:p-3 max-sm:[&_td]:p-1 max-sm:[&_td]:text-left max-sm:[&_caption]:block", className)}>
+    <Table container={false}>
       {caption && <TableCaption className="mt-0 mb-1 caption-top px-2 pt-3 text-left font-medium text-foreground">{caption}</TableCaption>}
       <TableHeader>
         <TableRow>
           <TableHead>Critère</TableHead>
-          {scale.map((level) => <TableHead key={level.value} className="text-center">{renderLevel ? renderLevel(level) : level.label}</TableHead>)}
+          {levels.map((level) => (
+            <TableHead key={level.value} className={cn("text-center", level === outOfScale && "border-l")}>{renderLevel ? renderLevel(level) : level.label}</TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -60,8 +68,9 @@ function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, capt
                 </>
               )}
             </TableCell>
-            {scale.map((level) => (
-              <TableCell key={level.value} className="text-center">
+            {levels.map((level) => (
+              <TableCell key={level.value} className={cn("text-center", level === outOfScale && "sm:border-l max-sm:mt-1 max-sm:border-t max-sm:pt-2")}>
+                <label className="inline-flex items-center gap-2 max-sm:w-full">
                 <input
                   type="radio"
                   name={`${prefix}-${criterion.id}`}
@@ -72,12 +81,15 @@ function RatingGrid({ criteria, scale = defaultScale, value, onValueChange, capt
                   className={cn(radio, "align-middle", readOnly && "disabled:cursor-default disabled:opacity-100")}
                   onChange={() => onValueChange?.({ ...value, [criterion.id]: level.value })}
                 />
+                <span aria-hidden="true" className="text-sm sm:hidden">{level.label}</span>
+                </label>
               </TableCell>
             ))}
           </TableRow>
         ))}
       </TableBody>
     </Table>
+    </div>
   )
 }
 
