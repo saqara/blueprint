@@ -11,7 +11,8 @@ export default function RatingGridDemo() {
   const [value, setValue] = useState<Record<string, string>>({ delais: "4" })
   return (
     <div className="w-full max-w-2xl">
-      <RatingGrid caption="Évaluation qualité — Bâti Sud SAS" criteria={criteria} value={value} onValueChange={setValue} />
+      <RatingGrid caption="Évaluation qualité — Bâti Sud SAS" criteria={criteria} value={value} onValueChange={setValue}
+        outOfScale={{ value: "na", label: "Non applicable" }} />
     </div>
   )
 }

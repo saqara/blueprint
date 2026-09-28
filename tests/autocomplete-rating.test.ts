@@ -116,3 +116,27 @@ describe.each(["react", "vue"] as const)("%s rating-grid follow-ups", (fw) => {
   })
 })
 
+
+describe.each(["react", "vue"] as const)("%s rating-grid stacked and out-of-scale", (fw) => {
+  const criteria = [{ id: "delais", label: "Respect des délais" }]
+  it("adds an out-of-scale column after a separator", async () => {
+    const onValueChange = vi.fn()
+    const run = await mounts[fw]("grid", { criteria, value: {}, onValueChange, "onUpdate:value": onValueChange, outOfScale: { value: "na", label: "Non applicable" } })
+    const radios = [...document.querySelectorAll<HTMLInputElement>("input[type=radio]")]
+    expect(radios).toHaveLength(7)
+    const na = radios.find((r) => r.value === "na")!
+    expect(na.getAttribute("aria-label")).toBe("Respect des délais : Non applicable")
+    expect(na.closest("td")!.className).toContain("sm:border-l")
+    await run(() => na.click())
+    expect(onValueChange).toHaveBeenLastCalledWith({ delais: "na" })
+  })
+  it("stacks below sm: one card per criterion, a visible label beside each radio", async () => {
+    await mounts[fw]("grid", { criteria, value: {} })
+    const root = document.querySelector<HTMLElement>("[data-slot=rating-grid]")!
+    expect(root.className).toContain("max-sm:[&_thead]:hidden")
+    expect(root.className).toContain("max-sm:[&_tr]:grid")
+    const cellLabel = document.querySelector<HTMLElement>("td label span")!
+    expect(cellLabel.className).toContain("sm:hidden")
+    expect(cellLabel.textContent).toBe("0")
+  })
+})
