@@ -8,6 +8,7 @@ const RULES = `## Design system : Saqara Blueprint
 - Couleurs : uniquement les tokens du thème (\`bg-primary\`, \`text-muted-foreground\`, \`bg-success\`…), jamais de hex.
 - Texte coloré (statuts, scores) : \`text-success-text\`, \`text-warning-text\`, \`text-info-text\`, \`text-identity-text\`, \`text-destructive-text\` — lisibles sur le fond, la carte et la teinte \`bg-X/10\`. Jamais \`text-success\` ou \`text-warning\` pour du texte : ces tokens servent aux fonds et aux icônes.
 - Textes d'interface en français.
+- \`chart\` : libellés d'axe non atténués via une classe sur \`ChartContainer\` (\`[&_.recharts-cartesian-axis-tick_text]:fill-foreground\` en React, \`[&_.tick_text]:!fill-foreground\` en Vue). Au clavier, Recharts (React) rend le graphique focalisable et les flèches déplacent la barre active et son tooltip ; il n'y a pas d'activation au clavier d'une barre (ni de navigation en Vue / unovis) : toute action par barre doit aussi exister hors du graphique (tableau, liste, lien).
 - \`select\` : aucun item à valeur vide (Radix l'interdit). Pour « Tous », une valeur sentinelle (\`"all"\`) que l'app traduit ; pour revenir au placeholder, \`value=""\`.
 - Tout contrôle sans \`<Label>\` visible (\`SelectTrigger\`, \`Switch\`, \`Checkbox\`, \`multi-select\` via \`triggerProps\`) reçoit un \`aria-label\`.
 - Formulaire verrouillé (« Modifier » pour éditer) : \`readOnly\` sur \`input\` / \`textarea\` / \`SelectTrigger\`, pas \`disabled\` (\`disabled\` = indisponible, valeur atténuée).
