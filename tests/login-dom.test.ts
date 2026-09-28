@@ -45,3 +45,32 @@ describe.each([
     expect(resend().textContent).toMatch(/dans 3\s*s/)
   })
 })
+
+describe.each([
+  ["react", async () => {
+    const root = createRoot(document.body.appendChild(document.createElement("div")))
+    const render = (status: string) => act(async () => root.render(e(RLogin as any, { password: false, magicLink: true, status })))
+    await render("idle")
+    cleanups.push(() => act(async () => root.unmount()))
+    return render
+  }],
+  ["vue", async () => {
+    const { ref } = await import("vue")
+    const status = ref("idle")
+    const app = createApp({ render: () => h(VLogin as any, { password: false, magicLink: true, status: status.value }) })
+    app.mount(document.body.appendChild(document.createElement("div")))
+    cleanups.push(() => app.unmount())
+    await nextTick()
+    return async (s: string) => { status.value = s; await nextTick(); await nextTick() }
+  }],
+])("%s login sent state", (_, mount) => {
+  it("moves focus to the card title when the link is sent", async () => {
+    vi.useRealTimers()
+    const set = await mount()
+    await set("sent")
+    const title = document.querySelector("h1")!
+    expect(title.textContent).toContain("Vérifiez votre boîte mail")
+    expect(document.activeElement).toBe(title)
+    expect(title.getAttribute("tabindex")).toBe("-1")
+  })
+})
