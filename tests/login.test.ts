@@ -119,3 +119,14 @@ describe.each([
     described(html, "Recevoir un lien de connexion", "Pour les fournisseurs\\.")
   })
 })
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RLogin as any, { ...p, sentHelp: e("p", null, "Pensez à vérifier vos courriers indésirables.") }))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VLogin as any, p, { "sent-help": () => h("p", "Pensez à vérifier vos courriers indésirables.") }) }))],
+])("%s login sent help", (_, render) => {
+  it("shows extra help inside the sent card", async () => {
+    const html = await render({ password: false, magicLink: true, status: "sent" })
+    expect(html).toMatch(/data-slot="login"[\s\S]*Vérifiez votre boîte mail[\s\S]*Pensez à vérifier vos courriers indésirables\./)
+  })
+})
+

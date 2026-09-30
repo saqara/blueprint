@@ -173,3 +173,20 @@ describe.each([
     expect(html).toContain('data-sidebar="trigger"')
   })
 })
+
+describe.each([
+  ["react", async (p: Record<string, unknown>) => renderToString(e(RHeader as any, p, "Contenu"))],
+  ["vue", async (p: Record<string, unknown>) => renderVue(createSSRApp({ render: () => h(VHeader as any, p, { default: () => "Contenu" }) }))],
+])("%s app-shell-header badges and skip link", (_, render) => {
+  const badges = (html: string) => [...html.matchAll(/data-slot="badge"[^>]*data-variant="([^"]+)"|data-variant="([^"]+)"[^>]*data-slot="badge"/g)].map((m) => m[1] ?? m[2])
+  it("uses a badge variant from the item, else the shell default", async () => {
+    const items = [{ id: "a", label: "Évaluations", badge: 3 }, { id: "b", label: "Relances", badge: 1, badgeVariant: "info" }]
+    expect(badges(await render({ nav: items }))).toEqual(["identity", "info"])
+    expect(badges(await render({ nav: items, badgeVariant: "secondary" }))).toEqual(["secondary", "info"])
+  })
+  it("starts with a skip link to the main content", async () => {
+    const html = await render({ nav: [{ id: "a", label: "Accueil" }], mainId: "contenu-principal" })
+    expect(html).toMatch(/^(<!--[^>]*-->)*<div[^>]*data-slot="app-shell-header"[^>]*>(<!--[^>]*-->)*<a[^>]*href="#contenu-principal"[^>]*>(<!--[^>]*-->)*Aller au contenu/)
+    expect(html).toMatch(/<main[^>]*id="contenu-principal"[^>]*tabindex="-1"|<main[^>]*tabindex="-1"[^>]*id="contenu-principal"/)
+  })
+})
