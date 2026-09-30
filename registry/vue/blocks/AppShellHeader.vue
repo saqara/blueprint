@@ -1,7 +1,9 @@
 <script lang="ts">
 import type { Component } from "vue"
 
-export type AppNavItem = { id: string; label: string; icon?: Component; badge?: number; badgeLabel?: string; href?: string }
+export type AppNavItem = { id: string; label: string; icon?: Component; badge?: number; badgeLabel?: string; badgeVariant?: NavBadgeVariant; href?: string }
+/** A count is information, not an alert: identity (brand red) by default, info or secondary for neutral counts. */
+export type NavBadgeVariant = "identity" | "info" | "secondary"
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 </script>
 
@@ -24,11 +26,16 @@ const props = withDefaults(defineProps<{
   title?: string
   user?: AppUser
   menuLabel?: string
+  /** Default variant of the nav badges (an item's badgeVariant wins). */
+  badgeVariant?: NavBadgeVariant
+  /** id of <main>, target of the built-in skip link. */
+  mainId?: string
+  skipLinkLabel?: string
   onNavigate?: (id: string) => void
   onSignOut?: () => void
   signOutLabel?: string
   class?: HTMLAttributes["class"]
-}>(), { menuLabel: "Menu" })
+}>(), { menuLabel: "Menu", badgeVariant: "identity", mainId: "contenu", skipLinkLabel: "Aller au contenu" })
 const theme = defineModel<"light" | "dark">("theme")
 const open = ref(false)
 const active = computed(() => props.nav.find((item) => item.id === props.activeId))
@@ -36,6 +43,10 @@ const active = computed(() => props.nav.find((item) => item.id === props.activeI
 const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0"
 const entryClass = (item: AppNavItem, mobile: boolean) =>
   cn(entryBase, item.id === props.activeId && "bg-primary/10 text-identity-text hover:bg-primary/10 hover:text-identity-text", mobile && "w-full justify-start")
+
+function skipToMain() {
+  document.getElementById(props.mainId)?.focus()
+}
 
 function go(event: Event, id: string) {
   open.value = false
@@ -47,6 +58,8 @@ function go(event: Event, id: string) {
 
 <template>
   <div data-slot="app-shell-header" :class="cn('flex min-h-svh flex-col bg-background', props.class)">
+    <!-- Skip link: moves focus to the main region without touching the URL (works with hash routers too). -->
+    <a :href="`#${mainId}`" class="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium shadow-md outline-none focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus-visible:ring-[3px] focus-visible:ring-ring/50" @click.prevent="skipToMain">{{ skipLinkLabel }}</a>
     <header class="sticky top-0 z-40 border-b border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div class="flex h-16 items-center gap-4 px-4 sm:px-6">
         <div class="flex shrink-0 items-center gap-2"><slot name="logo"><SaqaraLogo with-text /></slot><slot name="product" /></div>
@@ -62,7 +75,7 @@ function go(event: Event, id: string) {
             <component :is="item.icon" v-if="item.icon" />
             {{ item.label }}
             <template v-if="item.badge">
-              <Badge variant="identity" aria-hidden="true" class="ml-1 h-5 min-w-5 px-1">{{ item.badge }}</Badge>
+              <Badge :variant="item.badgeVariant ?? badgeVariant" aria-hidden="true" class="ml-1 h-5 min-w-5 px-1">{{ item.badge }}</Badge>
               <span class="sr-only">{{ item.badgeLabel ?? `${item.badge} en attente` }}</span>
             </template>
           </component>
@@ -88,7 +101,7 @@ function go(event: Event, id: string) {
                   <component :is="item.icon" v-if="item.icon" />
                   {{ item.label }}
                   <template v-if="item.badge">
-              <Badge variant="identity" aria-hidden="true" class="ml-1 h-5 min-w-5 px-1">{{ item.badge }}</Badge>
+              <Badge :variant="item.badgeVariant ?? badgeVariant" aria-hidden="true" class="ml-1 h-5 min-w-5 px-1">{{ item.badge }}</Badge>
               <span class="sr-only">{{ item.badgeLabel ?? `${item.badge} en attente` }}</span>
             </template>
                 </component>
@@ -98,6 +111,6 @@ function go(event: Event, id: string) {
         </div>
       </div>
     </header>
-    <main class="flex-1 p-4 sm:p-6"><slot /></main>
+    <main :id="mainId" tabindex="-1" class="flex-1 p-4 outline-none sm:p-6"><slot /></main>
   </div>
 </template>

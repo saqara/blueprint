@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-09-30 — `app-shell-header` : variante des badges de compteur (`badgeVariant` global ou par entrée : `identity` par défaut, `info`, `secondary`) ; lien d'évitement « Aller au contenu » intégré (premier élément, visible au focus, compatible routeur à hash) et `id` sur `<main>` (`mainId`, `"contenu"` par défaut, libellé `skipLinkLabel`). `login` : `sentHelp` (Vue : slot `#sent-help`), texte d'aide sous le titre de la carte « lien envoyé ». `badge` (Vue) : expose `data-variant` comme en React.
 - 2026-09-28 — `chart` : documenté (page « Utiliser avec une IA » et composant) — surcharge de la couleur des libellés d'axe par une classe sur `ChartContainer`, et ce que fait le clavier (flèches en React / Recharts, rien en Vue / unovis ; les actions par barre doivent exister hors du graphique). Un test garantit que la surcharge documentée fonctionne.
 - 2026-09-28 — `rating-grid` : sous `sm`, la table s'empile (une carte par critère, radios en liste verticale avec leur libellé, même DOM) ; `outOfScale` ajoute un choix hors échelle (« Non applicable ») après un séparateur.
 - 2026-09-28 — `data-table` : `DataTableColumnHeader thenBy` (clés de départage : un clic trie par la colonne puis par ces clés, dans le même sens ; le cycle `sortCycle` s'applique).

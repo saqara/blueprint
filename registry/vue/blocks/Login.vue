@@ -100,6 +100,8 @@ function sendLink(event: MouseEvent) {
       <h1 ref="sentTitleRef" tabindex="-1" data-slot="card-title" :class="cn(titleClass, 'outline-none')">{{ sentTitle }}</h1>
       <CardDescription>Un lien de connexion a été envoyé à <strong>{{ email || "votre adresse" }}</strong>.</CardDescription>
     </CardHeader>
+    <!-- #sent-help: extra help inside the "sent" card (spam folder, delay…). -->
+    <CardContent v-if="$slots['sent-help']" class="text-center text-sm text-muted-foreground"><slot name="sent-help" /></CardContent>
     <CardContent v-if="error">
       <Alert variant="destructive" role="alert">
         <AlertDescription>{{ error }}</AlertDescription>

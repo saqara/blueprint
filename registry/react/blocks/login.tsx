@@ -30,6 +30,8 @@ type LoginProps = {
   emailHint?: React.ReactNode
   sentTitle?: React.ReactNode
   resetLabel?: string
+  /** Extra help inside the "sent" card (spam folder, delay…). */
+  sentHelp?: React.ReactNode
   /** Seconds before the link can be resent, restarted after each resend. */
   resendCooldown?: number
   onPasswordSubmit?: (values: { email: string; password: string }) => void
@@ -48,7 +50,7 @@ const titleClass = "font-heading text-xl leading-none font-semibold"
 // Saqara block: presentational login. The app runs the auth and drives `status` / `error`.
 function Login({
   title = "Connexion", description, logo, password = true, magicLink = false, sso, primaryMethod = "form", formHint, status = "idle", loadingAction, error,
-  emailPlaceholder, emailHint, sentTitle = "Vérifiez votre boîte mail", resetLabel = "Utiliser une autre adresse", resendCooldown = 60,
+  emailPlaceholder, emailHint, sentTitle = "Vérifiez votre boîte mail", resetLabel = "Utiliser une autre adresse", sentHelp, resendCooldown = 60,
   onPasswordSubmit, onMagicLinkSubmit, onSso, onForgotPassword, onReset, onResend, onErrorDismiss, className,
 }: LoginProps) {
   const id = React.useId()
@@ -90,6 +92,7 @@ function Login({
           <h1 ref={sentTitleRef} tabIndex={-1} data-slot="card-title" className={cn(titleClass, "outline-none")}>{sentTitle}</h1>
           <CardDescription>Un lien de connexion a été envoyé à <strong>{email || "votre adresse"}</strong>.</CardDescription>
         </CardHeader>
+        {sentHelp && <CardContent className="text-center text-sm text-muted-foreground">{sentHelp}</CardContent>}
         {errorAlert && <CardContent>{errorAlert}</CardContent>}
         {(onResend || onReset) && (
           <CardFooter className="grid gap-2">
