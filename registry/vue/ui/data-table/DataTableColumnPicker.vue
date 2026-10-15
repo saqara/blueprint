@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { ColumnVisibilityState } from "@tanstack/vue-table"
+import type { ColumnDef, ColumnVisibilityState } from "@tanstack/vue-table"
 import { Columns3 } from "@lucide/vue"
 import { computed } from "vue"
 import { Button } from "@/registry/vue/ui/button"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/registry/vue/ui/dropdown-menu"
-import { columnId, columnLabel, type LabelledColumnDef } from "./utils"
+import { columnId, columnLabel, type DataTableFeatures, leafDefs, type LabelledColumnDef } from "./utils"
 
 // Show or hide columns, beside the table (a toolbar): one checkbox per column that can be hidden
 // (`enableHiding: false` keeps a column out of the list). Pass the table's `columns` and the same
@@ -13,7 +13,8 @@ import { columnId, columnLabel, type LabelledColumnDef } from "./utils"
 // Attributes (data-testid, class…) go to the trigger button.
 defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<{
-  columns: LabelledColumnDef[]
+  // Columns mix value types, hence `any` (same as DataTable).
+  columns: ColumnDef<DataTableFeatures, any, any>[]
   columnVisibility?: ColumnVisibilityState
   onReset?: () => void
   label?: string
@@ -24,12 +25,13 @@ const props = withDefaults(defineProps<{
   resetLabel: "Réinitialiser les colonnes",
 })
 const emit = defineEmits<{ "update:columnVisibility": [columnVisibility: ColumnVisibilityState] }>()
-const hideable = computed(() => props.columns.flatMap((def) => {
+const leaves = computed(() => leafDefs(props.columns as LabelledColumnDef[]))
+const hideable = computed(() => leaves.value.flatMap((def) => {
   const id = columnId(def)
   return id && def.enableHiding !== false ? [{ id, label: columnLabel(def, id) }] : []
 }))
 // The last visible column stays: a table with no column at all would be broken.
-const visibleCount = computed(() => props.columns.filter(def => def.enableHiding === false || props.columnVisibility[columnId(def) ?? ""] !== false).length)
+const visibleCount = computed(() => leaves.value.filter(def => def.enableHiding === false || props.columnVisibility[columnId(def) ?? ""] !== false).length)
 const toggle = (id: string, checked: boolean) => emit("update:columnVisibility", { ...props.columnVisibility, [id]: checked })
 </script>
 

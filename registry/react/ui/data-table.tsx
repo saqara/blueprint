@@ -42,12 +42,16 @@ const metaClass = (meta: unknown) => (meta as { className?: string } | undefined
 // `meta.reorderable: false` keeps a column in place (first or last column…); every other column can move.
 const reorderable = (meta: unknown) => (meta as { reorderable?: boolean } | undefined)?.reorderable !== false
 
-type LabelledColumnDef = { id?: string; accessorKey?: unknown; header?: unknown; meta?: unknown }
+type LabelledColumnDef = { id?: string; accessorKey?: unknown; header?: unknown; meta?: unknown; enableHiding?: boolean; columns?: LabelledColumnDef[] }
 // The column's plain-text name (move handle, column picker): `meta.label`, else a string header, else its id.
 export function columnLabel(def: LabelledColumnDef, id: string): string {
   return (def.meta as { label?: string } | undefined)?.label ?? (typeof def.header === "string" ? def.header : id)
 }
-const columnId = (def: LabelledColumnDef) => def.id ?? (typeof def.accessorKey === "string" ? def.accessorKey : undefined)
+// The id TanStack gives the column: `id`, else `accessorKey` (dots become underscores), else a string header.
+const columnId = (def: LabelledColumnDef) =>
+  def.id ?? (def.accessorKey === undefined ? undefined : String(def.accessorKey).replaceAll(".", "_")) ?? (typeof def.header === "string" ? def.header : undefined)
+// Grouped definitions (`columns: [...]`) down to the columns that render cells.
+const leafDefs = (defs: LabelledColumnDef[]): LabelledColumnDef[] => defs.flatMap((def) => (def.columns ? leafDefs(def.columns) : [def]))
 
 /**
  * `id` takes `target`'s place: after it when moving right, before it when moving left. A move that would
@@ -118,7 +122,7 @@ function DataTable<TData extends RowData>({
   onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, stickyScrollbar = false, dragToScroll = false, className, children,
 }: DataTableProps<TData>) {
   // TanStack would hide a column that `enableHiding: false` should keep visible (a stale stored layout…).
-  const alwaysVisible = new Set(columns.flatMap((def) => (def.enableHiding === false ? [columnId(def as LabelledColumnDef)] : [])))
+  const alwaysVisible = new Set(leafDefs(columns as LabelledColumnDef[]).flatMap((def) => (def.enableHiding === false ? [columnId(def)] : [])))
   const columnVisibility = Object.fromEntries(Object.entries(requestedVisibility).filter(([id]) => !alwaysVisible.has(id)))
   const table = useTable({
     features: dataTableFeatures,
@@ -169,7 +173,8 @@ function DataTable<TData extends RowData>({
     const next = move(id, neighbour.id)
     if (next) focusAfterMove.current = { id, order: next.join() }
   }
-  const movable = (column: Column<DataTableFeatures, TData, unknown>) => columnOrder !== undefined && reorderable(column.columnDef.meta)
+  // Leaf columns only: a group header's id is not in the order.
+  const movable = (column: Column<DataTableFeatures, TData, unknown>) => columnOrder !== undefined && column.columns.length === 0 && reorderable(column.columnDef.meta)
   const dropProps = (id: string): React.ComponentProps<"th"> => ({
     onDragOver: (event) => {
       if (!dragging.current || dragging.current === id) return
@@ -339,12 +344,13 @@ function DataTableColumnPicker<TData extends RowData>({ columns, columnVisibilit
   label?: string
   resetLabel?: string
 } & Omit<React.ComponentProps<typeof Button>, "children">) {
-  const hideable = columns.flatMap((def) => {
-    const id = columnId(def as LabelledColumnDef)
-    return id && def.enableHiding !== false ? [{ id, label: columnLabel(def as LabelledColumnDef, id) }] : []
+  const leaves = leafDefs(columns as LabelledColumnDef[])
+  const hideable = leaves.flatMap((def) => {
+    const id = columnId(def)
+    return id && def.enableHiding !== false ? [{ id, label: columnLabel(def, id) }] : []
   })
   // The last visible column stays: a table with no column at all would be broken.
-  const visibleCount = columns.filter((def) => def.enableHiding === false || columnVisibility[columnId(def as LabelledColumnDef) ?? ""] !== false).length
+  const visibleCount = leaves.filter((def) => def.enableHiding === false || columnVisibility[columnId(def) ?? ""] !== false).length
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

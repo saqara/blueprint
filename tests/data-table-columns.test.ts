@@ -165,6 +165,18 @@ describe.each([["react", mountReact], ["vue", mountVue]] as const)("%s data-tabl
     expect(document.activeElement?.tagName).toBe("INPUT")
   })
 
+  it("offers handles on leaf columns only, never on a group header", async () => {
+    const grouped = [columns[0], { id: "group", header: "Notes", columns: [columns[1], columns[2]] }, columns[3]]
+    await mount({ columns: grouped, columnOrder: ["a", "b", "c", "d"] })
+    expect([...document.querySelectorAll<HTMLElement>("[data-column-handle]")].map((b) => b.dataset.columnHandle)).toEqual(["b", "c"])
+  })
+
+  it("keeps a nested column that cannot be hidden visible", async () => {
+    const grouped = [{ id: "group", header: "Tout", columns: columns }]
+    await mount({ columns: grouped, columnVisibility: { a: false, c: false } })
+    expect(headers().slice(-3)).toEqual(["Raison sociale", "Ville", "Actions"])
+  })
+
   it("does not start the drag-to-scroll from a handle", async () => {
     const capture = vi.spyOn(HTMLElement.prototype, "setPointerCapture").mockImplementation(() => {})
     const { run } = await mount({ columnOrder: ["a", "b", "c", "d"], dragToScroll: true })
@@ -224,6 +236,20 @@ describe.each([["react", mountReactPicker], ["vue", mountVuePicker]] as const)("
     expect(items().map((i) => i.getAttribute("aria-checked"))).toEqual(["true", "false", "true"])
     await run(() => items()[1].click())
     expect(visibility).toHaveBeenLastCalledWith({ c: true })
+  })
+
+  it("lists nested columns, with the ids TanStack gives them", async () => {
+    const nested = [{ id: "group", header: "Tout", columns: [
+      { accessorKey: "address.city", header: "Ville" },
+      { accessorFn: (row: Row) => row.c, header: "Note" },
+    ] }]
+    const { visibility, run } = await mount({ columns: nested, columnVisibility: {} })
+    await open(run)
+    expect(items().map((i) => i.textContent?.trim())).toEqual(["Ville", "Note"])
+    await run(() => items()[0].click())
+    expect(visibility).toHaveBeenLastCalledWith({ address_city: false })
+    await run(() => items()[1].click())
+    expect(visibility).toHaveBeenLastCalledWith({ Note: false })
   })
 
   it("never lets the last visible column be hidden", async () => {

@@ -9,7 +9,7 @@ import { Button } from "@/registry/vue/ui/button"
 import { HorizontalScroll } from "@/registry/vue/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/vue/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/vue/ui/table"
-import { ariaSort, columnId, columnLabel, dataTableFeatures, fromControl, metaClass, moveColumn, reorderable, resolveUpdater, stickyCell, type DataTableFeatures, type LabelledColumnDef } from "./utils"
+import { ariaSort, columnId, columnLabel, dataTableFeatures, leafDefs, fromControl, metaClass, moveColumn, reorderable, resolveUpdater, stickyCell, type DataTableFeatures, type LabelledColumnDef } from "./utils"
 
 // Saqara: sorting is always controlled — the page sorts (server or client) and passes `sorting` back (v-model:sorting).
 const props = withDefaults(defineProps<{
@@ -74,7 +74,7 @@ const emit = defineEmits<{
 
 // TanStack would hide a column that `enableHiding: false` should keep visible (a stale stored layout…).
 const columnVisibility = computed(() => {
-  const alwaysVisible = new Set(props.columns.flatMap(def => (def.enableHiding === false ? [columnId(def as LabelledColumnDef)] : [])))
+  const alwaysVisible = new Set(leafDefs(props.columns as LabelledColumnDef[]).flatMap(def => (def.enableHiding === false ? [columnId(def)] : [])))
   return Object.fromEntries(Object.entries(props.columnVisibility).filter(([id]) => !alwaysVisible.has(id)))
 })
 const table = useTable({
@@ -107,7 +107,8 @@ const announcement = ref("")
 let dragging: string | null = null
 let focusAfterMove: { id: string, order: string } | null = null
 const label = (column: AnyColumn) => columnLabel(column.columnDef as LabelledColumnDef, column.id)
-const movable = (column: AnyColumn) => props.columnOrder !== undefined && reorderable(column.columnDef.meta)
+// Leaf columns only: a group header's id is not in the order.
+const movable = (column: AnyColumn) => props.columnOrder !== undefined && column.columns.length === 0 && reorderable(column.columnDef.meta)
 function move(id: string, target: string) {
   const order = props.columnOrder ?? []
   const ids = table.getAllLeafColumns().map(column => column.id)

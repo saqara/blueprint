@@ -34,12 +34,17 @@ export const metaClass = (meta: unknown) => (meta as { className?: string } | un
 // `meta.reorderable: false` keeps a column in place (first or last column…); every other column can move.
 export const reorderable = (meta: unknown) => (meta as { reorderable?: boolean } | undefined)?.reorderable !== false
 
-export type LabelledColumnDef = { id?: string, accessorKey?: unknown, header?: unknown, meta?: unknown, enableHiding?: boolean }
+export type LabelledColumnDef = { id?: string, accessorKey?: unknown, header?: unknown, meta?: unknown, enableHiding?: boolean, columns?: LabelledColumnDef[] }
 // The column's plain-text name (move handle, column picker): `meta.label`, else a string header, else its id.
 export function columnLabel(def: LabelledColumnDef, id: string): string {
   return (def.meta as { label?: string } | undefined)?.label ?? (typeof def.header === "string" ? def.header : id)
 }
-export const columnId = (def: LabelledColumnDef) => def.id ?? (typeof def.accessorKey === "string" ? def.accessorKey : undefined)
+// The id TanStack gives the column: `id`, else `accessorKey` (dots become underscores), else a string header.
+export function columnId(def: LabelledColumnDef): string | undefined {
+  return def.id ?? (def.accessorKey === undefined ? undefined : String(def.accessorKey).replaceAll(".", "_")) ?? (typeof def.header === "string" ? def.header : undefined)
+}
+// Grouped definitions (`columns: [...]`) down to the columns that render cells.
+export const leafDefs = (defs: LabelledColumnDef[]): LabelledColumnDef[] => defs.flatMap(def => (def.columns ? leafDefs(def.columns) : [def]))
 
 /**
  * `id` takes `target`'s place: after it when moving right, before it when moving left. A move that would
