@@ -28,6 +28,8 @@ const hideable = computed(() => props.columns.flatMap((def) => {
   const id = columnId(def)
   return id && def.enableHiding !== false ? [{ id, label: columnLabel(def, id) }] : []
 }))
+// The last visible column stays: a table with no column at all would be broken.
+const visibleCount = computed(() => props.columns.filter(def => def.enableHiding === false || props.columnVisibility[columnId(def) ?? ""] !== false).length)
 const toggle = (id: string, checked: boolean) => emit("update:columnVisibility", { ...props.columnVisibility, [id]: checked })
 </script>
 
@@ -42,6 +44,7 @@ const toggle = (id: string, checked: boolean) => emit("update:columnVisibility",
     <DropdownMenuContent align="end">
       <!-- The menu stays open: several columns are usually toggled in a row. -->
       <DropdownMenuCheckboxItem v-for="column in hideable" :key="column.id" :model-value="columnVisibility[column.id] !== false"
+        :disabled="visibleCount === 1 && columnVisibility[column.id] !== false"
         @select.prevent @update:model-value="(checked: boolean) => toggle(column.id, checked)">
         {{ column.label }}
       </DropdownMenuCheckboxItem>

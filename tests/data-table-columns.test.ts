@@ -81,10 +81,13 @@ describe.each([["react", mountReact], ["vue", mountVue]] as const)("%s data-tabl
     expect(document.querySelector("[data-column-handle]")).toBeNull()
   })
 
-  it("offers a button handle on the movable columns only, named after the column", async () => {
+  it("offers a focusable button handle on the movable columns only, named after the column", async () => {
     await mount({ columnOrder: ["a", "b", "c", "d"] })
     expect([...document.querySelectorAll<HTMLElement>("[data-column-handle]")].map((b) => b.dataset.columnHandle)).toEqual(["b", "c"])
-    expect(handle("b")!.tagName).toBe("BUTTON")
+    // A span with role=button, not a <button>: Firefox does not start a drag from a <button>.
+    expect(handle("b")!.getAttribute("role")).toBe("button")
+    expect(handle("b")!.tabIndex).toBe(0)
+    expect(handle("b")!.getAttribute("draggable")).toBe("true")
     expect(handle("b")!.getAttribute("aria-label")).toBe("Déplacer la colonne Ville")
   })
 
@@ -123,6 +126,45 @@ describe.each([["react", mountReact], ["vue", mountVue]] as const)("%s data-tabl
     expect(changes.order).not.toHaveBeenCalled()
   })
 
+  it("never moves a locked column in the middle by dropping across it", async () => {
+    const locked = [columns[0], columns[1], { ...columns[2], meta: { reorderable: false } }, { accessorKey: "e", header: "Effectif" }, columns[3]]
+    const { changes, run } = await mount({ columns: locked, columnOrder: ["a", "b", "c", "e", "d"] })
+    await run(() => drag("dragstart", handle("b")!))
+    await run(() => { drag("dragover", th("e")); drag("drop", th("e")) })
+    expect(changes.order).not.toHaveBeenCalled()
+  })
+
+  it("keeps a column that cannot be hidden visible, whatever columnVisibility says", async () => {
+    await mount({ columnVisibility: { a: false, c: false } })
+    expect(headers()).toEqual(["Raison sociale", "Ville", "Actions"])
+  })
+
+  it("does not take the focus back on a later order change when the page refused a move", async () => {
+    const changes = vi.fn()
+    if (_ === "react") {
+      const root = createRoot(document.body.appendChild(document.createElement("div")))
+      const draw = (columnOrder: string[]) => act(async () => root.render(e(RDataTable as any, { columns, data, columnOrder, onColumnOrderChange: changes })))
+      await draw(["a", "b", "c", "d"])
+      cleanups.push(() => act(async () => root.unmount()))
+      await act(async () => key(handle("b")!, "ArrowRight"))
+      document.body.appendChild(document.createElement("input")).focus()
+      await draw(["a", "b", "c", "d", "x"])
+    } else {
+      const order = ref(["a", "b", "c", "d"])
+      const app = createApp({ render: () => h(VDataTable as any, { columns, data, columnOrder: order.value, "onUpdate:columnOrder": changes }) })
+      app.mount(document.body.appendChild(document.createElement("div")))
+      cleanups.push(() => app.unmount())
+      await nextTick()
+      key(handle("b")!, "ArrowRight")
+      await nextTick()
+      document.body.appendChild(document.createElement("input")).focus()
+      order.value = ["a", "b", "c", "d", "x"]
+      await nextTick(); await nextTick()
+    }
+    expect(changes).toHaveBeenCalled()
+    expect(document.activeElement?.tagName).toBe("INPUT")
+  })
+
   it("does not start the drag-to-scroll from a handle", async () => {
     const capture = vi.spyOn(HTMLElement.prototype, "setPointerCapture").mockImplementation(() => {})
     const { run } = await mount({ columnOrder: ["a", "b", "c", "d"], dragToScroll: true })
@@ -139,6 +181,13 @@ describe.each(["react", "vue"] as const)("%s moveColumn", (fw) => {
     expect(moveColumn(["a", "b", "c", "d"], "b", "c")).toEqual(["a", "c", "b", "d"])
     expect(moveColumn(["a", "b", "c", "d"], "d", "b")).toEqual(["a", "d", "b", "c"])
     expect(moveColumn(["a", "b", "c"], "b", "b")).toEqual(["a", "b", "c"])
+  })
+  it("refuses a move that would shift a locked column", () => {
+    const locked = new Set(["a", "c", "e"])
+    expect(moveColumn(["a", "b", "c", "d", "e"], "b", "d", locked)).toEqual(["a", "b", "c", "d", "e"])
+    expect(moveColumn(["a", "b", "c", "d", "e"], "d", "b", locked)).toEqual(["a", "b", "c", "d", "e"])
+    expect(moveColumn(["a", "b", "c", "d", "e"], "b", "c", locked)).toEqual(["a", "b", "c", "d", "e"])
+    expect(moveColumn(["a", "b", "x", "d", "e"], "b", "d", locked)).toEqual(["a", "x", "d", "b", "e"])
   })
 })
 
@@ -175,6 +224,12 @@ describe.each([["react", mountReactPicker], ["vue", mountVuePicker]] as const)("
     expect(items().map((i) => i.getAttribute("aria-checked"))).toEqual(["true", "false", "true"])
     await run(() => items()[1].click())
     expect(visibility).toHaveBeenLastCalledWith({ c: true })
+  })
+
+  it("never lets the last visible column be hidden", async () => {
+    const { run } = await mount({ columns: [columns[1], columns[2]], columnVisibility: { c: false } })
+    await open(run)
+    expect(items().map((i) => i.getAttribute("data-disabled") !== null)).toEqual([true, false])
   })
 
   it("offers no reset without onReset", async () => {

@@ -9,7 +9,7 @@ import { Button } from "@/registry/vue/ui/button"
 import { HorizontalScroll } from "@/registry/vue/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/vue/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/vue/ui/table"
-import { ariaSort, columnLabel, dataTableFeatures, fromControl, metaClass, moveColumn, reorderable, resolveUpdater, stickyCell, type DataTableFeatures, type LabelledColumnDef } from "./utils"
+import { ariaSort, columnId, columnLabel, dataTableFeatures, fromControl, metaClass, moveColumn, reorderable, resolveUpdater, stickyCell, type DataTableFeatures, type LabelledColumnDef } from "./utils"
 
 // Saqara: sorting is always controlled — the page sorts (server or client) and passes `sorting` back (v-model:sorting).
 const props = withDefaults(defineProps<{
@@ -72,6 +72,11 @@ const emit = defineEmits<{
   "update:columnVisibility": [columnVisibility: ColumnVisibilityState]
 }>()
 
+// TanStack would hide a column that `enableHiding: false` should keep visible (a stale stored layout…).
+const columnVisibility = computed(() => {
+  const alwaysVisible = new Set(props.columns.flatMap(def => (def.enableHiding === false ? [columnId(def as LabelledColumnDef)] : [])))
+  return Object.fromEntries(Object.entries(props.columnVisibility).filter(([id]) => !alwaysVisible.has(id)))
+})
 const table = useTable({
   features: dataTableFeatures,
   get data() { return props.data },
@@ -82,10 +87,10 @@ const table = useTable({
   state: {
     get sorting() { return props.sorting },
     get columnOrder() { return props.columnOrder ?? [] },
-    get columnVisibility() { return props.columnVisibility },
+    get columnVisibility() { return columnVisibility.value },
   },
   onSortingChange: updater => emit("update:sorting", resolveUpdater(updater, props.sorting)),
-  onColumnVisibilityChange: updater => emit("update:columnVisibility", resolveUpdater(updater, props.columnVisibility)),
+  onColumnVisibilityChange: updater => emit("update:columnVisibility", resolveUpdater(updater, columnVisibility.value)),
 })
 const colCount = computed(() => table.getVisibleLeafColumns().length)
 const sticky = (index: number) => (props.stickyFirstColumn && index === 0 ? stickyCell : "")
@@ -100,31 +105,37 @@ const root = ref<HTMLElement | null>(null)
 const dropTarget = ref<string | null>(null)
 const announcement = ref("")
 let dragging: string | null = null
-let focusAfterMove: string | null = null
+let focusAfterMove: { id: string, order: string } | null = null
 const label = (column: AnyColumn) => columnLabel(column.columnDef as LabelledColumnDef, column.id)
 const movable = (column: AnyColumn) => props.columnOrder !== undefined && reorderable(column.columnDef.meta)
 function move(id: string, target: string) {
   const order = props.columnOrder ?? []
   const ids = table.getAllLeafColumns().map(column => column.id)
-  const next = moveColumn([...order, ...ids.filter(column => !order.includes(column))], id, target)
+  const locked = new Set(table.getAllLeafColumns().filter(column => !reorderable(column.columnDef.meta)).map(column => column.id))
+  const current = [...order, ...ids.filter(column => !order.includes(column))]
+  const next = moveColumn(current, id, target, locked)
+  if (next === current) return null
   const visible = table.getVisibleLeafColumns()
   const position = next.filter(column => visible.some(v => v.id === column)).indexOf(id) + 1
   const column = table.getColumn(id)
   if (column) announcement.value = `${label(column)} : colonne ${position} sur ${visible.length}`
   emit("update:columnOrder", next)
+  return next
 }
-// A moved <th> loses focus in the browser: give it back to the handle once the new order is rendered.
-watch(() => props.columnOrder, () => {
-  const id = focusAfterMove
+// A moved <th> loses focus in the browser: give it back to the handle once that order is rendered
+// (not on a later, unrelated change if the page refused the move).
+watch(() => props.columnOrder, (columnOrder) => {
+  const pending = focusAfterMove
   focusAfterMove = null
+  const id = pending && pending.order === columnOrder?.join() ? pending.id : null
   if (id) [...(root.value?.querySelectorAll<HTMLElement>("[data-column-handle]") ?? [])].find(el => el.dataset.columnHandle === id)?.focus()
 }, { flush: "post" })
 function moveStep(id: string, step: -1 | 1) {
   const visible = table.getVisibleLeafColumns()
   const neighbour = visible[visible.findIndex(column => column.id === id) + step]
   if (!neighbour || !reorderable(neighbour.columnDef.meta)) return
-  focusAfterMove = id
-  move(id, neighbour.id)
+  const next = move(id, neighbour.id)
+  if (next) focusAfterMove = { id, order: next.join() }
 }
 function headAttrs(header: Header<DataTableFeatures, TData, unknown>, index: number) {
   const id = header.column.id
@@ -157,8 +168,12 @@ function HeadContent({ header }: { header: Header<DataTableFeatures, TData, unkn
   const title = h(FlexRender, { header })
   if (!movable(header.column)) return title
   const column = header.column
+  // A span with role=button, not a <button>: Firefox does not start a drag from a <button>.
+  // horizontal-scroll leaves [role=button] alone, so dragToScroll does not take the drag over.
   const handle = h(Button, {
-    "type": "button",
+    "as": "span",
+    "role": "button",
+    "tabindex": 0,
     "variant": "ghost",
     "size": "icon-xs",
     "draggable": "true",

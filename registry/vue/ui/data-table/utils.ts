@@ -41,11 +41,16 @@ export function columnLabel(def: LabelledColumnDef, id: string): string {
 }
 export const columnId = (def: LabelledColumnDef) => def.id ?? (typeof def.accessorKey === "string" ? def.accessorKey : undefined)
 
-/** `id` takes `target`'s place: after it when moving right, before it when moving left. */
-export function moveColumn(order: string[], id: string, target: string): string[] {
+/**
+ * `id` takes `target`'s place: after it when moving right, before it when moving left. A move that would
+ * shift a `locked` column (the target, or one in between) is refused: the order comes back unchanged.
+ */
+export function moveColumn(order: string[], id: string, target: string, locked: ReadonlySet<string> = new Set()): string[] {
   const from = order.indexOf(id)
   const to = order.indexOf(target)
   if (from < 0 || to < 0 || from === to) return order
+  const shifted = from < to ? order.slice(from + 1, to + 1) : order.slice(to, from)
+  if (shifted.some(column => locked.has(column))) return order
   const next = order.filter(column => column !== id)
   next.splice(to, 0, id)
   return next

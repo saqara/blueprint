@@ -49,11 +49,16 @@ export function columnLabel(def: LabelledColumnDef, id: string): string {
 }
 const columnId = (def: LabelledColumnDef) => def.id ?? (typeof def.accessorKey === "string" ? def.accessorKey : undefined)
 
-/** `id` takes `target`'s place: after it when moving right, before it when moving left. */
-export function moveColumn(order: string[], id: string, target: string): string[] {
+/**
+ * `id` takes `target`'s place: after it when moving right, before it when moving left. A move that would
+ * shift a `locked` column (the target, or one in between) is refused: the order comes back unchanged.
+ */
+export function moveColumn(order: string[], id: string, target: string, locked: ReadonlySet<string> = new Set()): string[] {
   const from = order.indexOf(id)
   const to = order.indexOf(target)
   if (from < 0 || to < 0 || from === to) return order
+  const shifted = from < to ? order.slice(from + 1, to + 1) : order.slice(to, from)
+  if (shifted.some((column) => locked.has(column))) return order
   const next = order.filter((column) => column !== id)
   next.splice(to, 0, id)
   return next
@@ -108,10 +113,13 @@ type DataTableProps<TData extends RowData> = {
 
 // Saqara: sorting is always controlled — the page sorts (server or client) and passes `sorting` back.
 function DataTable<TData extends RowData>({
-  columns, data, getRowId, meta, sorting = [], onSortingChange, columnOrder, onColumnOrderChange, columnVisibility = {}, onColumnVisibilityChange, loading = false, loadingRows = 5,
+  columns, data, getRowId, meta, sorting = [], onSortingChange, columnOrder, onColumnOrderChange, columnVisibility: requestedVisibility = {}, onColumnVisibilityChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
   onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, stickyScrollbar = false, dragToScroll = false, className, children,
 }: DataTableProps<TData>) {
+  // TanStack would hide a column that `enableHiding: false` should keep visible (a stale stored layout…).
+  const alwaysVisible = new Set(columns.flatMap((def) => (def.enableHiding === false ? [columnId(def as LabelledColumnDef)] : [])))
+  const columnVisibility = Object.fromEntries(Object.entries(requestedVisibility).filter(([id]) => !alwaysVisible.has(id)))
   const table = useTable({
     features: dataTableFeatures,
     data,
@@ -128,32 +136,38 @@ function DataTable<TData extends RowData>({
   // Moving columns: the new order is built on `columnOrder` itself, ids with no column included.
   const rootRef = React.useRef<HTMLDivElement>(null)
   const dragging = React.useRef<string | null>(null)
-  const focusAfterMove = React.useRef<string | null>(null)
+  const focusAfterMove = React.useRef<{ id: string; order: string } | null>(null)
   const [dropTarget, setDropTarget] = React.useState<string | null>(null)
   const [announcement, setAnnouncement] = React.useState("")
   const label = (column: Column<DataTableFeatures, TData, unknown>) => columnLabel(column.columnDef as LabelledColumnDef, column.id)
   const move = (id: string, target: string) => {
     const order = columnOrder ?? []
     const ids = table.getAllLeafColumns().map((column) => column.id)
-    const next = moveColumn([...order, ...ids.filter((column) => !order.includes(column))], id, target)
+    const locked = new Set(table.getAllLeafColumns().filter((column) => !reorderable(column.columnDef.meta)).map((column) => column.id))
+    const current = [...order, ...ids.filter((column) => !order.includes(column))]
+    const next = moveColumn(current, id, target, locked)
+    if (next === current) return null
     const visible = table.getVisibleLeafColumns()
     const position = next.filter((column) => visible.some((v) => v.id === column)).indexOf(id) + 1
     const column = table.getColumn(id)
     if (column) setAnnouncement(`${label(column)} : colonne ${position} sur ${visible.length}`)
     onColumnOrderChange?.(next)
+    return next
   }
-  // A moved <th> loses focus in the browser: give it back to the handle once the new order is rendered.
+  // A moved <th> loses focus in the browser: give it back to the handle once that order is rendered
+  // (not on a later, unrelated change if the page refused the move).
   React.useEffect(() => {
-    const id = focusAfterMove.current
+    const pending = focusAfterMove.current
     focusAfterMove.current = null
+    const id = pending && pending.order === columnOrder?.join() ? pending.id : null
     if (id) [...(rootRef.current?.querySelectorAll<HTMLElement>("[data-column-handle]") ?? [])].find((el) => el.dataset.columnHandle === id)?.focus()
   }, [columnOrder])
   const moveStep = (id: string, step: -1 | 1) => {
     const visible = table.getVisibleLeafColumns()
     const neighbour = visible[visible.findIndex((column) => column.id === id) + step]
     if (!neighbour || !reorderable(neighbour.columnDef.meta)) return
-    focusAfterMove.current = id
-    move(id, neighbour.id)
+    const next = move(id, neighbour.id)
+    if (next) focusAfterMove.current = { id, order: next.join() }
   }
   const movable = (column: Column<DataTableFeatures, TData, unknown>) => columnOrder !== undefined && reorderable(column.columnDef.meta)
   const dropProps = (id: string): React.ComponentProps<"th"> => ({
@@ -173,7 +187,10 @@ function DataTable<TData extends RowData>({
     },
   })
   const handle = (column: Column<DataTableFeatures, TData, unknown>) => (
-    <Button type="button" variant="ghost" size="icon-xs" draggable data-column-handle={column.id}
+    // A span with role=button, not a <button>: Firefox does not start a drag from a <button>.
+    // horizontal-scroll leaves [role=button] alone, so dragToScroll does not take the drag over.
+    <Button asChild variant="ghost" size="icon-xs">
+    <span role="button" tabIndex={0} draggable data-column-handle={column.id}
       aria-label={`Déplacer la colonne ${label(column)}`} title="Glisser pour déplacer, ou flèches gauche et droite"
       className="cursor-grab text-muted-foreground active:cursor-grabbing"
       onDragStart={(event) => {
@@ -189,6 +206,7 @@ function DataTable<TData extends RowData>({
         moveStep(column.id, step)
       }}>
       <GripVertical />
+    </span>
     </Button>
   )
   const sticky = (index: number) => stickyFirstColumn && index === 0 && stickyCell
@@ -325,6 +343,8 @@ function DataTableColumnPicker<TData extends RowData>({ columns, columnVisibilit
     const id = columnId(def as LabelledColumnDef)
     return id && def.enableHiding !== false ? [{ id, label: columnLabel(def as LabelledColumnDef, id) }] : []
   })
+  // The last visible column stays: a table with no column at all would be broken.
+  const visibleCount = columns.filter((def) => def.enableHiding === false || columnVisibility[columnId(def as LabelledColumnDef) ?? ""] !== false).length
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -333,7 +353,8 @@ function DataTableColumnPicker<TData extends RowData>({ columns, columnVisibilit
       <DropdownMenuContent align="end">
         {hideable.map((column) => (
           // The menu stays open: several columns are usually toggled in a row.
-          <DropdownMenuCheckboxItem key={column.id} checked={columnVisibility[column.id] !== false} onSelect={(event) => event.preventDefault()}
+          <DropdownMenuCheckboxItem key={column.id} checked={columnVisibility[column.id] !== false}
+            disabled={visibleCount === 1 && columnVisibility[column.id] !== false} onSelect={(event) => event.preventDefault()}
             onCheckedChange={(checked) => onColumnVisibilityChange?.({ ...columnVisibility, [column.id]: checked === true })}>
             {column.label}
           </DropdownMenuCheckboxItem>
