@@ -56,6 +56,7 @@ npm run build          # registry JSON + vitrine dans dist/
 npm run smoke          # installe tout dans des apps jetables (après build)
 ```
 
+- Le code de `registry/` est copié dans les apps et compilé par elles : il doit passer avec une `lib` ES2020 (pas de `replaceAll`, `.at()`, `Object.hasOwn`…). `npm run check` le vérifie (`tsconfig.registry-es2020.*.json`).
 - Les couleurs se changent dans `tokens/theme.json`, jamais dans `src/theme.css` (généré).
 - Chaque composant doit exister en React **et** en Vue, avec une démo dans `src/react/demos/` et `src/vue/demos/`, et une catégorie dans `site/catalog.ts`.
 - Les exemples (écrans complets) vivent dans `src/examples/{react,vue}/`, dans les deux frameworks.
