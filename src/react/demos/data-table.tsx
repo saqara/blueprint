@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react"
-import type { ColumnDef, SortingState } from "@tanstack/react-table"
+import type { ColumnDef, ColumnOrderState, ColumnVisibilityState, SortingState } from "@tanstack/react-table"
 import { Badge } from "@/registry/react/ui/badge"
 import { Button } from "@/registry/react/ui/button"
-import { DataTable, DataTableColumnHeader, type DataTableFeatures } from "@/registry/react/ui/data-table"
+import { DataTable, DataTableColumnHeader, DataTableColumnPicker, type DataTableFeatures } from "@/registry/react/ui/data-table"
 
 type Company = { siren: string; name: string; city: string; score: number }
 const companies: Company[] = [
@@ -13,11 +13,14 @@ const companies: Company[] = [
 // Columns live outside the component (or in useMemo): FlexRender mounts `cell` / `header` as components,
 // so a function rebuilt on every render remounts its cells (lost focus, tooltip state…).
 // Cells that read live state get it from `table.options.meta` (DataTable `meta` prop), not from a closure.
+// Columns move (handle in the header) and hide (DataTableColumnPicker) when the page passes `columnOrder` /
+// `columnVisibility`. The first column stays in place and visible; `meta.label` names a render-function header.
 const columns: ColumnDef<DataTableFeatures, Company, any>[] = [
-  { accessorKey: "name", header: ({ column }) => <DataTableColumnHeader column={column} title="Raison sociale" /> },
+  { accessorKey: "name", header: ({ column }) => <DataTableColumnHeader column={column} title="Raison sociale" />,
+    enableHiding: false, meta: { reorderable: false } },
   { accessorKey: "siren", header: "SIREN", enableSorting: false },
-  { accessorKey: "city", header: ({ column }) => <DataTableColumnHeader column={column} title="Ville" /> },
-  { accessorKey: "score", header: ({ column }) => <DataTableColumnHeader column={column} title="Note" />,
+  { accessorKey: "city", header: ({ column }) => <DataTableColumnHeader column={column} title="Ville" />, meta: { label: "Ville" } },
+  { accessorKey: "score", header: ({ column }) => <DataTableColumnHeader column={column} title="Note" />, meta: { label: "Note" },
     cell: ({ row }) => <Badge variant={row.original.score >= 15 ? "success" : "warning"}>{row.original.score}/20</Badge> },
 ]
 
@@ -25,6 +28,10 @@ export default function DataTableDemo() {
   const [sorting, setSorting] = useState<SortingState>([{ id: "name", desc: false }])
   const [loading, setLoading] = useState(false)
   const [opened, setOpened] = useState<string>()
+  const defaultOrder = ["name", "siren", "city", "score"]
+  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(defaultOrder)
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({})
+  const changed = columnOrder.join() !== defaultOrder.join() || Object.values(columnVisibility).includes(false)
   // The demo sorts client-side; a real page would pass `sorting` to its API.
   const data = useMemo(() => {
     const [s] = sorting
@@ -34,8 +41,13 @@ export default function DataTableDemo() {
   }, [sorting])
   return (
     <div className="space-y-2">
-      <Button variant="outline" size="sm" onClick={() => setLoading((l) => !l)}>{loading ? "Afficher les données" : "Simuler le chargement"}</Button>
+      <div className="flex justify-between gap-2">
+        <Button variant="outline" size="sm" onClick={() => setLoading((l) => !l)}>{loading ? "Afficher les données" : "Simuler le chargement"}</Button>
+        <DataTableColumnPicker columns={columns} columnVisibility={columnVisibility} onColumnVisibilityChange={setColumnVisibility}
+          onReset={changed ? () => { setColumnOrder(defaultOrder); setColumnVisibility({}) } : undefined} />
+      </div>
       <DataTable columns={columns} data={data} getRowId={(c) => c.siren} sorting={sorting} onSortingChange={setSorting}
+        columnOrder={columnOrder} onColumnOrderChange={setColumnOrder} columnVisibility={columnVisibility} onColumnVisibilityChange={setColumnVisibility}
         loading={loading} stickyHeader stickyFirstColumn className="max-h-72"
         onRowClick={(c) => setOpened(c.name)} getRowProps={(c) => ({ "data-siren": c.siren })} />
       <p className="text-sm text-muted-foreground">{opened ? `Fiche ouverte : ${opened}` : "Cliquez sur une ligne pour ouvrir la fiche."}</p>
