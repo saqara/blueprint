@@ -11,7 +11,7 @@
     "registry": "npm run sync && node scripts/llms.ts && shadcn build registry.react.json -o public/r/react && shadcn-vue build registry.vue.json -o public/r/vue",
     "dev": "npm run sync && vite",
     "build": "npm run registry && vite build",
-    "check": "node scripts/check-parity.ts && npm run lint && vitest run && tsc -p tsconfig.react.json && vue-tsc -p tsconfig.vue.json",
+    "check": "node scripts/check-parity.ts && npm run lint && vitest run && tsc -p tsconfig.react.json && vue-tsc -p tsconfig.vue.json && tsc -p tsconfig.registry-es2020.react.json && vue-tsc -p tsconfig.registry-es2020.vue.json",
     "smoke": "bash scripts/smoke.sh",
     "lint": "eslint registry/react"
   },

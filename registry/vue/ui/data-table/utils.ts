@@ -41,7 +41,7 @@ export function columnLabel(def: LabelledColumnDef, id: string): string {
 }
 // The id TanStack gives the column: `id`, else `accessorKey` (dots become underscores), else a string header.
 export function columnId(def: LabelledColumnDef): string | undefined {
-  return def.id ?? (def.accessorKey === undefined ? undefined : String(def.accessorKey).replaceAll(".", "_")) ?? (typeof def.header === "string" ? def.header : undefined)
+  return def.id ?? (def.accessorKey === undefined ? undefined : String(def.accessorKey).replace(/\./g, "_")) ?? (typeof def.header === "string" ? def.header : undefined)
 }
 // Grouped definitions (`columns: [...]`) down to the columns that render cells.
 export const leafDefs = (defs: LabelledColumnDef[]): LabelledColumnDef[] => defs.flatMap(def => (def.columns ? leafDefs(def.columns) : [def]))

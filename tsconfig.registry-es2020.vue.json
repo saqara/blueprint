@@ -1,0 +1,6 @@
+{
+  "//": "Apps copy the registry into their own build: it must compile against an ES2020 lib, not only Blueprint's ES2022.",
+  "extends": "./tsconfig.vue.json",
+  "compilerOptions": { "lib": ["ES2020", "DOM", "DOM.Iterable"] },
+  "include": ["registry/vue/**/*.ts", "registry/vue/**/*.vue"]
+}
