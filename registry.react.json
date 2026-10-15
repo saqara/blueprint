@@ -520,7 +520,7 @@
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
-      "description": "Table TanStack à tri contrôlé, chargement et état vide (Saqara).",
+      "description": "Table TanStack à tri contrôlé, colonnes déplaçables et masquables, chargement et état vide (Saqara).",
       "dependencies": [
         "@tanstack/react-table",
         "cn",
@@ -528,6 +528,7 @@
       ],
       "registryDependencies": [
         "@saqara/button",
+        "@saqara/dropdown-menu",
         "@saqara/horizontal-scroll",
         "@saqara/skeleton",
         "@saqara/table"

@@ -1,16 +1,17 @@
 "use client"
 
 import * as React from "react"
-import { type CellData, type Column, type ColumnDef, type RowData, type SortingState, type Updater, FlexRender, rowSortingFeature, tableFeatures, useTable } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react"
+import { type CellData, type Column, type ColumnDef, type ColumnOrderState, type ColumnVisibilityState, type RowData, type SortingState, type Updater, FlexRender, columnOrderingFeature, columnVisibilityFeature, rowSortingFeature, tableFeatures, useTable } from "@tanstack/react-table"
+import { ArrowDown, ArrowUp, ChevronsUpDown, Columns3, GripVertical } from "lucide-react"
 import { cn } from "cn"
 import { Button } from "@/registry/react/ui/button"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/registry/react/ui/dropdown-menu"
 import { HorizontalScroll } from "@/registry/react/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/react/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/react/ui/table"
 
-// TanStack Table v9: only sorting is registered (rows are sorted by the page, never here).
-export const dataTableFeatures = tableFeatures({ rowSortingFeature })
+// TanStack Table v9: sorting (rows are sorted by the page, never here), column order and column visibility.
+export const dataTableFeatures = tableFeatures({ rowSortingFeature, columnOrderingFeature, columnVisibilityFeature })
 export type DataTableFeatures = typeof dataTableFeatures
 
 export function resolveUpdater<T>(updater: Updater<T>, current: T): T {
@@ -38,6 +39,34 @@ export function fromControl(event: { target: EventTarget | null; currentTarget: 
 export const stickyCell = "sticky left-0 z-[1] bg-(--data-table-bg) transition-colors [tr:hover>&]:bg-[color-mix(in_oklab,var(--muted)_50%,var(--data-table-bg))]"
 
 const metaClass = (meta: unknown) => (meta as { className?: string } | undefined)?.className
+// `meta.reorderable: false` keeps a column in place (first or last column…); every other column can move.
+const reorderable = (meta: unknown) => (meta as { reorderable?: boolean } | undefined)?.reorderable !== false
+
+type LabelledColumnDef = { id?: string; accessorKey?: unknown; header?: unknown; meta?: unknown; enableHiding?: boolean; columns?: LabelledColumnDef[] }
+// The column's plain-text name (move handle, column picker): `meta.label`, else a string header, else its id.
+export function columnLabel(def: LabelledColumnDef, id: string): string {
+  return (def.meta as { label?: string } | undefined)?.label ?? (typeof def.header === "string" ? def.header : id)
+}
+// The id TanStack gives the column: `id`, else `accessorKey` (dots become underscores), else a string header.
+const columnId = (def: LabelledColumnDef) =>
+  def.id ?? (def.accessorKey === undefined ? undefined : String(def.accessorKey).replaceAll(".", "_")) ?? (typeof def.header === "string" ? def.header : undefined)
+// Grouped definitions (`columns: [...]`) down to the columns that render cells.
+const leafDefs = (defs: LabelledColumnDef[]): LabelledColumnDef[] => defs.flatMap((def) => (def.columns ? leafDefs(def.columns) : [def]))
+
+/**
+ * `id` takes `target`'s place: after it when moving right, before it when moving left. A move that would
+ * shift a `locked` column (the target, or one in between) is refused: the order comes back unchanged.
+ */
+export function moveColumn(order: string[], id: string, target: string, locked: ReadonlySet<string> = new Set()): string[] {
+  const from = order.indexOf(id)
+  const to = order.indexOf(target)
+  if (from < 0 || to < 0 || from === to) return order
+  const shifted = from < to ? order.slice(from + 1, to + 1) : order.slice(to, from)
+  if (shifted.some((column) => locked.has(column))) return order
+  const next = order.filter((column) => column !== id)
+  next.splice(to, 0, id)
+  return next
+}
 
 type DataTableProps<TData extends RowData> = {
   // Columns mix value types, hence `any` (same as the upstream shadcn data table).
@@ -46,6 +75,15 @@ type DataTableProps<TData extends RowData> = {
   getRowId?: (row: TData, index: number) => string
   sorting?: SortingState
   onSortingChange?: (sorting: SortingState) => void
+  /**
+   * Column ids in display order. Passing it turns on moving columns (drag a header's handle, or ←/→ on
+   * the focused handle); ids with no column are kept in place, so a column shown later keeps its spot.
+   */
+  columnOrder?: ColumnOrderState
+  onColumnOrderChange?: (columnOrder: ColumnOrderState) => void
+  /** `{ [columnId]: false }` hides a column (see DataTableColumnPicker). */
+  columnVisibility?: ColumnVisibilityState
+  onColumnVisibilityChange?: (columnVisibility: ColumnVisibilityState) => void
   /** Live state for cells (read via `table.options.meta`), so `columns` can stay stable. */
   meta?: Record<string, unknown>
   loading?: boolean
@@ -79,10 +117,13 @@ type DataTableProps<TData extends RowData> = {
 
 // Saqara: sorting is always controlled — the page sorts (server or client) and passes `sorting` back.
 function DataTable<TData extends RowData>({
-  columns, data, getRowId, meta, sorting = [], onSortingChange, loading = false, loadingRows = 5,
+  columns, data, getRowId, meta, sorting = [], onSortingChange, columnOrder, onColumnOrderChange, columnVisibility: requestedVisibility = {}, onColumnVisibilityChange, loading = false, loadingRows = 5,
   emptyMessage = "Aucun résultat.", stickyHeader = false, stickyFirstColumn = false,
   onRowClick, getRowProps, tableProps, scrollRef, scrollProps, container = true, bordered = true, wrap = false, stickyScrollbar = false, dragToScroll = false, className, children,
 }: DataTableProps<TData>) {
+  // TanStack would hide a column that `enableHiding: false` should keep visible (a stale stored layout…).
+  const alwaysVisible = new Set(leafDefs(columns as LabelledColumnDef[]).flatMap((def) => (def.enableHiding === false ? [columnId(def)] : [])))
+  const columnVisibility = Object.fromEntries(Object.entries(requestedVisibility).filter(([id]) => !alwaysVisible.has(id)))
   const table = useTable({
     features: dataTableFeatures,
     data,
@@ -90,10 +131,89 @@ function DataTable<TData extends RowData>({
     getRowId,
     meta,
     manualSorting: true,
-    state: { sorting },
+    state: { sorting, columnOrder: columnOrder ?? [], columnVisibility },
     onSortingChange: (updater) => onSortingChange?.(resolveUpdater(updater, sorting)),
+    onColumnVisibilityChange: (updater) => onColumnVisibilityChange?.(resolveUpdater(updater, columnVisibility)),
   })
-  const colCount = table.getAllLeafColumns().length
+  const colCount = table.getVisibleLeafColumns().length
+
+  // Moving columns: the new order is built on `columnOrder` itself, ids with no column included.
+  const rootRef = React.useRef<HTMLDivElement>(null)
+  const dragging = React.useRef<string | null>(null)
+  const focusAfterMove = React.useRef<{ id: string; order: string } | null>(null)
+  const [dropTarget, setDropTarget] = React.useState<string | null>(null)
+  const [announcement, setAnnouncement] = React.useState("")
+  const label = (column: Column<DataTableFeatures, TData, unknown>) => columnLabel(column.columnDef as LabelledColumnDef, column.id)
+  const move = (id: string, target: string) => {
+    const order = columnOrder ?? []
+    const ids = table.getAllLeafColumns().map((column) => column.id)
+    const locked = new Set(table.getAllLeafColumns().filter((column) => !reorderable(column.columnDef.meta)).map((column) => column.id))
+    const current = [...order, ...ids.filter((column) => !order.includes(column))]
+    const next = moveColumn(current, id, target, locked)
+    if (next === current) return null
+    const visible = table.getVisibleLeafColumns()
+    const position = next.filter((column) => visible.some((v) => v.id === column)).indexOf(id) + 1
+    const column = table.getColumn(id)
+    if (column) setAnnouncement(`${label(column)} : colonne ${position} sur ${visible.length}`)
+    onColumnOrderChange?.(next)
+    return next
+  }
+  // A moved <th> loses focus in the browser: give it back to the handle once that order is rendered
+  // (not on a later, unrelated change if the page refused the move).
+  React.useEffect(() => {
+    const pending = focusAfterMove.current
+    focusAfterMove.current = null
+    const id = pending && pending.order === columnOrder?.join() ? pending.id : null
+    if (id) [...(rootRef.current?.querySelectorAll<HTMLElement>("[data-column-handle]") ?? [])].find((el) => el.dataset.columnHandle === id)?.focus()
+  }, [columnOrder])
+  const moveStep = (id: string, step: -1 | 1) => {
+    const visible = table.getVisibleLeafColumns()
+    const neighbour = visible[visible.findIndex((column) => column.id === id) + step]
+    if (!neighbour || !reorderable(neighbour.columnDef.meta)) return
+    const next = move(id, neighbour.id)
+    if (next) focusAfterMove.current = { id, order: next.join() }
+  }
+  // Leaf columns only: a group header's id is not in the order.
+  const movable = (column: Column<DataTableFeatures, TData, unknown>) => columnOrder !== undefined && column.columns.length === 0 && reorderable(column.columnDef.meta)
+  const dropProps = (id: string): React.ComponentProps<"th"> => ({
+    onDragOver: (event) => {
+      if (!dragging.current || dragging.current === id) return
+      event.preventDefault()
+      event.dataTransfer.dropEffect = "move"
+      setDropTarget(id)
+    },
+    onDragLeave: () => setDropTarget((current) => (current === id ? null : current)),
+    onDrop: (event) => {
+      event.preventDefault()
+      const from = dragging.current
+      dragging.current = null
+      setDropTarget(null)
+      if (from && from !== id) move(from, id)
+    },
+  })
+  const handle = (column: Column<DataTableFeatures, TData, unknown>) => (
+    // A span with role=button, not a <button>: Firefox does not start a drag from a <button>.
+    // horizontal-scroll leaves [role=button] alone, so dragToScroll does not take the drag over.
+    <Button asChild variant="ghost" size="icon-xs">
+    <span role="button" tabIndex={0} draggable data-column-handle={column.id}
+      aria-label={`Déplacer la colonne ${label(column)}`} title="Glisser pour déplacer, ou flèches gauche et droite"
+      className="cursor-grab text-muted-foreground active:cursor-grabbing"
+      onDragStart={(event) => {
+        dragging.current = column.id
+        event.dataTransfer.effectAllowed = "move"
+        event.dataTransfer.setData("text/plain", column.id)
+      }}
+      onDragEnd={() => { dragging.current = null; setDropTarget(null) }}
+      onKeyDown={(event) => {
+        const step = event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0
+        if (!step) return
+        event.preventDefault()
+        moveStep(column.id, step)
+      }}>
+      <GripVertical />
+    </span>
+    </Button>
+  )
   const sticky = (index: number) => stickyFirstColumn && index === 0 && stickyCell
   const rows = table.getRowModel().rows
   const tableElement = (
@@ -102,8 +222,14 @@ function DataTable<TData extends RowData>({
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
               {group.headers.map((header, i) => (
-                <TableHead key={header.id} aria-sort={ariaSort(header.column.getIsSorted())} className={cn(sticky(i), metaClass(header.column.columnDef.meta))}>
-                  {header.isPlaceholder ? null : <FlexRender header={header} />}
+                <TableHead key={header.id} aria-sort={ariaSort(header.column.getIsSorted())}
+                  data-drop-target={dropTarget === header.column.id || undefined}
+                  className={cn(sticky(i), "data-[drop-target]:bg-muted", metaClass(header.column.columnDef.meta))}
+                  {...(movable(header.column) && dropProps(header.column.id))}>
+                  {header.isPlaceholder ? null : movable(header.column) ? (
+                    // Inline: a text-center / text-right header class still aligns the title and its handle.
+                    <span className="inline-flex items-center gap-0.5"><FlexRender header={header} />{handle(header.column)}</span>
+                  ) : <FlexRender header={header} />}
                 </TableHead>
               ))}
             </TableRow>
@@ -134,7 +260,7 @@ function DataTable<TData extends RowData>({
                     },
                   })}
                 >
-                  {row.getAllCells().map((cell, i) => (
+                  {row.getVisibleCells().map((cell, i) => (
                     <TableCell key={cell.id} className={cn(sticky(i), metaClass(cell.column.columnDef.meta))}><FlexRender cell={cell} /></TableCell>
                   ))}
                 </TableRow>
@@ -151,6 +277,7 @@ function DataTable<TData extends RowData>({
 
   return (
     <div
+      ref={rootRef}
       data-slot="data-table"
       className={cn("[--data-table-bg:var(--background)]", stickyHeader && "[&>[data-slot=table-container]]:max-h-[inherit] [&>[data-slot=table-container]]:overflow-auto", className)}
     >
@@ -171,6 +298,7 @@ function DataTable<TData extends RowData>({
             {children}
           </div>
         )}
+      {columnOrder !== undefined && <span role="status" aria-live="polite" className="sr-only">{announcement}</span>}
     </div>
   )
 }
@@ -201,4 +329,46 @@ function DataTableColumnHeader<TData extends RowData, TValue extends CellData>({
   )
 }
 
-export { DataTable, DataTableColumnHeader }
+/**
+ * Show or hide columns, beside the table (a toolbar): one checkbox per column that can be hidden
+ * (`enableHiding: false` keeps a column out of the list). Pass the table's `columns` and the same
+ * `columnVisibility` as the DataTable. `onReset` adds « Réinitialiser les colonnes »: pass it only
+ * when the layout differs from the default.
+ */
+function DataTableColumnPicker<TData extends RowData>({ columns, columnVisibility = {}, onColumnVisibilityChange, onReset,
+  label = "Colonnes", resetLabel = "Réinitialiser les colonnes", className, ...props }: {
+  columns: ColumnDef<DataTableFeatures, TData, any>[]
+  columnVisibility?: ColumnVisibilityState
+  onColumnVisibilityChange?: (columnVisibility: ColumnVisibilityState) => void
+  onReset?: () => void
+  label?: string
+  resetLabel?: string
+} & Omit<React.ComponentProps<typeof Button>, "children">) {
+  const leaves = leafDefs(columns as LabelledColumnDef[])
+  const hideable = leaves.flatMap((def) => {
+    const id = columnId(def)
+    return id && def.enableHiding !== false ? [{ id, label: columnLabel(def, id) }] : []
+  })
+  // The last visible column stays: a table with no column at all would be broken.
+  const visibleCount = leaves.filter((def) => def.enableHiding === false || columnVisibility[columnId(def) ?? ""] !== false).length
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" className={className} {...props}><Columns3 />{label}</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {hideable.map((column) => (
+          // The menu stays open: several columns are usually toggled in a row.
+          <DropdownMenuCheckboxItem key={column.id} checked={columnVisibility[column.id] !== false}
+            disabled={visibleCount === 1 && columnVisibility[column.id] !== false} onSelect={(event) => event.preventDefault()}
+            onCheckedChange={(checked) => onColumnVisibilityChange?.({ ...columnVisibility, [column.id]: checked === true })}>
+            {column.label}
+          </DropdownMenuCheckboxItem>
+        ))}
+        {onReset && <><DropdownMenuSeparator /><DropdownMenuItem onSelect={onReset}>{resetLabel}</DropdownMenuItem></>}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+export { DataTable, DataTableColumnHeader, DataTableColumnPicker }

@@ -31,7 +31,7 @@ Composants qui demandent un élément racine :
 - `sonner` : monter `<Toaster />` une fois à la racine. En React, passer `theme="light" | "dark"` depuis le thème de l'app (défaut : `light`, comme en Vue). En Vue, la feuille de style de `vue-sonner` est importée par le composant (l'app doit déclarer les types `vite/client`, présents par défaut dans un projet Vite).
 
 Composants Saqara (lot 3) :
-- `data-table` : le tri est toujours contrôlé par la page (`sorting` + `onSortingChange`, Vue `v-model:sorting`) ; colonnes typées `ColumnDef<DataTableFeatures, Row, any>[]` (TanStack Table v9) ; pour l'en-tête collant, donner une hauteur max (`className="max-h-96"`).
+- `data-table` : le tri est toujours contrôlé par la page (`sorting` + `onSortingChange`, Vue `v-model:sorting`) ; colonnes typées `ColumnDef<DataTableFeatures, Row, any>[]` (TanStack Table v9) ; pour l'en-tête collant, donner une hauteur max (`className="max-h-96"`). Colonnes déplaçables (poignée dans l'en-tête, ou flèches ← → sur la poignée) et masquables : `columnOrder` + `onColumnOrderChange` et `columnVisibility` + `onColumnVisibilityChange` (Vue `v-model:column-order`, `v-model:column-visibility`), contrôlés par la page qui les mémorise ; `DataTableColumnPicker` (mêmes `columns` et `columnVisibility`, `onReset` facultatif) se place à côté. `meta.reorderable: false` fixe une colonne, `enableHiding: false` la garde visible, `meta.label` nomme une colonne dont l'en-tête est une fonction.
 - `stepper` : étapes numérotées à partir de 1 ; avec `linear` (défaut), on peut cliquer les étapes précédentes, l'étape en cours et la suivante (règle Reka, identique en React et en Vue).
 - `file-dropzone` : sélection et validation seulement, l'app gère l'envoi.
 

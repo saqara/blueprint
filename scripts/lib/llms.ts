@@ -48,7 +48,7 @@ export function llmsTxt({ react, categories, blocks, site }: Input): string {
     "- Couleurs : uniquement les tokens (`bg-primary`, `text-muted-foreground`, `bg-success`…), jamais de valeur hex.",
     "- Textes d'interface en français.",
     "- React : placer `<TooltipProvider>` et `<Toaster />` une fois à la racine. Vue : `<Toaster />` une fois à la racine.",
-    "- `data-table` : le tri est contrôlé par la page (`sorting` + `onSortingChange`, Vue `v-model:sorting`).",
+    "- `data-table` : le tri est contrôlé par la page (`sorting` + `onSortingChange`, Vue `v-model:sorting`). Colonnes déplaçables et masquables : passer `columnOrder` + `onColumnOrderChange` et `columnVisibility` + `onColumnVisibilityChange` (Vue `v-model:column-order`, `v-model:column-visibility`), `DataTableColumnPicker` à côté de la table ; `meta.reorderable: false` fixe une colonne, `enableHiding: false` la garde visible.",
     "",
     ...categories.flatMap((c) => [`## ${c.label}`, "", ...c.items.map((name) => line(name, "composants")), ""]),
     "## Blocs",
