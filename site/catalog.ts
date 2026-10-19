@@ -19,7 +19,7 @@ export const CATEGORIES = [
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
 ]
 
-export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "login"]
+export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "login", "settings-page"]
 
 export const EXAMPLES = [
   { slug: "annuaire", title: "Annuaire fournisseurs", description: "Liste filtrable et triable des entreprises, avec indicateurs." },

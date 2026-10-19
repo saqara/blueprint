@@ -2721,6 +2721,21 @@
       "description": "Séparateur horizontal ou vertical."
     },
     {
+      "name": "settings-page",
+      "type": "registry:block",
+      "title": "Settings Page",
+      "description": "Écran de paramètres : navigation entre sections, champs, barre « Enregistrer / Annuler » quand le formulaire est modifié (Saqara).",
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/SettingsPage.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
