@@ -14,6 +14,8 @@ const BANNED = [
   /aria-label="progress"/,
   /Displays the mobile sidebar/,
   />\s*Sidebar\s*</,
+  /(Previous|Next) [Ss]lide/,
+  /aria-roledescription="(carousel|slide)"/,
 ]
 
 function files(dir: string): string[] {

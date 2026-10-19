@@ -82,3 +82,37 @@ describe("planAll", () => {
     await expect(planAll(["a", "missing"], fetchItem, () => false, false)).rejects.toThrow('upstream vue has no "missing"')
   })
 })
+
+describe("AI Elements", () => {
+  const react = {
+    name: "plan", type: "registry:component", dependencies: ["@radix-ui/react-use-controllable-state", "lucide-react"],
+    registryDependencies: ["card", "https://elements.ai-sdk.dev/api/registry/shimmer.json"],
+    files: [{ path: "registry/default/ai-elements/plan.tsx", type: "registry:component", target: "components/ai-elements/plan.tsx",
+      content: 'import { cn } from "@/lib/utils";\nimport { useControllableState } from "@radix-ui/react-use-controllable-state";\nimport { Card } from "@/components/ui/card";\nimport { Button } from "@/registry/default/ui/button";\nimport { Shimmer } from "./shimmer";\n' }],
+  }
+  const vue = {
+    name: "plan", type: "registry:component", registryDependencies: ["card", "shimmer"],
+    files: [{ path: "components/ai-elements/plan/Plan.vue", type: "registry:component",
+      content: "import { cn } from '@/lib/utils'\nimport { Card } from '@/components/ui/card'\nimport { Shimmer } from '@/components/ai-elements/shimmer'\n" }],
+  }
+  it("installs React items with the ui items, on the cn package and the radix-ui umbrella", () => {
+    const { files, item } = plan(react, "react", () => false, false)
+    expect(files[0].path).toBe("registry/react/ui/plan.tsx")
+    expect(files[0].content).toContain('from "cn"')
+    expect(files[0].content).toContain('from "radix-ui/internal"')
+    expect(files[0].content).toContain('from "@/registry/react/ui/card"')
+    expect(item).toEqual({
+      name: "plan", type: "registry:ui", title: "Plan",
+      dependencies: ["cn", "lucide-react", "radix-ui"],
+      registryDependencies: ["@saqara/button", "@saqara/card", "@saqara/shimmer"],
+      files: [{ path: "registry/react/ui/plan.tsx", type: "registry:ui" }],
+    })
+  })
+  it("installs Vue items with the ui items", () => {
+    const { files, item } = plan(vue, "vue", () => false, false)
+    expect(files[0].path).toBe("registry/vue/ui/plan/Plan.vue")
+    expect(files[0].content).toContain("'@/registry/vue/ui/shimmer'")
+    expect(files[0].content).toContain("'@/lib/utils'")
+    expect(item.registryDependencies).toEqual(["@saqara/card", "@saqara/shimmer"])
+  })
+})

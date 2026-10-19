@@ -391,6 +391,27 @@
       ]
     },
     {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "dependencies": [
+        "class-variance-authority",
+        "cn",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Groupe de boutons accolés (actions liées, barre d'outils)."
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -405,6 +426,26 @@
         }
       ],
       "description": "Conteneur de contenu avec en-tête, corps et pied."
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "dependencies": [
+        "cn",
+        "embla-carousel-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Défilement horizontal de diapositives, au clic, au clavier ou au glissé."
     },
     {
       "name": "chart",
@@ -442,6 +483,27 @@
         }
       ],
       "description": "Case à cocher."
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "shiki"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/select"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/code-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Bloc de code avec coloration syntaxique (Shiki), numéros de ligne et bouton copier."
     },
     {
       "name": "collapsible",
@@ -976,6 +1038,21 @@
         }
       ],
       "description": "Panneau latéral glissant, en 4 largeurs, avec un corps qui défile."
+    },
+    {
+      "name": "shimmer",
+      "type": "registry:ui",
+      "title": "Shimmer",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/shimmer.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Texte animé d'un reflet pendant une attente (« Réflexion… »), immobile si l'utilisateur réduit les animations."
     },
     {
       "name": "sidebar",

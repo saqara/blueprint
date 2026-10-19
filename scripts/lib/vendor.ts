@@ -9,16 +9,32 @@ export type UpstreamItem = {
   files: { path: string; type: string; content: string; target?: string }[]
 }
 
-export const UPSTREAM: Record<Fw, string> = {
-  react: "https://ui.shadcn.com/r/styles/new-york-v4",
-  vue: "https://www.shadcn-vue.com/r/styles/new-york-v4",
+export type Source = "shadcn" | "ai"
+
+export const UPSTREAM: Record<Source, Record<Fw, string>> = {
+  shadcn: { react: "https://ui.shadcn.com/r/styles/new-york-v4", vue: "https://www.shadcn-vue.com/r/styles/new-york-v4" },
+  // AI Elements (Vercel) and its Vue port: built on shadcn, imported into the same ui/ folder.
+  ai: { react: "https://elements.ai-sdk.dev/api/registry", vue: "https://registry.ai-elements-vue.com" },
 }
 
-export const localize = (text: string, fw: Fw) => text.replaceAll("registry/new-york-v4/", `registry/${fw}/`)
+export const localize = (text: string, fw: Fw) => {
+  let out = text
+    .replaceAll("registry/new-york-v4/", `registry/${fw}/`)
+    .replaceAll("registry/default/ai-elements/", `registry/${fw}/ui/`)
+    .replaceAll("@/registry/default/ui/", `@/registry/${fw}/ui/`)
+    .replace(/(^|["'])components\/ai-elements\//gm, `$1registry/${fw}/ui/`)
+    .replaceAll("@/components/ui/", `@/registry/${fw}/ui/`)
+    .replaceAll("@/components/ai-elements/", `@/registry/${fw}/ui/`)
+  // React items here use the `cn` package and the radix-ui umbrella.
+  if (fw === "react") out = out.replace(/(from\s+)["']@\/lib\/utils["']/g, '$1"cn"').replaceAll("@radix-ui/react-use-controllable-state", "radix-ui/internal")
+  return out
+}
 
 export function saqaraDeps(upstream: string[] | undefined, contents: string[], self?: string): string[] {
-  const imported = contents.flatMap((c) => [...c.matchAll(/@\/registry\/new-york-v4\/ui\/([\w-]+)/g)].map((m) => m[1]))
-  const names = new Set([...(upstream ?? []), ...imported].filter((n) => n !== "utils" && n !== self && !n.includes("/")))
+  const imported = contents.flatMap((c) => [...c.matchAll(/@\/registry\/(?:new-york-v4|react|vue)\/ui\/([\w-]+)/g)].map((m) => m[1]))
+  // AI Elements list their own items as full URLs (".../shimmer.json").
+  const upstreamNames = (upstream ?? []).map((d) => (/^https?:/.test(d) ? d.replace(/^.*\/|\.json$/g, "") : d))
+  const names = new Set([...upstreamNames, ...imported].filter((n) => n !== "utils" && n !== self && !n.includes("/")))
   return [...names].sort().map((n) => `@saqara/${n}`)
 }
 
@@ -40,15 +56,18 @@ export function npmDeps(upstream: string[] | undefined, contents: string[]): str
 const title = (name: string) => name.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
 
 export function plan(upstream: UpstreamItem, fw: Fw, exists: (path: string) => boolean, force: boolean) {
-  const files = upstream.files.map((f) => ({ path: localize(f.path, fw), content: localize(f.content, fw), type: f.type, target: f.target }))
+  // An AI Elements target ("components/ai-elements/…") is dropped: the file installs with the ui items.
+  const files = upstream.files.map((f) => ({ path: localize(f.path, fw), content: localize(f.content, fw), type: f.type === "registry:component" ? "registry:ui" : f.type, target: f.target?.startsWith("components/ai-elements/") ? undefined : f.target }))
   const clash = files.find((f) => exists(f.path))
   if (clash && !force) throw new Error(`${clash.path} already exists (customized?). Re-run with --force to overwrite.`)
 
-  const packages = npmDeps(upstream.dependencies, upstream.files.map((f) => f.content))
-  const deps = saqaraDeps(upstream.registryDependencies, upstream.files.map((f) => f.content), upstream.name)
+  const declared = upstream.dependencies?.map((d) => (fw === "react" && d === "@radix-ui/react-use-controllable-state" ? "radix-ui" : d))
+  const packages = npmDeps(declared, files.map((f) => f.content))
+  const deps = saqaraDeps(upstream.registryDependencies, files.map((f) => f.content), upstream.name)
   const item: Item = {
     name: upstream.name,
-    type: upstream.type,
+    // AI Elements ship as registry:component; here they are listed with the other ui items.
+    type: upstream.type === "registry:component" ? "registry:ui" : upstream.type,
     title: title(upstream.name),
     ...(packages.length ? { dependencies: packages } : {}),
     ...(deps.length ? { registryDependencies: deps } : {}),

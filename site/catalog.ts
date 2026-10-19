@@ -8,12 +8,14 @@ export const START_PAGES = [
 ]
 
 export const CATEGORIES = [
-  { id: "formulaires", label: "Formulaires", items: ["autocomplete", "button", "checkbox", "field", "file-dropzone", "input", "input-group", "label", "multi-select", "password-input", "radio-group", "rating-grid", "select", "slider", "switch", "tag-input", "textarea", "toggle", "toggle-group"] },
+  { id: "formulaires", label: "Formulaires", items: ["autocomplete", "button", "button-group", "checkbox", "field", "file-dropzone", "input", "input-group", "label", "multi-select", "password-input", "radio-group", "rating-grid", "select", "slider", "switch", "tag-input", "textarea", "toggle", "toggle-group"] },
   { id: "mise-en-page", label: "Mise en page", items: ["list-toolbar", "page-header"] },
-  { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
+  { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "carousel", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
   { id: "overlays", label: "Overlays", items: ["alert-dialog", "confirm-dialog", "dialog", "dropdown-menu", "hover-card", "popover", "sheet", "sonner", "tooltip"] },
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "collapsible-section", "command", "pagination", "sidebar", "stepper", "tabs"] },
   { id: "donnees", label: "Données", items: ["chart", "data-table", "horizontal-scroll"] },
+  // AI Elements (Vercel, Vue port by vuepont), restyled and translated: docs link to AI Elements.
+  { id: "chat-ia", label: "Chat IA", items: ["code-block", "shimmer"] },
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
 ]
 
