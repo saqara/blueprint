@@ -423,6 +423,73 @@
       ]
     },
     {
+      "name": "attachments",
+      "type": "registry:ui",
+      "title": "Attachments",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/hover-card"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/attachments/Attachment.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentEmpty.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentHoverCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentHoverCardContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentHoverCardTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentInfo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentPreview.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/AttachmentRemove.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/Attachments.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/types.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/attachments/utils.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Pièces jointes d'un message ou de la saisie (fichiers, images, sources) : aperçu, nom, type et bouton retirer."
+    },
+    {
       "name": "autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",

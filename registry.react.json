@@ -322,6 +322,26 @@
       ]
     },
     {
+      "name": "attachments",
+      "type": "registry:ui",
+      "title": "Attachments",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/hover-card"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/attachments.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Pièces jointes d'un message ou de la saisie (fichiers, images, sources) : aperçu, nom, type et bouton retirer."
+    },
+    {
       "name": "autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",

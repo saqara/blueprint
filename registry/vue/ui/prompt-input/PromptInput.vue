@@ -74,7 +74,7 @@ if (!context) {
   throw new Error('PromptInput context is missing.')
 }
 
-const { fileInputRef, addFiles, submitForm } = context
+const { fileInputRef, addFiles, submitForm, files, removeFile } = context
 
 function handleDragOver(e: DragEvent) {
   if (e.dataTransfer?.types?.includes('Files')) {
@@ -137,7 +137,8 @@ function onSubmit(e: Event) {
       @drop.prevent.stop="handleDrop"
     >
       <InputGroup class="overflow-hidden">
-        <slot />
+        <!-- Saqara: the attached files, to list them with the attachments item (React: usePromptInputAttachments). -->
+        <slot :files="files" :remove-file="removeFile" />
       </InputGroup>
     </form>
   </div>

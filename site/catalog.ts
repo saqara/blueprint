@@ -15,7 +15,7 @@ export const CATEGORIES = [
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "collapsible-section", "command", "pagination", "sidebar", "stepper", "tabs"] },
   { id: "donnees", label: "Données", items: ["chart", "data-table", "horizontal-scroll"] },
   // AI Elements (Vercel, Vue port by vuepont), restyled and translated: docs link to AI Elements.
-  { id: "chat-ia", label: "Chat IA", items: ["agent", "chain-of-thought", "checkpoint", "code-block", "confirmation", "context", "conversation", "file-tree", "inline-citation", "message", "model-selector", "plan", "prompt-input", "queue", "reasoning", "shimmer", "sources", "stack-trace", "suggestion", "task", "terminal", "test-results", "tool"] },
+  { id: "chat-ia", label: "Chat IA", items: ["agent", "attachments", "chain-of-thought", "checkpoint", "code-block", "confirmation", "context", "conversation", "file-tree", "inline-citation", "message", "model-selector", "plan", "prompt-input", "queue", "reasoning", "shimmer", "sources", "stack-trace", "suggestion", "task", "terminal", "test-results", "tool"] },
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
 ]
 
