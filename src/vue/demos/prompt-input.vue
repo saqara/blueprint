@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { ChatStatus } from "@/registry/vue/ui/prompt-input/types"
+import { Attachment, AttachmentInfo, AttachmentPreview, AttachmentRemove, Attachments } from "@/registry/vue/ui/attachments"
 import {
   PromptInput, PromptInputActionAddAttachments, PromptInputActionMenu, PromptInputActionMenuContent, PromptInputActionMenuTrigger,
-  PromptInputBody, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools,
+  PromptInputBody, PromptInputFooter, PromptInputHeader, PromptInputSubmit, PromptInputTextarea, PromptInputTools,
 } from "@/registry/vue/ui/prompt-input"
 
 const status = ref<ChatStatus>("ready")
@@ -19,7 +20,17 @@ function send({ text }: { text: string }) {
 
 <template>
   <div class="w-full max-w-2xl space-y-2">
-    <PromptInput @submit="send">
+    <PromptInput v-slot="{ files, removeFile }" @submit="send">
+      <!-- The files attached so far (menu, drag and drop, paste), each with a remove button. -->
+      <PromptInputHeader v-if="files.length">
+        <Attachments variant="inline">
+          <Attachment v-for="file in files" :key="file.id" :data="file" @remove="removeFile(file.id)">
+            <AttachmentPreview />
+            <AttachmentInfo />
+            <AttachmentRemove />
+          </Attachment>
+        </Attachments>
+      </PromptInputHeader>
       <PromptInputBody>
         <PromptInputTextarea />
       </PromptInputBody>
