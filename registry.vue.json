@@ -3775,6 +3775,28 @@
       "dependencies": [
         "@lucide/vue"
       ]
+    },
+    {
+      "name": "wizard",
+      "type": "registry:block",
+      "title": "Wizard",
+      "description": "Formulaire en plusieurs étapes : stepper, validation par étape avec résumé des erreurs, récapitulatif facultatif, envoi et confirmation (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/alert",
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/spinner",
+        "@saqara/stepper"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/Wizard.vue",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
