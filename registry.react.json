@@ -1296,6 +1296,30 @@
       "description": "Raisonnement du modèle, ouvert pendant la génération puis replié, avec sa durée."
     },
     {
+      "name": "record-page",
+      "type": "registry:block",
+      "title": "Record Page",
+      "description": "Page de détail d'un enregistrement : titre, statut, métadonnées et actions, onglets, panneau d'informations clés qui passe sous le contenu sur mobile (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/dropdown-menu",
+        "@saqara/page-header",
+        "@saqara/tabs"
+      ],
+      "files": [
+        {
+          "path": "registry/react/blocks/record-page.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "saqara-logo",
       "type": "registry:ui",
       "title": "Saqara Logo",
