@@ -89,3 +89,17 @@ export async function planAll(
   }
   return planned
 }
+
+// After adapting a vendored item by hand: its files and dependencies, read from what is on disk now.
+export function refreshItem(item: Item, files: { path: string; content: string }[]): Item {
+  const contents = files.map((f) => f.content)
+  const { dependencies: _, registryDependencies: __, files: ___, ...rest } = item
+  const packages = npmDeps(undefined, contents)
+  const deps = saqaraDeps(undefined, contents, item.name)
+  return {
+    ...rest,
+    ...(packages.length ? { dependencies: packages } : {}),
+    ...(deps.length ? { registryDependencies: deps } : {}),
+    files: files.map((f) => ({ path: f.path, type: "registry:ui" })),
+  }
+}

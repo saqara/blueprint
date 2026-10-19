@@ -579,6 +579,26 @@
       ]
     },
     {
+      "name": "conversation",
+      "type": "registry:ui",
+      "title": "Conversation",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "use-stick-to-bottom"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/conversation.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Fil de discussion qui reste collé au dernier message pendant la génération, avec retour en bas et état vide."
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
@@ -818,6 +838,27 @@
       ]
     },
     {
+      "name": "message",
+      "type": "registry:ui",
+      "title": "Message",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/button-group",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/message.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Message d'une conversation (utilisateur ou assistant) : bulle, réponse mise en forme (HTML issu du markdown de l'app), actions et versions."
+    },
+    {
       "name": "multi-select",
       "type": "registry:ui",
       "title": "Multi Select",
@@ -922,6 +963,32 @@
         }
       ],
       "description": "Barre de progression."
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "nanoid"
+      ],
+      "registryDependencies": [
+        "@saqara/command",
+        "@saqara/dropdown-menu",
+        "@saqara/hover-card",
+        "@saqara/input-group",
+        "@saqara/select",
+        "@saqara/spinner",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/prompt-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Zone de saisie du chat : texte, pièces jointes (glisser-déposer, coller), menu d'actions et bouton envoyer / arrêter."
     },
     {
       "name": "radio-group",
@@ -1177,6 +1244,25 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "suggestion",
+      "type": "registry:ui",
+      "title": "Suggestion",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/scroll-area"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/suggestion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Questions suggérées sous forme de pastilles défilantes."
     },
     {
       "name": "switch",

@@ -1,15 +1,32 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname } from "node:path"
 import { keepDescription, readManifest, upsertItem, writeManifest } from "./lib/manifest.ts"
-import { planAll, UPSTREAM, type Fw, type UpstreamItem } from "./lib/vendor.ts"
+import { planAll, refreshItem, UPSTREAM, type Fw, type UpstreamItem } from "./lib/vendor.ts"
 
 const args = process.argv.slice(2)
 const force = args.includes("--force")
 const source = args.includes("--ai") ? "ai" : "shadcn"
-const names = args.filter((a) => a !== "--force" && a !== "--ai")
+const names = args.filter((a) => !a.startsWith("--"))
 if (!names.length) {
-  console.error("usage: npm run vendor -- <name...> [--force] [--ai]")
+  console.error("usage: npm run vendor -- <name...> [--force] [--ai] | --refresh <name...>")
   process.exit(1)
+}
+
+if (args.includes("--refresh")) {
+  for (const fw of ["react", "vue"] as Fw[]) {
+    const manifestPath = `registry.${fw}.json`
+    let manifest = readManifest(manifestPath)
+    for (const name of names) {
+      const item = manifest.items.find((i) => i.name === name)
+      if (!item) throw new Error(`${fw}: no "${name}" in ${manifestPath}`)
+      const dir = `registry/${fw}/ui/${name}`
+      const paths = fw === "vue" ? readdirSync(dir).sort().map((f) => `${dir}/${f}`) : [`${dir}.tsx`]
+      manifest = upsertItem(manifest, refreshItem(item, paths.map((path) => ({ path, content: readFileSync(path, "utf8") }))))
+      console.log(`${fw}: ${name} refreshed`)
+    }
+    writeManifest(manifestPath, manifest)
+  }
+  process.exit(0)
 }
 
 async function fetchItem(fw: Fw, name: string): Promise<UpstreamItem> {
