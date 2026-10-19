@@ -23,7 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
   mass: 1.25,
   anchor: 'none',
 })
-const delegatedProps = reactiveOmit(props, 'class')
+// Saqara: aria-label is set on the log itself (StickToBottom does not render ariaLabel).
+const delegatedProps = reactiveOmit(props, 'class', 'ariaLabel')
 </script>
 
 <template>
@@ -31,6 +32,7 @@ const delegatedProps = reactiveOmit(props, 'class')
     v-bind="delegatedProps"
     :class="cn('relative flex-1 overflow-y-hidden', props.class)"
     role="log"
+    :aria-label="props.ariaLabel"
   >
     <slot />
   </StickToBottom>

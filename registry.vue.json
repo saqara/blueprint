@@ -283,6 +283,29 @@
       "description": "Fiche d'un agent : modèle, instructions, outils disponibles et schéma de sortie."
     },
     {
+      "name": "ai-chat",
+      "type": "registry:block",
+      "title": "AI Chat",
+      "description": "Écran de chat IA complet : conversation, suggestions, saisie avec pièces jointes, envoi / arrêt (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/attachments",
+        "@saqara/conversation",
+        "@saqara/message",
+        "@saqara/prompt-input",
+        "@saqara/shimmer",
+        "@saqara/suggestion"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/AiChat.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
