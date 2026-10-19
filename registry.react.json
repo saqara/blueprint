@@ -219,6 +219,27 @@
       "description": "Sections repliables empilées, une ou plusieurs ouvertes."
     },
     {
+      "name": "agent",
+      "type": "registry:ui",
+      "title": "Agent",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/accordion",
+        "@saqara/badge",
+        "@saqara/code-block"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/agent.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Fiche d'un agent : modèle, instructions, outils disponibles et schéma de sortie."
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -446,6 +467,27 @@
         }
       ],
       "description": "Défilement horizontal de diapositives, au clic, au clavier ou au glissé."
+    },
+    {
+      "name": "chain-of-thought",
+      "type": "registry:ui",
+      "title": "Chain of Thought",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/chain-of-thought.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Étapes du raisonnement (recherches, résultats, statut de chaque étape), repliables."
     },
     {
       "name": "chart",
@@ -747,6 +789,27 @@
       "description": "Aperçu d'un contenu au survol."
     },
     {
+      "name": "inline-citation",
+      "type": "registry:ui",
+      "title": "Inline Citation",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/carousel",
+        "@saqara/hover-card"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/inline-citation.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Citation dans le texte : badge de la source, détail au survol ou au focus, plusieurs sources en carrousel."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -933,6 +996,28 @@
       ]
     },
     {
+      "name": "plan",
+      "type": "registry:ui",
+      "title": "Plan",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/collapsible",
+        "@saqara/shimmer"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/plan.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Plan proposé par l'assistant : titre, description, étapes et actions, repliable."
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -991,6 +1076,27 @@
       "description": "Zone de saisie du chat : texte, pièces jointes (glisser-déposer, coller), menu d'actions et bouton envoyer / arrêter."
     },
     {
+      "name": "queue",
+      "type": "registry:ui",
+      "title": "Queue",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/collapsible",
+        "@saqara/scroll-area"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/queue.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "File de tâches ou de messages en attente, par sections repliables."
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
@@ -1024,6 +1130,28 @@
       "dependencies": [
         "cn"
       ]
+    },
+    {
+      "name": "reasoning",
+      "type": "registry:ui",
+      "title": "Reasoning",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible",
+        "@saqara/message",
+        "@saqara/shimmer"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/reasoning.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Raisonnement du modèle, ouvert pendant la génération puis replié, avec sa durée."
     },
     {
       "name": "saqara-logo",
@@ -1196,6 +1324,25 @@
       "description": "Notifications (toasts) aux couleurs Saqara."
     },
     {
+      "name": "sources",
+      "type": "registry:ui",
+      "title": "Sources",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/sources.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Liste repliable des sources utilisées pour une réponse."
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
@@ -1332,6 +1479,25 @@
       ]
     },
     {
+      "name": "task",
+      "type": "registry:ui",
+      "title": "Task",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/task.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Tâche en cours de l'assistant avec ses sous-étapes et les fichiers lus, repliable."
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
@@ -1400,6 +1566,27 @@
         }
       ],
       "description": "Groupe de boutons à bascule (choix unique ou multiple)."
+    },
+    {
+      "name": "tool",
+      "type": "registry:ui",
+      "title": "Tool",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/code-block",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/tool.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Appel d'outil (requête, API…) : statut, paramètres et résultat ou erreur, repliables."
     },
     {
       "name": "tooltip",
