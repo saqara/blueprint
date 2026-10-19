@@ -800,6 +800,38 @@
       "description": "Case à cocher."
     },
     {
+      "name": "checkpoint",
+      "type": "registry:ui",
+      "title": "Checkpoint",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/separator",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/checkpoint/Checkpoint.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/checkpoint/CheckpointIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/checkpoint/CheckpointTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/checkpoint/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Point de restauration dans une conversation : revenir à l’état d’avant une question."
+    },
+    {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
@@ -1011,6 +1043,123 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "confirmation",
+      "type": "registry:ui",
+      "title": "Confirmation",
+      "registryDependencies": [
+        "@saqara/alert",
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/confirmation/Confirmation.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationAccepted.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationRejected.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationRequest.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/ConfirmationTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/confirmation/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Demande d’autorisation avant qu’un outil s’exécute (requête, envoi…), puis rappel de la décision."
+    },
+    {
+      "name": "context",
+      "type": "registry:ui",
+      "title": "Context",
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/hover-card",
+        "@saqara/progress"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/context/Context.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextCacheUsage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextContentBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextContentFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextContentHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextInputUsage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextOutputUsage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextReasoningUsage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/ContextTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/TokensWithCost.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/context/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Consommation de la fenêtre de contexte du modèle (jetons d’entrée, de sortie, de raisonnement, en cache) et coût, fourni par l’app."
     },
     {
       "name": "conversation",
@@ -1350,6 +1499,52 @@
       ]
     },
     {
+      "name": "file-tree",
+      "type": "registry:ui",
+      "title": "File Tree",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/file-tree/FileTree.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/FileTreeActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/FileTreeFile.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/FileTreeFolder.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/FileTreeIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/FileTreeName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/file-tree/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Arborescence de fichiers (exports, pièces jointes) avec dossiers dépliables et sélection."
+    },
+    {
       "name": "horizontal-scroll",
       "type": "registry:ui",
       "title": "Horizontal Scroll",
@@ -1665,6 +1860,81 @@
         }
       ],
       "description": "Message d'une conversation (utilisateur ou assistant) : bulle, réponse mise en forme (HTML issu du markdown de l'app), actions et versions."
+    },
+    {
+      "name": "model-selector",
+      "type": "registry:ui",
+      "title": "Model Selector",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/command",
+        "@saqara/dialog"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelector.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorDialog.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorEmpty.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorLogo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorLogoGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorShortcut.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/ModelSelectorTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/model-selector/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Choix du modèle d’IA dans une fenêtre avec recherche, groupes et raccourcis."
     },
     {
       "name": "multi-select",
@@ -2669,6 +2939,74 @@
       "description": "Indicateur de chargement."
     },
     {
+      "name": "stack-trace",
+      "type": "registry:ui",
+      "title": "Stack Trace",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/stack-trace/StackTrace.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceCopyButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceError.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceErrorMessage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceErrorType.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceExpandButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceFrames.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/StackTraceHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/stack-trace/utils.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Erreur et pile d’appels dépliable, avec chemins de fichiers cliquables et copie de la trace."
+    },
+    {
       "name": "stat-card",
       "type": "registry:ui",
       "title": "Stat Card",
@@ -2921,6 +3259,152 @@
         }
       ],
       "description": "Tâche en cours de l'assistant avec ses sous-étapes et les fichiers lus, repliable."
+    },
+    {
+      "name": "terminal",
+      "type": "registry:ui",
+      "title": "Terminal",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/terminal/Terminal.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalClearButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalCopyButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalStatus.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/TerminalTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/terminal/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Sortie de commande en police à chasse fixe, défilement automatique, copie et effacement ; les codes ANSI sont retirés."
+    },
+    {
+      "name": "test-results",
+      "type": "registry:ui",
+      "title": "Test Results",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/test-results/Test.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestDuration.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestError.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestErrorMessage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestErrorStack.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResults.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResultsContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResultsDuration.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResultsHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResultsProgress.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestResultsSummary.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestStatus.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestSuite.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestSuiteContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestSuiteName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/TestSuiteStats.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/test-results/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Résultats de contrôles ou de tests : résumé, progression, suites dépliables et messages d’erreur."
     },
     {
       "name": "textarea",

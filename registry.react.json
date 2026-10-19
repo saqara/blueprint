@@ -527,6 +527,27 @@
       "description": "Case à cocher."
     },
     {
+      "name": "checkpoint",
+      "type": "registry:ui",
+      "title": "Checkpoint",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/separator",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/checkpoint.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Point de restauration dans une conversation : revenir à l’état d’avant une question."
+    },
+    {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
@@ -619,6 +640,45 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "confirmation",
+      "type": "registry:ui",
+      "title": "Confirmation",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/alert",
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/confirmation.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Demande d’autorisation avant qu’un outil s’exécute (requête, envoi…), puis rappel de la décision."
+    },
+    {
+      "name": "context",
+      "type": "registry:ui",
+      "title": "Context",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/hover-card",
+        "@saqara/progress"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/context.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Consommation de la fenêtre de contexte du modèle (jetons d’entrée, de sortie, de raisonnement, en cache) et coût, fourni par l’app."
     },
     {
       "name": "conversation",
@@ -756,6 +816,25 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "file-tree",
+      "type": "registry:ui",
+      "title": "File Tree",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/file-tree.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Arborescence de fichiers (exports, pièces jointes) avec dossiers dépliables et sélection."
     },
     {
       "name": "horizontal-scroll",
@@ -920,6 +999,25 @@
         }
       ],
       "description": "Message d'une conversation (utilisateur ou assistant) : bulle, réponse mise en forme (HTML issu du markdown de l'app), actions et versions."
+    },
+    {
+      "name": "model-selector",
+      "type": "registry:ui",
+      "title": "Model Selector",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/command",
+        "@saqara/dialog"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/model-selector.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Choix du modèle d’IA dans une fenêtre avec recherche, groupes et raccourcis."
     },
     {
       "name": "multi-select",
@@ -1360,6 +1458,27 @@
       "description": "Indicateur de chargement."
     },
     {
+      "name": "stack-trace",
+      "type": "registry:ui",
+      "title": "Stack Trace",
+      "dependencies": [
+        "cn",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/stack-trace.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Erreur et pile d’appels dépliable, avec chemins de fichiers cliquables et copie de la trace."
+    },
+    {
       "name": "stat-card",
       "type": "registry:ui",
       "title": "Stat Card",
@@ -1496,6 +1615,45 @@
         }
       ],
       "description": "Tâche en cours de l'assistant avec ses sous-étapes et les fichiers lus, repliable."
+    },
+    {
+      "name": "terminal",
+      "type": "registry:ui",
+      "title": "Terminal",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/terminal.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Sortie de commande en police à chasse fixe, défilement automatique, copie et effacement ; les codes ANSI sont retirés."
+    },
+    {
+      "name": "test-results",
+      "type": "registry:ui",
+      "title": "Test Results",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/test-results.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Résultats de contrôles ou de tests : résumé, progression, suites dépliables et messages d’erreur."
     },
     {
       "name": "textarea",

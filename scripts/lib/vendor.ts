@@ -42,7 +42,8 @@ const FRAMEWORKS = new Set(["react", "react-dom", "vue"])
 
 // Upstream items sometimes import packages they don't declare (e.g. button → class-variance-authority).
 export function npmDeps(upstream: string[] | undefined, contents: string[]): string[] {
-  const specifiers = contents.flatMap((c) => [...c.matchAll(/from ["']([^"'.@][^"']*|@[^/"']+\/[^"']+)["']/g)].map((m) => m[1]))
+  // A package specifier has no whitespace: prose such as `from "ErrorType: message"` in a comment is not an import.
+  const specifiers = contents.flatMap((c) => [...c.matchAll(/from ["']([^"'.@\s][^"'\s]*|@[^/"'\s]+\/[^"'\s]+)["']/g)].map((m) => m[1]))
   const packages = specifiers
     .filter((s) => !s.startsWith("@/"))
     .map((s) => s.split("/").slice(0, s.startsWith("@") ? 2 : 1).join("/"))

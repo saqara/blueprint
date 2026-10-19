@@ -33,6 +33,7 @@ describe("npmDeps", () => {
       'import { X } from "@lucide/vue/icons"\nimport a from "./Dialog.vue"\nimport { cn } from "@/lib/utils"\nimport { ref } from "vue"',
     ]
     expect(npmDeps(["radix-ui"], src)).toEqual(["@lucide/vue", "class-variance-authority", "radix-ui"])
+    expect(npmDeps(undefined, ['// extract error type from "ErrorType: message" format'])).toEqual([])
   })
 })
 
