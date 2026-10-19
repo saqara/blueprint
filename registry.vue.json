@@ -235,6 +235,54 @@
       "description": "Sections repliables empilées, une ou plusieurs ouvertes."
     },
     {
+      "name": "agent",
+      "type": "registry:ui",
+      "title": "Agent",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/accordion",
+        "@saqara/badge",
+        "@saqara/code-block"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/agent/Agent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentInstructions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentOutput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentTool.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/AgentTools.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/agent/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Fiche d'un agent : modèle, instructions, outils disponibles et schéma de sortie."
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -639,6 +687,58 @@
         }
       ],
       "description": "Défilement horizontal de diapositives, au clic, au clavier ou au glissé."
+    },
+    {
+      "name": "chain-of-thought",
+      "type": "registry:ui",
+      "title": "Chain of Thought",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThought.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtImage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtSearchResult.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtSearchResults.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/ChainOfThoughtStep.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/chain-of-thought/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Étapes du raisonnement (recherches, résultats, statut de chaque étape), repliables."
     },
     {
       "name": "chart",
@@ -1294,6 +1394,82 @@
       "description": "Aperçu d'un contenu au survol."
     },
     {
+      "name": "inline-citation",
+      "type": "registry:ui",
+      "title": "Inline Citation",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/carousel",
+        "@saqara/hover-card"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitation.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCardBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCardTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarousel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselIndex.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselNext.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationCarouselPrev.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationQuote.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationSource.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/InlineCitationText.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/inline-citation/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Citation dans le texte : badge de la source, détail au survol ou au focus, plusieurs sources en carrousel."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1618,6 +1794,63 @@
       ]
     },
     {
+      "name": "plan",
+      "type": "registry:ui",
+      "title": "Plan",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/collapsible",
+        "@saqara/shimmer"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/plan/Plan.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/PlanTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/plan/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Plan proposé par l'assistant : titre, description, étapes et actions, repliable."
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1842,6 +2075,86 @@
       "description": "Zone de saisie du chat : texte, pièces jointes (glisser-déposer, coller), menu d'actions et bouton envoyer / arrêter."
     },
     {
+      "name": "queue",
+      "type": "registry:ui",
+      "title": "Queue",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/collapsible",
+        "@saqara/scroll-area"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/queue/Queue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemAttachment.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemFile.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemImage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueItemIndicator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueSection.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueSectionContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueSectionLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/QueueSectionTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/queue/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "File de tâches ou de messages en attente, par sections repliables."
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
@@ -1888,6 +2201,43 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "reasoning",
+      "type": "registry:ui",
+      "title": "Reasoning",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible",
+        "@saqara/message",
+        "@saqara/shimmer"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/reasoning/Reasoning.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/reasoning/ReasoningContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/reasoning/ReasoningTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/reasoning/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/reasoning/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Raisonnement du modèle, ouvert pendant la génération puis replié, avec sa durée."
     },
     {
       "name": "saqara-logo",
@@ -2266,6 +2616,40 @@
       "description": "Notifications (toasts) aux couleurs Saqara."
     },
     {
+      "name": "sources",
+      "type": "registry:ui",
+      "title": "Sources",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/sources/Source.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sources/Sources.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sources/SourcesContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sources/SourcesTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/sources/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Liste repliable des sources utilisées pour une réponse."
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
@@ -2501,6 +2885,44 @@
       ]
     },
     {
+      "name": "task",
+      "type": "registry:ui",
+      "title": "Task",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/task/Task.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/task/TaskContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/task/TaskItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/task/TaskItemFile.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/task/TaskTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/task/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Tâche en cours de l'assistant avec ses sous-étapes et les fichiers lus, repliable."
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
@@ -2589,6 +3011,54 @@
         }
       ],
       "description": "Groupe de boutons à bascule (choix unique ou multiple)."
+    },
+    {
+      "name": "tool",
+      "type": "registry:ui",
+      "title": "Tool",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/badge",
+        "@saqara/code-block",
+        "@saqara/collapsible"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/tool/Tool.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/ToolContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/ToolHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/ToolInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/ToolOutput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/ToolStatusBadge.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/tool/types.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Appel d'outil (requête, API…) : statut, paramètres et résultat ou erreur, repliables."
     },
     {
       "name": "tooltip",
