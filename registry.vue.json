@@ -516,6 +516,39 @@
       ]
     },
     {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "dependencies": [
+        "@vueuse/core",
+        "class-variance-authority",
+        "cn",
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "@saqara/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/button-group/ButtonGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/button-group/ButtonGroupSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/button-group/ButtonGroupText.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/button-group/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Groupe de boutons accolés (actions liées, barre d'outils)."
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -557,6 +590,55 @@
       "dependencies": [
         "reka-ui"
       ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "cn",
+        "embla-carousel-vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/carousel/Carousel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/CarouselContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/CarouselItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/CarouselNext.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/CarouselPrevious.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/interface.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/carousel/useCarousel.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Défilement horizontal de diapositives, au clic, au clavier ou au glissé."
     },
     {
       "name": "chart",
@@ -616,6 +698,87 @@
         }
       ],
       "description": "Case à cocher."
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "shiki"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/select"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/code-block/CodeBlock.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockContainer.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockCopyButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockFilename.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockLanguageSelector.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockLanguageSelectorContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockLanguageSelectorItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockLanguageSelectorTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockLanguageSelectorValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/CodeBlockTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/code-block/utils.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Bloc de code avec coloration syntaxique (Shiki), numéros de ligne et bouton copier."
     },
     {
       "name": "collapsible",
@@ -1618,6 +1781,22 @@
         }
       ],
       "description": "Panneau latéral glissant, en 4 largeurs, avec un corps qui défile."
+    },
+    {
+      "name": "shimmer",
+      "type": "registry:ui",
+      "title": "Shimmer",
+      "files": [
+        {
+          "path": "registry/vue/ui/shimmer/Shimmer.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/shimmer/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Texte animé d'un reflet pendant une attente (« Réflexion… »), immobile si l'utilisateur réduit les animations."
     },
     {
       "name": "sidebar",

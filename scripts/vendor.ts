@@ -5,14 +5,15 @@ import { planAll, UPSTREAM, type Fw, type UpstreamItem } from "./lib/vendor.ts"
 
 const args = process.argv.slice(2)
 const force = args.includes("--force")
-const names = args.filter((a) => a !== "--force")
+const source = args.includes("--ai") ? "ai" : "shadcn"
+const names = args.filter((a) => a !== "--force" && a !== "--ai")
 if (!names.length) {
-  console.error("usage: npm run vendor -- <name...> [--force]")
+  console.error("usage: npm run vendor -- <name...> [--force] [--ai]")
   process.exit(1)
 }
 
 async function fetchItem(fw: Fw, name: string): Promise<UpstreamItem> {
-  const res = await fetch(`${UPSTREAM[fw]}/${name}.json`)
+  const res = await fetch(`${UPSTREAM[source][fw]}/${name}.json`)
   if (!res.ok) throw new Error(`upstream ${fw} has no "${name}" (HTTP ${res.status})`)
   return (await res.json()) as UpstreamItem
 }

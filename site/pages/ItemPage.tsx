@@ -11,7 +11,11 @@ export function ItemPage({ kind, name, fw }: { kind: "composants" | "blocs"; nam
   const category = CATEGORIES.find((c) => c.items.includes(name))
   const listed = kind === "blocs" ? BLOCKS.includes(name) : !!category
   if (!info || !listed) return <NotFound />
-  const docs = fw === "react" ? `https://ui.shadcn.com/docs/components/${name}` : `https://www.shadcn-vue.com/docs/components/${name}`
+  const ai = category?.id === "chat-ia"
+  const docs = ai
+    ? fw === "react" ? `https://elements.ai-sdk.dev/components/${name}` : "https://www.ai-elements-vue.com/overview/introduction"
+    : fw === "react" ? `https://ui.shadcn.com/docs/components/${name}` : `https://www.shadcn-vue.com/docs/components/${name}`
+  const source = ai ? (fw === "react" ? "AI Elements" : "AI Elements Vue") : fw === "react" ? "shadcn/ui" : "shadcn-vue"
   return (
     <article className="space-y-6">
       <Breadcrumb>
@@ -29,7 +33,7 @@ export function ItemPage({ kind, name, fw }: { kind: "composants" | "blocs"; nam
           {SAQARA_MADE.has(name) && <Badge variant="identity">Saqara</Badge>}
         </div>
         <p className="text-muted-foreground">{info.description.replace(/ \(Saqara\)\.?$/, ".")}</p>
-        {!SAQARA_MADE.has(name) && <a className="text-sm text-primary underline-offset-4 hover:underline" href={docs} target="_blank" rel="noreferrer">Documentation officielle ({fw === "react" ? "shadcn/ui" : "shadcn-vue"}) ↗</a>}
+        {!SAQARA_MADE.has(name) && <a className="text-sm text-primary underline-offset-4 hover:underline" href={docs} target="_blank" rel="noreferrer">Documentation officielle ({source}) ↗</a>}
       </header>
       <InstallCommand name={name} fw={fw} />
       <Preview key={`${fw}-${name}`} kind="demos" fw={fw} name={name} framed={kind === "blocs"} />
