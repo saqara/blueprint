@@ -1838,6 +1838,31 @@
       "description": "Libellé associé à un champ."
     },
     {
+      "name": "list-page",
+      "type": "registry:block",
+      "title": "List Page",
+      "description": "Écran de liste : en-tête, recherche et filtres, tableau triable, pagination, états vide et chargement (Saqara).",
+      "dependencies": [
+        "@lucide/vue",
+        "@tanstack/vue-table"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/data-table",
+        "@saqara/empty",
+        "@saqara/input-group",
+        "@saqara/list-toolbar",
+        "@saqara/page-header",
+        "@saqara/pagination"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/blocks/ListPage.vue",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "list-toolbar",
       "type": "registry:ui",
       "title": "List Toolbar",
