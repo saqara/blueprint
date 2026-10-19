@@ -913,6 +913,42 @@
       ]
     },
     {
+      "name": "conversation",
+      "type": "registry:ui",
+      "title": "Conversation",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "vue-stick-to-bottom"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/conversation/Conversation.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/conversation/ConversationContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/conversation/ConversationEmptyState.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/conversation/ConversationScrollButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/conversation/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Fil de discussion qui reste collé au dernier message pendant la génération, avec retour en bas et état vide."
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
@@ -1378,6 +1414,83 @@
       ]
     },
     {
+      "name": "message",
+      "type": "registry:ui",
+      "title": "Message",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/avatar",
+        "@saqara/button",
+        "@saqara/button-group",
+        "@saqara/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/message/Message.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageAvatar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranch.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranchContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranchNext.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranchPage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranchPrevious.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageBranchSelector.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageResponse.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/MessageToolbar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/message/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Message d'une conversation (utilisateur ou assistant) : bulle, réponse mise en forme (HTML issu du markdown de l'app), actions et versions."
+    },
+    {
       "name": "multi-select",
       "type": "registry:ui",
       "title": "Multi Select",
@@ -1555,6 +1668,178 @@
         }
       ],
       "description": "Barre de progression."
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "dependencies": [
+        "@lucide/vue",
+        "@vueuse/core",
+        "nanoid"
+      ],
+      "registryDependencies": [
+        "@saqara/command",
+        "@saqara/dropdown-menu",
+        "@saqara/hover-card",
+        "@saqara/input-group",
+        "@saqara/select"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputActionAddAttachments.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputActionMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputActionMenuContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputActionMenuItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputActionMenuTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommand.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandEmpty.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputCommandSeparator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputHoverCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputHoverCardContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputHoverCardTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputProvider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSelect.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSelectContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSelectItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSelectTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSelectValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSpeechButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputSubmit.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTab.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTabBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTabItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTabLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTabsList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTextarea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/PromptInputTools.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/prompt-input/types.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Zone de saisie du chat : texte, pièces jointes (glisser-déposer, coller), menu d'actions et bouton envoyer / arrêter."
     },
     {
       "name": "radio-group",
@@ -2061,6 +2346,30 @@
         }
       ],
       "description": "Étapes numérotées d'un parcours."
+    },
+    {
+      "name": "suggestion",
+      "type": "registry:ui",
+      "title": "Suggestion",
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/scroll-area"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/suggestion/Suggestion.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/suggestion/Suggestions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/suggestion/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "description": "Questions suggérées sous forme de pastilles défilantes."
     },
     {
       "name": "switch",

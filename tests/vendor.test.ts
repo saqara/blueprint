@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { localize, npmDeps, plan, planAll, saqaraDeps } from "../scripts/lib/vendor.ts"
+import { localize, npmDeps, plan, planAll, refreshItem, saqaraDeps } from "../scripts/lib/vendor.ts"
 
 const upstream = {
   name: "radio-group",
@@ -114,5 +114,20 @@ describe("AI Elements", () => {
     expect(files[0].content).toContain("'@/registry/vue/ui/shimmer'")
     expect(files[0].content).toContain("'@/lib/utils'")
     expect(item.registryDependencies).toEqual(["@saqara/card", "@saqara/shimmer"])
+  })
+})
+
+describe("refreshItem", () => {
+  it("re-reads files and dependencies from the adapted sources, keeping title and description", () => {
+    const item = { name: "message", type: "registry:ui", title: "Message", description: "Bulle.", dependencies: ["ai", "streamdown"], registryDependencies: ["@saqara/tooltip"], files: [] }
+    const files = [
+      { path: "registry/vue/ui/message/Message.vue", content: "import { cn } from '@/lib/utils'\nimport { Button } from '@/registry/vue/ui/button'\nimport { X } from '@lucide/vue'\nimport { ctx } from './context'\n" },
+      { path: "registry/vue/ui/message/context.ts", content: "import { inject } from 'vue'\n" },
+    ]
+    expect(refreshItem(item, files)).toEqual({
+      name: "message", type: "registry:ui", title: "Message", description: "Bulle.",
+      dependencies: ["@lucide/vue"], registryDependencies: ["@saqara/button"],
+      files: files.map((f) => ({ path: f.path, type: "registry:ui" })),
+    })
   })
 })
