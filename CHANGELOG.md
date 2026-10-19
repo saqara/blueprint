@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-10-19 — Bloc `dashboard` : tableau de bord (indicateurs `stat-card`, panneaux de graphiques titrés avec alternative textuelle `summary`, activité récente avec état vide, sélecteur de période annoncé aux lecteurs d'écran, squelettes pendant le chargement). L'app fournit les chiffres et ses graphiques (React : `panels[].content` ; Vue : slots `#panel-<id>`).
 - 2026-10-19 — Bloc `list-page` : écran de liste (en-tête et action principale, recherche et filtres, tableau triable, pagination avec ellipses, nombre de résultats annoncé, chargement, état vide « rien encore » distinct de « aucun résultat » avec réinitialisation), piloté par l'app (données, tri, filtres et page).
 - 2026-10-19 — Bloc `record-page` : page de détail d'un enregistrement (titre en h1, statut, métadonnées, action principale + menu « Plus d’actions », onglets avec compteurs, panneau « Informations clés » en `<aside>` qui passe sous le contenu sur mobile). Contenu des onglets : `tabs[].content` en React, slots `#tab-<valeur>` en Vue.
 - 2026-10-19 — Bloc `settings-page` : écran de paramètres avec navigation entre sections (liste latérale, rangée défilante sur mobile), sections toujours montées (la saisie survit au changement de section), barre « Enregistrer / Annuler » quand `dirty`, états enregistrement / enregistré / erreur annoncés aux lecteurs d'écran, confirmation du navigateur avant de quitter avec des modifications (`warnOnLeave`).

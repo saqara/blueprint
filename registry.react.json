@@ -745,6 +745,29 @@
       "description": "Fil de discussion qui reste collé au dernier message pendant la génération, avec retour en bas et état vide."
     },
     {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "Tableau de bord : indicateurs, graphiques avec alternative textuelle, activité récente et sélecteur de période (Saqara).",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "@saqara/card",
+        "@saqara/empty",
+        "@saqara/page-header",
+        "@saqara/select",
+        "@saqara/skeleton",
+        "@saqara/stat-card"
+      ],
+      "files": [
+        {
+          "path": "registry/react/blocks/dashboard.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
