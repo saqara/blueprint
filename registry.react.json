@@ -1927,6 +1927,29 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "wizard",
+      "type": "registry:block",
+      "title": "Wizard",
+      "description": "Formulaire en plusieurs étapes : stepper, validation par étape avec résumé des erreurs, récapitulatif facultatif, envoi et confirmation (Saqara).",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@saqara/alert",
+        "@saqara/button",
+        "@saqara/card",
+        "@saqara/spinner",
+        "@saqara/stepper"
+      ],
+      "files": [
+        {
+          "path": "registry/react/blocks/wizard.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

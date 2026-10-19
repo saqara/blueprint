@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-10-19 — Bloc `wizard` : formulaire en plusieurs étapes (stepper, Précédent / Suivant, validation par étape via `validate` avec un résumé des erreurs qui prend le focus, récapitulatif facultatif, envoi et confirmation). Le focus va au titre de chaque étape, puis à la confirmation. Vue : contenu des étapes dans les slots `#step-1`, `#step-2`…, `#review` et `#done`.
 - 2026-10-19 — Bloc `dashboard` : tableau de bord (indicateurs `stat-card`, panneaux de graphiques titrés avec alternative textuelle `summary`, activité récente avec état vide, sélecteur de période annoncé aux lecteurs d'écran, squelettes pendant le chargement). L'app fournit les chiffres et ses graphiques (React : `panels[].content` ; Vue : slots `#panel-<id>`).
 - 2026-10-19 — Bloc `list-page` : écran de liste (en-tête et action principale, recherche et filtres, tableau triable, pagination avec ellipses, nombre de résultats annoncé, chargement, état vide « rien encore » distinct de « aucun résultat » avec réinitialisation), piloté par l'app (données, tri, filtres et page).
 - 2026-10-19 — Bloc `record-page` : page de détail d'un enregistrement (titre en h1, statut, métadonnées, action principale + menu « Plus d’actions », onglets avec compteurs, panneau « Informations clés » en `<aside>` qui passe sous le contenu sur mobile). Contenu des onglets : `tabs[].content` en React, slots `#tab-<valeur>` en Vue.
