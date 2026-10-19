@@ -26,7 +26,9 @@ function handleKeyDown(e: KeyboardEvent) {
     const textarea = e.currentTarget as HTMLTextAreaElement | null
     const submitButton = textarea?.form?.querySelector('button[type="submit"]') as HTMLButtonElement | null
 
-    if (submitButton?.disabled)
+    // Saqara: no enabled submit button (disabled, or turned into "stop" while generating): Enter
+    // must not send the text — nor clear it.
+    if (!submitButton || submitButton.disabled)
       return
 
     textarea?.form?.requestSubmit()
