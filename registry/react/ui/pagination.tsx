@@ -1,6 +1,7 @@
 // Saqara: French copy (tests/pagination.test.ts).
 import * as React from "react"
 import { cn } from "cn"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -23,14 +24,18 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
 
 function PaginationContent({
   className,
+  children,
   ...props
 }: React.ComponentProps<"ul">) {
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex flex-row items-center gap-1", className)}
+      className={cn("relative isolate flex flex-row items-center gap-1 [&_:is(a,button):not([aria-current]):hover]:bg-transparent", className)}
       {...props}
-    />
+    >
+      <FluidHighlight as="li" mode="pointer" items="a, button" className="rounded-md bg-accent" />
+      {children}
+    </ul>
   )
 }
 

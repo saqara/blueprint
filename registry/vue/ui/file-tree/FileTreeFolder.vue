@@ -49,9 +49,10 @@ provide(FileTreeFolderKey, {
     >
       <CollapsibleTrigger as-child>
         <button
+          data-slot="file-tree-row"
           :class="
             cn(
-              'flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors hover:bg-muted/50 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+              'flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
               isSelected && 'bg-muted',
             )
           "

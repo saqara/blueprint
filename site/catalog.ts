@@ -38,6 +38,8 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   attachments: "updated", "chain-of-thought": "updated", "code-block": "updated", "file-tree": "updated", "prompt-input": "updated",
   question: "updated", reasoning: "updated", sources: "updated", "stack-trace": "updated", task: "updated", terminal: "updated",
   "test-results": "updated", tool: "updated",
+  // Fluid hover audit.
+  autocomplete: "updated", pagination: "updated", "settings-page": "updated",
 }
 
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]

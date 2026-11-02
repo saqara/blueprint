@@ -3,6 +3,7 @@
 import * as React from "react"
 import { MenuIcon } from "lucide-react"
 import { cn } from "cn"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 import { Badge } from "@/registry/react/ui/badge"
 import { Button } from "@/registry/react/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/react/ui/sheet"
@@ -104,7 +105,8 @@ function AppShellHeader({
               {title}
             </h1>
           )}
-          <nav aria-label="Navigation principale" className="ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex">
+          <nav aria-label="Navigation principale" className="relative isolate ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+            <FluidHighlight mode="pointer" items="a, button" className="rounded-md bg-sidebar-accent" />
             {nav.map((item) => entry(item, false))}
           </nav>
           <div className="ml-auto flex shrink-0 items-center gap-1 md:ml-0">
@@ -120,7 +122,8 @@ function AppShellHeader({
                 <SheetHeader onClick={(event) => (event.target as HTMLElement).closest("a") && setOpen(false)}>
                   <SheetTitle>{brand}</SheetTitle>
                 </SheetHeader>
-                <nav aria-label="Navigation principale" className="grid gap-1 px-4">
+                <nav aria-label="Navigation principale" className="relative isolate grid gap-1 px-4 [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+                  <FluidHighlight mode="pointer" items="a, button" className="rounded-md bg-sidebar-accent" />
                   {nav.map((item) => entry(item, true))}
                 </nav>
               </SheetContent>

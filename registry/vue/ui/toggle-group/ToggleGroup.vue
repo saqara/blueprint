@@ -7,6 +7,7 @@ import { reactiveOmit } from "@vueuse/core"
 import { ToggleGroupRoot, useForwardPropsEmits } from "reka-ui"
 import { provide } from "vue"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
@@ -42,8 +43,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       '--gap': spacing,
     }"
     v-bind="forwarded"
-    :class="cn('group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs', props.class)"
+    :class="cn('group/toggle-group relative isolate [&>[data-slot=toggle-group-item]:hover]:bg-transparent flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs', props.class)"
   >
+    <FluidHighlight mode="pointer" items="[data-slot=toggle-group-item]" class="rounded-md bg-muted" />
     <slot v-bind="slotProps" />
   </ToggleGroupRoot>
 </template>

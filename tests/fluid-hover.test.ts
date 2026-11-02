@@ -38,3 +38,12 @@ describe.each([["react", reactFluidHover], ["vue", vueFluidHover]])("%s fluidHov
     stop()
   })
 })
+
+describe("hosts", () => {
+  // The highlight is the container's first child: items must not rely on :first-child / :last-child.
+  it.each(["registry/react/ui/toggle-group.tsx", "registry/vue/ui/toggle-group/ToggleGroupItem.vue"])("%s styles its ends by type", async (file) => {
+    const src = (await import("node:fs")).readFileSync(file, "utf8")
+    expect(src).toContain("first-of-type:rounded-l-md")
+    expect(src).not.toMatch(/\]:(first|last):/)
+  })
+})

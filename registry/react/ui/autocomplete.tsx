@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "cn"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 
 import { Input } from "@/registry/react/ui/input"
 import { Spinner } from "@/registry/react/ui/spinner"
@@ -95,10 +96,11 @@ function Autocomplete({
       {icon && <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">{icon}</span>}
       {loading && <Spinner aria-hidden="true" role="presentation" className="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground" />}
       {showList && (
-        <ul id={listId} role="listbox" className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
+        <ul id={listId} role="listbox" className="absolute isolate z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-md">
+          <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
           {suggestions.map((option, i) => (
             <li key={option.value} id={`${listId}-${i}`} role="option" aria-selected={i === active}
-              className={cn("cursor-pointer rounded-sm px-2 py-1.5 text-sm", i === active && "bg-accent text-accent-foreground")}
+              className={cn("cursor-pointer rounded-sm px-2 py-1.5 text-sm", i === active && "text-accent-foreground")}
               onMouseDown={(event) => { event.preventDefault(); pick(option) }}
               onMouseEnter={() => setActive(i)}>
               {renderSuggestion ? renderSuggestion(option) : (
