@@ -128,7 +128,7 @@ function toggleListening() {
     :aria-label="isListening ? 'Arrêter la dictée' : 'Dicter le message'"
     :aria-pressed="isListening"
     :class="cn(
-      'relative transition-all duration-200',
+      'relative transition-[color,background-color,border-color,width] duration-160 ease-tail',
       isListening && 'animate-pulse bg-accent text-accent-foreground motion-reduce:animate-none',
       props.class,
     )"

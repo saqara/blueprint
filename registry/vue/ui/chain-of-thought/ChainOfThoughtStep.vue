@@ -28,7 +28,7 @@ const statusStyles = {
       cn(
         'flex gap-2 text-sm',
         statusStyles[props.status],
-        'fade-in-0 slide-in-from-top-2 animate-in motion-reduce:animate-none',
+        'fade-in-0 slide-in-from-top-1 animate-in motion-reduce:animate-none duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in',
         props.class,
       )
     "

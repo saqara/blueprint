@@ -26,7 +26,7 @@ const { isOpen } = useStackTraceContext('StackTraceContent')
     <CollapsibleContent
       :class="cn(
         'overflow-auto border-t bg-muted/30',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in motion-reduce:animate-none',
+        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in motion-reduce:animate-none duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in',
         props.class,
       )"
       :style="{ maxHeight: `${props.maxHeight}px` }"

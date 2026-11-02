@@ -34,11 +34,11 @@ const failedPercent = computed(() => {
     <slot>
       <div class="flex h-2 overflow-hidden rounded-full bg-muted">
         <div
-          class="bg-success transition-all"
+          class="bg-success transition-[color,background-color,border-color,width] duration-160 ease-tail"
           :style="{ width: `${passedPercent}%` }"
         />
         <div
-          class="bg-destructive transition-all"
+          class="bg-destructive transition-[color,background-color,border-color,width] duration-160 ease-tail"
           :style="{ width: `${failedPercent}%` }"
         />
       </div>

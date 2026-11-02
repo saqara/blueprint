@@ -181,7 +181,7 @@ export const FileTreeFolder = ({
             <CollapsibleTrigger asChild>
               <button
                 aria-label={`${isExpanded ? "Replier" : "Déplier"} ${name}`}
-                className="flex shrink-0 cursor-pointer items-center rounded-sm border-none bg-transparent p-0 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex shrink-0 cursor-pointer items-center rounded-sm border-none bg-transparent p-0 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 type="button"
               >
                 <ChevronRightIcon
@@ -193,7 +193,7 @@ export const FileTreeFolder = ({
               </button>
             </CollapsibleTrigger>
             <button
-              className="flex min-w-0 flex-1 cursor-pointer items-center gap-1 rounded-sm border-none bg-transparent p-0 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              className="flex min-w-0 flex-1 cursor-pointer items-center gap-1 rounded-sm border-none bg-transparent p-0 text-left outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               onClick={handleSelect}
               type="button"
             >
@@ -263,7 +263,7 @@ export const FileTreeFile = ({
     <FileTreeFileContext.Provider value={fileContextValue}>
       <div
         className={cn(
-          "flex cursor-pointer items-center gap-1 rounded px-2 py-1 outline-none transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50",
+          "flex cursor-pointer items-center gap-1 rounded px-2 py-1 outline-none transition-colors hover:bg-muted/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           isSelected && "bg-muted",
           className
         )}

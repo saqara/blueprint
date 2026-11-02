@@ -411,7 +411,7 @@ export const CodeBlockContent = ({
 
   return (
     // Saqara: the scrollable code is reachable with the keyboard (arrows scroll it).
-    <div className="relative overflow-auto rounded-b-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50" tabIndex={0}>
+    <div className="relative overflow-auto rounded-b-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" tabIndex={0}>
       <CodeBlockBody showLineNumbers={showLineNumbers} tokenized={tokenized} />
     </div>
   );
