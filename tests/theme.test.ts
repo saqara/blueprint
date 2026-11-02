@@ -64,9 +64,9 @@ import realTokens from "../tokens/theme.json"
 
 describe("monospace font", () => {
   it("defines font-mono and ships its font files with the theme", () => {
-    expect(realTokens.theme["font-mono"]).toMatch(/^"JetBrains Mono", /)
-    expect(Object.keys(realTokens.css)).toContain('@import "@fontsource/jetbrains-mono/400.css"')
-    expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("@fontsource/jetbrains-mono")
+    expect(realTokens.theme["font-mono"]).toMatch(/^"Maple Mono", /)
+    expect(Object.keys(realTokens.css)).toContain('@import "@fontsource/maple-mono/400.css"')
+    expect((themeItem(realTokens as Tokens) as { dependencies: string[] }).dependencies).toContain("@fontsource/maple-mono")
   })
   it("colours body so portalled content reads right without shadcn init", () => {
     expect((realTokens.css["@layer base"] as Record<string, unknown>).body).toEqual({ "@apply bg-background text-foreground": {} })

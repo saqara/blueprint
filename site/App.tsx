@@ -11,7 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
 import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES } from "./catalog"
 import { ReactIcon, VueIcon } from "./components/FrameworkIcon"
 import { CURRENT, EDITIONS, editionHref, type Edition } from "./lib/edition"
-import { ThemeMenu } from "./components/ThemeMenu"
+import { ThemeSwitch } from "./components/ThemeSwitch"
 import { useFramework, useRoute, useTheme } from "./hooks"
 import type { Fw } from "./lib/framework"
 import { toHash, type Route } from "./lib/route"
@@ -83,7 +83,7 @@ export function App() {
               <ToggleGroupItem value="react"><ReactIcon />React</ToggleGroupItem>
               <ToggleGroupItem value="vue"><VueIcon />Vue</ToggleGroupItem>
             </ToggleGroup>
-            <ThemeMenu value={theme.choice} onChange={theme.setChoice} />
+            <ThemeSwitch dark={theme.resolved === "dark"} onChange={(dark) => theme.setChoice(dark ? "dark" : "light")} />
             <Button variant="ghost" size="icon" asChild>
               <a href="https://github.com/saqara/blueprint" target="_blank" rel="noreferrer" aria-label="Code source sur GitHub"><Code2 /></a>
             </Button>

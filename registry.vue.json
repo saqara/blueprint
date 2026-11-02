@@ -10,7 +10,7 @@
       "description": "Couleurs, polices et ombres Saqara (clair + sombre).",
       "dependencies": [
         "@fontsource-variable/geist",
-        "@fontsource/jetbrains-mono",
+        "@fontsource/maple-mono",
         "@fontsource/poppins",
         "tw-animate-css"
       ],
@@ -72,7 +72,7 @@
           "shadow-sm": "0 1px 2px var(--shadow)",
           "shadow-md": "0 4px 12px var(--shadow), 0 0 0 1px rgba(0,0,0,.04)",
           "shadow-lg": "0 12px 32px var(--shadow), 0 0 0 1px rgba(0,0,0,.04)",
-          "font-mono": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+          "font-mono": "\"Maple Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
           "text-xs": "0.75rem",
           "text-xs--line-height": "1rem",
           "text-sm": "0.8125rem",
@@ -197,8 +197,8 @@
         "@import \"@fontsource/poppins/400.css\"": {},
         "@import \"@fontsource/poppins/500.css\"": {},
         "@import \"@fontsource/poppins/600.css\"": {},
-        "@import \"@fontsource/jetbrains-mono/400.css\"": {},
-        "@import \"@fontsource/jetbrains-mono/600.css\"": {},
+        "@import \"@fontsource/maple-mono/400.css\"": {},
+        "@import \"@fontsource/maple-mono/600.css\"": {},
         "@custom-variant dark (&:is(.dark *))": {},
         "@layer base": {
           "*": {

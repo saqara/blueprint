@@ -9,7 +9,7 @@ Référence : [Fluid Functionalism](https://www.fluidfunctionalism.com/) (motion
 | Esprit | Sobre et dense, à la Fluid Functionalism. |
 | Couleurs | Gris neutres purs. Bouton principal noir (clair) / blanc (sombre). Rouge Saqara `#F04632` = seule couleur d'accent : anneau de focus, switch coché, sélection. Les erreurs restent en rouge foncé `destructive` avec une icône, pour ne pas se confondre avec le focus. |
 | Rayons | 6 px pour les contrôles (`rounded-md`), 10 px pour les conteneurs (`rounded-xl`). |
-| Polices | Poppins pour les titres (celle de saqara.com), Geist pour le contenu, JetBrains Mono pour le code. |
+| Polices | Poppins pour les titres (celle de saqara.com), Geist pour le contenu, Maple Mono pour le code. |
 | Motion | Bibliothèques Motion : `motion` (React), `motion-v` (Vue), avec les presets de `@saqara/springs`. |
 | Survol fluide | Menus, select, command, tabs, sidebar, table et data-table. Pas dans les listes où un mauvais clic coûte cher. |
 
