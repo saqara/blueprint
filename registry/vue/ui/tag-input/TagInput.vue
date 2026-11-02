@@ -115,14 +115,14 @@ const remove = (tag: string) => { model.value = model.value.filter((t) => t !== 
         @blur="onBlur"
       >
     </div>
-    <ul v-if="showList" :id="listId" role="listbox" class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
+    <ul v-if="showList" :id="listId" role="listbox" class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-dropdown">
       <li v-for="(option, i) in options" :id="`${listId}-${i}`" :key="option" role="option" :aria-selected="i === active"
         :class="cn('cursor-pointer rounded-sm px-2 py-1.5 text-sm', i === active && 'bg-accent text-accent-foreground')"
         @mousedown.prevent="commit([option])" @mouseenter="active = i">
         <slot name="suggestion" :suggestion="option">{{ option }}</slot>
       </li>
     </ul>
-    <div v-if="showEmpty" role="status" class="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+    <div v-if="showEmpty" role="status" class="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-dropdown">
       {{ empty }}
     </div>
   </div>

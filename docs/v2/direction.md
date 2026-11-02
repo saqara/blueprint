@@ -60,6 +60,9 @@ On sort du plat : ombres douces par rôle, dégradés sur les surfaces pleines.
 - Ombres : `shadow-2xs` à `shadow-xl`, et par rôle `shadow-card` (contact sous une carte), `shadow-dropdown` (menus), `shadow-panel` (panneau qui flotte), `shadow-raised` / `shadow-pressed`. Valeurs par mode (`elevation-*` dans `tokens/theme.json`), plus fortes en sombre.
 - `raised` (utilitaire du thème) + `[--raised-color:var(--x)]` : dégradé de la couleur, liseré clair en haut, dégradé plus clair qui apparaît en fondu au survol, plus sombre et creusé à l'appui. Boutons pleins, case cochée, switch allumé.
 - Appui des boutons : `active:scale-[0.98]` (sauf mouvement réduit).
+- Surfaces : carte `shadow-card`, menus / popovers / select / tooltips de graphique `shadow-dropdown`, dialogs et sheets `shadow-xl`, panneau principal des shells `shadow-panel`.
+- Fond gris (`sidebar` = `#F5F5F5`, `#111111` en sombre) sous des panneaux blancs.
+- Entrée active d'une navigation (sidebar, sous-menus, `app-shell-header`) : pilule blanche en relief au liseré rouge (`bg-background shadow-nav-selected text-foreground`).
 
 ## Classes communes
 

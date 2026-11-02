@@ -142,7 +142,7 @@ function TagInput({
         />
       </div>
       {showList && (
-        <ul id={listId} role="listbox" className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
+        <ul id={listId} role="listbox" className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-dropdown">
           {options.map((option, i) => (
             <li key={option} id={`${listId}-${i}`} role="option" aria-selected={i === active}
               className={cn("cursor-pointer rounded-sm px-2 py-1.5 text-sm", i === active && "bg-accent text-accent-foreground")}
@@ -154,7 +154,7 @@ function TagInput({
         </ul>
       )}
       {showEmpty && (
-        <div role="status" className="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+        <div role="status" className="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-dropdown">
           {emptyMessage}
         </div>
       )}

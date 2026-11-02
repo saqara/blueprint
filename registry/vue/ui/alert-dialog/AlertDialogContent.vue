@@ -52,7 +52,7 @@ function returnFocus(event: Event) {
       @close-auto-focus="returnFocus"
       :class="
         cn(
-          'group/alert-dialog-content bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-97 data-[state=open]:zoom-in-97 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border p-6 shadow-lg data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-lg duration-250 ease-spring-bounce data-[state=closed]:duration-160 data-[state=closed]:ease-in',
+          'group/alert-dialog-content bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-97 data-[state=open]:zoom-in-97 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border p-6 shadow-xl data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-lg duration-250 ease-spring-bounce data-[state=closed]:duration-160 data-[state=closed]:ease-in',
           props.class,
         )
       "

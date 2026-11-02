@@ -90,8 +90,8 @@ describe.each([
     const active = html.match(/<(?:a|button)[^>]*aria-current="page"[^>]*class="([^"]*)"|<(?:a|button)[^>]*class="([^"]*)"[^>]*aria-current="page"/)!
     const cls = active[1] ?? active[2]
     expect(cls).toContain("whitespace-nowrap")
-    // The active tab keeps its red tint on hover (tests/sidebar-gaps.test.ts); other tabs hover in neutral grey.
-    expect(cls).toContain("hover:bg-identity/10")
+    // The active tab keeps its raised pill on hover (tests/sidebar-gaps.test.ts); other tabs hover in neutral grey.
+    expect(cls).toContain("hover:bg-background")
     expect(html).toMatch(/<(?:a|button)(?![^>]*aria-current)[^>]*class="[^"]*hover:bg-sidebar-accent/)
   })
 })

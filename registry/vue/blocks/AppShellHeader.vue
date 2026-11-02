@@ -43,7 +43,7 @@ const active = computed(() => props.nav.find((item) => item.id === props.activeI
 // Nav entries: neutral sidebar-accent on hover, red tint when active (as the sidebar); they never wrap.
 const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:size-4 [&_svg]:shrink-0"
 const entryClass = (item: AppNavItem, mobile: boolean) =>
-  cn(entryBase, item.id === props.activeId && "bg-identity/10 text-identity-text hover:bg-identity/10 hover:text-identity-text", mobile && "w-full justify-start")
+  cn(entryBase, item.id === props.activeId && "bg-background text-foreground shadow-nav-selected hover:bg-background hover:text-foreground", mobile && "w-full justify-start")
 
 function skipToMain() {
   document.getElementById(props.mainId)?.focus()

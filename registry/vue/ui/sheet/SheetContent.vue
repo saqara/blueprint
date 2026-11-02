@@ -61,7 +61,7 @@ function returnFocus(event: Event) {
       data-slot="sheet-content"
       :data-size="size"
       :class="cn(
-        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg data-[state=open]:duration-300 data-[state=open]:ease-spring data-[state=closed]:duration-200 data-[state=closed]:ease-in',
+        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-xl data-[state=open]:duration-300 data-[state=open]:ease-spring data-[state=closed]:duration-200 data-[state=closed]:ease-in',
         side === 'right'
           && 'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l',
         side === 'left'

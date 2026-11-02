@@ -21,7 +21,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <DropdownMenuSubContent
     data-slot="dropdown-menu-sub-content"
     v-bind="forwarded"
-    :class="cn('relative isolate bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 z-50 min-w-[8rem] max-w-(--reka-dropdown-menu-content-available-width) origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden rounded-lg border p-1 shadow-lg duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in', props.class)"
+    :class="cn('relative isolate bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 z-50 min-w-[8rem] max-w-(--reka-dropdown-menu-content-available-width) origin-(--reka-dropdown-menu-content-transform-origin) overflow-hidden rounded-lg border p-1 shadow-dropdown duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in', props.class)"
   >
     <FluidHighlight mode="attribute" items="[role^=menuitem]" active="[role^=menuitem][data-highlighted], [role=menuitem][data-state=open]" />
       <slot />

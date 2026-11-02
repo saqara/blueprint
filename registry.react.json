@@ -93,7 +93,8 @@
           "shadow-dropdown": "var(--elevation-dropdown)",
           "shadow-panel": "var(--elevation-panel)",
           "shadow-raised": "var(--elevation-raised)",
-          "shadow-pressed": "var(--elevation-pressed)"
+          "shadow-pressed": "var(--elevation-pressed)",
+          "shadow-nav-selected": "var(--elevation-nav-selected)"
         },
         "light": {
           "radius": "0.375rem",
@@ -123,7 +124,7 @@
           "navy": "#283549",
           "navy-foreground": "#FFFFFF",
           "success": "#6EBD71",
-          "success-text": "#2B7C33",
+          "success-text": "#287530",
           "success-foreground": "#171717",
           "warning": "#E59A06",
           "warning-text": "#A05900",
@@ -132,11 +133,11 @@
           "info-text": "#0A5CD6",
           "info-foreground": "#FFFFFF",
           "shadow": "rgba(0,0,0,.08)",
-          "sidebar": "#FAFAFA",
+          "sidebar": "#F5F5F5",
           "sidebar-foreground": "#171717",
           "sidebar-primary": "#171717",
           "sidebar-primary-foreground": "#FFFFFF",
-          "sidebar-accent": "#F0F0F0",
+          "sidebar-accent": "#EAEAEA",
           "sidebar-accent-foreground": "#171717",
           "sidebar-border": "#E5E5E5",
           "sidebar-ring": "#F04632",
@@ -155,7 +156,8 @@
           "elevation-dropdown": "0 0 0 1px rgb(0 0 0 / 0.04), 0 1px 1px 0 rgb(0 0 0 / 0.04), 0 4px 12px 0 rgb(0 0 0 / 0.08)",
           "elevation-panel": "0 1px 0 0 rgb(0 0 0 / 0.02), 0 1px 12px 0 rgb(0 0 0 / 0.06), 0 0 1px 0 rgb(0 0 0 / 0.32)",
           "elevation-raised": "inset 0 1px 0 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(0 0 0 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.14)",
-          "elevation-pressed": "inset 0 1px 2px 0 rgb(0 0 0 / 0.22)"
+          "elevation-pressed": "inset 0 1px 2px 0 rgb(0 0 0 / 0.22)",
+          "elevation-nav-selected": "0 0 0 1px var(--identity), inset 0 1px 0 0 rgb(255 255 255 / 0.6), 0 1px 2px 0 rgb(0 0 0 / 0.08)"
         },
         "dark": {
           "radius": "0.375rem",
@@ -194,7 +196,7 @@
           "info-text": "#4A90FF",
           "info-foreground": "#FFFFFF",
           "shadow": "rgba(0,0,0,.5)",
-          "sidebar": "#1A1A1A",
+          "sidebar": "#111111",
           "sidebar-foreground": "#FAFAFA",
           "sidebar-primary": "#FAFAFA",
           "sidebar-primary-foreground": "#171717",
@@ -217,7 +219,8 @@
           "elevation-dropdown": "0 0 0 1px rgb(255 255 255 / 0.06), 0 1px 1px 0 rgb(0 0 0 / 0.14), 0 4px 12px 0 rgb(0 0 0 / 0.24)",
           "elevation-panel": "0 1px 0 0 rgb(0 0 0 / 0.10), 0 1px 12px 0 rgb(0 0 0 / 0.16), 0 0 1px 0 rgb(0 0 0 / 0.42)",
           "elevation-raised": "inset 0 1px 0 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(0 0 0 / 0.20), 0 1px 2px 0 rgb(0 0 0 / 0.40)",
-          "elevation-pressed": "inset 0 1px 2px 0 rgb(0 0 0 / 0.40)"
+          "elevation-pressed": "inset 0 1px 2px 0 rgb(0 0 0 / 0.40)",
+          "elevation-nav-selected": "0 0 0 1px var(--identity), inset 0 1px 0 0 rgb(255 255 255 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.40)"
         }
       },
       "css": {
