@@ -1,0 +1,41 @@
+name: publish
+# One site for every edition: V1 (branch main) at the root, V2 (branch v2-wip) under /v2/.
+# Runs after a green ci push on either branch. A workflow_run always runs on main, the only branch the
+# github-pages environment lets deploy, so V2 pushes publish without widening that rule.
+on:
+  workflow_run: { workflows: [ci], types: [completed], branches: [main, v2-wip] }
+  workflow_dispatch:
+permissions: { contents: read }
+# Never cancel a Pages deploy in flight; a newer push waits, then publishes the newer heads.
+concurrency: { group: pages, cancel-in-progress: false }
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    permissions: { contents: read, pages: write, id-token: write }
+    environment: { name: github-pages, url: "${{ steps.deploy.outputs.page_url }}" }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - id: assemble
+        run: bash scripts/publish.sh pages
+      # Runs can finish out of order: publish only if every branch built is still at the head we built.
+      - id: latest
+        env: { GH_TOKEN: "${{ github.token }}", BUILT: "${{ steps.assemble.outputs.built }}" }
+        run: |
+          current=true
+          for pair in $BUILT; do
+            branch=${pair%%=*}; sha=${pair#*=}
+            head=$(gh api "repos/${{ github.repository }}/commits/$branch" --jq .sha)
+            [ "$head" = "$sha" ] || { echo "::notice::Skipping deploy: $branch moved to $head"; current=false; }
+          done
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+      - if: steps.latest.outputs.current == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with: { path: pages }
+      - id: deploy
+        if: steps.latest.outputs.current == 'true'
+        uses: actions/deploy-pages@v4

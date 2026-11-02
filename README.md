@@ -72,4 +72,4 @@ npm run smoke          # installe tout dans des apps jetables (après build)
 - `public/llms.txt` est généré par `npm run registry` depuis les manifestes.
 - Un composant personnalisé ne se réimporte qu'avec `--force`, en connaissance de cause.
 - TypeScript reste en 6.x tant que `vue-tsc` ne supporte pas TypeScript 7.
-- Éditions : `edition.json` dit quelle édition la branche construit (`current`) et le chemin de chacune ; toutes les URLs (base Vite, `llms.txt`, page Installation) en dérivent. Les PR V1 visent `main`, les PR V2 visent `v2-wip` ; un push sur l'une ou l'autre republie les deux éditions (`scripts/publish.sh`).
+- Éditions : `edition.json` dit quelle édition la branche construit (`current`) et le chemin de chacune ; toutes les URLs (base Vite, `llms.txt`, page Installation) en dérivent. Les PR V1 visent `main`, les PR V2 visent `v2-wip` ; une CI verte sur l'une ou l'autre republie les deux éditions (workflow `publish`, `scripts/publish.sh`).
