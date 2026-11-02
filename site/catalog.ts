@@ -13,7 +13,7 @@ export const CATEGORIES = [
   { id: "affichage", label: "Affichage", items: ["alert", "avatar", "badge", "card", "carousel", "empty", "progress", "scroll-area", "separator", "skeleton", "spinner", "stat-card", "table"] },
   { id: "overlays", label: "Overlays", items: ["alert-dialog", "confirm-dialog", "dialog", "dropdown-menu", "hover-card", "popover", "sheet", "sonner", "tooltip"] },
   { id: "navigation", label: "Navigation", items: ["accordion", "breadcrumb", "collapsible", "collapsible-section", "command", "pagination", "sidebar", "stepper", "tabs"] },
-  { id: "donnees", label: "Données", items: ["bar-list", "chart", "data-table", "horizontal-scroll", "radar-chart"] },
+  { id: "donnees", label: "Données", items: ["bar-list", "chart", "data-table", "funnel-chart", "horizontal-scroll", "radar-chart", "radial-chart"] },
   // AI Elements (Vercel, Vue port by vuepont), restyled and translated: docs link to AI Elements.
   { id: "chat-ia", label: "Chat IA", items: ["agent", "attachments", "chain-of-thought", "checkpoint", "code-block", "confirmation", "context", "conversation", "file-tree", "inline-citation", "message", "model-selector", "plan", "prompt-input", "question", "questionnaire", "queue", "reasoning", "shimmer", "sources", "stack-trace", "suggestion", "task", "terminal", "test-results", "tool"] },
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
@@ -44,6 +44,8 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   queue: "updated",
   // Pro-inspired, lot 1.
   "bar-list": "new", questionnaire: "new", "radar-chart": "new",
+  // Pro-inspired, lot 2.
+  "funnel-chart": "new", "radial-chart": "new",
 }
 
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]

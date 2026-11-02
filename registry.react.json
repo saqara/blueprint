@@ -1071,6 +1071,21 @@
       ]
     },
     {
+      "name": "funnel-chart",
+      "type": "registry:ui",
+      "title": "Funnel Chart",
+      "description": "Entonnoir en SVG, sans bibliothèque : une barre par étape reliée à la suivante, taux de conversion entre deux étapes (Saqara).",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/funnel-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "horizontal-scroll",
       "type": "registry:ui",
       "title": "Horizontal Scroll",
@@ -1506,6 +1521,21 @@
       "files": [
         {
           "path": "registry/react/ui/radar-chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radial-chart",
+      "type": "registry:ui",
+      "title": "Radial Chart",
+      "description": "Anneaux concentriques en SVG, sans bibliothèque : score de complétude au centre, ou plusieurs anneaux avec légende (Saqara).",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/react/ui/radial-chart.tsx",
           "type": "registry:ui"
         }
       ]
