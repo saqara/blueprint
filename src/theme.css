@@ -28,6 +28,34 @@
     }
   }
 }
+@utility raised {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--raised-color);
+  background-image: linear-gradient(180deg, color-mix(in oklab, var(--raised-color) 86%, white), color-mix(in oklab, var(--raised-color) 90%, black));
+  box-shadow: var(--elevation-raised);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: linear-gradient(180deg, color-mix(in oklab, var(--raised-color) 74%, white), var(--raised-color));
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+  &:hover:not(:disabled):not([aria-disabled=true])::before {
+    opacity: 1;
+  }
+  &:active:not(:disabled):not([aria-disabled=true]) {
+    background-image: linear-gradient(180deg, color-mix(in oklab, var(--raised-color) 88%, black), color-mix(in oklab, var(--raised-color) 80%, black));
+    box-shadow: var(--elevation-pressed);
+  }
+  &:active:not(:disabled):not([aria-disabled=true])::before {
+    opacity: 0;
+  }
+}
 
 :root {
   --radius: 0.375rem;
@@ -37,7 +65,7 @@
   --card-foreground: #171717;
   --popover: #FFFFFF;
   --popover-foreground: #171717;
-  --primary: #171717;
+  --primary: #F04632;
   --primary-foreground: #FFFFFF;
   --secondary: #F5F5F5;
   --secondary-foreground: #171717;
@@ -79,6 +107,17 @@
   --chart-3: #0A5CD6;
   --chart-4: #6EBD71;
   --chart-5: #E59A06;
+  --elevation-2xs: 0 1px 0 0 rgb(0 0 0 / 0.05);
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --elevation-sm: 0 1px 2px 0 rgb(0 0 0 / 0.06), 0 1px 3px 0 rgb(0 0 0 / 0.10);
+  --elevation-md: 0 2px 4px -1px rgb(0 0 0 / 0.06), 0 4px 6px -1px rgb(0 0 0 / 0.10);
+  --elevation-lg: 0 4px 6px -2px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.10);
+  --elevation-xl: 0 10px 10px -5px rgb(0 0 0 / 0.04), 0 20px 25px -5px rgb(0 0 0 / 0.10);
+  --elevation-card: 0 1px 1px 0 rgb(0 0 0 / 0.05);
+  --elevation-dropdown: 0 0 0 1px rgb(0 0 0 / 0.04), 0 1px 1px 0 rgb(0 0 0 / 0.04), 0 4px 12px 0 rgb(0 0 0 / 0.08);
+  --elevation-panel: 0 1px 0 0 rgb(0 0 0 / 0.02), 0 1px 12px 0 rgb(0 0 0 / 0.06), 0 0 1px 0 rgb(0 0 0 / 0.32);
+  --elevation-raised: inset 0 1px 0 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(0 0 0 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.14);
+  --elevation-pressed: inset 0 1px 2px 0 rgb(0 0 0 / 0.22);
 }
 
 .dark {
@@ -89,8 +128,8 @@
   --card-foreground: #FAFAFA;
   --popover: #1F1F1F;
   --popover-foreground: #FAFAFA;
-  --primary: #FAFAFA;
-  --primary-foreground: #171717;
+  --primary: #F04632;
+  --primary-foreground: #FFFFFF;
   --secondary: #262626;
   --secondary-foreground: #FAFAFA;
   --muted: #262626;
@@ -131,6 +170,17 @@
   --chart-3: #4C8DF6;
   --chart-4: #6EBD71;
   --chart-5: #E59A06;
+  --elevation-2xs: 0 1px 0 0 rgb(0 0 0 / 0.16);
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.18);
+  --elevation-sm: 0 1px 2px 0 rgb(0 0 0 / 0.12), 0 1px 3px 0 rgb(0 0 0 / 0.16);
+  --elevation-md: 0 2px 4px -1px rgb(0 0 0 / 0.12), 0 4px 6px -1px rgb(0 0 0 / 0.18);
+  --elevation-lg: 0 4px 6px -2px rgb(0 0 0 / 0.10), 0 10px 15px -3px rgb(0 0 0 / 0.18);
+  --elevation-xl: 0 10px 10px -5px rgb(0 0 0 / 0.08), 0 20px 25px -5px rgb(0 0 0 / 0.20);
+  --elevation-card: 0 1px 1px 0 rgb(0 0 0 / 0.14);
+  --elevation-dropdown: 0 0 0 1px rgb(255 255 255 / 0.06), 0 1px 1px 0 rgb(0 0 0 / 0.14), 0 4px 12px 0 rgb(0 0 0 / 0.24);
+  --elevation-panel: 0 1px 0 0 rgb(0 0 0 / 0.10), 0 1px 12px 0 rgb(0 0 0 / 0.16), 0 0 1px 0 rgb(0 0 0 / 0.42);
+  --elevation-raised: inset 0 1px 0 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(0 0 0 / 0.20), 0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --elevation-pressed: inset 0 1px 2px 0 rgb(0 0 0 / 0.40);
 }
 
 @theme inline {
@@ -187,9 +237,6 @@
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
-  --shadow-sm: 0 1px 2px var(--shadow);
-  --shadow-md: 0 4px 12px var(--shadow), 0 0 0 1px rgba(0,0,0,.04);
-  --shadow-lg: 0 12px 32px var(--shadow), 0 0 0 1px rgba(0,0,0,.04);
   --font-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --text-xs: 0.75rem;
   --text-xs--line-height: 1rem;
@@ -204,4 +251,15 @@
   --ease-tail: cubic-bezier(.23,1,.32,1);
   --ease-spring: linear(0, .5729, .8966, .9789, .996, 1, 1);
   --ease-spring-bounce: linear(0, .3878, .7777, .9458, .9946, 1.0029, 1.0021, 1);
+  --shadow-2xs: var(--elevation-2xs);
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+  --shadow-xl: var(--elevation-xl);
+  --shadow-card: var(--elevation-card);
+  --shadow-dropdown: var(--elevation-dropdown);
+  --shadow-panel: var(--elevation-panel);
+  --shadow-raised: var(--elevation-raised);
+  --shadow-pressed: var(--elevation-pressed);
 }

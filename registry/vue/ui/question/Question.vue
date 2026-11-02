@@ -4,6 +4,7 @@ import type { QuestionOption } from "."
 import { CornerDownLeftIcon, XIcon } from "@lucide/vue"
 import { computed, getCurrentInstance, nextTick, onMounted, ref, useId, watch } from "vue"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 import { Button } from "@/registry/vue/ui/button"
 
 const props = withDefaults(defineProps<{
@@ -77,7 +78,7 @@ function onEscape(event: KeyboardEvent) {
 <template>
   <div
     data-slot="question"
-    :class="cn('flex flex-col overflow-hidden rounded-md border bg-background shadow-xs', disabled && 'opacity-60', props.class)"
+    :class="cn('flex flex-col overflow-hidden rounded-xl border bg-background shadow-sm animate-in fade-in-0 slide-in-from-bottom-1 duration-200 ease-spring', disabled && 'opacity-60', props.class)"
     @keydown.esc="onEscape"
   >
     <div v-if="question || hasClose" class="flex items-start gap-2 py-2 pr-2 pl-4">
@@ -94,9 +95,10 @@ function onEscape(event: KeyboardEvent) {
       :aria-label="question ? undefined : ariaLabel"
       :aria-activedescendant="current >= 0 ? `${id}-${current}` : undefined"
       :aria-disabled="disabled || undefined"
-      class="max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-inset"
+      class="relative isolate max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-inset"
       @keydown="onKeydown"
     >
+      <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
       <li
         v-for="(option, index) in options"
         :id="`${id}-${index}`"
@@ -107,7 +109,7 @@ function onEscape(event: KeyboardEvent) {
         :aria-disabled="option.disabled || undefined"
         :class="cn(
           'flex cursor-pointer items-center gap-3 rounded-sm px-3 py-2 text-sm',
-          index === current && 'bg-accent text-accent-foreground',
+          index === current && 'text-accent-foreground',
           option.disabled && 'cursor-not-allowed opacity-50',
         )"
         @mouseenter="!option.disabled && (active = index)"

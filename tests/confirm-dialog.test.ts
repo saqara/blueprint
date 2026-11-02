@@ -103,7 +103,7 @@ describe.each([["react", react], ["vue", vue]])("%s confirm()", (_, mount) => {
     const ui = await mount()
     ui.confirm({ message: "Supprimer ?", variant: "destructive" })
     await ui.flush()
-    expect(button("Confirmer").className).toContain("bg-destructive")
+    expect(button("Confirmer").className).toContain("[--raised-color:var(--destructive)]")
     expect(document.querySelector("[data-slot=alert-dialog-media]")).not.toBeNull()
   })
 })
