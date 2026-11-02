@@ -20,7 +20,7 @@ const props = defineProps<TaskContentProps>()
     )"
     v-bind="$attrs"
   >
-    <div class="mt-4 space-y-2 border-l-2 border-muted pl-4">
+    <div class="stagger mt-4 space-y-2 border-l-2 border-muted pl-4">
       <slot />
     </div>
   </CollapsibleContent>

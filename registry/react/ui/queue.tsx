@@ -188,7 +188,7 @@ export const QueueList = ({
 }: QueueListProps) => (
   <ScrollArea className={cn("mt-2 -mb-1", className)} {...props}>
     <div className="max-h-40 pr-4">
-      <ul>{children}</ul>
+      <ul className="stagger">{children}</ul>
     </div>
   </ScrollArea>
 );

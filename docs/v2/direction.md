@@ -66,6 +66,7 @@ On sort du plat : ombres douces par rôle, dégradés sur les surfaces pleines.
 - Champs (`input`, `textarea`, `select`, `tag-input`, `input-group`) : creusés au repos (`shadow-field`), à plat sous l'anneau au focus (`focus-visible:shadow-none`). On tape dans un creux, on appuie sur une bosse.
 - Contrôle segmenté (`tabs`) : piste creusée (`bg-muted shadow-track`), pouce blanc en relief (`shadow-thumb`) qui glisse jusqu'à l'onglet actif (`FluidHighlight` en mode attribut). Pas sur `toggle-group` : il peut être à choix multiple.
 - Survol fluide : un premier survol attend 60 ms (un pointeur qui traverse la liste n'allume rien) ; une fois allumé, il suit sans délai. Le clavier n'attend jamais.
+- Listes qui se remplissent (`task`, `queue`, `attachments`, `chain-of-thought`) : utilitaire `stagger` sur le conteneur, chaque enfant entre en fondu avec 4 px de glissement (240 ms, `ease-spring`), 30 ms après le précédent, plafonné à 240 ms. Mouvement réduit : fondu seul.
 
 ## Classes communes
 
