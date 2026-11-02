@@ -1,4 +1,7 @@
 {
-  "current": "v1",
-  "editions": { "v1": "", "v2": "v2/" }
+  "current": "v2",
+  "editions": {
+    "v1": "",
+    "v2": "v2/"
+  }
 }
