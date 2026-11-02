@@ -40,6 +40,8 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   "test-results": "updated", tool: "updated",
   // Fluid hover audit.
   autocomplete: "updated", pagination: "updated", "settings-page": "updated",
+  // Cascade reveal.
+  queue: "updated",
   // Pro-inspired, lot 1.
   "bar-list": "new", questionnaire: "new", "radar-chart": "new",
 }

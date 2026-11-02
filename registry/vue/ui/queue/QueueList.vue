@@ -14,7 +14,7 @@ const props = defineProps<{
     v-bind="$attrs"
   >
     <div class="max-h-40 pr-4">
-      <ul>
+      <ul class="stagger">
         <slot />
       </ul>
     </div>

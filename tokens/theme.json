@@ -229,6 +229,37 @@
       "&:active:not(:disabled):not([aria-disabled=true])::before": {
         "opacity": "0"
       }
+    },
+    "@utility stagger": {
+      "& > *": {
+        "animation": "enter 240ms var(--ease-spring) backwards",
+        "--tw-enter-opacity": "0",
+        "--tw-enter-translate-y": "4px"
+      },
+      "& > :nth-child(2)": {
+        "animation-delay": "30ms"
+      },
+      "& > :nth-child(3)": {
+        "animation-delay": "60ms"
+      },
+      "& > :nth-child(4)": {
+        "animation-delay": "90ms"
+      },
+      "& > :nth-child(5)": {
+        "animation-delay": "120ms"
+      },
+      "& > :nth-child(6)": {
+        "animation-delay": "150ms"
+      },
+      "& > :nth-child(7)": {
+        "animation-delay": "180ms"
+      },
+      "& > :nth-child(8)": {
+        "animation-delay": "210ms"
+      },
+      "& > :nth-child(n+9)": {
+        "animation-delay": "240ms"
+      }
     }
   }
 }
