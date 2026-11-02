@@ -49,7 +49,20 @@ Règle : **la réponse part tout de suite et se pose lentement.** Ce n'est pas u
 5. Animer `transform` et `opacity`, jamais `top`, `left`, `width` ou `height`.
 6. Mouvement réduit : moins, pas rien. On garde les fondus, on coupe les déplacements et les changements d'échelle.
 
-Pour une transition CSS simple (couleur, bordure), le thème expose `duration-fast` / `duration-moderate` / `duration-slow` et `ease-tail`.
+Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses en classes Tailwind : `duration-80` / `duration-160` / `duration-240`, avec `ease-tail`. Tailwind v4 n'a pas d'espace de noms pour les durées : pas de `duration-fast`. Une transition CSS repart aussi d'où elle en est si on l'interrompt ; Motion (`@saqara/springs`) sert aux entrées / sorties et aux déplacements (lots 2 et 3).
+
+## Classes communes
+
+À copier telles quelles d'un lot à l'autre.
+
+| Usage | Classes |
+|---|---|
+| Focus d'un contrôle (bouton, case, radio, switch, toggle, badge) | `outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring` (destructif : `focus-visible:outline-destructive`) |
+| Focus d'un champ (input, textarea, input-group, déclencheur de select) | `focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/20` |
+| Appui (bouton, toggle) | `transition-[color,background-color,border-color,box-shadow] duration-180 ease-tail active:duration-80`, et `active:bg-<fond>/80` sur un fond plein |
+| Champ | `transition-[color,border-color,box-shadow] duration-80 ease-tail` ; texte `text-[16px] md:text-sm` (iOS zoome sur un champ sous 16 px) |
+| Sélection (case, radio, switch, slider, carte de choix) | `identity` : `data-[state=checked]:bg-identity`, `border-identity`, `text-identity-foreground` |
+| Compact | `sm` = 28 px (`h-7`, `text-xs`, icône 14 px) |
 
 ## Lots
 

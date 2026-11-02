@@ -36,7 +36,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     >
       <SliderRange
         data-slot="slider-range"
-        class="bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+        class="bg-identity absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
       />
     </SliderTrack>
 
@@ -45,7 +45,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       :key="key"
       :aria-label="thumbLabels?.[key]"
       data-slot="slider-thumb"
-      class="bg-white border-primary ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+      class="bg-white border-identity ring-ring/20 block size-4 shrink-0 rounded-full border shadow-sm transition-[box-shadow] duration-80 ease-tail hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
     />
     <div v-if="marks?.length" aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-full mt-1 h-5 text-xs text-muted-foreground">
       <span v-for="mark in marks" :key="mark.value" data-slot="slider-mark" class="absolute flex -translate-x-1/2 flex-col items-center gap-0.5"
