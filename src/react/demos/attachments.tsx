@@ -4,7 +4,7 @@ import { Attachment, AttachmentEmpty, AttachmentInfo, AttachmentPreview, Attachm
 const initial: AttachmentData[] = [
   { id: "1", type: "file", mediaType: "text/csv", filename: "fournisseurs-lyon.csv", url: "#" },
   { id: "2", type: "file", mediaType: "application/pdf", filename: "contrat-cadre-2026.pdf", url: "#" },
-  { id: "3", type: "source-document", sourceId: "kbis", mediaType: "text/html", title: "Extrait Kbis – Acme SAS" },
+  { id: "3", type: "source-document", sourceId: "kbis", mediaType: "text/html", title: "Extrait Kbis – Bâti Sud SAS" },
 ]
 
 export default function AttachmentsDemo() {

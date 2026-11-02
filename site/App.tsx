@@ -22,8 +22,8 @@ type NavGroup = { label: string; items: { label: string; route: Route; status?: 
 
 const NAV: NavGroup[] = [
   { label: "Démarrer", items: START_PAGES.map((p) => ({ label: p.title, route: { section: "demarrer", slug: p.slug } })) },
-  ...CATEGORIES.map((c) => ({ label: c.label, items: c.items.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "composants" as const, slug: name }, status: V2_STATUS[name] })) })),
-  { label: "Blocs", items: BLOCKS.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "blocs" as const, slug: name }, status: V2_STATUS[name] })) },
+  ...CATEGORIES.map((c) => ({ label: c.label, items: c.items.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "composants" as const, slug: name }, status: V2_STATUS[name] === "new" ? ("new" as const) : undefined })) })),
+  { label: "Blocs", items: BLOCKS.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "blocs" as const, slug: name }, status: V2_STATUS[name] === "new" ? ("new" as const) : undefined })) },
   { label: "Exemples", items: EXAMPLES.map((e) => ({ label: e.title, route: { section: "exemples" as const, slug: e.slug } })) },
 ]
 

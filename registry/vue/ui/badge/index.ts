@@ -13,12 +13,12 @@ export const badgeVariants = cva(
         secondary:
           "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         destructive:
-         "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:outline-destructive dark:bg-destructive/60",
+         "border-transparent bg-destructive/12 text-destructive-text focus-visible:outline-destructive [a&]:hover:bg-destructive/20",
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        success: "border-transparent bg-success text-success-foreground [a&]:hover:bg-success/90",
-        warning: "border-transparent bg-warning text-warning-foreground [a&]:hover:bg-warning/90",
-        info: "border-transparent bg-info text-info-foreground [a&]:hover:bg-info/90",
+        success: "border-transparent bg-success/15 text-success-text [a&]:hover:bg-success/25",
+        warning: "border-transparent bg-warning/15 text-warning-text [a&]:hover:bg-warning/25",
+        info: "border-transparent bg-info/15 text-info-text [a&]:hover:bg-info/25",
         identity: "border-transparent bg-identity text-identity-foreground [a&]:hover:bg-identity/90",
       },
     },

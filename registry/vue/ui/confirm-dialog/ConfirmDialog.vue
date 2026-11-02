@@ -38,7 +38,7 @@ const variant = computed(() => state.options.variant ?? "warning")
           {{ state.options.cancelText ?? "Annuler" }}
         </AlertDialogCancel>
         <Button
-          :variant="variant === 'destructive' ? 'destructive' : 'default'"
+          :class="variant === 'destructive' ? '[--raised-color:var(--destructive)] focus-visible:outline-destructive dark:[--raised-color:color-mix(in_oklab,var(--destructive)_60%,black)]' : undefined"
           :loading="state.loading"
           @click="accept"
         >
