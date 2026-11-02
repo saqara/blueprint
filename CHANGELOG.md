@@ -2,6 +2,7 @@
 
 Une ligne par changement visible par les apps consommatrices, la plus récente en haut.
 
+- 2026-11-02 — Éditions : la V1 reste à https://saqara.github.io/blueprint/ (registry `/r/…`, branche `main`), la V2 restylée arrive sous https://saqara.github.io/blueprint/v2/ (registry `/v2/r/…`, branche `v2-wip`). Aucun changement pour les apps en V1. Le site de doc a un sélecteur V1 / V2.
 - 2026-11-02 — Chat IA : `question` (Saqara), la question de l'assistant à la place du champ de saisie (comme AskUserQuestion de Claude Code) : titre optionnel, options avec description, flèches / Entrée / chiffres 1 à 9, « Autre réponse… » qui rend la main au champ texte, fermeture (bouton, Échap), défilement au-delà d'environ 10 options.
 - 2026-10-19 — Bloc `wizard` : formulaire en plusieurs étapes (stepper, Précédent / Suivant, validation par étape via `validate` avec un résumé des erreurs qui prend le focus, récapitulatif facultatif, envoi et confirmation). Le focus va au titre de chaque étape, puis à la confirmation. Vue : contenu des étapes dans les slots `#step-1`, `#step-2`…, `#review` et `#done`.
 - 2026-10-19 — Bloc `dashboard` : tableau de bord (indicateurs `stat-card`, panneaux de graphiques titrés avec alternative textuelle `summary`, activité récente avec état vide, sélecteur de période annoncé aux lecteurs d'écran, squelettes pendant le chargement). L'app fournit les chiffres et ses graphiques (React : `panels[].content` ; Vue : slots `#panel-<id>`).

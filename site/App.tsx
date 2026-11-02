@@ -10,6 +10,7 @@ import { Toaster } from "@/registry/react/ui/sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
 import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES } from "./catalog"
 import { ReactIcon, VueIcon } from "./components/FrameworkIcon"
+import { CURRENT, EDITIONS, editionHref, type Edition } from "./lib/edition"
 import { ThemeMenu } from "./components/ThemeMenu"
 import { useFramework, useRoute, useTheme } from "./hooks"
 import type { Fw } from "./lib/framework"
@@ -74,6 +75,10 @@ export function App() {
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
           <h1 className="truncate text-sm font-medium">{pageTitle(route)}</h1>
           <div className="ml-auto flex items-center gap-2">
+            {/* Each edition is its own site (/blueprint/, /blueprint/v2/): switching opens the same page there. */}
+            <ToggleGroup type="single" variant="outline" size="sm" value={CURRENT} onValueChange={(v) => v && v !== CURRENT && window.location.assign(editionHref(v as Edition, window.location))} aria-label="Version de Blueprint">
+              {EDITIONS.map((e) => <ToggleGroupItem key={e} value={e}>{e === "v2" ? "V2 (wip)" : e.toUpperCase()}</ToggleGroupItem>)}
+            </ToggleGroup>
             <ToggleGroup type="single" variant="outline" size="sm" value={fw} onValueChange={(v) => v && setFw(v as Fw)} aria-label="Framework">
               <ToggleGroupItem value="react"><ReactIcon />React</ToggleGroupItem>
               <ToggleGroupItem value="vue"><VueIcon />Vue</ToggleGroupItem>

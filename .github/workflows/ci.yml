@@ -1,12 +1,12 @@
 name: ci
 on:
-  push: { branches: [main] }
+  push: { branches: [main, v2-wip] }
   pull_request:
 permissions: { contents: read }
 concurrency:
-  group: pages-${{ github.ref }}
-  # Never cancel a Pages deploy in flight on main.
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: ci-${{ github.ref }}
+  # Pull requests: a new push replaces the run. Branches: every push is checked.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -19,24 +19,38 @@ jobs:
       - run: npm run check
       - run: npm run build
       - run: npm run smoke
-      - if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v3
-        with: { path: dist }
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
+  # One site for every edition: V1 (branch main) at the root, V2 (branch v2-wip) under /v2/.
+  # A push to either branch rebuilds both, each at its current head.
+  publish:
+    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
+    # Never cancel a Pages deploy in flight; a newer push waits, then publishes the newer heads.
+    concurrency: { group: pages, cancel-in-progress: false }
     permissions: { contents: read, pages: write, id-token: write }
     environment: { name: github-pages, url: "${{ steps.deploy.outputs.page_url }}" }
     steps:
-      # Runs can finish out of order: only the build of main's current HEAD may deploy,
-      # so an older run finishing last can't overwrite a newer registry.
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - id: assemble
+        run: bash scripts/publish.sh pages
+      # Runs can finish out of order: publish only if every branch built is still at the head we built.
       - id: latest
-        env: { GH_TOKEN: "${{ github.token }}" }
+        env: { GH_TOKEN: "${{ github.token }}", BUILT: "${{ steps.assemble.outputs.built }}" }
         run: |
-          head=$(gh api "repos/${{ github.repository }}/commits/main" --jq .sha)
-          if [ "$head" = "${{ github.sha }}" ]; then echo "current=true" >> "$GITHUB_OUTPUT"; else echo "::notice::Skipping deploy: $head is newer than ${{ github.sha }}"; fi
+          current=true
+          for pair in $BUILT; do
+            branch=${pair%%=*}; sha=${pair#*=}
+            head=$(gh api "repos/${{ github.repository }}/commits/$branch" --jq .sha)
+            [ "$head" = "$sha" ] || { echo "::notice::Skipping deploy: $branch moved to $head"; current=false; }
+          done
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+      - if: steps.latest.outputs.current == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with: { path: pages }
       - id: deploy
         if: steps.latest.outputs.current == 'true'
         uses: actions/deploy-pages@v4
