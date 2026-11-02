@@ -95,7 +95,7 @@ function onKeydown(event: KeyboardEvent) {
     />
     <span v-if="$slots.icon" aria-hidden="true" class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground [&>svg]:size-4"><slot name="icon" /></span>
     <Spinner v-if="loading" aria-hidden="true" role="presentation" class="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground" />
-    <ul v-if="showList" :id="listId" role="listbox" class="absolute isolate z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-md">
+    <ul v-if="showList" :id="listId" role="listbox" class="absolute isolate z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-dropdown">
       <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
       <li v-for="(option, i) in suggestions" :id="`${listId}-${i}`" :key="option.value" role="option" :aria-selected="i === active"
         :class="cn('cursor-pointer rounded-sm px-2 py-1.5 text-sm', i === active && 'text-accent-foreground')"
@@ -106,7 +106,7 @@ function onKeydown(event: KeyboardEvent) {
         </slot>
       </li>
     </ul>
-    <div v-if="status" role="status" class="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+    <div v-if="status" role="status" class="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-dropdown">
       {{ status }}
     </div>
   </div>

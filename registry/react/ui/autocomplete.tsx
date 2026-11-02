@@ -96,7 +96,7 @@ function Autocomplete({
       {icon && <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">{icon}</span>}
       {loading && <Spinner aria-hidden="true" role="presentation" className="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground" />}
       {showList && (
-        <ul id={listId} role="listbox" className="absolute isolate z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-md">
+        <ul id={listId} role="listbox" className="absolute isolate z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-dropdown">
           <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
           {suggestions.map((option, i) => (
             <li key={option.value} id={`${listId}-${i}`} role="option" aria-selected={i === active}
@@ -114,7 +114,7 @@ function Autocomplete({
         </ul>
       )}
       {status && (
-        <div role="status" className="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-md">
+        <div role="status" className="absolute z-50 mt-1 w-full rounded-md border bg-popover px-3 py-2 text-sm text-muted-foreground shadow-dropdown">
           {status}
         </div>
       )}
