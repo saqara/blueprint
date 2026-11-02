@@ -46,7 +46,7 @@ describe("checkbox indeterminate", () => {
     const html = await render()
     expect(html).toContain('data-state="indeterminate"')
     expect(html).toContain("lucide-minus")
-    expect(cls(html, "checkbox")).toContain("data-[state=indeterminate]:bg-primary")
+    expect(cls(html, "checkbox")).toContain("data-[state=indeterminate]:bg-identity")
   })
 })
 
