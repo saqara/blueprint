@@ -16,11 +16,12 @@ const delegatedProps = reactiveOmit(props, "class")
     data-slot="tabs-list"
     v-bind="delegatedProps"
     :class="cn(
-      'relative isolate bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-0.75',
+      'relative isolate bg-muted shadow-track text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-0.75',
       props.class,
     )"
   >
     <FluidHighlight mode="pointer" items="[role=tab]" class="rounded-md bg-foreground/5" />
+    <FluidHighlight mode="attribute" items="[role=tab]" active="[role=tab][data-state=active]" class="rounded-md bg-background shadow-thumb dark:bg-accent" />
     <slot />
   </TabsList>
 </template>
