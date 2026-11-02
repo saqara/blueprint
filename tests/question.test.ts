@@ -42,8 +42,8 @@ describe.each(["react", "vue"] as const)("%s question (SSR)", (fw) => {
   })
 })
 
-let cleanup: () => void = () => {}
-afterEach(() => { cleanup(); document.body.innerHTML = "" })
+let cleanup: () => unknown = () => {}
+afterEach(async () => { await cleanup(); document.body.innerHTML = "" })
 
 async function mount(fw: "react" | "vue", handlers: Handlers) {
   const host = document.createElement("div")
@@ -56,6 +56,8 @@ async function mount(fw: "react" | "vue", handlers: Handlers) {
     const app = createApp({ render: () => h(VQuestion, { options, question: "Q", ...handlers }) })
     app.mount(host)
     await nextTick()
+    // Vue skips an event stamped no later than its listener was attached (same millisecond as the mount here).
+    await new Promise((resolve) => setTimeout(resolve, 2))
     cleanup = () => app.unmount()
   }
   return host

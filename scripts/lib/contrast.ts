@@ -10,6 +10,8 @@ export type Tokens = {
 const HEX = /^#[0-9A-Fa-f]{6}$/
 // Per-mode vars that are not #RRGGBB colors (no contrast check, no Tailwind color utility).
 export const NON_COLOR = new Set(["radius", "shadow"])
+// Per-mode shadow recipes (elevation-xs, elevation-card…): stronger in dark mode, so they live per mode.
+export const isNonColor = (k: string) => NON_COLOR.has(k) || k.startsWith("elevation-")
 
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => {
@@ -40,7 +42,7 @@ export function tokenErrors(t: Tokens): string[] {
     for (const k of Object.keys(other)) {
       if (!(k in vars)) errors.push(`${mode}.${k}: missing (present in ${mode === "light" ? "dark" : "light"})`)
     }
-    const bad = Object.entries(vars).filter(([k, v]) => !NON_COLOR.has(k) && !HEX.test(v))
+    const bad = Object.entries(vars).filter(([k, v]) => !isNonColor(k) && !HEX.test(v))
     for (const [k, v] of bad) errors.push(`${mode}.${k}: "${v}" is not #RRGGBB`)
     if (bad.length) continue
 

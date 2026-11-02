@@ -4,6 +4,7 @@ import * as React from "react"
 import { cn } from "cn"
 import { CornerDownLeftIcon, XIcon } from "lucide-react"
 import { Button } from "@/registry/react/ui/button"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 
 export type QuestionOption = {
   value: string
@@ -75,7 +76,7 @@ function Question({
   return (
     <div
       data-slot="question"
-      className={cn("flex flex-col overflow-hidden rounded-md border bg-background shadow-xs", disabled && "opacity-60", className)}
+      className={cn("flex flex-col overflow-hidden rounded-xl border bg-background shadow-sm animate-in fade-in-0 slide-in-from-bottom-1 duration-200 ease-spring", disabled && "opacity-60", className)}
       onKeyDown={(event) => {
         if (event.key === "Escape" && onClose) { event.preventDefault(); onClose() }
       }}
@@ -99,9 +100,10 @@ function Question({
         aria-label={question ? undefined : ariaLabel}
         aria-activedescendant={current >= 0 ? `${id}-${current}` : undefined}
         aria-disabled={disabled || undefined}
-        className="max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-inset"
+        className="relative isolate max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-inset"
         onKeyDown={onKeyDown}
       >
+        <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
         {options.map((option, index) => (
           <li
             key={option.value}
@@ -112,7 +114,7 @@ function Question({
             aria-disabled={option.disabled || undefined}
             className={cn(
               "flex cursor-pointer items-center gap-3 rounded-sm px-3 py-2 text-sm",
-              index === current && "bg-accent text-accent-foreground",
+              index === current && "text-accent-foreground",
               option.disabled && "cursor-not-allowed opacity-50",
             )}
             onMouseEnter={() => !option.disabled && setActive(index)}

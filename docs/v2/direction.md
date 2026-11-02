@@ -7,7 +7,7 @@ Référence : [Fluid Functionalism](https://www.fluidfunctionalism.com/) (motion
 | Sujet | Décision |
 |---|---|
 | Esprit | Sobre et dense, à la Fluid Functionalism. |
-| Couleurs | Gris neutres purs. Bouton principal noir (clair) / blanc (sombre). Rouge Saqara `#F04632` = seule couleur d'accent : anneau de focus, switch coché, sélection. Les erreurs restent en rouge foncé `destructive` avec une icône, pour ne pas se confondre avec le focus. |
+| Couleurs | Gris neutres purs. Bouton principal en dégradé rouge Saqara (décision du lot Relief, au lieu du noir / blanc initial) ; destructif en cramoisi. Rouge Saqara `#F04632` = seule couleur d'accent : anneau de focus, switch coché, sélection. Les erreurs restent en rouge foncé `destructive` avec une icône, pour ne pas se confondre avec le focus. |
 | Rayons | 6 px pour les contrôles (`rounded-md`), 10 px pour les conteneurs (`rounded-xl`). |
 | Polices | Poppins pour les titres (celle de saqara.com), Geist pour le contenu, Maple Mono pour le code. |
 | Motion | Bibliothèques Motion : `motion` (React), `motion-v` (Vue), avec les presets de `@saqara/springs`. |
@@ -52,6 +52,14 @@ Règle : **la réponse part tout de suite et se pose lentement.** Ce n'est pas u
 Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses en classes Tailwind : `duration-80` / `duration-160` / `duration-240`, avec `ease-tail`. Tailwind v4 n'a pas d'espace de noms pour les durées : pas de `duration-fast`. Une transition CSS repart aussi d'où elle en est si on l'interrompt.
 
 Entrées / sorties des surcouches (décision du lot 2) : animations CSS de tw-animate-css avec les courbes des ressorts en `linear()` : `ease-spring` (moderate, sans dépassement) et `ease-spring-bounce` (slow, rebond 0,12). Motion (`@saqara/springs`) reste pour les déplacements interrompus (survol fluide, lot 3). Mouvement réduit : une règle du thème garde le fondu et annule zoom et glissement.
+
+## Relief (référence : BoardUI)
+
+On sort du plat : ombres douces par rôle, dégradés sur les surfaces pleines.
+
+- Ombres : `shadow-2xs` à `shadow-xl`, et par rôle `shadow-card` (contact sous une carte), `shadow-dropdown` (menus), `shadow-panel` (panneau qui flotte), `shadow-raised` / `shadow-pressed`. Valeurs par mode (`elevation-*` dans `tokens/theme.json`), plus fortes en sombre.
+- `raised` (utilitaire du thème) + `[--raised-color:var(--x)]` : dégradé de la couleur, liseré clair en haut, dégradé plus clair qui apparaît en fondu au survol, plus sombre et creusé à l'appui. Boutons pleins, case cochée, switch allumé.
+- Appui des boutons : `active:scale-[0.98]` (sauf mouvement réduit).
 
 ## Classes communes
 

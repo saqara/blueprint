@@ -61,7 +61,7 @@ function Slider({
           data-slot="slider-thumb"
           key={index}
           aria-label={thumbLabels?.[index]}
-          className="block size-4 shrink-0 rounded-full border border-identity bg-white shadow-sm ring-ring/20 transition-[box-shadow] duration-80 ease-tail hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+          className="block size-4 shrink-0 rounded-full border border-identity bg-white bg-linear-to-b from-white to-neutral-100 shadow-sm ring-ring/20 transition-[box-shadow] duration-80 ease-tail hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
         />
       ))}
       {marks?.length ? (
