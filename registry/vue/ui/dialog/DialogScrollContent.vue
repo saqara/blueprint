@@ -53,7 +53,7 @@ function returnFocus(event: Event) {
 <template>
   <DialogPortal>
     <DialogOverlay
-      class="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      class="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-250 ease-out data-[state=closed]:duration-160 data-[state=closed]:ease-in"
     >
       <DialogContent
         :class="
@@ -79,7 +79,7 @@ function returnFocus(event: Event) {
         <slot />
 
         <DialogClose
-          class="absolute top-4 right-4 p-0.5 transition-colors rounded-md hover:bg-secondary"
+          class="absolute top-4 right-4 p-0.5 transition-colors duration-80 rounded-md hover:bg-secondary outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <X class="w-4 h-4" />
           <span class="sr-only">{{ closeLabel }}</span>

@@ -20,7 +20,7 @@ function disabledChild() {
     v-bind="props"
     as-child
   >
-    <span tabindex="0" class="inline-flex w-fit rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"><slot /></span>
+    <span tabindex="0" class="inline-flex w-fit rounded-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"><slot /></span>
   </TooltipTrigger>
   <TooltipTrigger
     v-else

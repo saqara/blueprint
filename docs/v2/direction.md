@@ -49,7 +49,9 @@ Règle : **la réponse part tout de suite et se pose lentement.** Ce n'est pas u
 5. Animer `transform` et `opacity`, jamais `top`, `left`, `width` ou `height`.
 6. Mouvement réduit : moins, pas rien. On garde les fondus, on coupe les déplacements et les changements d'échelle.
 
-Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses en classes Tailwind : `duration-80` / `duration-160` / `duration-240`, avec `ease-tail`. Tailwind v4 n'a pas d'espace de noms pour les durées : pas de `duration-fast`. Une transition CSS repart aussi d'où elle en est si on l'interrompt ; Motion (`@saqara/springs`) sert aux entrées / sorties et aux déplacements (lots 2 et 3).
+Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses en classes Tailwind : `duration-80` / `duration-160` / `duration-240`, avec `ease-tail`. Tailwind v4 n'a pas d'espace de noms pour les durées : pas de `duration-fast`. Une transition CSS repart aussi d'où elle en est si on l'interrompt.
+
+Entrées / sorties des surcouches (décision du lot 2) : animations CSS de tw-animate-css avec les courbes des ressorts en `linear()` : `ease-spring` (moderate, sans dépassement) et `ease-spring-bounce` (slow, rebond 0,12). Motion (`@saqara/springs`) reste pour les déplacements interrompus (survol fluide, lot 3). Mouvement réduit : une règle du thème garde le fondu et annule zoom et glissement.
 
 ## Classes communes
 
@@ -62,6 +64,10 @@ Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses e
 | Appui (bouton, toggle) | `transition-[color,background-color,border-color,box-shadow] duration-180 ease-tail active:duration-80`, et `active:bg-<fond>/80` sur un fond plein |
 | Champ | `transition-[color,border-color,box-shadow] duration-80 ease-tail` ; texte `text-[16px] md:text-sm` (iOS zoome sur un champ sous 16 px) |
 | Sélection (case, radio, switch, slider, carte de choix) | `identity` : `data-[state=checked]:bg-identity`, `border-identity`, `text-identity-foreground` |
+| Menu, popover, select, hover-card | `duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in`, glissement de 4 px (`slide-in-from-*-1`), `rounded-lg` |
+| Tooltip | `duration-80 ease-out data-[state=closed]:duration-60 data-[state=closed]:ease-in`, glissement de 4 px, sans zoom, délai 200 ms |
+| Dialog | `duration-250 ease-spring-bounce data-[state=closed]:duration-160 data-[state=closed]:ease-in`, `zoom-in-97`, `rounded-xl` ; fond `bg-black/50` en 250 / 160 ms |
+| Sheet | `data-[state=open]:duration-300 data-[state=open]:ease-spring data-[state=closed]:duration-200 data-[state=closed]:ease-in` (sans rebond : le panneau ne dépasse pas le bord) |
 | Compact | `sm` = 28 px (`h-7`, `text-xs`, icône 14 px) |
 
 ## Lots

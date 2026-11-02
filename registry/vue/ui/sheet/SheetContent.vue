@@ -61,7 +61,7 @@ function returnFocus(event: Event) {
       data-slot="sheet-content"
       :data-size="size"
       :class="cn(
-        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
+        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg data-[state=open]:duration-300 data-[state=open]:ease-spring data-[state=closed]:duration-200 data-[state=closed]:ease-in',
         side === 'right'
           && 'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l',
         side === 'left'
@@ -79,7 +79,7 @@ function returnFocus(event: Event) {
       <slot />
 
       <DialogClose
-        class="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
+        class="data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 hover:opacity-100 disabled:pointer-events-none transition-opacity duration-80 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         <X class="size-4" />
         <span class="sr-only">{{ closeLabel }}</span>

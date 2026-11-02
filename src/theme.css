@@ -17,6 +17,16 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      --tw-enter-scale: 1 !important;
+      --tw-exit-scale: 1 !important;
+      --tw-enter-translate-x: 0 !important;
+      --tw-enter-translate-y: 0 !important;
+      --tw-exit-translate-x: 0 !important;
+      --tw-exit-translate-y: 0 !important;
+    }
+  }
 }
 
 :root {
@@ -192,4 +202,6 @@
   --text-3xl: 1.75rem;
   --text-3xl--line-height: 2.125rem;
   --ease-tail: cubic-bezier(.23,1,.32,1);
+  --ease-spring: linear(0, .5729, .8966, .9789, .996, 1, 1);
+  --ease-spring-bounce: linear(0, .3878, .7777, .9458, .9946, 1.0029, 1.0021, 1);
 }
