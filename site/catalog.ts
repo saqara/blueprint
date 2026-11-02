@@ -25,6 +25,9 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   // Lot 1, basic controls.
   badge: "updated", button: "updated", checkbox: "updated", field: "updated", input: "updated", "input-group": "updated",
   "radio-group": "updated", slider: "updated", switch: "updated", textarea: "updated", toggle: "updated", "toggle-group": "updated",
+  // Lot 2, overlays.
+  "alert-dialog": "updated", command: "updated", "confirm-dialog": "updated", dialog: "updated", "dropdown-menu": "updated",
+  "hover-card": "updated", popover: "updated", select: "updated", sheet: "updated", tooltip: "updated",
 }
 
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]

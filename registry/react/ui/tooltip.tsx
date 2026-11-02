@@ -5,7 +5,8 @@ import { cn } from "cn"
 import { Tooltip as TooltipPrimitive } from "radix-ui"
 
 function TooltipProvider({
-  delayDuration = 0,
+  // Saqara V2: 200ms, so tooltips don't flash while the cursor crosses a toolbar (Radix skips it for 300ms between neighbours).
+  delayDuration = 200,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
   return (
@@ -39,7 +40,7 @@ function TooltipTrigger({
   if (disabled) {
     return (
       <TooltipPrimitive.Trigger data-slot="tooltip-trigger" asChild {...props}>
-        <span tabIndex={0} className="inline-flex w-fit rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">{children}</span>
+        <span tabIndex={0} className="inline-flex w-fit rounded-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">{children}</span>
       </TooltipPrimitive.Trigger>
     )
   }
@@ -58,7 +59,7 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "z-50 w-fit origin-(--radix-tooltip-content-transform-origin) animate-in rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+          "z-50 w-fit origin-(--radix-tooltip-content-transform-origin) animate-in rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background fade-in-0 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 duration-80 ease-out data-[state=closed]:duration-60 data-[state=closed]:ease-in",
           className
         )}
         {...props}
