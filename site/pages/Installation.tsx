@@ -1,9 +1,10 @@
 import type { Fw } from "../lib/framework"
 import { CodeBlock } from "../components/CodeBlock"
+import { registryUrl } from "../lib/edition"
 
 export function Installation({ fw }: { fw: Fw }) {
   const cli = fw === "react" ? "shadcn" : "shadcn-vue"
-  const registry = `https://saqara.github.io/blueprint/r/${fw}/{name}.json`
+  const registry = registryUrl(fw)
   return (
     <article className="space-y-6 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_p]:text-muted-foreground">
       <h1 className="text-3xl font-semibold">Installation ({fw === "react" ? "React" : "Vue"})</h1>

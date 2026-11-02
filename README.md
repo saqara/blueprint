@@ -6,6 +6,15 @@ Design system Saqara : un registry [shadcn/ui](https://ui.shadcn.com) (React) et
 
 Documentation : https://saqara.github.io/blueprint/ (index pour les IA : https://saqara.github.io/blueprint/llms.txt)
 
+Deux éditions coexistent, chacune publiée à part :
+
+| Édition | Branche | Documentation | Registry |
+|---|---|---|---|
+| V1 (en usage) | `main` | https://saqara.github.io/blueprint/ | `…/blueprint/r/{react,vue}/{name}.json` |
+| V2 (restylée, en cours) | `v2-wip` | https://saqara.github.io/blueprint/v2/ | `…/blueprint/v2/r/{react,vue}/{name}.json` |
+
+Une app choisit son édition par l'URL du registry dans `components.json`. Les deux éditions définissent les mêmes tokens et les mêmes fichiers : une app n'en installe qu'une.
+
 ## Utiliser Blueprint dans une app
 
 Prérequis : Tailwind v4 et `shadcn init` (React) ou `shadcn-vue init` (Vue) déjà faits.
@@ -63,3 +72,4 @@ npm run smoke          # installe tout dans des apps jetables (après build)
 - `public/llms.txt` est généré par `npm run registry` depuis les manifestes.
 - Un composant personnalisé ne se réimporte qu'avec `--force`, en connaissance de cause.
 - TypeScript reste en 6.x tant que `vue-tsc` ne supporte pas TypeScript 7.
+- Éditions : `edition.json` dit quelle édition la branche construit (`current`) et le chemin de chacune ; toutes les URLs (base Vite, `llms.txt`, page Installation) en dérivent. Les PR V1 visent `main`, les PR V2 visent `v2-wip` ; un push sur l'une ou l'autre republie les deux éditions (`scripts/publish.sh`).

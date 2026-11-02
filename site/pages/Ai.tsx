@@ -1,9 +1,10 @@
 import { CodeBlock } from "../components/CodeBlock"
 import type { Fw } from "../lib/framework"
+import { siteUrl } from "../lib/edition"
 
 const RULES = `## Design system : Saqara Blueprint
 
-- Les composants d'interface viennent du registry \`@saqara\` (doc : https://saqara.github.io/blueprint/, index pour IA : https://saqara.github.io/blueprint/llms.txt).
+- Les composants d'interface viennent du registry \`@saqara\` (doc : ${siteUrl()}, index pour IA : ${siteUrl()}llms.txt).
 - Avant d'écrire un composant, vérifier qu'il n'existe pas déjà dans Blueprint ; l'installer avec la CLI plutôt que le recopier.
 - Couleurs : uniquement les tokens du thème (\`bg-primary\`, \`text-muted-foreground\`, \`bg-success\`…), jamais de hex.
 - Texte coloré (statuts, scores) : \`text-success-text\`, \`text-warning-text\`, \`text-info-text\`, \`text-identity-text\`, \`text-destructive-text\` — lisibles sur le fond, la carte et la teinte \`bg-X/10\`. Jamais \`text-success\` ou \`text-warning\` pour du texte : ces tokens servent aux fonds et aux icônes.

@@ -3,11 +3,14 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import vue from "@vitejs/plugin-vue"
 import tailwindcss from "@tailwindcss/vite"
+import { basePath, siteUrl } from "./site/lib/edition.ts"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
+// %VITE_SITE% in index.html (og:image).
+process.env.VITE_SITE = siteUrl()
 
 export default defineConfig({
-  base: "/blueprint/",
+  base: basePath(),
   plugins: [react(), vue(), tailwindcss()],
   resolve: { alias: { "@": root } },
   build: {
