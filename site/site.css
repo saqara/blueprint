@@ -3,8 +3,10 @@
 
 /* Shiki dual theme: light colors inline, dark via CSS variables. */
 .dark .shiki,
-.dark .shiki span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; }
-.shiki { padding: 1rem; overflow: auto; }
+.dark .shiki span { color: var(--shiki-dark) !important; }
+/* The theme's own grey, not GitHub's blue-grey (#24292E). */
+.shiki, .shiki span { background-color: transparent !important; }
+.shiki { padding: 1rem; overflow: auto; background-color: var(--muted) !important; }
 
 /* Inline code in docs prose: monospace (a text font could merge "--" into a dash). */
 main code { font-family: var(--font-mono); font-size: 0.9em; }
