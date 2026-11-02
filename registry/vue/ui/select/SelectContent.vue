@@ -9,6 +9,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 import { SelectScrollDownButton, SelectScrollUpButton } from "."
 
 defineOptions({
@@ -42,7 +43,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       "
     >
       <SelectScrollUpButton />
-      <SelectViewport :class="cn('p-1', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width) scroll-my-1')">
+      <SelectViewport :class="cn('relative isolate p-1', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width) scroll-my-1')">
+        <FluidHighlight mode="attribute" items="[role=option]" active="[role=option][data-highlighted]" />
         <slot />
       </SelectViewport>
       <SelectScrollDownButton />

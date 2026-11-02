@@ -68,6 +68,7 @@ Entrées / sorties des surcouches (décision du lot 2) : animations CSS de tw-an
 | Tooltip | `duration-80 ease-out data-[state=closed]:duration-60 data-[state=closed]:ease-in`, glissement de 4 px, sans zoom, délai 200 ms |
 | Dialog | `duration-250 ease-spring-bounce data-[state=closed]:duration-160 data-[state=closed]:ease-in`, `zoom-in-97`, `rounded-xl` ; fond `bg-black/50` en 250 / 160 ms |
 | Sheet | `data-[state=open]:duration-300 data-[state=open]:ease-spring data-[state=closed]:duration-200 data-[state=closed]:ease-in` (sans rebond : le panneau ne dépasse pas le bord) |
+| Survol fluide | `@saqara/fluid-hover` : `<FluidHighlight>` en premier enfant du conteneur de la liste (`relative isolate`, le défilant s'il y en a un). `mode="attribute"` (menus, select, command : suit `data-highlighted` / `data-selected`, clavier compris) ou `mode="pointer"` (tabs, sidebar, lignes de table). Retirer le fond de survol propre aux éléments (`focus:bg-accent`, `hover:bg-…`), garder la couleur du texte. `as="li"` dans un `ul`. |
 | Compact | `sm` = 28 px (`h-7`, `text-xs`, icône 14 px) |
 
 ## Lots

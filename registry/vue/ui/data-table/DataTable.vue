@@ -5,6 +5,7 @@ import { GripVertical } from "@lucide/vue"
 import { FlexRender, useTable } from "@tanstack/vue-table"
 import { computed, h, ref, watch } from "vue"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 import { Button } from "@/registry/vue/ui/button"
 import { HorizontalScroll } from "@/registry/vue/ui/horizontal-scroll"
 import { Skeleton } from "@/registry/vue/ui/skeleton"
@@ -225,7 +226,8 @@ function rowAttrs(row: TData) {
     <!-- Wide tables: the scroll container becomes HorizontalScroll's viewport (sticky header and scrollContainer kept). -->
     <HorizontalScroll v-if="container && (stickyScrollbar || dragToScroll)" :sticky-scrollbar="stickyScrollbar" :drag-to-scroll="dragToScroll"
       :viewport-ref="(el: HTMLElement | null) => (scrollContainer = el)" :class="cn(stickyHeader && 'flex max-h-[inherit] flex-col')"
-      :viewport-props="{ ...scrollProps, 'data-slot': 'table-container', class: cn('relative w-full', stickyHeader && 'min-h-0 overflow-auto', bordered && 'rounded-md border') }">
+      :viewport-props="{ ...scrollProps, 'data-slot': 'table-container', class: cn('relative isolate w-full [&_[data-slot=table-body]>tr:hover]:bg-transparent', stickyHeader && 'min-h-0 overflow-auto', bordered && 'rounded-md border') }">
+    <FluidHighlight mode="pointer" items="[data-slot=table-body] > tr" class="rounded-none bg-muted/50" />
     <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">
@@ -256,7 +258,8 @@ function rowAttrs(row: TData) {
     </HorizontalScroll>
     <!-- container=false: display:contents, no box and no scroll of its own (an outer scroller takes over). -->
     <div v-else ref="scrollContainer" v-bind="container ? scrollProps : {}" :data-slot="container ? 'table-container' : undefined"
-      :class="container ? cn('relative w-full overflow-x-auto', bordered && 'rounded-md border') : 'contents'">
+      :class="container ? cn('relative isolate w-full overflow-x-auto [&_[data-slot=table-body]>tr:hover]:bg-transparent', bordered && 'rounded-md border') : 'contents'">
+    <FluidHighlight v-if="container" mode="pointer" items="[data-slot=table-body] > tr" class="rounded-none bg-muted/50" />
     <Table :container="false" :wrap="wrap" v-bind="tableProps" :aria-busy="loading || undefined">
       <TableHeader :class="cn(stickyHeader && 'sticky top-0 z-[2] bg-(--data-table-bg)')">
         <TableRow v-for="group in table.getHeaderGroups()" :key="group.id">

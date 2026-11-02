@@ -7,6 +7,7 @@ import { cn } from "cn"
 import { Button } from "@/registry/react/ui/button"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/registry/react/ui/dropdown-menu"
 import { HorizontalScroll } from "@/registry/react/ui/horizontal-scroll"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 import { Skeleton } from "@/registry/react/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/registry/react/ui/table"
 
@@ -288,12 +289,15 @@ function DataTable<TData extends RowData>({
             // Sticky header: a flex column bounded by the table's max height; the viewport shrinks and scrolls
             // (an inherited percentage would resolve against a wrapper with no height).
             className={cn(stickyHeader && "flex max-h-[inherit] flex-col")}
-            viewportProps={{ ...scrollProps, "data-slot": "table-container", className: cn("relative w-full", stickyHeader && "min-h-0 overflow-auto", bordered && "rounded-md border", scrollProps?.className) }}>
+            viewportProps={{ ...scrollProps, "data-slot": "table-container", className: cn("relative isolate w-full [&_[data-slot=table-body]>tr:hover]:bg-transparent", stickyHeader && "min-h-0 overflow-auto", bordered && "rounded-md border", scrollProps?.className) }}>
+            {/* Saqara: the row highlight lives in the scroll container, so it scrolls with the rows. */}
+            <FluidHighlight mode="pointer" items="[data-slot=table-body] > tr" className="rounded-none bg-muted/50" />
             {tableElement}
             {children}
           </HorizontalScroll>
         ) : (
-          <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border", scrollProps?.className)}>
+          <div {...scrollProps} ref={scrollRef} data-slot="table-container" className={cn("relative isolate w-full overflow-x-auto [&_[data-slot=table-body]>tr:hover]:bg-transparent", bordered && "rounded-md border", scrollProps?.className)}>
+            <FluidHighlight mode="pointer" items="[data-slot=table-body] > tr" className="rounded-none bg-muted/50" />
             {tableElement}
             {children}
           </div>
