@@ -92,7 +92,7 @@ describe.each(["react", "vue"] as const)("%s collapsible-section props", (fw) =>
   })
   it("has a card variant and heading levels up to 6", async () => {
     await section[fw]({ variant: "card", headingLevel: 5 })
-    expect($("[data-slot=collapsible-section]").className).toMatch(/rounded-lg border bg-card/)
+    expect($("[data-slot=collapsible-section]").className).toMatch(/rounded-xl border bg-card/)
     expect($("[data-slot=collapsible-section] h5 button")).not.toBeNull()
   })
 })

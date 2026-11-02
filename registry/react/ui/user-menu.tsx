@@ -26,7 +26,7 @@ function UserMenu({ name, email, avatarUrl, onSignOut, signOutLabel = "Se décon
   return (
     <DropdownMenu>
       <DropdownMenuTrigger data-slot="user-menu" aria-label={name}
-        className={cn("flex items-center gap-2 rounded-md p-1 text-left text-sm outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50", className)}>
+        className={cn("flex items-center gap-2 rounded-md p-1 text-left text-sm outline-none hover:bg-accent focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring", className)}>
         <Avatar className="size-8">
           {avatarUrl && <AvatarImage src={avatarUrl} alt="" />}
           <AvatarFallback>{initials(name)}</AvatarFallback>

@@ -30,6 +30,10 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   "hover-card": "updated", popover: "updated", select: "updated", sheet: "updated", tooltip: "updated",
   // Lot 3, fluid hover.
   "data-table": "updated", sidebar: "updated", table: "updated", tabs: "updated",
+  // Lot 4, content and remaining forms.
+  accordion: "updated", alert: "updated", "collapsible-section": "updated", empty: "updated", "file-dropzone": "updated",
+  progress: "updated", "rating-grid": "updated", "scroll-area": "updated", stepper: "updated", "tag-input": "updated", "user-menu": "updated",
+  "app-shell-header": "updated", wizard: "updated",
 }
 
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]

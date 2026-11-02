@@ -35,7 +35,7 @@ type RatingGridProps = {
 
 // Native radios, styled like radio-group's item (checked = inner dot).
 const radio =
-  "size-4 shrink-0 cursor-pointer appearance-none rounded-full border border-input shadow-xs outline-none transition-[color,box-shadow] checked:border-primary checked:bg-primary checked:shadow-[inset_0_0_0_3px_var(--background)] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:checked:bg-primary"
+  "size-4 shrink-0 cursor-pointer appearance-none rounded-full border border-input shadow-xs outline-none transition-[color,box-shadow] checked:border-identity checked:bg-identity checked:shadow-[inset_0_0_0_3px_var(--background)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:checked:bg-primary"
 
 // Saqara: Likert / rating grid — one row per criterion, one native radio group per row (arrows move
 // within a row, Tab moves between rows), inside a real table (no role overrides).

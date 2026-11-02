@@ -40,7 +40,7 @@ const theme = defineModel<"light" | "dark">("theme")
 const open = ref(false)
 const active = computed(() => props.nav.find((item) => item.id === props.activeId))
 // Nav entries: neutral sidebar-accent on hover, red tint when active (as the sidebar); they never wrap.
-const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0"
+const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:size-4 [&_svg]:shrink-0"
 const entryClass = (item: AppNavItem, mobile: boolean) =>
   cn(entryBase, item.id === props.activeId && "bg-identity/10 text-identity-text hover:bg-identity/10 hover:text-identity-text", mobile && "w-full justify-start")
 
@@ -59,7 +59,7 @@ function go(event: Event, id: string) {
 <template>
   <div data-slot="app-shell-header" :class="cn('flex min-h-svh flex-col bg-background', props.class)">
     <!-- Skip link: moves focus to the main region without touching the URL (works with hash routers too). -->
-    <a :href="`#${mainId}`" class="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium shadow-md outline-none focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus-visible:ring-[3px] focus-visible:ring-ring/50" @click.prevent="skipToMain">{{ skipLinkLabel }}</a>
+    <a :href="`#${mainId}`" class="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium shadow-md outline-none focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" @click.prevent="skipToMain">{{ skipLinkLabel }}</a>
     <header class="sticky top-0 z-40 border-b border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div class="flex h-16 items-center gap-4 px-4 sm:px-6">
         <div class="flex shrink-0 items-center gap-2"><slot name="logo"><SaqaraLogo with-text /></slot><slot name="product" /></div>

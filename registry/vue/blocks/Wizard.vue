@@ -133,7 +133,7 @@ function submit() {
           <p class="text-xs text-muted-foreground">Étape {{ step }} sur {{ all.length }}</p>
           <h2 :id="`${id}-step`" ref="heading" tabindex="-1" class="text-lg font-semibold outline-none">{{ all[step - 1]?.title }}</h2>
         </div>
-        <Alert v-if="errors.length" ref="summary" variant="destructive" tabindex="-1" data-slot="wizard-errors" class="outline-none focus-visible:ring-[3px] focus-visible:ring-destructive/30">
+        <Alert v-if="errors.length" ref="summary" variant="destructive" tabindex="-1" data-slot="wizard-errors" class="outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive">
           <CircleAlertIcon />
           <AlertTitle>{{ errors.length > 1 ? `${errors.length} points à corriger` : "Un point à corriger" }}</AlertTitle>
           <AlertDescription>
