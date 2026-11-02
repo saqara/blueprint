@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "cn"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 
 // Saqara: framed like data-table (rounded border on the scroll container);
 // `container={false}` drops the wrapper (and its frame), so sticky cells can stick to an outer scroller.
@@ -22,8 +23,10 @@ function Table({ className, container = true, bordered = true, wrap = false, ...
   return (
     <div
       data-slot="table-container"
-      className={cn("relative w-full overflow-x-auto", bordered && "rounded-md border")}
+      className={cn("relative isolate w-full overflow-x-auto [&_[data-slot=table-body]>tr:hover]:bg-transparent", bordered && "rounded-md border")}
     >
+      {/* Saqara: one row highlight glides under the pointer; rows keep their own hover without the container. */}
+      <FluidHighlight mode="pointer" items="[data-slot=table-body] > tr" className="rounded-none bg-muted/50" />
       {table}
     </div>
   )

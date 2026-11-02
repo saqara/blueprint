@@ -1083,7 +1083,8 @@
         "reka-ui"
       ],
       "registryDependencies": [
-        "@saqara/dialog"
+        "@saqara/dialog",
+        "@saqara/fluid-hover"
       ],
       "files": [
         {
@@ -1341,6 +1342,7 @@
       "registryDependencies": [
         "@saqara/button",
         "@saqara/dropdown-menu",
+        "@saqara/fluid-hover",
         "@saqara/horizontal-scroll",
         "@saqara/skeleton",
         "@saqara/table"
@@ -1503,7 +1505,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Menu d'actions déroulant."
+      "description": "Menu d'actions déroulant.",
+      "registryDependencies": [
+        "@saqara/fluid-hover"
+      ]
     },
     {
       "name": "empty",
@@ -1675,6 +1680,24 @@
         }
       ],
       "description": "Arborescence de fichiers (exports, pièces jointes) avec dossiers dépliables et sélection."
+    },
+    {
+      "name": "fluid-hover",
+      "type": "registry:lib",
+      "title": "Fluid Hover",
+      "description": "Survol fluide : une seule surbrillance par liste, qui glisse jusqu’à l’élément actif (souris ou clavier) au lieu de clignoter.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@saqara/springs"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/lib/fluid-hover.ts",
+          "type": "registry:lib"
+        }
+      ]
     },
     {
       "name": "horizontal-scroll",
@@ -2810,7 +2833,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Liste déroulante à choix unique."
+      "description": "Liste déroulante à choix unique.",
+      "registryDependencies": [
+        "@saqara/fluid-hover"
+      ]
     },
     {
       "name": "separator",
@@ -2932,6 +2958,7 @@
       ],
       "registryDependencies": [
         "@saqara/button",
+        "@saqara/fluid-hover",
         "@saqara/input",
         "@saqara/separator",
         "@saqara/sheet",
@@ -3394,7 +3421,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Tableau de données simple."
+      "description": "Tableau de données simple.",
+      "registryDependencies": [
+        "@saqara/fluid-hover"
+      ]
     },
     {
       "name": "tabs",
@@ -3426,7 +3456,10 @@
           "type": "registry:ui"
         }
       ],
-      "description": "Onglets pour basculer entre des vues."
+      "description": "Onglets pour basculer entre des vues.",
+      "registryDependencies": [
+        "@saqara/fluid-hover"
+      ]
     },
     {
       "name": "tag-input",

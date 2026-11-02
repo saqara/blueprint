@@ -28,6 +28,8 @@ export const V2_STATUS: Record<string, "new" | "updated"> = {
   // Lot 2, overlays.
   "alert-dialog": "updated", command: "updated", "confirm-dialog": "updated", dialog: "updated", "dropdown-menu": "updated",
   "hover-card": "updated", popover: "updated", select: "updated", sheet: "updated", tooltip: "updated",
+  // Lot 3, fluid hover.
+  "data-table": "updated", sidebar: "updated", table: "updated", tabs: "updated",
 }
 
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]
