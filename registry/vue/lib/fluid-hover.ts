@@ -16,6 +16,8 @@ export type FluidHoverOptions = {
   items: string
   /** attribute mode: the active item (or something inside it). */
   active?: string
+  /** Take each item's corner radii (square cells of a joined group). */
+  matchRadius?: boolean
 }
 
 const { exit: _fastExit, ...fast } = spring.fast
@@ -31,7 +33,7 @@ function offsetIn(el: HTMLElement, origin: Element | null) {
   return { x, y }
 }
 
-export function fluidHover(highlight: HTMLElement, { mode, items, active }: FluidHoverOptions): () => void {
+export function fluidHover(highlight: HTMLElement, { mode, items, active, matchRadius }: FluidHoverOptions): () => void {
   const container = highlight.parentElement
   if (!container) return () => {}
   const reduced = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -47,7 +49,11 @@ export function fluidHover(highlight: HTMLElement, { mode, items, active }: Flui
       return
     }
     const { x, y } = offsetIn(target, highlight.offsetParent)
-    const box = { x, y, width: target.offsetWidth, height: target.offsetHeight }
+    const box: Record<string, number | string> = { x, y, width: target.offsetWidth, height: target.offsetHeight }
+    if (matchRadius) {
+      const cs = getComputedStyle(target)
+      for (const k of ["borderTopLeftRadius", "borderTopRightRadius", "borderBottomRightRadius", "borderBottomLeftRadius"] as const) box[k] = cs[k]
+    }
     if (fresh || reduced) {
       fresh = false
       animate(highlight, box, { duration: 0 })
@@ -88,6 +94,7 @@ export const FluidHighlight = defineComponent({
     mode: { type: String as PropType<FluidHoverOptions["mode"]>, required: true },
     items: { type: String, required: true },
     active: { type: String, default: undefined },
+    matchRadius: { type: Boolean, default: false },
     class: { type: String, default: undefined },
     /** "li" inside a list (ul/ol), where a div is not allowed. */
     as: { type: String as PropType<"div" | "li">, default: "div" },
@@ -95,7 +102,7 @@ export const FluidHighlight = defineComponent({
   setup(props) {
     const el = ref<HTMLElement>()
     let stop = () => {}
-    onMounted(() => { if (el.value) stop = fluidHover(el.value, { mode: props.mode, items: props.items, active: props.active }) })
+    onMounted(() => { if (el.value) stop = fluidHover(el.value, { mode: props.mode, items: props.items, active: props.active, matchRadius: props.matchRadius }) })
     onBeforeUnmount(() => stop())
     return () => h(props.as, { ref: el, "aria-hidden": "true", "data-slot": "fluid-highlight", class: cn("pointer-events-none absolute top-0 left-0 -z-10 rounded-sm bg-accent opacity-0", props.class) })
   },

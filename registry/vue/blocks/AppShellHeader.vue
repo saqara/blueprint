@@ -70,7 +70,7 @@ function go(event: Event, id: string) {
           <component :is="active.icon" v-if="active?.icon" class="size-4 text-primary" />
           {{ title }}
         </h1>
-        <nav aria-label="Navigation principale" class="relative isolate ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+        <nav aria-label="Navigation principale" class="relative isolate ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto p-1 md:flex [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
           <FluidHighlight mode="pointer" items="a, button" class="rounded-md bg-sidebar-accent" />
           <component :is="item.href ? 'a' : 'button'" v-for="item in nav" :key="item.id" :href="item.href" :type="item.href ? undefined : 'button'"
             :aria-current="item.id === activeId ? 'page' : undefined" :class="entryClass(item, false)" @click="go($event, item.id)">
