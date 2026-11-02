@@ -28,14 +28,27 @@ describe.each([["react", reactFluidHover], ["vue", vueFluidHover]])("%s fluidHov
     stop()
   })
 
-  it("pointer mode lights the item under the pointer and goes out on leave", () => {
-    const { c, h, a } = list()
+  it("pointer mode waits a beat before a fresh hover, then follows at once, and goes out on leave", () => {
+    vi.useFakeTimers()
+    const { c, h, a, b } = list()
     const stop = fluidHover(h, { mode: "pointer", items: ".item" })
-    a.dispatchEvent(new PointerEvent("pointermove", { bubbles: true }))
+    const move = (el: Element) => el.dispatchEvent(new PointerEvent("pointermove", { bubbles: true }))
+    move(a)
+    c.dispatchEvent(new PointerEvent("pointerleave"))
+    vi.advanceTimersByTime(100)
+    expect(animate.mock.calls.some(([, t]) => t.opacity === 1)).toBe(false)
+    move(a)
+    vi.advanceTimersByTime(59)
+    expect(animate.mock.calls.some(([, t]) => t.opacity === 1)).toBe(false)
+    vi.advanceTimersByTime(1)
     expect(lastTarget()).toMatchObject({ opacity: 1 })
+    const calls = animate.mock.calls.length
+    move(b)
+    expect(animate.mock.calls.length).toBeGreaterThan(calls)
     c.dispatchEvent(new PointerEvent("pointerleave"))
     expect(lastTarget()).toEqual({ opacity: 0 })
     stop()
+    vi.useRealTimers()
   })
 })
 

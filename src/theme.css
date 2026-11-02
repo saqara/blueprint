@@ -119,6 +119,9 @@
   --elevation-raised: inset 0 1px 0 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(0 0 0 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.14);
   --elevation-pressed: inset 0 1px 2px 0 rgb(0 0 0 / 0.22);
   --elevation-nav-selected: 0 0 0 1px var(--identity), inset 0 1px 0 0 rgb(255 255 255 / 0.6), 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --elevation-field: inset 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --elevation-track: inset 0 1px 2px 0 rgb(0 0 0 / 0.07), inset 0 0 0 1px rgb(0 0 0 / 0.04);
+  --elevation-thumb: 0 0 0 1px rgb(0 0 0 / 0.06), 0 1px 2px 0 rgb(0 0 0 / 0.10), inset 0 1px 0 0 rgb(255 255 255 / 0.6);
 }
 
 .dark {
@@ -183,6 +186,9 @@
   --elevation-raised: inset 0 1px 0 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(0 0 0 / 0.20), 0 1px 2px 0 rgb(0 0 0 / 0.40);
   --elevation-pressed: inset 0 1px 2px 0 rgb(0 0 0 / 0.40);
   --elevation-nav-selected: 0 0 0 1px var(--identity), inset 0 1px 0 0 rgb(255 255 255 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --elevation-field: inset 0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --elevation-track: inset 0 1px 2px 0 rgb(0 0 0 / 0.50), inset 0 0 0 1px rgb(255 255 255 / 0.03);
+  --elevation-thumb: 0 0 0 1px rgb(255 255 255 / 0.06), 0 1px 2px 0 rgb(0 0 0 / 0.50), inset 0 1px 0 0 rgb(255 255 255 / 0.08);
 }
 
 @theme inline {
@@ -265,4 +271,7 @@
   --shadow-raised: var(--elevation-raised);
   --shadow-pressed: var(--elevation-pressed);
   --shadow-nav-selected: var(--elevation-nav-selected);
+  --shadow-field: var(--elevation-field);
+  --shadow-track: var(--elevation-track);
+  --shadow-thumb: var(--elevation-thumb);
 }

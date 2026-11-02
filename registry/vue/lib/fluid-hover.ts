@@ -21,6 +21,7 @@ export type FluidHoverOptions = {
 }
 
 const { exit: _fastExit, ...fast } = spring.fast
+const HOVER_DELAY = 60
 
 // Offsets ignore transforms, so a popup still scaling in measures right; they are content-relative,
 // so the highlight scrolls with the items.
@@ -76,11 +77,22 @@ export function fluidHover(highlight: HTMLElement, { mode, items, active, matchR
     sync()
     return () => { observer.disconnect(); container.removeEventListener("pointerenter", onEnter) }
   }
-  const onMove = (e: PointerEvent) => move(itemOf(e.target))
-  const onLeave = () => move(null)
+  // A fresh hover waits a beat, so a pointer crossing the list on its way elsewhere lights nothing;
+  // once lit, it follows at once.
+  let pending: HTMLElement | null = null
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const settle = () => { clearTimeout(timer); timer = undefined; pending = null }
+  const onMove = (e: PointerEvent) => {
+    const item = itemOf(e.target)
+    if (lit || !item) { settle(); move(item); return }
+    pending = item
+    timer ??= setTimeout(() => { const next = pending; settle(); move(next) }, HOVER_DELAY)
+  }
+  const onLeave = () => { settle(); move(null) }
   container.addEventListener("pointermove", onMove)
   container.addEventListener("pointerleave", onLeave)
   return () => {
+    settle()
     container.removeEventListener("pointerenter", onEnter)
     container.removeEventListener("pointermove", onMove)
     container.removeEventListener("pointerleave", onLeave)

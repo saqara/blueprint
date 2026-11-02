@@ -63,6 +63,9 @@ On sort du plat : ombres douces par rôle, dégradés sur les surfaces pleines.
 - Surfaces : carte `shadow-card`, menus / popovers / select / tooltips de graphique `shadow-dropdown`, dialogs et sheets `shadow-xl`, panneau principal des shells `shadow-panel`.
 - Fond gris (`sidebar` = `#F5F5F5`, `#111111` en sombre) sous des panneaux blancs.
 - Entrée active d'une navigation (sidebar, sous-menus, `app-shell-header`) : pilule blanche en relief au liseré rouge (`bg-background shadow-nav-selected text-foreground`).
+- Champs (`input`, `textarea`, `select`, `tag-input`, `input-group`) : creusés au repos (`shadow-field`), à plat sous l'anneau au focus (`focus-visible:shadow-none`). On tape dans un creux, on appuie sur une bosse.
+- Contrôle segmenté (`tabs`) : piste creusée (`bg-muted shadow-track`), pouce blanc en relief (`shadow-thumb`) qui glisse jusqu'à l'onglet actif (`FluidHighlight` en mode attribut). Pas sur `toggle-group` : il peut être à choix multiple.
+- Survol fluide : un premier survol attend 60 ms (un pointeur qui traverse la liste n'allume rien) ; une fois allumé, il suit sans délai. Le clavier n'attend jamais.
 
 ## Classes communes
 
