@@ -45,7 +45,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     :class="cn('group/toggle-group relative isolate [&>[data-slot=toggle-group-item]:hover]:bg-transparent flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs', props.class)"
   >
-    <FluidHighlight mode="pointer" items="[data-slot=toggle-group-item]" class="rounded-md bg-muted" />
+    <FluidHighlight mode="pointer" items="[data-slot=toggle-group-item]" match-radius class="bg-muted" />
     <slot v-bind="slotProps" />
   </ToggleGroupRoot>
 </template>

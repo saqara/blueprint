@@ -42,7 +42,7 @@ function ToggleGroup({
       )}
       {...props}
     >
-      <FluidHighlight mode="pointer" items="[data-slot=toggle-group-item]" className="rounded-md bg-muted" />
+      <FluidHighlight mode="pointer" items="[data-slot=toggle-group-item]" matchRadius className="bg-muted" />
       <ToggleGroupContext.Provider value={{ variant, size, spacing }}>
         {children}
       </ToggleGroupContext.Provider>

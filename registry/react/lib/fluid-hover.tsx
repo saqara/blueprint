@@ -18,6 +18,8 @@ export type FluidHoverOptions = {
   items: string
   /** attribute mode: the active item (or something inside it). */
   active?: string
+  /** Take each item's corner radii (square cells of a joined group). */
+  matchRadius?: boolean
 }
 
 const { exit: _fastExit, ...fast } = spring.fast
@@ -33,7 +35,7 @@ function offsetIn(el: HTMLElement, origin: Element | null) {
   return { x, y }
 }
 
-export function fluidHover(highlight: HTMLElement, { mode, items, active }: FluidHoverOptions): () => void {
+export function fluidHover(highlight: HTMLElement, { mode, items, active, matchRadius }: FluidHoverOptions): () => void {
   const container = highlight.parentElement
   if (!container) return () => {}
   const reduced = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -49,7 +51,11 @@ export function fluidHover(highlight: HTMLElement, { mode, items, active }: Flui
       return
     }
     const { x, y } = offsetIn(target, highlight.offsetParent)
-    const box = { x, y, width: target.offsetWidth, height: target.offsetHeight }
+    const box: Record<string, number | string> = { x, y, width: target.offsetWidth, height: target.offsetHeight }
+    if (matchRadius) {
+      const cs = getComputedStyle(target)
+      for (const k of ["borderTopLeftRadius", "borderTopRightRadius", "borderBottomRightRadius", "borderBottomLeftRadius"] as const) box[k] = cs[k]
+    }
     if (fresh || reduced) {
       fresh = false
       animate(highlight, box, { duration: 0 })
@@ -85,9 +91,9 @@ export function fluidHover(highlight: HTMLElement, { mode, items, active }: Flui
 
 // Place it first inside the list container (`relative isolate`); it measures its siblings.
 // `as="li"` inside a list (ul/ol), where a div is not allowed.
-function FluidHighlight({ className, mode, items, active, as: Tag = "div" }: FluidHoverOptions & { className?: string; as?: "div" | "li" }) {
+function FluidHighlight({ className, mode, items, active, matchRadius, as: Tag = "div" }: FluidHoverOptions & { className?: string; as?: "div" | "li" }) {
   const ref = React.useRef<HTMLElement>(null)
-  React.useEffect(() => (ref.current ? fluidHover(ref.current, { mode, items, active }) : undefined), [mode, items, active])
+  React.useEffect(() => (ref.current ? fluidHover(ref.current, { mode, items, active, matchRadius }) : undefined), [mode, items, active, matchRadius])
   return <Tag ref={ref as React.RefObject<never>} aria-hidden data-slot="fluid-highlight" className={cn("pointer-events-none absolute top-0 left-0 -z-10 rounded-sm bg-accent opacity-0", className)} />
 }
 
