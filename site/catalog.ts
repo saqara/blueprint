@@ -19,6 +19,14 @@ export const CATEGORIES = [
   { id: "saqara", label: "Saqara", items: ["saqara-logo", "theme-toggle", "user-menu"] },
 ]
 
+// V2 edition only: components restyled ("updated") or added ("new") since V1, badged in the sidebar.
+// Each V2 lot adds its components here.
+export const V2_STATUS: Record<string, "new" | "updated"> = {
+  // Lot 1, basic controls.
+  badge: "updated", button: "updated", checkbox: "updated", field: "updated", input: "updated", "input-group": "updated",
+  "radio-group": "updated", slider: "updated", switch: "updated", textarea: "updated", toggle: "updated", "toggle-group": "updated",
+}
+
 export const BLOCKS = ["ai-chat", "app-shell-header", "app-shell-sidebar", "dashboard", "list-page", "login", "record-page", "settings-page", "wizard"]
 
 export const EXAMPLES = [

@@ -1,14 +1,15 @@
+import { cn } from "cn"
 import { useEffect, useRef } from "react"
 import { Code2 } from "lucide-react"
 import { Button } from "@/registry/react/ui/button"
 import { Separator } from "@/registry/react/ui/separator"
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset,
-  SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
+  SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
 } from "@/registry/react/ui/sidebar"
 import { Toaster } from "@/registry/react/ui/sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
-import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES } from "./catalog"
+import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES, V2_STATUS } from "./catalog"
 import { ReactIcon, VueIcon } from "./components/FrameworkIcon"
 import { CURRENT, EDITIONS, editionHref, type Edition } from "./lib/edition"
 import { ThemeSwitch } from "./components/ThemeSwitch"
@@ -17,12 +18,12 @@ import type { Fw } from "./lib/framework"
 import { toHash, type Route } from "./lib/route"
 import { Page } from "./pages/Page"
 
-type NavGroup = { label: string; items: { label: string; route: Route }[] }
+type NavGroup = { label: string; items: { label: string; route: Route; status?: "new" | "updated" }[] }
 
 const NAV: NavGroup[] = [
   { label: "Démarrer", items: START_PAGES.map((p) => ({ label: p.title, route: { section: "demarrer", slug: p.slug } })) },
-  ...CATEGORIES.map((c) => ({ label: c.label, items: c.items.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "composants" as const, slug: name } })) })),
-  { label: "Blocs", items: BLOCKS.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "blocs" as const, slug: name } })) },
+  ...CATEGORIES.map((c) => ({ label: c.label, items: c.items.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "composants" as const, slug: name }, status: V2_STATUS[name] })) })),
+  { label: "Blocs", items: BLOCKS.map((name) => ({ label: itemInfo(name)?.title ?? name, route: { section: "blocs" as const, slug: name }, status: V2_STATUS[name] })) },
   { label: "Exemples", items: EXAMPLES.map((e) => ({ label: e.title, route: { section: "exemples" as const, slug: e.slug } })) },
 ]
 
@@ -57,8 +58,15 @@ export function App() {
                     return (
                       <SidebarMenuItem key={href}>
                         <SidebarMenuButton asChild isActive={href === current}>
-                          <a href={href} aria-current={href === current ? "page" : undefined}>{item.label}</a>
+                          <a href={href} aria-current={href === current ? "page" : undefined}>
+                            {item.label}{item.status && <span className="sr-only"> ({item.status === "new" ? "New" : "Updated"})</span>}
+                          </a>
                         </SidebarMenuButton>
+                        {item.status && (
+                          <SidebarMenuBadge aria-hidden className={cn("rounded-full px-1.5 text-[11px]", item.status === "new" ? "bg-identity/10 text-identity-text" : "bg-sidebar-accent text-muted-foreground")}>
+                            {item.status === "new" ? "New" : "Updated"}
+                          </SidebarMenuBadge>
+                        )}
                       </SidebarMenuItem>
                     )
                   })}
