@@ -681,6 +681,25 @@
       "description": "Étiquette courte : statut, note, rôle."
     },
     {
+      "name": "bar-list",
+      "type": "registry:ui",
+      "title": "Bar List",
+      "description": "Classement en barres : une ligne par élément, barre proportionnelle à la plus grande valeur, survol fluide, lignes cliquables (Saqara).",
+      "registryDependencies": [
+        "@saqara/fluid-hover"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/bar-list/BarList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/bar-list/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
@@ -2622,6 +2641,29 @@
       ]
     },
     {
+      "name": "questionnaire",
+      "type": "registry:ui",
+      "title": "Questionnaire",
+      "description": "Plusieurs questions, une à la fois : progression, retour à la question précédente, réponses rendues à la fin (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button",
+        "@saqara/question"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/questionnaire/Questionnaire.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/questionnaire/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "queue",
       "type": "registry:ui",
       "title": "Queue",
@@ -2700,6 +2742,22 @@
         }
       ],
       "description": "File de tâches ou de messages en attente, par sections repliables."
+    },
+    {
+      "name": "radar-chart",
+      "type": "registry:ui",
+      "title": "Radar Chart",
+      "description": "Graphique radar en SVG, sans bibliothèque : une série pleine comparée à des séries en contour, valeurs lues aussi en tableau par les lecteurs d’écran (Saqara).",
+      "files": [
+        {
+          "path": "registry/vue/ui/radar-chart/RadarChart.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/radar-chart/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     },
     {
       "name": "radio-group",

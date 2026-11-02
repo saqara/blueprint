@@ -97,3 +97,5 @@ Chaque lot ajoute ses composants à `V2_STATUS` dans `site/catalog.ts` : badge �
 | 3 | Survol fluide (hook React + composable Vue) sur menus, tabs, sidebar, table, data-table. |
 | 4 | Contenus : card, alert, accordion, stepper, page-header, skeleton, progress, empty… |
 | 5 | Composants IA, puis blocs et site de doc. |
+| Relief | Relief BoardUI (bouton rouge, ombres, fond gris, pilule de nav) puis toucher (pistes creusées, champs creusés, délai de survol). |
+| Pro 1 | Équivalents maison de composants Pro de BoardUI, sans reprendre leur code : `radar-chart` (SVG, sans bibliothèque), `bar-list`, `questionnaire` (sur `question`). |

@@ -95,7 +95,7 @@ function onEscape(event: KeyboardEvent) {
       :aria-label="question ? undefined : ariaLabel"
       :aria-activedescendant="current >= 0 ? `${id}-${current}` : undefined"
       :aria-disabled="disabled || undefined"
-      class="relative isolate max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-inset"
+      class="relative isolate max-h-[min(31rem,60vh)] overflow-y-auto border-t p-1 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       @keydown="onKeydown"
     >
       <FluidHighlight as="li" mode="attribute" items="[role=option]" active="[role=option][aria-selected=true]" />
