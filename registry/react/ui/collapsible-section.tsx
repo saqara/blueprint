@@ -28,10 +28,10 @@ function CollapsibleSection({
   const Heading = `h${headingLevel}` as const
   return (
     <Collapsible data-slot="collapsible-section" data-variant={variant} {...props} open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}
-      className={cn("grid gap-2", variant === "card" && "rounded-lg border bg-card p-4 text-card-foreground", className)}>
+      className={cn("grid gap-2", variant === "card" && "rounded-xl border bg-card p-4 text-card-foreground", className)}>
       <div className="flex min-h-9 items-center gap-2">
         <Heading className="min-w-0 flex-1 text-sm font-semibold">
-          <CollapsibleTrigger {...triggerProps} className="group flex w-full items-center gap-2 rounded-md text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+          <CollapsibleTrigger {...triggerProps} className="group flex w-full items-center gap-2 rounded-md text-left outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
             <ChevronDownIcon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=closed]:-rotate-90" />
             <span className="truncate">{title}</span>
           </CollapsibleTrigger>

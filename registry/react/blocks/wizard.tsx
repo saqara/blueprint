@@ -132,7 +132,7 @@ function Wizard({
             <h2 id={`${id}-step`} ref={heading} tabIndex={-1} className="text-lg font-semibold outline-none">{current.title}</h2>
           </div>
           {errors.length > 0 && (
-            <Alert ref={summary} variant="destructive" tabIndex={-1} data-slot="wizard-errors" className="outline-none focus-visible:ring-[3px] focus-visible:ring-destructive/30">
+            <Alert ref={summary} variant="destructive" tabIndex={-1} data-slot="wizard-errors" className="outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive">
               <CircleAlertIcon />
               <AlertTitle>{errors.length > 1 ? `${errors.length} points à corriger` : "Un point à corriger"}</AlertTitle>
               <AlertDescription>

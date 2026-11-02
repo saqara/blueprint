@@ -26,12 +26,12 @@ const emit = defineEmits<{ openChange: [open: boolean] }>()
     :data-variant="variant"
     :open="open"
     :default-open="defaultOpen"
-    :class="cn('grid gap-2', variant === 'card' && 'rounded-lg border bg-card p-4 text-card-foreground', props.class)"
+    :class="cn('grid gap-2', variant === 'card' && 'rounded-xl border bg-card p-4 text-card-foreground', props.class)"
     @update:open="(value: boolean) => { open = value; emit('openChange', value) }"
   >
     <div class="flex min-h-9 items-center gap-2">
       <component :is="`h${headingLevel}`" class="min-w-0 flex-1 text-sm font-semibold">
-        <CollapsibleTrigger v-bind="triggerProps" class="group flex w-full items-center gap-2 rounded-md text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+        <CollapsibleTrigger v-bind="triggerProps" class="group flex w-full items-center gap-2 rounded-md text-left outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
           <ChevronDownIcon aria-hidden="true" class="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=closed]:-rotate-90" />
           <span class="truncate">{{ title }}</span>
         </CollapsibleTrigger>

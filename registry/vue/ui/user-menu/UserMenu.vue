@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger data-slot="user-menu" :aria-label="name"
-      :class="cn('flex items-center gap-2 rounded-md p-1 text-left text-sm outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50', props.class)">
+      :class="cn('flex items-center gap-2 rounded-md p-1 text-left text-sm outline-none hover:bg-accent focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring', props.class)">
       <Avatar class="size-8">
         <AvatarImage v-if="avatarUrl" :src="avatarUrl" alt="" />
         <AvatarFallback>{{ initials(name) }}</AvatarFallback>

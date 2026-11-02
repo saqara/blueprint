@@ -75,7 +75,7 @@ function FileDropzone({
         onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
         onDragLeave={() => setDragging(false)}
         onDrop={(e) => { e.preventDefault(); setDragging(false); add(e.dataTransfer.files) }}
-        className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-md border border-dashed border-input p-6 text-sm text-muted-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[dragging]:border-primary data-[dragging]:bg-accent"
+        className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-md border border-dashed border-input p-6 text-sm text-muted-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[dragging]:border-identity data-[dragging]:bg-accent"
       >
         <UploadIcon className="size-5" />
         {label}

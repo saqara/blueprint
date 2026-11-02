@@ -16,7 +16,7 @@ export type NavBadgeVariant = "identity" | "info" | "secondary"
 export type AppUser = { name: string; email?: string; avatarUrl?: string }
 
 // Nav entries: neutral sidebar-accent on hover, red tint when active (as the sidebar); they never wrap.
-const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-4 [&_svg]:shrink-0"
+const entryBase = "inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:size-4 [&_svg]:shrink-0"
 
 type AppShellHeaderProps = {
   nav: AppNavItem[]
@@ -89,7 +89,7 @@ function AppShellHeader({
   return (
     <div data-slot="app-shell-header" className={cn("flex min-h-svh flex-col bg-background", className)}>
       {/* Skip link: moves focus to <main> without touching the URL (works with hash routers too). */}
-      <a href={`#${mainId}`} className="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium shadow-md outline-none focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus-visible:ring-[3px] focus-visible:ring-ring/50"
+      <a href={`#${mainId}`} className="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium shadow-md outline-none focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         onClick={(event) => { event.preventDefault(); document.getElementById(mainId)?.focus() }}>
         {skipLinkLabel}
       </a>

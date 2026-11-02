@@ -111,7 +111,7 @@ function StepperTrigger({ className, onClick, ...props }: React.ComponentProps<"
       aria-current={state === "active" ? "step" : undefined}
       disabled={disabled}
       onClick={composeHandlers(onClick, () => setValue(step))}
-      className={cn("flex flex-col items-center gap-1 rounded-md p-1 text-center outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50", className)}
+      className={cn("flex flex-col items-center gap-1 rounded-md p-1 text-center outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring", className)}
       {...props}
     />
   )
@@ -124,7 +124,7 @@ function StepperIndicator({ className, ...props }: React.ComponentProps<"span">)
       className={cn(
         "inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground/50",
         "group-data-[disabled]:text-muted-foreground group-data-[disabled]:opacity-50",
-        "group-data-[state=active]:bg-primary group-data-[state=active]:text-primary-foreground",
+        "group-data-[state=active]:bg-identity group-data-[state=active]:text-identity-foreground",
         "group-data-[state=completed]:bg-accent group-data-[state=completed]:text-accent-foreground",
         className,
       )}
