@@ -24,7 +24,7 @@ const noteConfig = { qualite: { label: "Note qualité", color: "var(--chart-1)" 
 const signupConfig = { inscriptions: { label: "Inscriptions", color: "var(--chart-2)" } } satisfies ChartConfig
 const x = (_: unknown, i: number) => i
 const activity: DashboardActivity[] = [
-  { id: "1", title: "Acme SAS a rejoint le réseau", description: "Inscription validée par Camille Martin", time: "il y a 2 h", dateTime: "2026-10-19T08:00" },
+  { id: "1", title: "Bâti Sud SAS a rejoint le réseau", description: "Inscription validée par Camille Martin", time: "il y a 2 h", dateTime: "2026-10-19T08:00" },
   { id: "2", title: "Nouvelle évaluation : Durand & Fils", description: "Note qualité 17/20", time: "hier", dateTime: "2026-10-18" },
   { id: "3", title: "Attestation URSSAF expirée", description: "Bâti Rhône – à renouveler", time: "12 oct.", dateTime: "2026-10-12" },
 ]
@@ -41,7 +41,7 @@ function change(p: string) {
 const stats = computed(() => [
   { label: "Fournisseurs actifs", value: "1 284", description: week.value ? "+6 cette semaine" : "+48 sur 6 mois" },
   { label: "Évaluations", value: week.value ? "37" : "912", description: "Note moyenne 15,8/20" },
-  { label: "Inscriptions en attente", value: "14", description: "Délai moyen 2 jours" },
+  { label: "En attente", value: "14", description: "Délai moyen 2 jours" },
   { label: "Documents expirés", value: "9", description: "À relancer" },
 ])
 const panels = [

@@ -7,7 +7,7 @@ Référence : [Fluid Functionalism](https://www.fluidfunctionalism.com/) (motion
 | Sujet | Décision |
 |---|---|
 | Esprit | Sobre et dense, à la Fluid Functionalism. |
-| Couleurs | Gris neutres purs. Bouton principal en dégradé rouge Saqara (décision du lot Relief, au lieu du noir / blanc initial) ; destructif en cramoisi. Rouge Saqara `#F04632` = seule couleur d'accent : anneau de focus, switch coché, sélection. Les erreurs restent en rouge foncé `destructive` avec une icône, pour ne pas se confondre avec le focus. |
+| Couleurs | Gris neutres purs. Bouton principal en dégradé rouge Saqara (décision du lot Relief, au lieu du noir / blanc initial). Rouge Saqara `#F04632` = seule couleur d'accent : anneau de focus, sélection, graphiques ; sous du texte blanc (`primary`), il passe à `#D93A26` (4,58:1). Destructif en contour cramoisi, plein au survol, pour ne pas faire deux rouges pleins côte à côte. Badges de statut en teinte douce (fond à 15 %, texte `*-text`). Graphiques : `chart-2` gris neutre. Les erreurs restent en rouge foncé `destructive` avec une icône, pour ne pas se confondre avec le focus. |
 | Rayons | 6 px pour les contrôles (`rounded-md`), 10 px pour les conteneurs (`rounded-xl`). |
 | Polices | Poppins pour les titres (celle de saqara.com), Geist pour le contenu, Maple Mono pour le code. |
 | Motion | Bibliothèques Motion : `motion` (React), `motion-v` (Vue), avec les presets de `@saqara/springs`. |
@@ -101,3 +101,4 @@ Chaque lot ajoute ses composants à `V2_STATUS` dans `site/catalog.ts` : badge �
 | Relief | Relief BoardUI (bouton rouge, ombres, fond gris, pilule de nav) puis toucher (pistes creusées, champs creusés, délai de survol). |
 | Pro 1 | Équivalents maison de composants Pro de BoardUI, sans reprendre leur code : `radar-chart` (SVG, sans bibliothèque), `bar-list`, `questionnaire` (sur `question`). |
 | Pro 2 | `funnel-chart` (entonnoir, taux de conversion entre étapes), `radial-chart` (score de complétude, anneaux concentriques). SVG, sans bibliothèque. |
+| Revues | Correctifs des revues Impeccable et Taste : contraste du rouge, bouton désactivé, destructif, badges doux, sélection du toggle-group, zones tactiles, démos. |

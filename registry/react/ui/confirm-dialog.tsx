@@ -103,7 +103,8 @@ function ConfirmDialog() {
             {options.cancelText ?? "Annuler"}
           </AlertDialogCancel>
           <Button
-            variant={variant === "destructive" ? "destructive" : "default"}
+            // Saqara: confirming a destructive action is the one place the red is solid (raised, destructive color).
+            className={variant === "destructive" ? "[--raised-color:var(--destructive)] focus-visible:outline-destructive dark:[--raised-color:color-mix(in_oklab,var(--destructive)_60%,black)]" : undefined}
             loading={loading}
             onClick={accept}
           >
