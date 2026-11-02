@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "cn"
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover"
 import { Button } from "@/registry/react/ui/button"
 
 export type SettingsSection = {
@@ -80,7 +81,8 @@ function SettingsPage({
       <div className="flex flex-1 flex-col gap-6 p-4 sm:px-6 md:flex-row md:gap-10">
         {/* Below md the same list becomes a scrolling row of tabs-like buttons (one DOM). */}
         <nav aria-label="Sections des paramètres" className="shrink-0 md:w-56">
-          <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible md:pb-0">
+          <ul className="relative isolate -mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible md:pb-0 [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+              <FluidHighlight as="li" mode="pointer" items="a, button" className="rounded-md bg-accent" />
             {sections.map((section) => (
               <li key={section.id} className="shrink-0">
                 <Button

@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "vue"
 import { computed, onBeforeUnmount, ref, useId, watch } from "vue"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 import { Button } from "@/registry/vue/ui/button"
 
 export interface SettingsSection {
@@ -81,7 +82,8 @@ onBeforeUnmount(() => window.removeEventListener("beforeunload", onBeforeUnload)
     <div class="flex flex-1 flex-col gap-6 p-4 sm:px-6 md:flex-row md:gap-10">
       <!-- Below md the same list becomes a scrolling row of tabs-like buttons (one DOM). -->
       <nav aria-label="Sections des paramètres" class="shrink-0 md:w-56">
-        <ul class="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible md:pb-0">
+        <ul class="relative isolate -mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:flex-col md:overflow-visible md:pb-0 [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+          <FluidHighlight as="li" mode="pointer" items="a, button" class="rounded-md bg-accent" />
           <li v-for="section in sections" :key="section.id" class="shrink-0">
             <Button
               type="button"

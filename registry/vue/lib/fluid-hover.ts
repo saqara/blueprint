@@ -7,7 +7,7 @@ import { spring } from "@/registry/vue/lib/springs"
 // instead of each item blinking its own background. The highlight's parent is the list container;
 // the nearest positioned ancestor gets `relative isolate` (the highlight sits at -z-10, under the items).
 // - "attribute": follows the item the primitive marks active (Radix/Reka data-highlighted, cmdk
-//   data-selected), so keyboard navigation moves it too.
+//   data-selected, or aria-selected on a custom listbox), so keyboard navigation moves it too.
 // - "pointer": follows the item under the pointer (tabs, sidebar, table rows).
 // A fresh pointer entry fades in where it lands instead of sliding over from the last item.
 export type FluidHoverOptions = {
@@ -66,7 +66,7 @@ export function fluidHover(highlight: HTMLElement, { mode, items, active }: Flui
   if (mode === "attribute") {
     const sync = () => move(itemOf(active ? container.querySelector(active) : null))
     const observer = new MutationObserver(sync)
-    observer.observe(container, { subtree: true, attributes: true, attributeFilter: ["data-highlighted", "data-selected", "data-state"] })
+    observer.observe(container, { subtree: true, attributes: true, attributeFilter: ["data-highlighted", "data-selected", "data-state", "aria-selected"] })
     sync()
     return () => { observer.disconnect(); container.removeEventListener("pointerenter", onEnter) }
   }

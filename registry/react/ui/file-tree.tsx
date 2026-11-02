@@ -6,6 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/registry/react/ui/collapsible";
 import { cn } from "cn";
+import { FluidHighlight } from "@/registry/react/lib/fluid-hover";
 import {
   ChevronRightIcon,
   FileIcon,
@@ -88,7 +89,10 @@ export const FileTree = ({
         role="tree"
         {...props}
       >
-        <div className="p-2">{children}</div>
+        <div className="relative isolate p-2">
+          <FluidHighlight mode="pointer" items="[data-slot=file-tree-row]" className="rounded bg-muted/50" />
+          {children}
+        </div>
       </div>
     </FileTreeContext.Provider>
   );
@@ -173,8 +177,9 @@ export const FileTreeFolder = ({
           {...props}
         >
           <div
+            data-slot="file-tree-row"
             className={cn(
-              "flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors hover:bg-muted/50",
+              "flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors",
               isSelected && "bg-muted"
             )}
           >
@@ -262,8 +267,9 @@ export const FileTreeFile = ({
   return (
     <FileTreeFileContext.Provider value={fileContextValue}>
       <div
+        data-slot="file-tree-row"
         className={cn(
-          "flex cursor-pointer items-center gap-1 rounded px-2 py-1 outline-none transition-colors hover:bg-muted/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "flex cursor-pointer items-center gap-1 rounded px-2 py-1 outline-none transition-colors focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           isSelected && "bg-muted",
           className
         )}

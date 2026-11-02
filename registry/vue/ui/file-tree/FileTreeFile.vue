@@ -28,9 +28,10 @@ provide(FileTreeFileKey, {
 
 <template>
   <div
+    data-slot="file-tree-row"
     :class="
       cn(
-        'flex cursor-pointer items-center gap-1 rounded px-2 py-1 transition-colors hover:bg-muted/50 outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+        'flex cursor-pointer items-center gap-1 rounded px-2 py-1 transition-colors outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
         isSelected && 'bg-muted',
         props.class,
       )

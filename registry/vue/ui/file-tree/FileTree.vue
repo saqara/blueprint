@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
+import { FluidHighlight } from '@/registry/vue/lib/fluid-hover'
 import { provide, ref, watch } from 'vue'
 import { FileTreeKey } from './context'
 
@@ -71,7 +72,8 @@ provide(FileTreeKey, {
     role="tree"
     v-bind="$attrs"
   >
-    <div class="p-2">
+    <div class="relative isolate p-2">
+      <FluidHighlight mode="pointer" items="[data-slot=file-tree-row]" class="rounded bg-muted/50" />
       <slot />
     </div>
   </div>

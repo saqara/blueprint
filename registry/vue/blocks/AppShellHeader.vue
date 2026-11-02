@@ -12,6 +12,7 @@ import type { HTMLAttributes } from "vue"
 import { MenuIcon } from "@lucide/vue"
 import { computed, ref } from "vue"
 import { cn } from "@/lib/utils"
+import { FluidHighlight } from "@/registry/vue/lib/fluid-hover"
 import { Badge } from "@/registry/vue/ui/badge"
 import { Button } from "@/registry/vue/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/vue/ui/sheet"
@@ -69,7 +70,8 @@ function go(event: Event, id: string) {
           <component :is="active.icon" v-if="active?.icon" class="size-4 text-primary" />
           {{ title }}
         </h1>
-        <nav aria-label="Navigation principale" class="ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex">
+        <nav aria-label="Navigation principale" class="relative isolate ml-auto hidden min-w-0 items-center gap-1 overflow-x-auto md:flex [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+          <FluidHighlight mode="pointer" items="a, button" class="rounded-md bg-sidebar-accent" />
           <component :is="item.href ? 'a' : 'button'" v-for="item in nav" :key="item.id" :href="item.href" :type="item.href ? undefined : 'button'"
             :aria-current="item.id === activeId ? 'page' : undefined" :class="entryClass(item, false)" @click="go($event, item.id)">
             <component :is="item.icon" v-if="item.icon" />
@@ -95,7 +97,8 @@ function go(event: Event, id: string) {
               <SheetHeader @click="(event: MouseEvent) => { if ((event.target as HTMLElement).closest('a')) open = false }">
                 <SheetTitle class="flex items-center gap-2"><slot name="logo"><SaqaraLogo with-text /></slot><slot name="product" /></SheetTitle>
               </SheetHeader>
-              <nav aria-label="Navigation principale" class="grid gap-1 px-4">
+              <nav aria-label="Navigation principale" class="relative isolate grid gap-1 px-4 [&_:is(a,button):not([aria-current]):hover]:bg-transparent">
+                <FluidHighlight mode="pointer" items="a, button" class="rounded-md bg-sidebar-accent" />
                 <component :is="item.href ? 'a' : 'button'" v-for="item in nav" :key="item.id" :href="item.href" :type="item.href ? undefined : 'button'"
                   :aria-current="item.id === activeId ? 'page' : undefined" :class="entryClass(item, true)" @click="go($event, item.id)">
                   <component :is="item.icon" v-if="item.icon" />
