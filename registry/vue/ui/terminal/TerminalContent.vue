@@ -32,7 +32,7 @@ watch(
   <div
     ref="containerRef"
     :class="cn(
-      'max-h-96 overflow-auto p-4 font-mono text-sm leading-relaxed outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+      'max-h-96 overflow-auto p-4 font-mono text-sm leading-relaxed outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
       props.class,
     )"
     aria-label="Sortie du terminal"

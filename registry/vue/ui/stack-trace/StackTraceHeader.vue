@@ -25,7 +25,7 @@ const { isOpen, setIsOpen } = useStackTraceContext('StackTraceHeader')
            and toggles with Enter / Space (the actions stop those keys from reaching it). -->
       <div
         :class="cn(
-          'flex w-full cursor-pointer items-center gap-3 p-3 text-left outline-none transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50',
+          'flex w-full cursor-pointer items-center gap-3 p-3 text-left outline-none transition-colors hover:bg-muted/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           props.class,
         )"
         role="button"

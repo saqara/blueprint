@@ -221,7 +221,7 @@ export const StackTraceHeader = memo(
               and toggles with Enter / Space (the actions stop those keys from reaching it). */}
           <div
             className={cn(
-              "flex w-full cursor-pointer items-center gap-3 p-3 text-left outline-none transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50",
+              "flex w-full cursor-pointer items-center gap-3 p-3 text-left outline-none transition-colors hover:bg-muted/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
               className
             )}
             onKeyDown={(event) => {
@@ -415,7 +415,7 @@ export const StackTraceContent = memo(
         <CollapsibleContent
           className={cn(
             "overflow-auto border-t bg-muted/30",
-            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in motion-reduce:animate-none",
+            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in motion-reduce:animate-none duration-200 ease-spring data-[state=closed]:duration-120 data-[state=closed]:ease-in",
             className
           )}
           style={{ maxHeight }}

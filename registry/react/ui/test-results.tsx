@@ -178,11 +178,11 @@ export const TestResultsProgress = ({
         <>
           <div className="flex h-2 overflow-hidden rounded-full bg-muted">
             <div
-              className="bg-success transition-all"
+              className="bg-success transition-[color,background-color,border-color,width] duration-160 ease-tail"
               style={{ width: `${passedPercent}%` }}
             />
             <div
-              className="bg-destructive transition-all"
+              className="bg-destructive transition-[color,background-color,border-color,width] duration-160 ease-tail"
               style={{ width: `${failedPercent}%` }}
             />
           </div>

@@ -73,7 +73,7 @@ const lineNumberClasses = cn(
 
 <template>
   <!-- Saqara: the scrollable code is reachable with the keyboard (arrows scroll it). -->
-  <div class="relative overflow-auto rounded-b-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50" tabindex="0">
+  <div class="relative overflow-auto rounded-b-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" tabindex="0">
     <pre
       :class="cn('dark:bg-(--shiki-dark-bg)! dark:text-(--shiki-dark)! m-0 p-4 text-sm')"
       :style="preStyle"
