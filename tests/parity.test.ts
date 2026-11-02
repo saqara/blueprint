@@ -27,6 +27,11 @@ describe("parityErrors", () => {
     const vueSidebar = { name: "sidebar", type: "registry:ui" }
     expect(parityErrors(m(sidebar, hook), m(vueSidebar), yes)).toEqual([])
   })
+  it("needs a twin but no demo for a lib", () => {
+    const lib = { name: "springs", type: "registry:lib" }
+    expect(parityErrors(m(lib), m(lib), () => false)).toEqual([])
+    expect(parityErrors(m(lib), m(), yes)).toEqual(['"springs" is in react but not in vue'])
+  })
   it("flags a missing demo, but never for the theme", () => {
     const hasDemo = (fw: string) => fw === "react"
     expect(parityErrors(m(theme, button), m(theme, button), hasDemo)).toEqual(['vue "button" has no demo in src/vue/demos/'])

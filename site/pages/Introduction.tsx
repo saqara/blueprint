@@ -11,7 +11,7 @@ export function Introduction() {
       <h2>Principes</h2>
       <ul className="list-disc space-y-1 pl-6">
         <li>Chaque composant existe en React et en Vue, avec la même API et le même rendu.</li>
-        <li>Un seul thème, <code>saqara-theme</code> : couleurs, polices (Poppins, Lato), rayons et ombres, en clair et en sombre.</li>
+        <li>Un seul thème, <code>saqara-theme</code> : couleurs, polices (Poppins, Geist), rayons et ombres, en clair et en sombre.</li>
         <li>Contraste WCAG AA vérifié automatiquement sur chaque paire de couleurs.</li>
         <li>Tailwind CSS v4, textes par défaut en français, surchargeables par props.</li>
       </ul>
