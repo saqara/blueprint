@@ -2480,6 +2480,28 @@
       "description": "Zone de saisie du chat : texte, pièces jointes (glisser-déposer, coller), menu d'actions et bouton envoyer / arrêter."
     },
     {
+      "name": "question",
+      "type": "registry:ui",
+      "title": "Question",
+      "description": "Question de l’assistant à la place du champ de saisie : options au clavier (flèches, Entrée, 1–9), « Autre réponse… » et fermeture (Saqara).",
+      "dependencies": [
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@saqara/button"
+      ],
+      "files": [
+        {
+          "path": "registry/vue/ui/question/Question.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/ui/question/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "queue",
       "type": "registry:ui",
       "title": "Queue",
