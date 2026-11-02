@@ -4,7 +4,7 @@ import { readThemeChoice, resolveTheme } from "../site/lib/theme"
 import { readFramework } from "../site/lib/framework"
 import reactManifest from "../registry.react.json"
 import vueManifest from "../registry.vue.json"
-import { BLOCKS, CATEGORIES, itemInfo, pageTitle } from "../site/catalog"
+import { BLOCKS, CATEGORIES, itemInfo, pageTitle, V2_STATUS } from "../site/catalog"
 
 describe("parseRoute", () => {
   it.each([
@@ -120,5 +120,12 @@ describe("anti-flash script", () => {
     const run = new Function("localStorage", "matchMedia", "document", script)
     run({ getItem: () => { throw new Error("blocked") } }, () => ({ matches: true }), { documentElement: { classList: { add: (c: string) => classes.add(c) } } })
     expect(classes.has("dark")).toBe(true)
+  })
+})
+
+describe("V2 sidebar badges", () => {
+  it("only badge pages that are in the sidebar", () => {
+    const listed = new Set([...CATEGORIES.flatMap((c) => c.items), ...BLOCKS])
+    expect(Object.keys(V2_STATUS).filter((name) => !listed.has(name))).toEqual([])
   })
 })

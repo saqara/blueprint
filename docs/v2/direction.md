@@ -66,6 +66,8 @@ Pour une transition CSS (couleur, bordure, survol, appui), les mêmes vitesses e
 
 ## Lots
 
+Chaque lot ajoute ses composants à `V2_STATUS` dans `site/catalog.ts` : badge « Updated » (restylé) ou « New » (nouveau en V2) dans la sidebar du site.
+
 | Lot | Contenu |
 |---|---|
 | 0 | Fondations : couleurs, rayons, polices, échelle de texte, ombres, presets de ressort, ce fichier. |
