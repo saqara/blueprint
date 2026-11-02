@@ -7,7 +7,7 @@ export function parityErrors(react: Manifest, vue: Manifest, hasDemo: (fw: Fw, n
   const manifests: Record<Fw, Manifest> = { react, vue }
   const names = (fw: Fw) => new Set(manifests[fw].items.map((i) => i.name))
 
-  // Hooks are framework-internal (e.g. React use-mobile): no twin, no demo.
+  // Hooks are framework-internal (e.g. React use-mobile): no twin, no demo. Libs (springs) have a twin but no demo.
   const shared = (fw: Fw) => new Set(manifests[fw].items.filter((i) => i.type !== "registry:hook").map((i) => i.name))
 
   for (const [fw, other] of [["react", "vue"], ["vue", "react"]] as const) {
@@ -19,7 +19,7 @@ export function parityErrors(react: Manifest, vue: Manifest, hasDemo: (fw: Fw, n
       for (const dep of deps) {
         if (dep.startsWith("@saqara/") && !names(fw).has(dep.slice(8))) errors.push(`${fw} "${item.name}" depends on missing "${dep}"`)
       }
-      if (item.name !== "saqara-theme" && item.type !== "registry:hook" && !hasDemo(fw, item.name)) errors.push(`${fw} "${item.name}" has no demo in src/${fw}/demos/`)
+      if (item.name !== "saqara-theme" && item.type !== "registry:hook" && item.type !== "registry:lib" && !hasDemo(fw, item.name)) errors.push(`${fw} "${item.name}" has no demo in src/${fw}/demos/`)
     }
   }
   return errors

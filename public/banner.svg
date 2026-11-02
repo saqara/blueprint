@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-label="Saqara Blueprint">
   <defs>
     <linearGradient id="bannerBg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4AA6F8"/>
-      <stop offset="1" stop-color="#2C62DC"/>
+      <stop offset="0" stop-color="#F86A57"/>
+      <stop offset="1" stop-color="#D8331F"/>
     </linearGradient>
     <pattern id="minor" width="32" height="32" patternUnits="userSpaceOnUse">
       <path d="M32 0H0V32" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1"/>
@@ -23,8 +23,8 @@
   <svg x="120" y="160" width="320" height="320" viewBox="0 0 1024 1024">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4AA6F8"/>
-      <stop offset="1" stop-color="#2C62DC"/>
+      <stop offset="0" stop-color="#F86A57"/>
+      <stop offset="1" stop-color="#D8331F"/>
     </linearGradient>
     <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fff"/>

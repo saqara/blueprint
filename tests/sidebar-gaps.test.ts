@@ -23,14 +23,14 @@ describe("active entry differs from hover", () => {
   const button = (html: string) => decode(html.match(/<(?:button|a)[^>]*data-active="true"[^>]*class="([^"]*)"|<(?:button|a)[^>]*class="([^"]*)"[^>]*data-active="true"/)!.slice(1).find(Boolean)!)
   it("react: red tint and text when active, neutral grey on hover", () => {
     const cls = RS.sidebarMenuButtonVariants()
-    expect(cls).toContain("data-[active=true]:bg-primary/10")
+    expect(cls).toContain("data-[active=true]:bg-identity/10")
     expect(cls).toContain("data-[active=true]:text-identity-text")
     expect(cls).not.toContain("data-[active=true]:bg-sidebar-accent")
     expect(cls).toContain("hover:bg-sidebar-accent")
   })
   it("vue: same classes", () => {
     const cls = VS.sidebarMenuButtonVariants()
-    expect(cls).toContain("data-[active=true]:bg-primary/10")
+    expect(cls).toContain("data-[active=true]:bg-identity/10")
     expect(cls).toContain("data-[active=true]:text-identity-text")
     expect(cls).not.toContain("data-[active=true]:bg-sidebar-accent")
   })
@@ -40,7 +40,7 @@ describe("active entry differs from hover", () => {
       ? renderToString(e(RHeader as any, { nav, activeId: "a" }, "x"))
       : await renderVue(createSSRApp({ render: () => h(VHeader as any, { nav, activeId: "a" }, { default: () => "x" }) }))
     const active = decode(html.match(/<(?:a|button)[^>]*aria-current="page"[^>]*class="([^"]*)"|<(?:a|button)[^>]*class="([^"]*)"[^>]*aria-current="page"/)!.slice(1).find(Boolean)!)
-    expect(active).toContain("bg-primary/10")
+    expect(active).toContain("bg-identity/10")
     expect(active).toContain("text-identity-text")
     void button
   })

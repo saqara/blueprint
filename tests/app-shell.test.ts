@@ -91,7 +91,7 @@ describe.each([
     const cls = active[1] ?? active[2]
     expect(cls).toContain("whitespace-nowrap")
     // The active tab keeps its red tint on hover (tests/sidebar-gaps.test.ts); other tabs hover in neutral grey.
-    expect(cls).toContain("hover:bg-primary/10")
+    expect(cls).toContain("hover:bg-identity/10")
     expect(html).toMatch(/<(?:a|button)(?![^>]*aria-current)[^>]*class="[^"]*hover:bg-sidebar-accent/)
   })
 })

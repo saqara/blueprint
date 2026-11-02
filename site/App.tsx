@@ -11,7 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/registry/react/ui/toggle-group"
 import { BLOCKS, CATEGORIES, EXAMPLES, itemInfo, pageTitle, START_PAGES } from "./catalog"
 import { ReactIcon, VueIcon } from "./components/FrameworkIcon"
 import { CURRENT, EDITIONS, editionHref, type Edition } from "./lib/edition"
-import { ThemeMenu } from "./components/ThemeMenu"
+import { ThemeSwitch } from "./components/ThemeSwitch"
 import { useFramework, useRoute, useTheme } from "./hooks"
 import type { Fw } from "./lib/framework"
 import { toHash, type Route } from "./lib/route"
@@ -73,18 +73,18 @@ export function App() {
         <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-          <h1 className="truncate text-sm font-medium">{pageTitle(route)}</h1>
-          <div className="ml-auto flex items-center gap-2">
+          <h1 className="hidden truncate text-sm font-medium sm:block">{pageTitle(route)}</h1>
+          <div className="ml-auto flex items-center gap-1 sm:gap-2">
             {/* Each edition is its own site (/blueprint/, /blueprint/v2/): switching opens the same page there. */}
             <ToggleGroup type="single" variant="outline" size="sm" value={CURRENT} onValueChange={(v) => v && v !== CURRENT && window.location.assign(editionHref(v as Edition, window.location))} aria-label="Version de Blueprint">
               {EDITIONS.map((e) => <ToggleGroupItem key={e} value={e}>{e === "v2" ? "V2 (wip)" : e.toUpperCase()}</ToggleGroupItem>)}
             </ToggleGroup>
             <ToggleGroup type="single" variant="outline" size="sm" value={fw} onValueChange={(v) => v && setFw(v as Fw)} aria-label="Framework">
-              <ToggleGroupItem value="react"><ReactIcon />React</ToggleGroupItem>
-              <ToggleGroupItem value="vue"><VueIcon />Vue</ToggleGroupItem>
+              <ToggleGroupItem value="react"><ReactIcon /><span className="sr-only sm:not-sr-only">React</span></ToggleGroupItem>
+              <ToggleGroupItem value="vue"><VueIcon /><span className="sr-only sm:not-sr-only">Vue</span></ToggleGroupItem>
             </ToggleGroup>
-            <ThemeMenu value={theme.choice} onChange={theme.setChoice} />
-            <Button variant="ghost" size="icon" asChild>
+            <ThemeSwitch dark={theme.resolved === "dark"} onChange={(dark) => theme.setChoice(dark ? "dark" : "light")} />
+            <Button variant="ghost" size="icon" className="hidden sm:inline-flex" asChild>
               <a href="https://github.com/saqara/blueprint" target="_blank" rel="noreferrer" aria-label="Code source sur GitHub"><Code2 /></a>
             </Button>
           </div>
