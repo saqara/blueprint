@@ -63,7 +63,7 @@ function AppShellHeader({
     const Icon = item.icon
     const props = {
       "aria-current": isActive ? ("page" as const) : undefined,
-      className: cn(entryBase, isActive && "bg-foreground/10 text-foreground hover:bg-foreground/10 hover:text-foreground", mobile && "w-full justify-start"),
+      className: cn(entryBase, isActive && "bg-identity/10 text-identity-text hover:bg-identity/10 hover:text-identity-text", mobile && "w-full justify-start"),
       onClick: (event: React.MouseEvent) => {
         setOpen(false)
         if (onNavigate) { event.preventDefault(); onNavigate(item.id) }
