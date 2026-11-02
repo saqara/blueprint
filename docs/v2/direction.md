@@ -100,3 +100,4 @@ Chaque lot ajoute ses composants à `V2_STATUS` dans `site/catalog.ts` : badge �
 | 5 | Composants IA, puis blocs et site de doc. |
 | Relief | Relief BoardUI (bouton rouge, ombres, fond gris, pilule de nav) puis toucher (pistes creusées, champs creusés, délai de survol). |
 | Pro 1 | Équivalents maison de composants Pro de BoardUI, sans reprendre leur code : `radar-chart` (SVG, sans bibliothèque), `bar-list`, `questionnaire` (sur `question`). |
+| Pro 2 | `funnel-chart` (entonnoir, taux de conversion entre étapes), `radial-chart` (score de complétude, anneaux concentriques). SVG, sans bibliothèque. |
