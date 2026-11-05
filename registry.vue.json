@@ -807,7 +807,6 @@
       "dependencies": [
         "@vueuse/core",
         "class-variance-authority",
-        "cn",
         "reka-ui"
       ],
       "registryDependencies": [
@@ -883,7 +882,6 @@
       "dependencies": [
         "@lucide/vue",
         "@vueuse/core",
-        "cn",
         "embla-carousel-vue"
       ],
       "registryDependencies": [
