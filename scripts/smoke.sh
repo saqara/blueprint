@@ -59,6 +59,8 @@ EOF
 (cd "$V" && npm i -s vue tailwindcss vite @vitejs/plugin-vue typescript@^6 vue-tsc clsx tailwind-merge \
   && npx -y shadcn-vue@latest add $(items vue) -y \
   && npx vue-tsc -p .)
+# Vue components take cn from the project's lib/utils, not from the "cn" package.
+! grep -q '"cn"' "$V/package.json" || { echo "FAIL: cn package installed in $V"; exit 1; }
 # The Vue consumer uses "~/" aliases (AdonisJS, Nuxt): lib files must still land in the lib folder.
 [ -f "$V/src/lib/fluid-hover.ts" ] && [ ! -e "$V/src/lib/lib" ] || { echo "FAIL: lib files not in $V/src/lib"; exit 1; }
 
