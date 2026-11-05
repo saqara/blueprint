@@ -45,7 +45,7 @@ EOF
 V="$TMP/vue"; write_common "$V"
 cat > "$V/tsconfig.json" <<'EOF'
 { "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "jsx": "preserve",
-  "strict": true, "noEmit": true, "skipLibCheck": true, "types": ["vite/client"], "paths": { "@/*": ["./src/*"] } },
+  "strict": true, "noEmit": true, "skipLibCheck": true, "types": ["vite/client"], "paths": { "~/*": ["./src/*"] } },
   "include": ["src/**/*.ts", "src/**/*.vue"] }
 EOF
 printf 'declare module "*.vue" { import type { DefineComponent } from "vue"; const c: DefineComponent<object, object, unknown>; export default c }\n' > "$V/src/shims.d.ts"
@@ -53,12 +53,14 @@ mkdir -p "$V/src/lib" && cp "$ROOT/lib/utils.ts" "$V/src/lib/utils.ts"
 cat > "$V/components.json" <<EOF
 { "\$schema": "https://shadcn-vue.com/schema.json", "style": "new-york", "typescript": true,
   "tailwind": { "config": "", "css": "src/index.css", "baseColor": "neutral", "cssVariables": true },
-  "aliases": { "components": "@/components", "utils": "@/lib/utils", "ui": "@/components/ui", "lib": "@/lib", "composables": "@/composables" },
+  "aliases": { "components": "~/components", "utils": "~/lib/utils", "ui": "~/components/ui", "lib": "~/lib", "composables": "~/composables" },
   "iconLibrary": "lucide", "registries": { "@saqara": "http://127.0.0.1:$PORT/r/vue/{name}.json" } }
 EOF
 (cd "$V" && npm i -s vue tailwindcss vite @vitejs/plugin-vue typescript@^6 vue-tsc clsx tailwind-merge \
   && npx -y shadcn-vue@latest add $(items vue) -y \
   && npx vue-tsc -p .)
+# The Vue consumer uses "~/" aliases (AdonisJS, Nuxt): lib files must still land in the lib folder.
+[ -f "$V/src/lib/fluid-hover.ts" ] && [ ! -e "$V/src/lib/lib" ] || { echo "FAIL: lib files not in $V/src/lib"; exit 1; }
 
 # --- Assertions shared by both consumers
 for APP in "$R" "$V"; do
