@@ -17,6 +17,9 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+  code, kbd, pre, samp, .font-mono {
+    font-size-adjust: 0.53;
+  }
   @media (prefers-reduced-motion: reduce) {
     * {
       --tw-enter-scale: 1 !important;

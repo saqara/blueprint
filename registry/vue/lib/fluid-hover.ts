@@ -20,13 +20,15 @@ export type FluidHoverOptions = {
   matchRadius?: boolean
 }
 
-const { exit: _fastExit, ...fast } = spring.fast
+// The spring without its exit, which is for fading out.
+const fast = { type: spring.fast.type, duration: spring.fast.duration, bounce: spring.fast.bounce }
 const HOVER_DELAY = 60
 
 // Offsets ignore transforms, so a popup still scaling in measures right; they are content-relative,
 // so the highlight scrolls with the items.
 function offsetIn(el: HTMLElement, origin: Element | null) {
-  let x = 0, y = 0
+  let x = 0
+  let y = 0
   for (let e: HTMLElement | null = el; e && e !== origin; e = e.offsetParent as HTMLElement | null) {
     x += e.offsetLeft
     y += e.offsetTop

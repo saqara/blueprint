@@ -102,3 +102,4 @@ Chaque lot ajoute ses composants à `V2_STATUS` dans `site/catalog.ts` : badge �
 | Pro 1 | Équivalents maison de composants Pro de BoardUI, sans reprendre leur code : `radar-chart` (SVG, sans bibliothèque), `bar-list`, `questionnaire` (sur `question`). |
 | Pro 2 | `funnel-chart` (entonnoir, taux de conversion entre étapes), `radial-chart` (score de complétude, anneaux concentriques). SVG, sans bibliothèque. |
 | Revues | Correctifs des revues Impeccable et Taste : contraste du rouge, bouton désactivé, destructif, badges doux, sélection du toggle-group, zones tactiles, démos. |
+| Install Vue | Retour ChatSQR : fichiers `registry:lib` à plat (alias `~/`), smoke Vue en alias `~/`, ESLint strict sur `fluid-hover`, `font-size-adjust` sur le code. |
